@@ -8,7 +8,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  entry: ['./src/index.js'],
+  entry: { app: ['babel-polyfill', './src/index.js'] },
   module: {
     rules: [
       {

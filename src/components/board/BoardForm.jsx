@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const BoardForm = props => {
-  const { data, clickHandler } = props;
+  const { url, data } = props;
 
   return (
-    <div
-      style={{
-        backgroundColor: data.color,
-      }}
-      onClick={() => {
-        clickHandler(data.name);
-      }}
-    >
-      <div>보드명 : {data.name}</div>
-      <div>보드 타입 : {data.type}</div>
-    </div>
+    <Link to={`${url}/${data.type}`}>
+      <div
+        style={{
+          backgroundColor: data.color,
+        }}
+      >
+        <div>보드명 : {data.name}</div>
+        <div>보드 타입 : {data.type}</div>
+      </div>
+    </Link>
   );
 };
 
