@@ -1,0 +1,5 @@
+#board-element {
+  margin: 2px;
+  background-image: '../assets/orange.png';
+  border-radius: 80px / 40px;
+}

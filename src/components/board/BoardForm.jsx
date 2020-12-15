@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const BoardForm = props => {
   const { url, data } = props;
-
+  const history = useHistory();
+  const onClickHandler = () => history.push(`${url}/${data.id}`);
   return (
-    <Link to={`${url}/${data.id}`}>
-      <div
+    <div
       // style={{
       //   backgroundColor: data.color,
       // }}
-      >
-        <div>보드명 : {data.name}</div>
-        <div>보드 생성시간 : {data.createDate}</div>
-      </div>
-    </Link>
+      id='board-element'
+      onClick={onClickHandler}
+    >
+      <div>보드명 : {data.name}</div>
+      <div>보드 생성시간 : {data.createDate}</div>
+    </div>
   );
 };
 
