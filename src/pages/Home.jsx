@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import Login from './Login';
+import React, { useState } from 'react';
+import LoginPage from './LoginPage';
+import BoardPage from './BoardPage';
 
-class Home extends Component {
-  state = {
-    //로그인 여부
-    login: false,
-  };
-  render() {
-    const { login } = this.state;
-    return login ? <div></div> : <Login />;
-  }
-}
+const Home = () => {
+  const [logined, setLogined] = useState(true);
+
+  return logined ? <BoardPage /> : <LoginPage />;
+};
 
 export default Home;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "webpack serve --env development",
-    "build" : "webpack,"
+    "build": "webpack,"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/cocoball02/Korello#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SignoutForm extends Component {
-  render() {
-    return <div></div>;
-  }
-}
+const SignoutForm = () => {
+  return <div></div>;
+};
 
 export default SignoutForm;
