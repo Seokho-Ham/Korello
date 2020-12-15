@@ -1,4 +1,5 @@
 import React, { memo, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const obj = {
@@ -6,15 +7,18 @@ const obj = {
   password: '1111',
 };
 
-const LoginForm = () => {
+const LoginForm = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const inputRef = useRef(null);
+  const history = useHistory();
 
   const onChangeForm = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'email') {
+      setEmail(e.target.value);
+    } else if (e.target.name === 'password') {
+      setPassword(e.target.value);
+    }
   };
   const onSubmit = e => {
     e.preventDefault();
@@ -25,6 +29,8 @@ const LoginForm = () => {
     //   })
     //   .then(res => {});
     if (email === obj.email && password === obj.password) {
+      props.handler();
+      history.push('/board');
     } else {
       alert('아이디 혹은 비밀번호가 올바르지 않습니다.');
       setEmail('');
@@ -35,21 +41,21 @@ const LoginForm = () => {
 
   return (
     <div>
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={onSubmit}>
         <h5>아이디</h5>
         <input
           ref={inputRef}
           name='email'
           type='email'
-          value={this.state.email}
-          onChange={this.onChangeForm}
+          value={email}
+          onChange={onChangeForm}
         />
         <h5>비밀번호</h5>
         <input
           name='password'
           type='password'
-          value={this.state.password}
-          onChange={this.onChangeForm}
+          value={password}
+          onChange={onChangeForm}
         />
         <button>로그인</button>
       </form>

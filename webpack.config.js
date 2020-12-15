@@ -8,7 +8,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  entry: ['./src/App.js'],
+  entry: { app: ['babel-polyfill', './src/index.js'] },
   module: {
     rules: [
       {
@@ -32,17 +32,25 @@ module.exports = {
           ],
         },
       },
+      {
+        test: /\.(png|jpeg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
     ],
   },
   plugins: [new RefreshWebpackPlugin()],
   output: {
-    path: path.join(__dirname, '/src'),
+    path: path.join(__dirname, ''),
     filename: 'index.js',
   },
   devServer: {
-    contentBase: './',
-    publicPath: '/src',
+    publicPath: '/',
     hot: true,
     port: 3000,
+    historyApiFallback: true,
   },
 };
