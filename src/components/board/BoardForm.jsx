@@ -4,14 +4,14 @@ const BoardForm = props => {
   const { url, data } = props;
 
   return (
-    <Link to={`${url}/${data.type}`}>
+    <Link to={`${url}/${data.id}`}>
       <div
-        style={{
-          backgroundColor: data.color,
-        }}
+      // style={{
+      //   backgroundColor: data.color,
+      // }}
       >
         <div>보드명 : {data.name}</div>
-        <div>보드 타입 : {data.type}</div>
+        <div>보드 생성시간 : {data.createDate}</div>
       </div>
     </Link>
   );
