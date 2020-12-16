@@ -13,7 +13,7 @@ const BoardForm = props => {
       onClick={onClickHandler}
     >
       <>보드명 : {data.name}</>
-      <>보드 생성시간 : {data.createDate}</>
+      {/* <>보드 생성시간 : {data.createDate}</> */}
     </div>
   );
 };
