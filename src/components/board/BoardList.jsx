@@ -6,16 +6,14 @@ import NewBoardForm from './NewBoardForm';
 const BoardList = ({ match }) => {
   const [boardList, setBoardList] = useState([]);
   const [addCheck, setAddCheck] = useState(false);
-
+  const [boardCount, setBoardCount] = useState(0);
   const onClickHandler = () => {
     setAddCheck(prevState => !prevState);
   };
 
   useEffect(async () => {
-    //서버에 board 목록을 요청
-    //state로 설정
+    console.log('실행');
     let data = await apiHandler('get', '/boards');
-    console.log(data);
 
     if (!data) {
       setBoardList([]);
@@ -25,29 +23,40 @@ const BoardList = ({ match }) => {
         setBoardList(result_body);
       }
     }
-  }, []);
+  }, [boardCount]);
 
+  const renderBoards = () => {
+    return boardList.map(el => {
+      return (
+        <BoardForm
+          key={el.id}
+          url={match.path}
+          data={el}
+          setBoardCount={setBoardCount}
+        />
+      );
+    });
+  };
   return (
-    <>
+    <div id='board-container'>
       {boardList.length > 0 ? (
         <>
-          <div id='board-list'>
-            {boardList.map(el => {
-              return <BoardForm key={el.id} url={match.path} data={el} />;
-            })}
-          </div>
+          <div id='board-list'>{renderBoards()}</div>
         </>
       ) : (
         <div id='board-list'>데이터가 없습니다.</div>
       )}
       {addCheck ? (
-        <NewBoardForm onClickHandler={onClickHandler} />
+        <NewBoardForm
+          onClickHandler={onClickHandler}
+          setBoardCount={setBoardCount}
+        />
       ) : (
         <button style={{ float: 'right' }} onClick={onClickHandler}>
           Add Board
         </button>
       )}
-    </>
+    </div>
   );
 };
 
