@@ -5,8 +5,6 @@ import NewCardForm from './NewCardForm';
 
 const CardForm = ({ data }) => {
   const { id, title, cards } = data;
-  // const [cardTitle, setCardTitle] = useState(title);
-  // const [cardList, setCardList] = useState(cards);
   const [addButton, setAddButton] = useState(false);
 
   const cardStyle = {

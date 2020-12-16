@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const NewCardForm = ({ setAddButton, cards }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
   const onChangeHandler = e => {
     if (e.target.name === 'title') {
       setTitle(e.target.value);
@@ -10,6 +11,7 @@ const NewCardForm = ({ setAddButton, cards }) => {
       setDescription(e.target.value);
     }
   };
+
   const onClickHandler = () => {
     //서버에 데이터 전송
     if (title.length) {
@@ -22,6 +24,7 @@ const NewCardForm = ({ setAddButton, cards }) => {
 
     setAddButton(prevState => !prevState);
   };
+
   return (
     <>
       <div id='new-card-form' style={{ margin: '20px' }}>

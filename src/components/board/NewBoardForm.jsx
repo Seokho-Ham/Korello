@@ -15,8 +15,6 @@ const NewBoardForm = ({ onClickHandler }) => {
         name: boardName,
       });
 
-      console.log(data);
-      // console.log(data);
       if (data.result_code === 201) {
         history.push('/board');
       } else {

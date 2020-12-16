@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import apiHandler from '../../api/index';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
-// import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-// import axios from 'axios';
 
 const BoardList = ({ match }) => {
   const [boardList, setBoardList] = useState([]);
@@ -16,9 +14,9 @@ const BoardList = ({ match }) => {
   useEffect(async () => {
     //서버에 board 목록을 요청
     //state로 설정
-
     let data = await apiHandler('get', '/boards');
     console.log(data);
+
     if (!data) {
       setBoardList([]);
     } else {
