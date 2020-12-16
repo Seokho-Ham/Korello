@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 const BoardForm = props => {
-  const { id, url, data } = props;
+  const { url, data } = props;
   const history = useHistory();
-  const onClickHandler = () => history.push(`${url}/${data.id}`, { id: id });
+  const onClickHandler = () =>
+    history.push(`${url}/${data.id}`, { id: data.id });
+
   return (
     <div
       // style={{

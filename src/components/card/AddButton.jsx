@@ -5,7 +5,9 @@ const AddButton = ({ addButton, setAddButton }) => {
     setAddButton(prevState => !prevState);
   };
   return addButton ? null : (
-    <button onClick={onClickHandler}>Add another card</button>
+    <div className='add-button'>
+      <button onClick={onClickHandler}>Add another card</button>
+    </div>
   );
 };
 

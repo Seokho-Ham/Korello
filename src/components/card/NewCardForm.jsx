@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import data from '../../assets/data';
 
 const NewCardForm = ({ setAddButton, cards }) => {
   const [title, setTitle] = useState('');
@@ -25,7 +24,7 @@ const NewCardForm = ({ setAddButton, cards }) => {
   };
   return (
     <>
-      <div style={{ margin: '20px' }}>
+      <div id='new-card-form' style={{ margin: '20px' }}>
         <input
           name='title'
           type='text'
@@ -44,7 +43,9 @@ const NewCardForm = ({ setAddButton, cards }) => {
           style={{ width: '98%' }}
         ></input>
       </div>
-      <button onClick={onClickHandler}>Add Card</button>
+      <div className='add-button'>
+        <button onClick={onClickHandler}>Add Card</button>
+      </div>
     </>
   );
 };

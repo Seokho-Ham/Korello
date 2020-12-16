@@ -10,23 +10,21 @@ const CardForm = ({ data }) => {
   const [addButton, setAddButton] = useState(false);
 
   const onClickHandler = () => {};
-
+  const cardStyle = {
+    float: 'left',
+    margin: '20px',
+    backgroundColor: 'gray',
+    width: '350px',
+  };
   return (
-    <div
-      style={{
-        float: 'left',
-        margin: '20px',
-        backgroundColor: 'gray',
-        width: '350px',
-      }}
-    >
+    <div className={`card-${data.id}`} style={cardStyle}>
       <div
-        id='card-header'
+        className={`card-${data.id}-header`}
         style={{ textAlign: 'center', backgroundColor: 'yellow' }}
       >
         {title}
       </div>
-      <div id='card-list'>
+      <div id={`card-${data.id}-list`}>
         {cards.map(el => {
           return (
             <CardListForm
@@ -39,9 +37,6 @@ const CardForm = ({ data }) => {
         {addButton ? (
           <NewCardForm setAddButton={setAddButton} cards={cards} />
         ) : null}
-      </div>
-
-      <div id='add-button'>
         <AddButton addButton={addButton} setAddButton={setAddButton} />
       </div>
     </div>
