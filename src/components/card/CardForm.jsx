@@ -5,16 +5,16 @@ import NewCardForm from './NewCardForm';
 
 const CardForm = ({ data }) => {
   const { id, title, cards } = data;
-  const [cardTitle, setCardTitle] = useState(title);
-  const [cardList, setCardList] = useState(cards);
+  // const [cardTitle, setCardTitle] = useState(title);
+  // const [cardList, setCardList] = useState(cards);
   const [addButton, setAddButton] = useState(false);
 
-  const onClickHandler = () => {};
   const cardStyle = {
     float: 'left',
     margin: '20px',
-    backgroundColor: 'gray',
+    backgroundColor: '#ebecf0',
     width: '350px',
+    borderRadius: '4px',
   };
   return (
     <div className={`card-${data.id}`} style={cardStyle}>

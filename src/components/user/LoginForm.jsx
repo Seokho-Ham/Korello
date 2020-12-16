@@ -30,6 +30,8 @@ const LoginForm = props => {
     //   .then(res => {});
     if (email === obj.email && password === obj.password) {
       props.handler();
+
+      //유저의 아이디 값을 state로 넘겨줘야할거같은데?
       history.push('/board');
     } else {
       alert('아이디 혹은 비밀번호가 올바르지 않습니다.');

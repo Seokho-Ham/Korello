@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
+
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
-import Card from './components/card/CardList';
 
 const App = () => {
+  const [logined, setLogined] = useState(false);
+  const loginHandler = () => {
+    setLogined(!logined);
+  };
+
   return (
     <Router>
-      <Route exact path='/' component={Home} />
-
       <Switch>
-        <Route path='/login' component={Login} />
+        <Route exact path='/' render={() => <Login handler={loginHandler} />} />
         <Route path='/board' component={Board} />
       </Switch>
     </Router>
