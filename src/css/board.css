@@ -1,5 +1,6 @@
 #board-element {
-  margin: 2px;
-  background-image: '../assets/orange.png';
+  margin: 10px;
+  width: 120px;
+  background-image: url('../assets/orange.png');
   border-radius: 80px / 40px;
 }

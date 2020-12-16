@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 const BoardForm = props => {
-  const { url, data } = props;
+  const { id, url, data } = props;
   const history = useHistory();
-  const onClickHandler = () => history.push(`${url}/${data.id}`);
+  const onClickHandler = () => history.push(`${url}/${data.id}`, { id: id });
   return (
     <div
       // style={{
@@ -12,8 +12,8 @@ const BoardForm = props => {
       id='board-element'
       onClick={onClickHandler}
     >
-      <div>보드명 : {data.name}</div>
-      <div>보드 생성시간 : {data.createDate}</div>
+      <>보드명 : {data.name}</>
+      <>보드 생성시간 : {data.createDate}</>
     </div>
   );
 };
