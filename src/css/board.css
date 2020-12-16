@@ -1,6 +1,16 @@
 #board-element {
+  text-align: center;
   margin: 10px;
-  width: 120px;
+
+  padding: 30px;
+  float: left;
+  width: 130px;
+  height: 50px;
   background-image: url('../assets/orange.png');
-  border-radius: 80px / 40px;
+  border-radius: 3px;
+}
+
+.add-button {
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
