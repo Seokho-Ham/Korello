@@ -37,8 +37,8 @@ const BoardForm = props => {
           X
         </button>
       </div>
-      <div id='board-title' onClick={clickBoard} style={{ padding: '10%' }}>
-        <>보드명 : {data.name}</>
+      <div id='board-title' onClick={clickBoard}>
+        <>{data.name}</>
       </div>
     </div>
   );
