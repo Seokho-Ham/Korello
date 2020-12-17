@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import apiHandler from '../../api/index';
 
@@ -14,14 +15,19 @@ const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
   };
 
   const onClickHandler = async () => {
+    const { result_code } = await apiHandler(
+      'post',
+      `${url.slice(0, url.length - 1)}`,
+      {
+        tagValue: tag,
+        name: title,
+      },
+    );
+
     if (title.length === 0) {
       setAddButton(prevState => !prevState);
     } else {
-      const res = await apiHandler('post', `${url.slice(0, url.length - 1)}`, {
-        tagValue: tag,
-        name: title,
-      });
-      if (res.result_code === 201) {
+      if (result_code === 201) {
         setUpdate(prevState => !prevState);
         setAddButton(prevState => !prevState);
       } else {

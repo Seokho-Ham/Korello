@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import TagForm from './TagForm';
 import apiHandler from '../../api/index';
-
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+
 const CardList = ({ history, match }) => {
   //데이터를 받아와서 나열.
+
+  // const [data, loading] = useApi('get', `${match.url}`);
   const [tagList, setTagList] = useState([]);
   const [cardList, setCardList] = useState([]);
   const [update, setUpdate] = useState(true);
@@ -15,12 +17,8 @@ const CardList = ({ history, match }) => {
   };
 
   useEffect(async () => {
-    const res = await apiHandler('get', `${match.url}`);
-    //tagValue로 분기를 해야한다.
-    //result_body.map을 사용 -> cardList state에 tagValue값을 기준으로 저장?
-    //tag1 : [{id:17, name:card1, memeberNames:[] }]
-    if (res.result_body.length > 0) {
-      const { result_body } = res;
+    const { result_body } = await apiHandler('get', `${match.url}`);
+    if (result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
@@ -44,7 +42,7 @@ const CardList = ({ history, match }) => {
         tags.push(i);
         cards.push(obj[i]);
       }
-      console.log(cards);
+
       setTagList(tags);
       setCardList(cards);
     }
