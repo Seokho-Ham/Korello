@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import TagForm from './TagForm';
 import apiHandler from '../../api/index';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import AddTagButton from './AddTagButton';
 
 const CardList = ({ history, match }) => {
   //데이터를 받아와서 나열.
@@ -32,10 +33,10 @@ const CardList = ({ history, match }) => {
           updateDate: el.updateDate,
         };
 
-        if (obj[el.tagValue]) {
-          obj[el.tagValue].push(cardObj);
-        } else {
+        if (!obj[el.tagValue]) {
           obj[el.tagValue] = [cardObj];
+        } else {
+          obj[el.tagValue].push(cardObj);
         }
       });
       for (let i in obj) {
@@ -45,20 +46,23 @@ const CardList = ({ history, match }) => {
 
       setTagList(tags);
       setCardList(cards);
+    } else {
+      setTagList([]);
+      setCardList([]);
     }
   }, [update]);
 
   return (
     <>
-      {Object.keys(cardList).length > 0 ? (
+      {cardList.length > 0 ? (
         <>
           <button onClick={onClickHandler}>뒤로가기</button>
           <div id='all-card-list'>
-            {cardList.map(el => {
+            {cardList.map((el, i) => {
               let index = cardList.indexOf(el);
               return (
                 <TagForm
-                  key={el.id}
+                  key={i}
                   data={el}
                   tag={tagList[index]}
                   boardUrl={match.url}
@@ -69,8 +73,11 @@ const CardList = ({ history, match }) => {
           </div>
         </>
       ) : (
-        <div></div>
+        <>
+          <button onClick={onClickHandler}>뒤로가기</button>
+        </>
       )}
+      <AddTagButton url={match.url} setUpdate={setUpdate} />
     </>
   );
 };

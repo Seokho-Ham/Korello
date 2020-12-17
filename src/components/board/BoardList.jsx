@@ -20,7 +20,7 @@ const BoardList = ({ match }) => {
     } else {
       setBoardList(result_body);
     }
-  }, [boardCount, loading]);
+  }, [boardCount]);
 
   const renderBoards = () => {
     return boardList.map(el => {

@@ -1,7 +1,6 @@
 import React, { useState, memo } from 'react';
-import AddButton from './AddButton';
+import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import NewCardForm from './NewCardForm';
 
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [addButton, setAddButton] = useState(false);
@@ -29,20 +28,23 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
             return (
               <CardListForm
                 key={el.id}
+                id={el.id}
                 title={el.name}
                 // description={el.description}
+                tag={tag}
+                url={boardUrl}
+                setUpdate={setUpdate}
               />
             );
           })}
-        {addButton ? (
-          <NewCardForm
-            setAddButton={setAddButton}
-            tag={tag}
-            url={boardUrl}
-            setUpdate={setUpdate}
-          />
-        ) : null}
-        <AddButton addButton={addButton} setAddButton={setAddButton} />
+
+        <AddCardButton
+          addButton={addButton}
+          setAddButton={setAddButton}
+          tag={tag}
+          url={boardUrl}
+          setUpdate={setUpdate}
+        />
       </div>
     </div>
   );

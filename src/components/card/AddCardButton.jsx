@@ -1,11 +1,8 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import apiHandler from '../../api/index';
-
-const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
+const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
   const onChangeHandler = e => {
     if (e.target.name === 'title') {
       setTitle(e.target.value);
@@ -13,8 +10,7 @@ const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
       setDescription(e.target.value);
     }
   };
-
-  const onClickHandler = async () => {
+  const addCardHandler = async () => {
     const { result_code } = await apiHandler(
       'post',
       `${url.slice(0, url.length - 1)}`,
@@ -23,7 +19,6 @@ const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
         name: title,
       },
     );
-
     if (title.length === 0) {
       setAddButton(prevState => !prevState);
     } else {
@@ -36,8 +31,10 @@ const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
       }
     }
   };
-
-  return (
+  const onClickHandler = () => {
+    setAddButton(prevState => !prevState);
+  };
+  return addButton ? (
     <>
       <div id='new-card-form' style={{ margin: '20px' }}>
         <input
@@ -59,10 +56,14 @@ const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
         ></input>
       </div>
       <div className='add-button'>
-        <button onClick={onClickHandler}>Add Card</button>
+        <button onClick={addCardHandler}>Add Card</button>
       </div>
     </>
+  ) : (
+    <div className='add-button'>
+      <button onClick={onClickHandler}>Add another card</button>
+    </div>
   );
 };
 
-export default NewCardForm;
+export default AddButton;
