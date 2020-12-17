@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import apiHandler from '../../api/index';
 
-const NewCardForm = ({ setAddButton, cards }) => {
+const NewCardForm = ({ setAddButton, tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -12,17 +13,22 @@ const NewCardForm = ({ setAddButton, cards }) => {
     }
   };
 
-  const onClickHandler = () => {
-    //서버에 데이터 전송
-    if (title.length) {
-      cards.push({
-        id: cards[cards.length - 1].id + 1,
-        title: title,
-        description: description,
+  const onClickHandler = async () => {
+    if (title.length === 0) {
+      setAddButton(prevState => !prevState);
+    } else {
+      const res = await apiHandler('post', `${url.slice(0, url.length - 1)}`, {
+        tagValue: tag,
+        name: title,
       });
+      if (res.result_code === 201) {
+        setUpdate(prevState => !prevState);
+        setAddButton(prevState => !prevState);
+      } else {
+        alert('생성에 실패했습니다.');
+        setTitle('');
+      }
     }
-
-    setAddButton(prevState => !prevState);
   };
 
   return (

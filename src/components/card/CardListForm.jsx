@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const CardListForm = ({ title, description }) => {
+const CardListForm = ({ title }) => {
   const style = {
     backgroundColor: '#fff',
     borderRadius: '3px',
@@ -10,9 +10,9 @@ const CardListForm = ({ title, description }) => {
   return (
     <div style={style}>
       <h3 style={{ marginLeft: '5px' }}>{title}</h3>
-      <div style={{ marginLeft: '5px' }}>{description}</div>
+      {/* <div style={{ marginLeft: '5px' }}>{description}</div> */}
     </div>
   );
 };
 
-export default CardListForm;
+export default memo(CardListForm);

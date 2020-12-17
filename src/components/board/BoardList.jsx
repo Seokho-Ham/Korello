@@ -13,12 +13,12 @@ const BoardList = ({ match }) => {
 
   useEffect(async () => {
     console.log('실행');
-    let data = await apiHandler('get', '/boards');
-
-    if (!data) {
+    let res = await apiHandler('get', '/boards');
+    console.log(res);
+    if (!res || !res.result_body) {
       setBoardList([]);
     } else {
-      const { result_body } = data;
+      const { result_body } = res;
       if (result_body.length > 0) {
         setBoardList(result_body);
       }

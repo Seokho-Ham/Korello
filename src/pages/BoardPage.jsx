@@ -16,7 +16,7 @@ const BoardPage = ({ match }) => {
         </Link>
       </div>
       <Route exact path={match.path} component={BoardList} />
-      <Route path={`${match.path}/:id`} component={CardList} />
+      <Route path={`${match.path}/:id/cards`} component={CardList} />
     </Router>
   );
 };
