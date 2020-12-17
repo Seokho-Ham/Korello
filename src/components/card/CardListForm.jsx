@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { memo } from 'react';
+import apiHandler from '../../api/index';
 
-const CardListForm = ({ title, description }) => {
+const CardListForm = ({ id, title, tag, url, setUpdate }) => {
+  const deleteCard = async () => {
+    let { result_code } = await apiHandler(
+      'post',
+      url.slice(0, url.length - 1) + '/delete',
+      { id: id },
+    );
+    if (result_code === 201) {
+      setUpdate(prevState => !prevState);
+    } else {
+      alert('삭제에 실패하였습니다.');
+    }
+  };
+
   const style = {
     backgroundColor: '#fff',
     borderRadius: '3px',
     margin: '20px',
     boxShadow: '0 2px 0 rgba(9,30,66,.25)',
   };
+
   return (
     <div style={style}>
-      <h3 style={{ marginLeft: '5px' }}>{title}</h3>
-      <div style={{ marginLeft: '5px' }}>{description}</div>
+      <h3 style={{ marginLeft: '5px', display: 'inline' }}>{title}</h3>
+      <button style={{ float: 'right' }} onClick={deleteCard}>
+        X
+      </button>
+      {/* <div style={{ marginLeft: '5px' }}>{description}</div> */}
     </div>
   );
 };
 
-export default CardListForm;
+export default memo(CardListForm);

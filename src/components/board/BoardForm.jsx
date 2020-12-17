@@ -7,7 +7,8 @@ const BoardForm = props => {
   const [boardId, setBoardId] = useState(data.id);
   const history = useHistory();
 
-  const clickBoard = () => history.push(`${url}/${data.id}`, { id: data.id });
+  const clickBoard = () =>
+    history.push(`${url}/${data.id}/cards`, { id: data.id });
   const deleteBoard = async () => {
     const res = await apiHandler('post', '/board/delete', { id: boardId });
     const { result_code } = res;

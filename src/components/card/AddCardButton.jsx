@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-
-const NewCardForm = ({ setAddButton, cards }) => {
+import apiHandler from '../../api/index';
+const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
   const onChangeHandler = e => {
     if (e.target.name === 'title') {
       setTitle(e.target.value);
@@ -11,21 +10,31 @@ const NewCardForm = ({ setAddButton, cards }) => {
       setDescription(e.target.value);
     }
   };
-
-  const onClickHandler = () => {
-    //서버에 데이터 전송
-    if (title.length) {
-      cards.push({
-        id: cards[cards.length - 1].id + 1,
-        title: title,
-        description: description,
-      });
+  const addCardHandler = async () => {
+    const { result_code } = await apiHandler(
+      'post',
+      `${url.slice(0, url.length - 1)}`,
+      {
+        tagValue: tag,
+        name: title,
+      },
+    );
+    if (title.length === 0) {
+      setAddButton(prevState => !prevState);
+    } else {
+      if (result_code === 201) {
+        setUpdate(prevState => !prevState);
+        setAddButton(prevState => !prevState);
+      } else {
+        alert('생성에 실패했습니다.');
+        setTitle('');
+      }
     }
-
+  };
+  const onClickHandler = () => {
     setAddButton(prevState => !prevState);
   };
-
-  return (
+  return addButton ? (
     <>
       <div id='new-card-form' style={{ margin: '20px' }}>
         <input
@@ -47,10 +56,14 @@ const NewCardForm = ({ setAddButton, cards }) => {
         ></input>
       </div>
       <div className='add-button'>
-        <button onClick={onClickHandler}>Add Card</button>
+        <button onClick={addCardHandler}>Add Card</button>
       </div>
     </>
+  ) : (
+    <div className='add-button'>
+      <button onClick={onClickHandler}>Add another card</button>
+    </div>
   );
 };
 
-export default NewCardForm;
+export default AddButton;

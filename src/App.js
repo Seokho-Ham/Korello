@@ -12,10 +12,8 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path='/' render={() => <Login handler={loginHandler} />} />
-        <Route path='/board' component={Board} />
-      </Switch>
+      <Route exact path='/' render={() => <Login handler={loginHandler} />} />
+      <Route path='/board' component={Board} />
     </Router>
   );
 };

@@ -7,21 +7,18 @@ const BoardList = ({ match }) => {
   const [boardList, setBoardList] = useState([]);
   const [addCheck, setAddCheck] = useState(false);
   const [boardCount, setBoardCount] = useState(0);
+  // const [data, loading] = useApi('get', '/boards');
+
   const onClickHandler = () => {
     setAddCheck(prevState => !prevState);
   };
 
   useEffect(async () => {
-    console.log('실행');
-    let data = await apiHandler('get', '/boards');
-
-    if (!data) {
+    const { result_body } = await apiHandler('get', '/boards');
+    if (!result_body) {
       setBoardList([]);
     } else {
-      const { result_body } = data;
-      if (result_body.length > 0) {
-        setBoardList(result_body);
-      }
+      setBoardList(result_body);
     }
   }, [boardCount]);
 
