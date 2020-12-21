@@ -4,10 +4,7 @@ import { usePostApi } from '../../api/index';
 const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [postData] = usePostApi(`${url.slice(0, url.length - 1)}`, {
-    tagValue: tag,
-    name: title,
-  });
+  const [postData] = usePostApi();
 
   const onChangeHandler = e => {
     if (e.target.name === 'title') {
@@ -23,7 +20,10 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
 
   const addCardHandler = async () => {
     if (title.length > 0) {
-      const code = await postData();
+      const code = await postData(`${url.slice(0, url.length - 1)}`, {
+        tagValue: tag,
+        name: title,
+      });
       console.log(code);
       if (code === 201) {
         setUpdate(prevState => !prevState);

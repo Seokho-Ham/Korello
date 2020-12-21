@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
@@ -13,6 +13,7 @@ const useGetApi = (method, uri, state1, state2) => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
+        console.log('요청');
         if (data.result_body) {
           setData(data.result_body);
         }
@@ -35,6 +36,7 @@ const useGetCardApi = uri => {
   useEffect(() => {
     const getCard = async () => {
       let { data } = await axios.get(serverUrl + uri);
+      console.log('요청');
       let { result_body } = data;
 
       if (result_body.length > 0) {
@@ -74,10 +76,11 @@ const useGetCardApi = uri => {
 };
 
 //POST--------------------------------------------------------------------------------
-const usePostApi = (uri, body) => {
-  const postData = async () => {
+const usePostApi = () => {
+  const postData = async (uri, body) => {
     try {
       let { data } = await axios.post(serverUrl + uri, body);
+      console.log('요청');
 
       return data.result_code;
     } catch (err) {
@@ -89,10 +92,11 @@ const usePostApi = (uri, body) => {
 };
 
 //UPDATE--------------------------------------------------------------------------------
-const useUpdateApi = (url, body) => {
-  const updateData = async () => {
+const useUpdateApi = () => {
+  const updateData = async (url, body) => {
     try {
       const { data } = await axios.put(serverUrl + url, body);
+      console.log('요청');
       if (data) {
         return data.result_code;
       }

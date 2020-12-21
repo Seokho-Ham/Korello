@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 

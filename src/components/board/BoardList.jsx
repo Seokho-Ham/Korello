@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import apiHandler from '../../api/index';
 import { useGetApi } from '../../api/index';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';

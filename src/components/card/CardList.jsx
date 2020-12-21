@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import { Route } from 'react-router-dom';
 import TagForm from './TagForm';
 import { useGetCardApi } from '../../api/index';
-// import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+
 import AddTagButton from './AddTagButton';
 
 const CardList = ({ history, location }) => {

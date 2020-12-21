@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import apiHandler, { usePostApi } from '../../api/index';
+import { usePostApi } from '../../api/index';
 const AddTagButton = ({ url, setUpdate }) => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [clicked, setClicked] = useState(false);
-  const [postData] = usePostApi(`${url.slice(0, url.length - 1)}`, {
-    tagValue: tagName,
-    name: cardName,
-  });
+  const [postData] = usePostApi();
 
   const onClickHandler = () => {
     setTagName('');
@@ -25,7 +22,10 @@ const AddTagButton = ({ url, setUpdate }) => {
     if (tagName.length === 0 && cardName.length === 0) {
       alert('빈칸이 있습니다.');
     } else {
-      const code = await postData();
+      const code = await postData(`${url.slice(0, url.length - 1)}`, {
+        tagValue: tagName,
+        name: cardName,
+      });
       if (code === 201) {
         setTagName('');
         setCardName('');

@@ -4,7 +4,7 @@ import { usePostApi } from '../../api/index';
 
 const BoardForm = ({ url, data, setUpdate }) => {
   const [boardId, setBoardId] = useState(data.id);
-  const [postData] = usePostApi('/board/delete', { id: boardId });
+  const [postData] = usePostApi();
   const history = useHistory();
 
   const clickBoard = () => {
@@ -13,7 +13,7 @@ const BoardForm = ({ url, data, setUpdate }) => {
     });
   };
   const deleteBoard = async () => {
-    const code = await postData();
+    const code = await postData('/board/delete', { id: boardId });
     if (code !== 200) {
       alert('삭제 실패!');
     }
@@ -25,13 +25,10 @@ const BoardForm = ({ url, data, setUpdate }) => {
         id='board-delete'
         style={{
           float: 'right',
-          // margin: '320px 70px',
         }}
       >
         <button
           style={{
-            // padding: '25px 40px',
-            // margin: '320px 70px',
             border: '3px solid #d9cbb3',
             color: 'black',
           }}
