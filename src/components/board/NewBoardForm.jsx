@@ -1,24 +1,23 @@
 import React, { useState, useRef } from 'react';
-import apiHandler from '../../api/index';
+import { usePostApi } from '../../api/index';
 
-const NewBoardForm = ({ onClickHandler, setBoardCount }) => {
+const NewBoardForm = ({ onClickHandler }) => {
   const [boardName, setBoardName] = useState('');
   const inputRef = useRef(null);
+  const [postData] = usePostApi('/board', {
+    name: boardName,
+  });
 
   const onChangeHandler = e => {
     setBoardName(e.target.value);
   };
 
   const addBoard = async () => {
-    //서버에 post 요청으로 보드 생성
     if (boardName.length > 0) {
-      const data = await apiHandler('post', '/board', {
-        name: boardName,
-      });
-
-      if (data.result_code === 201) {
+      const code = await postData();
+      console.log(code);
+      if (code === 201) {
         setBoardName('');
-        setBoardCount(prevState => prevState + 1);
         onClickHandler();
       } else {
         alert('생성에 실패했습니다.');

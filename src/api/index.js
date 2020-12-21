@@ -3,41 +3,40 @@ import axios from 'axios';
 
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
 
-const apiHandler = async (method, uri, body) => {
-  try {
-    const { data } = await axios[method](serverUrl + uri, body);
+const useGetApi = (method, uri) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState('loading');
+  const [code, setCode] = useState(0);
 
-    if (data) {
-      return data;
-    }
-  } catch (err) {
-    console.log(err);
-  }
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        let { data } = await axios[method](serverUrl + uri);
+        if (data.result_body) {
+          setData(data.result_body);
+        }
+        setCode(data.result_code);
+        setLoading('finished');
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  }, [data]);
+  return [data, code, loading];
 };
 
-export default apiHandler;
+const usePostApi = (uri, body) => {
+  const postData = async () => {
+    try {
+      let { data } = await axios.post(serverUrl + uri, body);
+      return data.result_code;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-// const useApi = (method, uri, body) => {
-//   const [data, setData] = useState([]);
-//   const [loading, setLoading] = useState('loading');
-//   const [code, setCode] = useState(0);
+  return [postData];
+};
 
-//   useEffect(() => {
-//     const getData = async () => {
-//       try {
-//         let { data } = await axios[method](serverUrl + uri, body);
-//         if (data.result_body) {
-//           setData(data.result_body);
-//         }
-//         setCode(data.result_code);
-//         setLoading('finished');
-//       } catch (err) {
-//         console.log(err);
-//       }
-//     };
-//     getData();
-//   }, []);
-//   return [data, code, loading];
-// };
-
-// export default useApi;
+export { useGetApi, usePostApi };

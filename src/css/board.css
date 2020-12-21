@@ -45,7 +45,8 @@ textarea {
   justify-content: space-between;
 }
 #board-list {
-  display: flex;
+  display: flexbox;
+  position: sticky;
   justify-content: center;
   align-items: center;
 }
