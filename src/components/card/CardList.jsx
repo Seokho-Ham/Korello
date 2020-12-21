@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+// import { Route } from 'react-router-dom';
 import TagForm from './TagForm';
 import apiHandler from '../../api/index';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+// import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import AddTagButton from './AddTagButton';
 
-const CardList = ({ history, match }) => {
+const CardList = ({ history, match, location }) => {
   //데이터를 받아와서 나열.
 
   // const [data, loading] = useApi('get', `${match.url}`);
@@ -16,29 +16,32 @@ const CardList = ({ history, match }) => {
   const onClickHandler = () => {
     history.goBack();
   };
-
+  console.log(location.pathname);
   useEffect(async () => {
-    const { result_body } = await apiHandler('get', `${match.url}`);
+    const { result_body } = await apiHandler('get', `${location.pathname}`);
+
     if (result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
-      result_body.map(el => {
-        let cardObj = {
-          id: el.id,
-          name: el.name,
-          tagValue: el.tagValue,
-          memberNames: el.memberNames,
-          createDate: el.createDate,
-          updateDate: el.updateDate,
-        };
+      result_body
+        .sort((a, b) => a.id - b.id)
+        .map(el => {
+          let cardObj = {
+            id: el.id,
+            name: el.name,
+            tagValue: el.tagValue,
+            memberNames: el.memberNames,
+            createDate: el.createDate,
+            updateDate: el.updateDate,
+          };
 
-        if (!obj[el.tagValue]) {
-          obj[el.tagValue] = [cardObj];
-        } else {
-          obj[el.tagValue].push(cardObj);
-        }
-      });
+          if (!obj[el.tagValue]) {
+            obj[el.tagValue] = [cardObj];
+          } else {
+            obj[el.tagValue].push(cardObj);
+          }
+        });
       for (let i in obj) {
         tags.push(i);
         cards.push(obj[i]);

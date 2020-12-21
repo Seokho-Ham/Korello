@@ -11,17 +11,15 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
     }
   };
   const addCardHandler = async () => {
-    const { result_code } = await apiHandler(
-      'post',
-      `${url.slice(0, url.length - 1)}`,
-      {
-        tagValue: tag,
-        name: title,
-      },
-    );
-    if (title.length === 0) {
-      setAddButton(prevState => !prevState);
-    } else {
+    if (title.length > 0) {
+      const { result_code } = await apiHandler(
+        'post',
+        `${url.slice(0, url.length - 1)}`,
+        {
+          tagValue: tag,
+          name: title,
+        },
+      );
       if (result_code === 201) {
         setUpdate(prevState => !prevState);
         setAddButton(prevState => !prevState);
@@ -29,6 +27,8 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
         alert('생성에 실패했습니다.');
         setTitle('');
       }
+    } else {
+      setAddButton(prevState => !prevState);
     }
   };
   const onClickHandler = () => {

@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import apiHandler from '../../api/index';
 
-const BoardForm = props => {
-  const { url, data, setBoardCount } = props;
+const BoardForm = ({ url, data, setBoardCount }) => {
   const [boardId, setBoardId] = useState(data.id);
   const history = useHistory();
 
-  const clickBoard = () =>
-    history.push(`${url}/${data.id}/cards`, { id: data.id });
+  const clickBoard = () => {
+    history.push(`${url.slice(0, url.length - 1)}/${data.id}/cards`, {
+      id: data.id,
+    });
+  };
   const deleteBoard = async () => {
     const res = await apiHandler('post', '/board/delete', { id: boardId });
     const { result_code } = res;
@@ -37,8 +39,8 @@ const BoardForm = props => {
           X
         </button>
       </div>
-      <div id='board-title' onClick={clickBoard} style={{ padding: '10%' }}>
-        <>보드명 : {data.name}</>
+      <div id='board-title' onClick={clickBoard}>
+        <>{data.name}</>
       </div>
     </div>
   );
