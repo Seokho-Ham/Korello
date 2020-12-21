@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
-import apiHandler from '../../api/index';
+import { usePostApi } from '../../api/index';
 
 const CardListForm = ({ id, title, tag, url, setUpdate }) => {
+  const [postData] = usePostApi(url.slice(0, url.length - 1) + '/delete', {
+    id: id,
+  });
   const deleteCard = async () => {
-    let { result_code } = await apiHandler(
-      'post',
-      url.slice(0, url.length - 1) + '/delete',
-      { id: id },
-    );
+    let result_code = await postData();
     if (result_code === 201) {
       setUpdate(prevState => !prevState);
     } else {

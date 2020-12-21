@@ -1,42 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import apiHandler from '../../api/index';
+// import apiHandler from '../../api/index';
+import { useGetApi } from '../../api/index';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
-  const [boardList, setBoardList] = useState([]);
   const [addCheck, setAddCheck] = useState(false);
-  const [boardCount, setBoardCount] = useState(0);
-  // const [data, loading] = useApi('get', '/boards');
+  const [update, setUpdate] = useState(false);
+  const [data] = useGetApi('get', '/boards', addCheck, update);
 
   const onClickHandler = () => {
     setAddCheck(prevState => !prevState);
   };
 
-  useEffect(async () => {
-    const { result_body } = await apiHandler('get', '/boards');
-    if (!result_body) {
-      setBoardList([]);
-    } else {
-      setBoardList(result_body);
-    }
-  }, [boardCount]);
-
   const renderBoards = () => {
-    return boardList.map(el => {
+    return data.map(el => {
       return (
         <BoardForm
           key={el.id}
           url={match.path}
           data={el}
-          setBoardCount={setBoardCount}
+          setUpdate={setUpdate}
         />
       );
     });
   };
   return (
     <div id='board-container'>
-      {boardList.length > 0 ? (
+      {data.length > 0 ? (
         <>
           <div id='board-list'>{renderBoards()}</div>
         </>
@@ -44,10 +35,7 @@ const BoardList = ({ match }) => {
         <div id='board-list'>데이터가 없습니다.</div>
       )}
       {addCheck ? (
-        <NewBoardForm
-          onClickHandler={onClickHandler}
-          setBoardCount={setBoardCount}
-        />
+        <NewBoardForm onClickHandler={onClickHandler} />
       ) : (
         <button style={{ float: 'right' }} onClick={onClickHandler}>
           Add Board

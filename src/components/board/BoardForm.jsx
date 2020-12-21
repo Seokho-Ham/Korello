@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import apiHandler from '../../api/index';
+import { usePostApi } from '../../api/index';
 
-const BoardForm = ({ url, data, setBoardCount }) => {
+const BoardForm = ({ url, data, setUpdate }) => {
   const [boardId, setBoardId] = useState(data.id);
+  const [postData] = usePostApi('/board/delete', { id: boardId });
   const history = useHistory();
 
   const clickBoard = () => {
@@ -12,11 +13,11 @@ const BoardForm = ({ url, data, setBoardCount }) => {
     });
   };
   const deleteBoard = async () => {
-    const res = await apiHandler('post', '/board/delete', { id: boardId });
-    const { result_code } = res;
-    if (result_code === 200) {
-      setBoardCount(prevState => prevState - 1);
+    const code = await postData();
+    if (code !== 200) {
+      alert('삭제 실패!');
     }
+    setUpdate(prevState => !prevState);
   };
   return (
     <div id='board-element'>
