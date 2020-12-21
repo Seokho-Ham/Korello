@@ -4,7 +4,7 @@ const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 module.exports = {
   name: 'Korello',
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -31,6 +31,11 @@ module.exports = {
             'react-refresh/babel',
           ],
         },
+      },
+      {
+        test: /\.jsx/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
       },
       {
         test: /\.(png|jpeg)$/,

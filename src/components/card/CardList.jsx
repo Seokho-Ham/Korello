@@ -5,7 +5,7 @@ import apiHandler from '../../api/index';
 // import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import AddTagButton from './AddTagButton';
 
-const CardList = ({ history, match }) => {
+const CardList = ({ history, match, location }) => {
   //데이터를 받아와서 나열.
 
   // const [data, loading] = useApi('get', `${match.url}`);
@@ -16,9 +16,9 @@ const CardList = ({ history, match }) => {
   const onClickHandler = () => {
     history.goBack();
   };
-
+  console.log(location.pathname);
   useEffect(async () => {
-    const { result_body } = await apiHandler('get', `${match.url}`);
+    const { result_body } = await apiHandler('get', `${location.pathname}`);
 
     if (result_body.length > 0) {
       const obj = {};

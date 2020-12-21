@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import apiHandler from '../../api/index';
 
-const BoardForm = props => {
-  const { url, data, setBoardCount } = props;
+const BoardForm = ({ url, data, setBoardCount }) => {
   const [boardId, setBoardId] = useState(data.id);
   const history = useHistory();
 
-  const clickBoard = () =>
-    history.push(`${url}/${data.id}/cards`, { id: data.id });
+  const clickBoard = () => {
+    history.push(`${url.slice(0, url.length - 1)}/${data.id}/cards`, {
+      id: data.id,
+    });
+  };
   const deleteBoard = async () => {
     const res = await apiHandler('post', '/board/delete', { id: boardId });
     const { result_code } = res;
