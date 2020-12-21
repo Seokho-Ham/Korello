@@ -1,10 +1,11 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { usePostApi, useUpdateApi } from '../../api/index';
+import CardModal from './CardModal';
 
 const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   const [edit, setEdit] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const [postData] = usePostApi(url.slice(0, url.length - 1) + '/delete', {
     id: id,
   });
@@ -18,6 +19,10 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   };
   const inputHandler = e => {
     setCardTitle(e.target.value);
+  };
+
+  const clickModal = () => {
+    setModalVisible(p => !p);
   };
 
   const sendUpdate = async () => {
@@ -52,6 +57,10 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
 
   return (
     <div style={style}>
+      {modalVisible ? (
+        <CardModal visible={modalVisible} onClose={clickModal} />
+      ) : null}
+
       {edit ? (
         <span>
           <input value={cardTitle} onChange={inputHandler} />
@@ -69,9 +78,14 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
         </span>
       )}
 
+      <button className='modal' onClick={clickModal}>
+        modal
+      </button>
+
       <button style={{ float: 'right' }} onClick={deleteCard}>
         X
       </button>
+
       {/* <div style={{ marginLeft: '5px' }}>{description}</div> */}
     </div>
   );

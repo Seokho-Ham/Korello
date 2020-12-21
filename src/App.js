@@ -4,6 +4,7 @@ import {
   Route,
   Link,
   Redirect,
+  Switch,
 } from 'react-router-dom';
 
 import Login from './pages/LoginPage.jsx';
@@ -24,8 +25,10 @@ const App = () => {
         {/* </Link> */}
       </div>
       <Route exact path='/' render={() => <Login handler={loginHandler} />} />
-      <Route path='/boards' component={Board} />
-      <Redirect from='/board/:id/cards' to='/boards' />
+      <Switch>
+        <Route path='/boards' component={Board} />
+        <Redirect from='/board/:id/cards' to='/boards' />
+      </Switch>
     </Router>
   );
 };
