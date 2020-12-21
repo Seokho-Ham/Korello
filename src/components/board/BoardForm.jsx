@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { usePostApi } from '../../api/index';
 
-const BoardForm = ({ url, data, setBoardCount }) => {
+const BoardForm = ({ url, data, setUpdate }) => {
   const [boardId, setBoardId] = useState(data.id);
   const [postData] = usePostApi('/board/delete', { id: boardId });
   const history = useHistory();
@@ -17,6 +17,7 @@ const BoardForm = ({ url, data, setBoardCount }) => {
     if (code !== 200) {
       alert('삭제 실패!');
     }
+    setUpdate(prevState => !prevState);
   };
   return (
     <div id='board-element'>

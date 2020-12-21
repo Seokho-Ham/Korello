@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import apiHandler from '../../api/index';
+import { usePostApi } from '../../api/index';
+
 const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [postData] = usePostApi(`${url.slice(0, url.length - 1)}`, {
+    tagValue: tag,
+    name: title,
+  });
+
   const onChangeHandler = e => {
     if (e.target.name === 'title') {
       setTitle(e.target.value);
@@ -10,17 +16,16 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
       setDescription(e.target.value);
     }
   };
+
+  const onClickHandler = () => {
+    setAddButton(prevState => !prevState);
+  };
+
   const addCardHandler = async () => {
     if (title.length > 0) {
-      const { result_code } = await apiHandler(
-        'post',
-        `${url.slice(0, url.length - 1)}`,
-        {
-          tagValue: tag,
-          name: title,
-        },
-      );
-      if (result_code === 201) {
+      const code = await postData();
+      console.log(code);
+      if (code === 201) {
         setUpdate(prevState => !prevState);
         setAddButton(prevState => !prevState);
       } else {
@@ -31,9 +36,7 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
       setAddButton(prevState => !prevState);
     }
   };
-  const onClickHandler = () => {
-    setAddButton(prevState => !prevState);
-  };
+
   return addButton ? (
     <>
       <div id='new-card-form' style={{ margin: '20px' }}>

@@ -6,7 +6,8 @@ import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [addCheck, setAddCheck] = useState(false);
-  const [data] = useGetApi('get', '/boards');
+  const [update, setUpdate] = useState(false);
+  const [data] = useGetApi('get', '/boards', addCheck, update);
 
   const onClickHandler = () => {
     setAddCheck(prevState => !prevState);
@@ -14,7 +15,14 @@ const BoardList = ({ match }) => {
 
   const renderBoards = () => {
     return data.map(el => {
-      return <BoardForm key={el.id} url={match.path} data={el} />;
+      return (
+        <BoardForm
+          key={el.id}
+          url={match.path}
+          data={el}
+          setUpdate={setUpdate}
+        />
+      );
     });
   };
   return (
