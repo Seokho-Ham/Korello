@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
 
+//GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, state2) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
@@ -26,21 +27,8 @@ const useGetApi = (method, uri, state1, state2) => {
   return [data, code, loading];
 };
 
-const usePostApi = (uri, body) => {
-  const postData = async () => {
-    try {
-      let { data } = await axios.post(serverUrl + uri, body);
-
-      return data.result_code;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return [postData];
-};
-
-const useGetCard = (uri, state) => {
+const useGetCardApi = uri => {
+  const [update, setUpdate] = useState(false);
   const [tagList, setTagList] = useState([]);
   const [cardList, setCardList] = useState([]);
 
@@ -80,9 +68,39 @@ const useGetCard = (uri, state) => {
       }
     };
     getCard();
-  }, [state]);
+  }, [update]);
 
-  return [tagList, cardList];
+  return [tagList, cardList, setUpdate];
 };
 
-export { useGetApi, usePostApi, useGetCard };
+//POST--------------------------------------------------------------------------------
+const usePostApi = (uri, body) => {
+  const postData = async () => {
+    try {
+      let { data } = await axios.post(serverUrl + uri, body);
+
+      return data.result_code;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return [postData];
+};
+
+//UPDATE--------------------------------------------------------------------------------
+const useUpdateApi = (url, body) => {
+  const updateData = async () => {
+    try {
+      const { data } = await axios.put(serverUrl + url, body);
+      if (data) {
+        return data.result_code;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return [updateData];
+};
+
+export { useGetApi, useGetCardApi, usePostApi, useUpdateApi };

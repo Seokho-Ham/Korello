@@ -25,7 +25,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {
-            console.log(1);
             return (
               <CardListForm
                 key={el.id}

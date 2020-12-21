@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // import { Route } from 'react-router-dom';
 import TagForm from './TagForm';
-import { useGetCard } from '../../api/index';
+import { useGetCardApi } from '../../api/index';
 // import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import AddTagButton from './AddTagButton';
 
 const CardList = ({ history, location }) => {
-  const [update, setUpdate] = useState(true);
-  const [tagList, cardList] = useGetCard(`${location.pathname}`, update);
+  const [tagList, cardList, setUpdate] = useGetCardApi(`${location.pathname}`);
 
   const onClickHandler = () => {
     history.goBack();
