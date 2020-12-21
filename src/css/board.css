@@ -66,3 +66,34 @@ textarea {
   margin-left: 10px;
   margin-bottom: 10px;
 }
+
+.drop-area {
+  padding: 28px;
+  background: #ebecf0;
+  border: 3px dashed orange;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.drop-area.drop-area-hovered {
+  background: #f8ffb5;
+}
+
+.draggable-container {
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+.draggable {
+  padding: 8px;
+  display: inline-block;
+  background: #cefdea;
+  border-radius: 4px;
+  cursor: grab;
+}
+
+.dropped-item {
+  display: block;
+  background-color: #fff;
+  margin: 10px;
+}

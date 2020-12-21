@@ -1,9 +1,42 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
+import { useUpdateApi } from '../../api/index';
+import { useDrop } from 'react-dnd';
 
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [addButton, setAddButton] = useState(false);
+  const [items, setItems] = useState();
+  const [updateData] = useUpdateApi();
+
+  const appendItem = useCallback(async item => {
+    // console.log(item);
+    setItems(item);
+    if (item.tagValue !== tag) {
+      const code = await updateData(
+        boardUrl.slice(0, boardUrl.length - 1) + '/tag',
+        {
+          id: item.id,
+          tagValue: tag,
+        },
+      );
+      if (code === 200) {
+        setUpdate(p => !p);
+      } else {
+        alert('');
+      }
+    }
+  });
+
+  const [collectedProps, drop] = useDrop({
+    accept: 'card',
+    drop: appendItem,
+    collect: monitor => {
+      return {
+        hovered: monitor.isOver(),
+      };
+    },
+  });
 
   const cardStyle = {
     float: 'left',
@@ -21,7 +54,13 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
       >
         {tag}
       </div>
-      <div id={`card-${tag}-list`}>
+      <div
+        // id={`card-${tag}-list`}
+        className={`drop-area ${
+          collectedProps.hovered ? 'drop-area-hovered' : ''
+        }`}
+        ref={drop}
+      >
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {
@@ -37,15 +76,14 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
               />
             );
           })}
-
-        <AddCardButton
-          addButton={addButton}
-          setAddButton={setAddButton}
-          tag={tag}
-          url={boardUrl}
-          setUpdate={setUpdate}
-        />
       </div>
+      <AddCardButton
+        addButton={addButton}
+        setAddButton={setAddButton}
+        tag={tag}
+        url={boardUrl}
+        setUpdate={setUpdate}
+      />
     </div>
   );
 };

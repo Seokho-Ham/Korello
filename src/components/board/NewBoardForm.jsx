@@ -4,9 +4,7 @@ import { usePostApi } from '../../api/index';
 const NewBoardForm = ({ onClickHandler }) => {
   const [boardName, setBoardName] = useState('');
   const inputRef = useRef(null);
-  const [postData] = usePostApi('/board', {
-    name: boardName,
-  });
+  const [postData] = usePostApi();
 
   const onChangeHandler = e => {
     setBoardName(e.target.value);
@@ -14,7 +12,9 @@ const NewBoardForm = ({ onClickHandler }) => {
 
   const addBoard = async () => {
     if (boardName.length > 0) {
-      const code = await postData();
+      const code = await postData('/board', {
+        name: boardName,
+      });
       console.log(code);
       if (code === 201) {
         setBoardName('');
