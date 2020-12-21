@@ -13,7 +13,7 @@ const useGetApi = (method, uri, state1, state2) => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
-        console.log('요청');
+        console.log('get요청');
         if (data.result_body) {
           setData(data.result_body);
         }
@@ -36,7 +36,7 @@ const useGetCardApi = uri => {
   useEffect(() => {
     const getCard = async () => {
       let { data } = await axios.get(serverUrl + uri);
-      console.log('요청');
+      console.log('getCard 요청');
       let { result_body } = data;
 
       if (result_body.length > 0) {
@@ -80,7 +80,7 @@ const usePostApi = () => {
   const postData = async (uri, body) => {
     try {
       let { data } = await axios.post(serverUrl + uri, body);
-      console.log('요청');
+      console.log('post 요청');
 
       return data.result_code;
     } catch (err) {
@@ -96,7 +96,7 @@ const useUpdateApi = () => {
   const updateData = async (url, body) => {
     try {
       const { data } = await axios.put(serverUrl + url, body);
-      console.log('요청');
+      console.log('update 요청');
       if (data) {
         return data.result_code;
       }

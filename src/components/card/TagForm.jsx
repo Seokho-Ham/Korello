@@ -1,30 +1,30 @@
-import React, { useState, memo, useCallback, useEffect } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import DroppableArea from './DroppableArea';
 import { useUpdateApi } from '../../api/index';
 import { useDrop } from 'react-dnd';
+
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [addButton, setAddButton] = useState(false);
   const [items, setItems] = useState();
   const [updateData] = useUpdateApi();
 
   const appendItem = useCallback(async item => {
-    console.log(item);
+    // console.log(item);
     setItems(item);
-
-    const code = await updateData(
-      boardUrl.slice(0, boardUrl.length - 1) + '/tag',
-      {
-        id: item.id,
-        tagValue: tag,
-      },
-    );
-    console.log(code);
-    if (code === 200) {
-      setUpdate(p => !p);
-    } else {
-      alert('');
+    if (item.tagValue !== tag) {
+      const code = await updateData(
+        boardUrl.slice(0, boardUrl.length - 1) + '/tag',
+        {
+          id: item.id,
+          tagValue: tag,
+        },
+      );
+      if (code === 200) {
+        setUpdate(p => !p);
+      } else {
+        alert('');
+      }
     }
   });
 
@@ -32,7 +32,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
     accept: 'card',
     drop: appendItem,
     collect: monitor => {
-      console.log('hah');
       return {
         hovered: monitor.isOver(),
       };
@@ -85,8 +84,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         url={boardUrl}
         setUpdate={setUpdate}
       />
-
-      <DroppableArea />
     </div>
   );
 };
