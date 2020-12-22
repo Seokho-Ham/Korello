@@ -10,7 +10,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [updateData] = useUpdateApi();
 
   const appendItem = useCallback(async item => {
-    // console.log(item);
+    console.log(item);
     setItems(item);
     if (item.tagValue !== tag) {
       const code = await updateData(
