@@ -1,6 +1,5 @@
 import React, { memo, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 const obj = {
   email: 'seokho9522@gmail.com',
@@ -22,16 +21,9 @@ const LoginForm = props => {
   };
   const onSubmit = e => {
     e.preventDefault();
-    // axios
-    //   .post('https://222.117.225.28:8080', {
-    //     email: this.state.email,
-    //     password: this.state.password,
-    //   })
-    //   .then(res => {});
+
     if (email === obj.email && password === obj.password) {
       props.handler();
-
-      //유저의 아이디 값을 state로 넘겨줘야할거같은데?
       history.push('/boards');
     } else {
       alert('아이디 혹은 비밀번호가 올바르지 않습니다.');

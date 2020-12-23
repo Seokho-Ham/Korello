@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
-
+const config = {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
+};
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, state2) => {
   const [data, setData] = useState([]);
@@ -12,7 +16,7 @@ const useGetApi = (method, uri, state1, state2) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        let { data } = await axios[method](serverUrl + uri);
+        let { data } = await axios[method](serverUrl + uri, config);
         console.log('get요청');
         if (data.result_body) {
           setData(data.result_body);
@@ -44,7 +48,7 @@ const useGetCardApi = uri => {
         const tags = [];
         const cards = [];
         result_body
-          .sort((a, b) => a.id - b.id)
+          .sort((a, b) => a.createDate - b.createDate)
           .map(el => {
             let cardObj = {
               id: el.id,
