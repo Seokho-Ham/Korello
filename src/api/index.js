@@ -48,7 +48,7 @@ const useGetCardApi = uri => {
         const tags = [];
         const cards = [];
         result_body
-          .sort((a, b) => a.id - b.id)
+          .sort((a, b) => a.createDate - b.createDate)
           .map(el => {
             let cardObj = {
               id: el.id,

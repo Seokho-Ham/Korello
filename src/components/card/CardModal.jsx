@@ -50,16 +50,15 @@ const CardModal = ({ visible, onClose }) => {
       <div
         className='wrapper'
         style={wrapperStyle}
-        onClick={visible ? onClose : null}
         tabIndex='-1'
         visible={visible.toString()}
       >
         <div tabIndex='0' className='modal-inner' style={modalInner}>
-          {/* {visible && (
+          {visible && (
             <button className='modal-close' onClick={onClose}>
               X
             </button>
-          )} */}
+          )}
           Label, CheckList, Duedate, Calendar
         </div>
       </div>
@@ -68,7 +67,3 @@ const CardModal = ({ visible, onClose }) => {
 };
 
 export default CardModal;
-
-// CardModal.propTypes = {
-//   visible: PropTypes.bool,
-// };

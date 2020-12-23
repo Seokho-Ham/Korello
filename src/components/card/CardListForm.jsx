@@ -60,7 +60,7 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   };
 
   return (
-    <div style={style} ref={drag}>
+    <div style={style} ref={edit ? null : drag}>
       {modalVisible ? (
         <CardModal visible={modalVisible} onClose={clickModal} />
       ) : null}
