@@ -60,17 +60,17 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   };
 
   return (
-    <div style={style} ref={edit ? null : drag}>
+    <div className='card' style={style} ref={edit ? null : drag}>
       {modalVisible ? (
         <CardModal visible={modalVisible} onClose={clickModal} />
       ) : null}
 
       {edit ? (
-        <span>
+        <div className='card-input'>
           <input value={cardTitle} onChange={inputHandler} />
 
           <button onClick={sendUpdate}>save</button>
-        </span>
+        </div>
       ) : (
         <span>
           <h3
@@ -86,7 +86,11 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
         modal
       </button>
 
-      <button style={{ float: 'right' }} onClick={deleteCard}>
+      <button
+        className='card-delete-button'
+        style={{ float: 'right' }}
+        onClick={deleteCard}
+      >
         X
       </button>
 

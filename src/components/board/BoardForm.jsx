@@ -20,9 +20,9 @@ const BoardForm = ({ url, data, setUpdate }) => {
     setUpdate(prevState => !prevState);
   };
   return (
-    <div id='board-element'>
+    <div className='board-element'>
       <div
-        id='board-delete'
+        className='board-delete'
         style={{
           float: 'right',
         }}
@@ -37,7 +37,7 @@ const BoardForm = ({ url, data, setUpdate }) => {
           X
         </button>
       </div>
-      <div id='board-title' onClick={clickBoard}>
+      <div className='board-title' onClick={clickBoard}>
         <>{data.name}</>
       </div>
     </div>

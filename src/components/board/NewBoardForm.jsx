@@ -31,7 +31,7 @@ const NewBoardForm = ({ onClickHandler }) => {
   };
 
   return (
-    <>
+    <span id='board-add-button'>
       <input
         ref={inputRef}
         placeholder='board name'
@@ -42,7 +42,7 @@ const NewBoardForm = ({ onClickHandler }) => {
       />
       <button onClick={addBoard}>Add</button>
       <button onClick={onClickHandler}>Cancel</button>
-    </>
+    </span>
   );
 };
 

@@ -36,9 +36,11 @@ const BoardList = ({ match }) => {
       {addCheck ? (
         <NewBoardForm onClickHandler={onClickHandler} />
       ) : (
-        <button style={{ float: 'right' }} onClick={onClickHandler}>
-          Add Board
-        </button>
+        <span id='board-add-button'>
+          <button style={{ float: 'right' }} onClick={onClickHandler}>
+            Add Board
+          </button>
+        </span>
       )}
     </div>
   );

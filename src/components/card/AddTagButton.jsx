@@ -41,7 +41,7 @@ const AddTagButton = ({ url, setUpdate }) => {
   return (
     <>
       {clicked ? (
-        <>
+        <div className='tag-add-button'>
           <input
             style={{ display: 'block' }}
             value={tagName}
@@ -54,7 +54,7 @@ const AddTagButton = ({ url, setUpdate }) => {
           />
           <button onClick={addTag}>Add</button>
           <button onClick={onClickHandler}>Cancel</button>
-        </>
+        </div>
       ) : (
         <button onClick={onClickHandler}>Add Tag</button>
       )}

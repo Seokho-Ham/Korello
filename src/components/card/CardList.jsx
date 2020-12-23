@@ -16,7 +16,7 @@ const CardList = ({ history, location }) => {
       {cardList.length > 0 ? (
         <>
           <button onClick={onClickHandler}>뒤로가기</button>
-          <div id='all-card-list'>
+          <div id='all-tag-list'>
             {cardList.map((el, i) => {
               let index = cardList.indexOf(el);
               return (

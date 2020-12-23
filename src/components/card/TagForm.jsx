@@ -47,9 +47,9 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   };
 
   return (
-    <div className={`card-${tag}`} style={cardStyle}>
+    <div className='tag' style={cardStyle}>
       <div
-        className={`card-${tag}-header`}
+        className='tag-header'
         style={{ textAlign: 'center', backgroundColor: 'yellow' }}
       >
         {tag}
