@@ -24,8 +24,9 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
         tagValue: tag,
         name: title,
       });
-      console.log(code);
+
       if (code === 201) {
+        setTitle('');
         setUpdate(prevState => !prevState);
         setAddButton(prevState => !prevState);
       } else {
@@ -39,24 +40,22 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
 
   return addButton ? (
     <>
-      <div id='new-card-form' style={{ margin: '20px' }}>
+      <div className='new-card-form'>
         <input
           name='title'
           type='text'
           placeholder='title'
           value={title}
           onChange={onChangeHandler}
-          style={{ width: '98%' }}
         ></input>
-        <br></br>
-        <input
+        {/* <br></br> */}
+        {/* <input
           name='description'
           type='text'
           placeholder='description'
           value={description}
           onChange={onChangeHandler}
-          style={{ width: '98%' }}
-        ></input>
+        ></input> */}
       </div>
       <div className='add-button'>
         <button onClick={addCardHandler}>Add Card</button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePostApi } from '../../api/index';
+
 const AddTagButton = ({ url, setUpdate }) => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
@@ -41,22 +42,16 @@ const AddTagButton = ({ url, setUpdate }) => {
   return (
     <>
       {clicked ? (
-        <>
-          <input
-            style={{ display: 'block' }}
-            value={tagName}
-            onChange={onChangeHandler}
-          />
-          <input
-            style={{ display: 'block' }}
-            value={cardName}
-            onChange={onCardChangeHandler}
-          />
+        <div className='tag-add-button'>
+          <input value={tagName} onChange={onChangeHandler} />
+          <input value={cardName} onChange={onCardChangeHandler} />
           <button onClick={addTag}>Add</button>
           <button onClick={onClickHandler}>Cancel</button>
-        </>
+        </div>
       ) : (
-        <button onClick={onClickHandler}>Add Tag</button>
+        <div className='tag-add-button'>
+          <button onClick={onClickHandler}>Add Tag</button>
+        </div>
       )}
     </>
   );

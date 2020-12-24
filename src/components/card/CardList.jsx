@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TagForm from './TagForm';
 import { useGetCardApi } from '../../api/index';
-
 import AddTagButton from './AddTagButton';
 
 const CardList = ({ history, location }) => {
@@ -12,32 +11,32 @@ const CardList = ({ history, location }) => {
   };
 
   return (
-    <>
+    <div id='one-board'>
+      <button className='go-back' onClick={onClickHandler}>
+        뒤로가기
+      </button>
       {cardList.length > 0 ? (
-        <>
-          <button onClick={onClickHandler}>뒤로가기</button>
-          <div id='all-card-list'>
-            {cardList.map((el, i) => {
-              let index = cardList.indexOf(el);
-              return (
-                <TagForm
-                  key={i}
-                  data={el}
-                  tag={tagList[index]}
-                  boardUrl={location.pathname}
-                  setUpdate={setUpdate}
-                />
-              );
-            })}
-          </div>
-        </>
+        <div id='tag-all-list'>
+          {cardList.map((el, i) => {
+            let index = cardList.indexOf(el);
+            return (
+              <TagForm
+                key={i}
+                data={el}
+                tag={tagList[index]}
+                boardUrl={location.pathname}
+                setUpdate={setUpdate}
+              />
+            );
+          })}
+          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
+        </div>
       ) : (
-        <>
-          <button onClick={onClickHandler}>뒤로가기</button>
-        </>
+        <div id='tag-all-list'>
+          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
+        </div>
       )}
-      <AddTagButton url={location.pathname} setUpdate={setUpdate} />
-    </>
+    </div>
   );
 };
 

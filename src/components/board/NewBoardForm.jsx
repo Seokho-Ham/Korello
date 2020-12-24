@@ -31,18 +31,16 @@ const NewBoardForm = ({ onClickHandler }) => {
   };
 
   return (
-    <>
+    <span id='board-add-button'>
       <input
         ref={inputRef}
         placeholder='board name'
-        type='text'
         value={boardName}
         onChange={onChangeHandler}
-        style={{ display: 'block', marginBottom: '5px' }}
       />
       <button onClick={addBoard}>Add</button>
       <button onClick={onClickHandler}>Cancel</button>
-    </>
+    </span>
   );
 };
 

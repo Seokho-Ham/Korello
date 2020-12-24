@@ -21,13 +21,8 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Router>
-        <div
-          id='header'
-          style={{ textAlign: 'center', backgroundColor: 'aqua' }}
-        >
-          {/* <Link to='/boards'> */}
+        <div id='header'>
           <h2 id='header-title'>Korello</h2>
-          {/* </Link> */}
         </div>
         <Route exact path='/' render={() => <Login handler={loginHandler} />} />
         <Switch>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useGetApi } from '../../api/index';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
@@ -36,9 +36,9 @@ const BoardList = ({ match }) => {
       {addCheck ? (
         <NewBoardForm onClickHandler={onClickHandler} />
       ) : (
-        <button style={{ float: 'right' }} onClick={onClickHandler}>
-          Add Board
-        </button>
+        <span id='board-add-button'>
+          <button onClick={onClickHandler}>Add Board</button>
+        </span>
       )}
     </div>
   );
