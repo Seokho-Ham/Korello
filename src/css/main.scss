@@ -12,17 +12,24 @@ input {
 }
 
 #root {
+  width: 100%;
   height: 100%;
   position: relative;
   z-index: 1;
-  overflow: hidden;
 }
 
 #header {
-  height: 80px;
+  width: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #026aa7;
+  text-align: 'center';
+  &-title:hover {
+    color: aliceblue;
+  }
 }
 
 @import './_board.scss';
+@import './card';

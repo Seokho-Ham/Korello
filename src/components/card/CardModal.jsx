@@ -48,7 +48,7 @@ const CardModal = ({ visible, onClose }) => {
         style={modalContainer}
       />
       <div
-        className='wrapper'
+        className='modal-wrapper'
         style={wrapperStyle}
         tabIndex='-1'
         visible={visible.toString()}

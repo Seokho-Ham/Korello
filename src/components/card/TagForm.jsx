@@ -10,7 +10,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [updateData] = useUpdateApi();
 
   const appendItem = useCallback(async item => {
-    console.log(item);
     setItems(item);
     if (item.tagValue !== tag) {
       const code = await updateData(
@@ -23,7 +22,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
       if (code === 200) {
         setUpdate(p => !p);
       } else {
-        alert('');
+        alert('이동 실패');
       }
     }
   });
@@ -38,24 +37,10 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
     },
   });
 
-  const cardStyle = {
-    float: 'left',
-    margin: '20px',
-    backgroundColor: '#ebecf0',
-    width: '350px',
-    borderRadius: '4px',
-  };
-
   return (
-    <div className='tag' style={cardStyle}>
+    <div className='tag'>
+      <div className='tag-header'>{tag}</div>
       <div
-        className='tag-header'
-        style={{ textAlign: 'center', backgroundColor: 'yellow' }}
-      >
-        {tag}
-      </div>
-      <div
-        // id={`card-${tag}-list`}
         className={`drop-area ${
           collectedProps.hovered ? 'drop-area-hovered' : ''
         }`}
@@ -69,7 +54,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
                 key={el.id}
                 id={el.id}
                 title={el.name}
-                // description={el.description}
                 tag={tag}
                 url={boardUrl}
                 setUpdate={setUpdate}

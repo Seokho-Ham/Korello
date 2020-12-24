@@ -35,10 +35,8 @@ const NewBoardForm = ({ onClickHandler }) => {
       <input
         ref={inputRef}
         placeholder='board name'
-        type='text'
         value={boardName}
         onChange={onChangeHandler}
-        style={{ display: 'block', marginBottom: '5px' }}
       />
       <button onClick={addBoard}>Add</button>
       <button onClick={onClickHandler}>Cancel</button>

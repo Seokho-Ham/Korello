@@ -52,15 +52,8 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
     }
   };
 
-  const style = {
-    backgroundColor: '#fff',
-    borderRadius: '3px',
-    margin: '20px',
-    boxShadow: '0 2px 0 rgba(9,30,66,.25)',
-  };
-
   return (
-    <div className='card' style={style} ref={edit ? null : drag}>
+    <div className='card' ref={edit ? null : drag}>
       {modalVisible ? (
         <CardModal visible={modalVisible} onClose={clickModal} />
       ) : null}
@@ -68,33 +61,21 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
       {edit ? (
         <div className='card-input'>
           <input value={cardTitle} onChange={inputHandler} />
-
           <button onClick={sendUpdate}>save</button>
         </div>
       ) : (
-        <span>
-          <h3
-            style={{ marginLeft: '5px', display: 'inline' }}
-            onClick={editCard}
-          >
-            {title}
-          </h3>
-        </span>
+        <span onClick={editCard}>{title}</span>
       )}
-
-      <button className='modal' onClick={clickModal}>
-        modal
-      </button>
-
-      <button
-        className='card-delete-button'
-        style={{ float: 'right' }}
-        onClick={deleteCard}
-      >
-        X
-      </button>
-
-      {/* <div style={{ marginLeft: '5px' }}>{description}</div> */}
+      {edit ? null : (
+        <>
+          <button className='modal' onClick={clickModal}>
+            modal
+          </button>
+          <button className='card-delete-button' onClick={deleteCard}>
+            X
+          </button>
+        </>
+      )}
     </div>
   );
 };
