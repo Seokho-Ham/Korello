@@ -37,6 +37,14 @@ input {
   color: aliceblue;
 }
 
+#login {
+  text-align: center;
+}
+
+#login button {
+  margin: 20px;
+}
+
 #board-container {
   display: -webkit-box;
   display: -ms-flexbox;
