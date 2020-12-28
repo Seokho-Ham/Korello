@@ -13,6 +13,7 @@ const BoardList = ({ match }) => {
   };
 
   const renderBoards = () => {
+    console.log(data);
     return data.map(el => {
       return (
         <BoardForm

@@ -55,7 +55,13 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   return (
     <div className='card' ref={edit ? null : drag}>
       {modalVisible ? (
-        <CardModal visible={modalVisible} onClose={clickModal} />
+        <CardModal
+          onClose={clickModal}
+          id={id}
+          title={title}
+          tag={tag}
+          url={url}
+        />
       ) : null}
 
       {edit ? (

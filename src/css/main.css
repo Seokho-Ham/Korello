@@ -187,4 +187,81 @@ input {
   width: auto;
   height: auto;
 }
+
+.modal-container {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.modal-wrapper {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  overflow: auto;
+  outline: 0;
+}
+
+.modal-inner {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 10px;
+  width: 768px;
+  height: 800px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.modal-contents {
+  float: left;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 24px;
+  padding: 0 8px 8px 16px;
+  position: relative;
+  width: 470px;
+  height: 90%;
+  z-index: 0;
+}
+
+.modal-sidebar {
+  float: right;
+  padding: 0 16px 8px 8px;
+  width: 210px;
+  height: 90%;
+  z-index: 10;
+}
+
+.label-modal {
+  display: block;
+  position: relative;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 5px;
+  top: 50%;
+  margin: 1px auto;
+  padding: 30px 20px;
+}
 /*# sourceMappingURL=main.css.map */
