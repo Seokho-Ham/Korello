@@ -30,6 +30,11 @@ input {
     color: aliceblue;
   }
 }
-
+#login {
+  text-align: center;
+  button {
+    margin: 20px;
+  }
+}
 @import './_board.scss';
 @import './card';

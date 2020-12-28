@@ -34,7 +34,7 @@ const LoginForm = props => {
   };
 
   return (
-    <div>
+    <div id='loginform'>
       <form onSubmit={onSubmit}>
         <h5>아이디</h5>
         <input
@@ -51,6 +51,7 @@ const LoginForm = props => {
           value={password}
           onChange={onChangeForm}
         />
+        <br></br>
         <button>로그인</button>
       </form>
     </div>
