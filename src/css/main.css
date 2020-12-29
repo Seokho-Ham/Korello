@@ -279,7 +279,8 @@ input {
   z-index: 10;
 }
 
-.label-modal {
+.label-modal,
+.checkList-modal {
   display: block;
   position: relative;
   -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
@@ -303,5 +304,9 @@ input {
   float: left;
   width: 48px;
   height: 8px;
+}
+
+.modal-close {
+  float: right;
 }
 /*# sourceMappingURL=main.css.map */
