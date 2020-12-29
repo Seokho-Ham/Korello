@@ -27,7 +27,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
     }
   });
 
-  const [collectedProps, drop] = useDrop({
+  const [{ hovered }, drop] = useDrop({
     accept: 'card',
     drop: appendItem,
     collect: monitor => {
@@ -41,11 +41,10 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
     <div className='tag'>
       <div className='tag-header'>{tag}</div>
       <div
-        className={`drop-area ${
-          collectedProps.hovered ? 'drop-area-hovered' : ''
-        }`}
+        className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
         ref={drop}
       >
+        {console.log(data)}
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {
@@ -54,6 +53,8 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
                 key={el.id}
                 id={el.id}
                 title={el.name}
+                memberNames={el.memberNames}
+                labels={el.labels}
                 tag={tag}
                 url={boardUrl}
                 setUpdate={setUpdate}

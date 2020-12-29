@@ -31,6 +31,8 @@
 }
 
 .card {
+  box-sizing: border-box;
+  position: relative;
   background-color: #fff;
   border-radius: 4px;
   margin: 20px 10px;
@@ -44,11 +46,28 @@
   }
   &-delete-button {
     margin: 0px 1px;
-    float: right;
+    // float: right;
   }
   .modal {
     margin: 0px 1px;
-    float: right;
+    // float: right;
+  }
+  &-labels {
+    overflow: auto;
+    position: relative;
+    span {
+      margin: 2px;
+      padding: 1px, 2px;
+      border-radius: 10px;
+      float: left;
+      width: 48px;
+      height: 8px;
+    }
+  }
+  &-buttons {
+    margin: 2px;
+    padding: 2px;
+    position: relative;
   }
 }
 
@@ -68,7 +87,8 @@
 .drop-area {
   width: auto;
   height: auto;
-  // &:hover{
-
-  // }
+  padding: 2px 0px;
+}
+.drop-area.drop-area-hovered {
+  background: #5abeff;
 }

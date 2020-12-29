@@ -1,65 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Label from '../modal/Label';
+import CheckListModal from '../modal/ChecklistModal';
+import Checklist from '../modal/Checklist';
+import { useGetApi } from '../../api';
 
-const CardModal = ({ visible, onClose }) => {
-  const wrapperStyle = {
-    boxSizing: ' border-box',
-    display: visible ? 'block' : 'none',
-    position: 'fixed',
-    top: '0',
-    right: '0',
-    bottom: '0',
-    left: '0',
-    zIndex: '1000',
-    overflow: 'auto',
-    outline: '0',
-  };
+const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
+  const [modalUpdate, setModalUpdate] = useState(false);
+  const [data] = useGetApi('get', `/card/${id}/todo`, modalUpdate);
 
-  const modalContainer = {
-    boxSizing: 'border-box',
-    display: visible ? 'block' : 'none',
-    position: 'fixed',
-    top: '0',
-    left: '0',
-    bottom: '0',
-    right: '0',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    zIndex: '999',
-  };
-
-  const modalInner = {
-    boxSizing: 'border-box',
-    position: 'relative',
-    boxShadow: ' 0 0 6px 0 rgba(0, 0, 0, 0.5)',
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    width: '360px',
-    maxWidth: '480px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    margin: '0 auto',
-    padding: '40px 20px',
-  };
-
+  const checkboxHandler = async () => {};
   return (
     <>
-      <div
-        visible={visible.toString()}
-        className='modal-container'
-        style={modalContainer}
-      />
-      <div
-        className='modal-wrapper'
-        style={wrapperStyle}
-        tabIndex='-1'
-        visible={visible.toString()}
-      >
-        <div tabIndex='0' className='modal-inner' style={modalInner}>
-          {visible && (
-            <button className='modal-close' onClick={onClose}>
-              X
-            </button>
-          )}
-          Label, CheckList, Duedate, Calendar
+      <div className='modal-container' />
+      <div className='modal-wrapper'>
+        <div tabIndex='0' className='modal-inner'>
+          <button className='modal-close' onClick={onClose}>
+            X
+          </button>
+          <div className='modal-header'>
+            <div className='modal-labels'>
+              {labels.length > 0
+                ? labels.map((el, i) => (
+                    <span
+                      key={i}
+                      className='label'
+                      style={{
+                        backgroundColor: el.color,
+                      }}
+                    ></span>
+                  ))
+                : null}
+            </div>
+            <h2>{title}</h2>
+          </div>
+          <div className='modal-contents'>
+            <div className='check-list'>
+              {data.length > 0 ? <Checklist data={data} /> : null}
+            </div>
+          </div>
+          <div className='modal-sidebar'>
+            <Label url={url} id={id} setUpdate={setUpdate} labels={labels} />
+            <CheckListModal id={id} setUpdate={setModalUpdate} />
+            <div>CheckList, Duedate, Calendar</div>
+          </div>
         </div>
       </div>
     </>

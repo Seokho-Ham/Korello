@@ -1,31 +1,17 @@
-.modal-inner {
-  box-sizing: border-box;
-  position: relative;
-  box-shadow: 0 0 6px 0 rgba(0 0 0 0.5);
-  background-color: #fff;
-  border-radius: 10px;
-  width: 360px;
-  max-width: 480px;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
 .modal-container {
   box-sizing: border-box;
-  // display: visible ? block : none;
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0 0 0 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
 }
 .modal-wrapper {
   box-sizing: border-box;
-  // display: visible ? block : none;
+  display: block;
   position: fixed;
   top: 0;
   right: 0;
@@ -34,4 +20,68 @@
   z-index: 1000;
   overflow: auto;
   outline: 0;
+}
+
+.modal-inner {
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 10px;
+  width: 768px;
+  height: 800px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.modal-contents {
+  float: left;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 24px;
+  padding: 0 8px 8px 16px;
+  position: relative;
+  width: 470px;
+  height: 90%;
+  z-index: 0;
+}
+
+.modal-sidebar {
+  float: right;
+  padding: 0 16px 8px 8px;
+  width: 210px;
+  height: 90%;
+  z-index: 10;
+}
+
+.label-modal,
+.checkList-modal {
+  display: block;
+  position: relative;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 5px;
+  top: 50%;
+  margin: 1px auto;
+  padding: 30px 20px;
+}
+
+.modal-labels {
+  overflow: auto;
+  position: relative;
+  span {
+    margin: 2px;
+    padding: 1px, 2px;
+    border-radius: 10px;
+    float: left;
+    width: 48px;
+    height: 8px;
+  }
+}
+
+.modal-close {
+  float: right;
 }

@@ -55,6 +55,7 @@ const useGetCardApi = uri => {
               name: el.name,
               tagValue: el.tagValue,
               memberNames: el.memberNames,
+              labels: el.labels,
               createDate: el.createDate,
               updateDate: el.updateDate,
             };
@@ -85,7 +86,7 @@ const usePostApi = () => {
     try {
       let { data } = await axios.post(serverUrl + uri, body);
       console.log('post 요청');
-
+      console.log(data);
       return data.result_code;
     } catch (err) {
       console.log(err);
