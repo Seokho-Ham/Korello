@@ -86,7 +86,7 @@ const usePostApi = () => {
     try {
       let { data } = await axios.post(serverUrl + uri, body);
       console.log('post 요청');
-
+      console.log(data);
       return data.result_code;
     } catch (err) {
       console.log(err);

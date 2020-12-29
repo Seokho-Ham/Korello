@@ -207,6 +207,11 @@ input {
 .drop-area {
   width: auto;
   height: auto;
+  padding: 2px 0px;
+}
+
+.drop-area.drop-area-hovered {
+  background: #5abeff;
 }
 
 .modal-container {
@@ -284,5 +289,19 @@ input {
   top: 50%;
   margin: 1px auto;
   padding: 30px 20px;
+}
+
+.modal-labels {
+  overflow: auto;
+  position: relative;
+}
+
+.modal-labels span {
+  margin: 2px;
+  padding: 1px, 2px;
+  border-radius: 10px;
+  float: left;
+  width: 48px;
+  height: 8px;
 }
 /*# sourceMappingURL=main.css.map */

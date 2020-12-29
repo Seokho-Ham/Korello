@@ -1,7 +1,8 @@
 import React from 'react';
 import Label from '../modal/Label';
+import CheckList from '../modal/Checklist';
 
-const CardModal = ({ onClose, id, title, tag, url, setUpdate }) => {
+const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
   return (
     <>
       <div className='modal-container' />
@@ -15,11 +16,25 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate }) => {
             X
           </button>
           <div className='modal-header'>
+            <div className='modal-labels'>
+              {labels.length > 0
+                ? labels.map((el, i) => (
+                    <span
+                      key={i}
+                      className='label'
+                      style={{
+                        backgroundColor: el.color,
+                      }}
+                    ></span>
+                  ))
+                : null}
+            </div>
             <h2>{title}</h2>
           </div>
           <div className='modal-contents'>하이하이</div>
           <div className='modal-sidebar'>
-            <Label url={url} id={id} setUpdate={setUpdate} />
+            <Label url={url} id={id} setUpdate={setUpdate} labels={labels} />
+            <CheckList />
             CheckList, Duedate, Calendar
           </div>
         </div>

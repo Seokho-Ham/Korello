@@ -12,8 +12,11 @@ const CardListForm = ({
   url,
   setUpdate,
 }) => {
-  const [collectedProps, drag] = useDrag({
-    item: { id: id, tagValue: tag, type: 'card' },
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: 'card', id: id, tagValue: tag },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
   const [edit, setEdit] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
@@ -58,6 +61,7 @@ const CardListForm = ({
       setUpdate(prevState => !prevState);
     } else {
       alert('삭제에 실패하였습니다.');
+      setUpdate(prevState => !prevState);
     }
   };
 
@@ -71,9 +75,14 @@ const CardListForm = ({
           tag={tag}
           url={url}
           setUpdate={setUpdate}
+          labels={labels}
         />
       ) : null}
-      <div className='card' ref={edit ? null : drag}>
+      <div
+        className='card'
+        opacity={isDragging ? 0.5 : 1}
+        ref={edit ? null : drag}
+      >
         {labels.length > 0 ? (
           <div className='card-labels'>
             {labels.map((el, i) => (

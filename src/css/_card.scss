@@ -87,7 +87,8 @@
 .drop-area {
   width: auto;
   height: auto;
-  // &:hover {
-
-  // }
+  padding: 2px 0px;
+}
+.drop-area.drop-area-hovered {
+  background: #5abeff;
 }

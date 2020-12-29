@@ -67,3 +67,16 @@
   margin: 1px auto;
   padding: 30px 20px;
 }
+
+.modal-labels {
+  overflow: auto;
+  position: relative;
+  span {
+    margin: 2px;
+    padding: 1px, 2px;
+    border-radius: 10px;
+    float: left;
+    width: 48px;
+    height: 8px;
+  }
+}

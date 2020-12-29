@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { usePostApi, useGetApi } from '../../api/index';
 import colors from '../../assets/colors';
 
-const Label = ({ id, url, setUpdate }) => {
+const Label = ({ id, url, setUpdate, labels }) => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
@@ -23,8 +23,8 @@ const Label = ({ id, url, setUpdate }) => {
   const selectButton = e => {
     setSelectColor(e.target.className);
   };
+
   const addBoardLabelButton = async () => {
-    //보드의 라벨을 만든다.
     if (addButton & (labelName.length > 0)) {
       const code = await postData(url.slice(0, url.length - 6) + '/label', {
         name: labelName,
@@ -43,15 +43,30 @@ const Label = ({ id, url, setUpdate }) => {
     }
   };
 
-  const addCardLabelButton = async e => {
-    const code = await postData(`/card/${id}/label`, {
-      labelId: e.target.id,
+  const checkOverlap = (arr, id) => {
+    let result = false;
+    arr.map(el => {
+      if (el.id === id) {
+        result = true;
+      }
     });
+    return result;
+  };
 
-    if (code === 201) {
+  const addCardLabelButton = async e => {
+    const code = checkOverlap(labels, e.target.id)
+      ? await postData(`/card/${id}/label/delete`, {
+          labelIds: [e.target.id],
+        })
+      : await postData(`/card/${id}/label`, {
+          labelId: e.target.id,
+        });
+
+    if (code === 201 || code === 200) {
       setUpdate(p => !p);
     } else {
       alert('실패');
+      setUpdate(p => !p);
     }
   };
 
