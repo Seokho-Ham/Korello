@@ -46,6 +46,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         }`}
         ref={drop}
       >
+        {console.log(data)}
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {
@@ -54,6 +55,8 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
                 key={el.id}
                 id={el.id}
                 title={el.name}
+                memberNames={el.memberNames}
+                labels={el.labels}
                 tag={tag}
                 url={boardUrl}
                 setUpdate={setUpdate}

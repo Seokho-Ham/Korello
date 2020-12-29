@@ -142,6 +142,9 @@ input {
 }
 
 .card {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
   background-color: #fff;
   border-radius: 4px;
   margin: 20px 10px;
@@ -159,12 +162,30 @@ input {
 
 .card-delete-button {
   margin: 0px 1px;
-  float: right;
 }
 
 .card .modal {
   margin: 0px 1px;
-  float: right;
+}
+
+.card-labels {
+  overflow: auto;
+  position: relative;
+}
+
+.card-labels span {
+  margin: 2px;
+  padding: 1px, 2px;
+  border-radius: 10px;
+  float: left;
+  width: 48px;
+  height: 8px;
+}
+
+.card-buttons {
+  margin: 2px;
+  padding: 2px;
+  position: relative;
 }
 
 .new-card-form {

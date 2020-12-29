@@ -3,7 +3,15 @@ import { usePostApi, useUpdateApi } from '../../api/index';
 import { useDrag } from 'react-dnd';
 import CardModal from './CardModal';
 
-const CardListForm = ({ id, title, tag, url, setUpdate }) => {
+const CardListForm = ({
+  id,
+  title,
+  tag,
+  memberNames,
+  labels,
+  url,
+  setUpdate,
+}) => {
   const [collectedProps, drag] = useDrag({
     item: { id: id, tagValue: tag, type: 'card' },
   });
@@ -42,6 +50,7 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   };
 
   const deleteCard = async () => {
+    console.log(id);
     let result_code = await postData(url.slice(0, url.length - 1) + '/delete', {
       id: id,
     });
@@ -53,7 +62,7 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
   };
 
   return (
-    <div className='card' ref={edit ? null : drag}>
+    <>
       {modalVisible ? (
         <CardModal
           onClose={clickModal}
@@ -61,28 +70,43 @@ const CardListForm = ({ id, title, tag, url, setUpdate }) => {
           title={title}
           tag={tag}
           url={url}
+          setUpdate={setUpdate}
         />
       ) : null}
-
-      {edit ? (
-        <div className='card-input'>
-          <input value={cardTitle} onChange={inputHandler} />
-          <button onClick={sendUpdate}>save</button>
-        </div>
-      ) : (
-        <span onClick={editCard}>{title}</span>
-      )}
-      {edit ? null : (
-        <>
-          <button className='modal' onClick={clickModal}>
-            modal
-          </button>
-          <button className='card-delete-button' onClick={deleteCard}>
-            X
-          </button>
-        </>
-      )}
-    </div>
+      <div className='card' ref={edit ? null : drag}>
+        {labels.length > 0 ? (
+          <div className='card-labels'>
+            {labels.map((el, i) => (
+              <span
+                key={i}
+                className='label'
+                style={{
+                  backgroundColor: el.color,
+                }}
+              ></span>
+            ))}
+          </div>
+        ) : null}
+        {edit ? (
+          <div className='card-input'>
+            <input value={cardTitle} onChange={inputHandler} />
+            <button onClick={sendUpdate}>save</button>
+          </div>
+        ) : (
+          <div onClick={editCard}>{title}</div>
+        )}
+        {edit ? null : (
+          <div className='card-buttons'>
+            <button className='modal' onClick={clickModal}>
+              modal
+            </button>
+            <button className='card-delete-button' onClick={deleteCard}>
+              X
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

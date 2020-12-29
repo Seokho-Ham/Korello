@@ -1,58 +1,121 @@
 import React, { useState } from 'react';
-import { usePostApi } from '../../api/index';
+import { usePostApi, useGetApi } from '../../api/index';
 import colors from '../../assets/colors';
 
-const Label = ({ id, url }) => {
-  const [labelClick, setLabelClick] = useState(false);
+const Label = ({ id, url, setUpdate }) => {
+  const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
+  const [addButton, setAddButton] = useState(false);
   const [postData] = usePostApi();
+  const [data] = useGetApi(
+    'get',
+    url.slice(0, url.length - 6) + '/label',
+    addButton,
+  );
 
   const onChangeHandler = e => {
     setLabelName(e.target.value);
   };
-  const clickButton = () => {
-    setLabelClick(p => !p);
+  const openLabelButton = () => {
+    setOpenLabel(p => !p);
   };
   const selectButton = e => {
     setSelectColor(e.target.className);
   };
-  const addLabelButton = async () => {
+  const addBoardLabelButton = async () => {
     //보드의 라벨을 만든다.
-    const code = await postData(url.slice(0, url.length - 6) + '/label', {
-      name: labelName,
-      color: selectColor,
+    if (addButton & (labelName.length > 0)) {
+      const code = await postData(url.slice(0, url.length - 6) + '/label', {
+        name: labelName,
+        color: selectColor,
+      });
+
+      if (code === 201) {
+        setSelectColor('');
+        setLabelName('');
+        setAddButton(p => !p);
+      } else {
+        alert('추가 실패');
+      }
+    } else {
+      setAddButton(p => !p);
+    }
+  };
+
+  const addCardLabelButton = async e => {
+    const code = await postData(`/card/${id}/label`, {
+      labelId: e.target.id,
     });
 
     if (code === 201) {
-      setSelectColor('');
-      setLabelName('');
+      setUpdate(p => !p);
     } else {
-      alert('추가 실패');
+      alert('실패');
     }
   };
 
   return (
     <div className='add-card-label-button'>
-      <button onClick={clickButton}>Label</button>
-      {labelClick ? (
-        <div className='label-modal'>
-          {colors.map((el, i) => (
-            <span
-              key={i}
-              className={el}
-              style={{
-                backgroundColor: el,
-                display: 'block',
-                margin: '2px',
-              }}
-              onClick={selectButton}
-            >
-              {el}
-            </span>
-          ))}
-          <input value={labelName} onChange={onChangeHandler} />
-          <button onClick={addLabelButton}>Add Label</button>
+      <button onClick={openLabelButton}>Label</button>
+      {openLabel ? (
+        <div className='label-modal' style={{ overflow: 'auto' }}>
+          {data.length > 0 && !addButton
+            ? data.map((el, i) => (
+                <span
+                  key={i}
+                  id={el.id}
+                  className={el.color}
+                  style={{
+                    backgroundColor: el.color,
+                    display: 'block',
+                    margin: '2px',
+                    padding: '3px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={addCardLabelButton}
+                >
+                  {el.name}
+                </span>
+              ))
+            : null}
+          {addButton ? (
+            <>
+              {colors.map((el, i) => (
+                <span
+                  key={i}
+                  className={el.color}
+                  style={{
+                    backgroundColor: el.color,
+                    float: 'left',
+                    width: '48px',
+                    height: '32px',
+                    margin: '2px',
+                    padding: '1px, 2px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={selectButton}
+                ></span>
+              ))}
+              <input
+                value={labelName}
+                onChange={onChangeHandler}
+                style={{ display: 'block' }}
+              />
+              <div
+                style={{
+                  backgroundColor: selectColor,
+                  borderRadius: '4px',
+                  margin: '2px',
+                }}
+              >
+                selected color
+              </div>
+            </>
+          ) : null}
+
+          <button onClick={addBoardLabelButton}>Add Label</button>
         </div>
       ) : null}
     </div>

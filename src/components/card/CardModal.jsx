@@ -1,7 +1,7 @@
 import React from 'react';
 import Label from '../modal/Label';
 
-const CardModal = ({ onClose, id, title, tag, url }) => {
+const CardModal = ({ onClose, id, title, tag, url, setUpdate }) => {
   return (
     <>
       <div className='modal-container' />
@@ -19,7 +19,7 @@ const CardModal = ({ onClose, id, title, tag, url }) => {
           </div>
           <div className='modal-contents'>하이하이</div>
           <div className='modal-sidebar'>
-            <Label url={url} id={id} />
+            <Label url={url} id={id} setUpdate={setUpdate} />
             CheckList, Duedate, Calendar
           </div>
         </div>

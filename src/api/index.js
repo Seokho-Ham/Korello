@@ -55,6 +55,7 @@ const useGetCardApi = uri => {
               name: el.name,
               tagValue: el.tagValue,
               memberNames: el.memberNames,
+              labels: el.labels,
               createDate: el.createDate,
               updateDate: el.updateDate,
             };
