@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
+import CalendarModal from '../modal/CalendarModal';
 import { useGetApi } from '../../api';
 
 const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
   const [modalUpdate, setModalUpdate] = useState(false);
   const [data] = useGetApi('get', `/card/${id}/todo`, modalUpdate);
 
-  const checkboxHandler = async () => {};
+  // const checkboxHandler = async () => {};
   return (
     <>
       <div className='modal-container' />
@@ -41,6 +42,7 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
           <div className='modal-sidebar'>
             <Label url={url} id={id} setUpdate={setUpdate} labels={labels} />
             <CheckListModal id={id} setUpdate={setModalUpdate} />
+            <CalendarModal />
             <div>CheckList, Duedate, Calendar</div>
           </div>
         </div>
