@@ -61,6 +61,22 @@ input {
           justify-content: center;
 }
 
+#board-list {
+  display: flexbox;
+  position: -webkit-sticky;
+  position: sticky;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#board-add-button {
+  margin: 20px;
+}
+
 .board-title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -77,22 +93,9 @@ input {
           justify-content: space-between;
 }
 
-#board-list {
-  display: flexbox;
-  position: -webkit-sticky;
-  position: sticky;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
 .board-element {
   text-align: center;
   margin: 20px;
-  /* padding: 30px; */
   float: left;
   width: 190px;
   height: 140px;
@@ -100,13 +103,9 @@ input {
   border-radius: 3px;
 }
 
-#board-add-button {
-  margin: 20px;
-}
-
 #one-board {
   padding: 20px;
-  white-space: nowrap;
+  width: auto;
 }
 
 .tag {
@@ -134,7 +133,7 @@ input {
 .tag-add-button {
   display: inline-block;
   vertical-align: top;
-  margin: 20px;
+  margin: 0px 5px;
 }
 
 .tag-add-button input {
@@ -279,19 +278,6 @@ input {
   z-index: 10;
 }
 
-.label-modal,
-.checkList-modal {
-  display: block;
-  position: relative;
-  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-  background-color: #fff;
-  border-radius: 5px;
-  top: 50%;
-  margin: 1px auto;
-  padding: 30px 20px;
-}
-
 .modal-labels {
   overflow: auto;
   position: relative;
@@ -308,5 +294,18 @@ input {
 
 .modal-close {
   float: right;
+}
+
+.label-modal,
+.checkList-modal {
+  display: block;
+  position: relative;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 5px;
+  top: 50%;
+  margin: 1px auto;
+  padding: 30px 20px;
 }
 /*# sourceMappingURL=main.css.map */

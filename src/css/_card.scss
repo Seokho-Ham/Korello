@@ -1,6 +1,7 @@
 #one-board {
   padding: 20px;
-  white-space: nowrap;
+  width: auto;
+  // white-space: nowrap;
 }
 .tag {
   box-sizing: border-box;
@@ -23,7 +24,7 @@
   &-add-button {
     display: inline-block;
     vertical-align: top;
-    margin: 20px;
+    margin: 0px 5px;
     input {
       display: block;
     }
@@ -88,7 +89,8 @@
   width: auto;
   height: auto;
   padding: 2px 0px;
+  &.drop-area-hovered {
+    background: #5abeff;
+  }
 }
-.drop-area.drop-area-hovered {
-  background: #5abeff;
-}
+//

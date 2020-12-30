@@ -15,6 +15,7 @@ const CardList = ({ history, location }) => {
       <button className='go-back' onClick={onClickHandler}>
         뒤로가기
       </button>
+      <AddTagButton url={location.pathname} setUpdate={setUpdate} />
       {cardList.length > 0 ? (
         <div id='tag-all-list'>
           {cardList.map((el, i) => {
@@ -29,12 +30,9 @@ const CardList = ({ history, location }) => {
               />
             );
           })}
-          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
         </div>
       ) : (
-        <div id='tag-all-list'>
-          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
-        </div>
+        <div id='tag-all-list'></div>
       )}
     </div>
   );
