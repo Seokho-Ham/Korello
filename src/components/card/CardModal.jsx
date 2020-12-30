@@ -34,7 +34,7 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             <h2>{title}</h2>
           </div>
           <div className='modal-contents'>
-            <div className='check-list'>
+            <div className='check-list-container'>
               {data.length > 0 ? <Checklist data={data} /> : null}
             </div>
           </div>
