@@ -33,6 +33,7 @@ const ChecklistModal = ({ id, setUpdate }) => {
       {clicked ? (
         <div className='checkList-modal' style={{ overflow: 'auto' }}>
           <input
+            placeholder='checklist title'
             value={checkListTitle}
             onChange={onChangeHandler}
             style={{ display: 'block' }}

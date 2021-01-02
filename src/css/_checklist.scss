@@ -1,0 +1,38 @@
+.checklist {
+  &-header {
+    h4 {
+      margin: 0px 0px 5px 0px;
+    }
+    .progress {
+      &-container {
+        position: 'relative';
+        margin-bottom: 6px;
+      }
+      &-percent {
+        color: #5e6c84;
+        font-size: 11px;
+      }
+      &-bar {
+        overflow: hidden;
+        position: relative;
+        height: 8px;
+        background-color: rgba(9, 30, 66, 0.08);
+        border-radius: 50px;
+      }
+      &-percent-bar {
+        height: 100%;
+        background-color: #3333;
+        transition: width 0.2s ease-in-out;
+      }
+    }
+  }
+  &-item {
+    margin-bottom: 10px;
+    &-title {
+      margin-left: 10px;
+    }
+  }
+  &-delete {
+    float: right;
+  }
+}

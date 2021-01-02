@@ -281,15 +281,21 @@ input {
 .modal-labels {
   overflow: auto;
   position: relative;
+  color: #fff;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .modal-labels span {
   margin: 2px;
-  padding: 1px, 2px;
-  border-radius: 10px;
+  padding: 2px 2px;
+  border-radius: 4px;
   float: left;
-  width: 48px;
-  height: 8px;
+  width: auto;
+  min-width: 50px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
 }
 
 .modal-close {
@@ -307,5 +313,46 @@ input {
   top: 50%;
   margin: 1px auto;
   padding: 30px 20px;
+}
+
+.checklist-header h4 {
+  margin: 0px 0px 5px 0px;
+}
+
+.checklist-header .progress-container {
+  position: 'relative';
+  margin-bottom: 6px;
+}
+
+.checklist-header .progress-percent {
+  color: #5e6c84;
+  font-size: 11px;
+}
+
+.checklist-header .progress-bar {
+  overflow: hidden;
+  position: relative;
+  height: 8px;
+  background-color: rgba(9, 30, 66, 0.08);
+  border-radius: 50px;
+}
+
+.checklist-header .progress-percent-bar {
+  height: 100%;
+  background-color: #3333;
+  -webkit-transition: width 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
+}
+
+.checklist-item {
+  margin-bottom: 10px;
+}
+
+.checklist-item-title {
+  margin-left: 10px;
+}
+
+.checklist-delete {
+  float: right;
 }
 /*# sourceMappingURL=main.css.map */

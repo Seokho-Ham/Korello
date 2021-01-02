@@ -1,58 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import ChecklistForm from './ChecklistForm';
 
-const progressCalculator = data => {
-  let count = 0;
-  data.map(el => {
-    if (el.status) {
-      count++;
-    }
-  });
-  const result = (count / data.length) * 100;
-  console.log(data);
-  console.log(result);
-  return result;
-};
-
-const Checklist = ({ data }) => {
-  const checkboxHandler = async () => {};
-  const [percent, setPercent] = useState(progressCalculator(data));
-
+const Checklist = ({ id, data, setUpdate, percent }) => {
   return (
     <>
       <div className='checklist-header'>
         <h4 style={{ margin: '0px 0px 5px 0px' }}>CheckList</h4>
-        <div
-          style={{
-            position: 'relative',
-            marginBottom: '6px',
-            position: 'relative',
-          }}
-        >
-          <div
-            style={{
-              color: '#5e6c84',
-              fontSize: '11px',
-            }}
-          >
-            {percent}%
-          </div>
-          <div
-            className='progress-bar'
-            style={{
-              overflow: 'hidden',
-              position: 'relative',
-              height: '8px',
-              backgroundColor: 'rgba(9,30,66,.08)',
-              borderRadius: '50px',
-            }}
-          >
+        <div className='progress-container'>
+          <div className='progress-percent'>{percent}%</div>
+          <div className='progress-bar'>
             <div
-              className='progress-bar-percent'
+              className='progress-percent-bar'
               style={{
-                height: '100%',
                 width: `${percent}%`,
-                backgroundColor: '#3333',
-                // transition: 'width 1s ease-in-out',
               }}
             ></div>
           </div>
@@ -60,23 +20,7 @@ const Checklist = ({ data }) => {
       </div>
       <div className='checklist- inner'>
         {data.map((el, i) => (
-          <div key={i}>
-            {el.status ? (
-              <>
-                <input
-                  type='checkbox'
-                  checked='true'
-                  onChange={checkboxHandler}
-                />
-                {el.title}
-              </>
-            ) : (
-              <>
-                <input type='checkbox' onChange={checkboxHandler} />
-                {el.title}
-              </>
-            )}
-          </div>
+          <ChecklistForm key={i} el={el} setUpdate={setUpdate} />
         ))}
       </div>
     </>

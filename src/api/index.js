@@ -102,6 +102,7 @@ const useUpdateApi = () => {
     try {
       const { data } = await axios.put(serverUrl + url, body);
       console.log('update 요청');
+      console.log(data);
       if (data) {
         return data.result_code;
       }
@@ -112,4 +113,21 @@ const useUpdateApi = () => {
   return [updateData];
 };
 
-export { useGetApi, useGetCardApi, usePostApi, useUpdateApi };
+//DELETE-------------------------------------------------------------------------------
+const useDeleteApi = () => {
+  const deleteData = async url => {
+    try {
+      const { data } = await axios.delete(serverUrl + url);
+      console.log('delete 요청');
+      console.log(data);
+      if (data) {
+        return data.result_code;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return [deleteData];
+};
+
+export { useGetApi, useGetCardApi, usePostApi, useUpdateApi, useDeleteApi };
