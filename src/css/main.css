@@ -308,4 +308,33 @@ input {
   margin: 1px auto;
   padding: 30px 20px;
 }
+
+.checklist-header h4 {
+  margin: 0px 0px 5px 0px;
+}
+
+.checklist-header .progress-container {
+  position: 'relative';
+  margin-bottom: 6px;
+}
+
+.checklist-header .progress-percent {
+  color: #5e6c84;
+  font-size: 11px;
+}
+
+.checklist-header .progress-bar {
+  overflow: hidden;
+  position: relative;
+  height: 8px;
+  background-color: rgba(9, 30, 66, 0.08);
+  border-radius: 50px;
+}
+
+.checklist-header .progress-percent-bar {
+  height: 100%;
+  background-color: #3333;
+  -webkit-transition: width 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
+}
 /*# sourceMappingURL=main.css.map */

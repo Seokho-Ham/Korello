@@ -9,7 +9,17 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
   const [modalUpdate, setModalUpdate] = useState(false);
   const [data] = useGetApi('get', `/card/${id}/todo`, modalUpdate);
 
-  // const checkboxHandler = async () => {};
+  const progressCalculator = data => {
+    let count = 0;
+    data.map(el => {
+      if (el.status) {
+        count++;
+      }
+    });
+    const result = Math.round((count / data.length) * 100);
+    return result;
+  };
+
   return (
     <>
       <div className='modal-container' />
@@ -36,7 +46,14 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
           </div>
           <div className='modal-contents'>
             <div className='check-list-container'>
-              {data.length > 0 ? <Checklist data={data} /> : null}
+              {data.length > 0 ? (
+                <Checklist
+                  id={id}
+                  data={data}
+                  setUpdate={setModalUpdate}
+                  percent={progressCalculator(data)}
+                />
+              ) : null}
             </div>
           </div>
           <div className='modal-sidebar'>
