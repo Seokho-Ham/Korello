@@ -85,15 +85,17 @@ const CardListForm = ({
       >
         {labels.length > 0 ? (
           <div className='card-labels'>
-            {labels.map((el, i) => (
-              <span
-                key={i}
-                className='label'
-                style={{
-                  backgroundColor: el.color,
-                }}
-              ></span>
-            ))}
+            {labels
+              .sort((a, b) => a.id - b.id)
+              .map((el, i) => (
+                <span
+                  key={i}
+                  className='label'
+                  style={{
+                    backgroundColor: el.color,
+                  }}
+                ></span>
+              ))}
           </div>
         ) : null}
         {edit ? (

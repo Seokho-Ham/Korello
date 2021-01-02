@@ -38,7 +38,9 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
                       style={{
                         backgroundColor: el.color,
                       }}
-                    ></span>
+                    >
+                      {el.name}
+                    </span>
                   ))
                 : null}
             </div>

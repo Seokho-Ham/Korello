@@ -43,8 +43,16 @@ const AddTagButton = ({ url, setUpdate }) => {
     <>
       {clicked ? (
         <div className='tag-add-button'>
-          <input value={tagName} onChange={onChangeHandler} />
-          <input value={cardName} onChange={onCardChangeHandler} />
+          <input
+            placeholder='tag name'
+            value={tagName}
+            onChange={onChangeHandler}
+          />
+          <input
+            placeholder='card name'
+            value={cardName}
+            onChange={onCardChangeHandler}
+          />
           <button onClick={addTag}>Add</button>
           <button onClick={onClickHandler}>Cancel</button>
         </div>
