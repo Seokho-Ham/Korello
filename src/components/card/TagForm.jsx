@@ -44,7 +44,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
         ref={drop}
       >
-        {console.log(data)}
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {

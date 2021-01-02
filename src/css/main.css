@@ -337,4 +337,12 @@ input {
   -webkit-transition: width 0.2s ease-in-out;
   transition: width 0.2s ease-in-out;
 }
+
+.checklist-item {
+  margin-bottom: 10px;
+}
+
+.checklist-item-title {
+  margin-left: 10px;
+}
 /*# sourceMappingURL=main.css.map */

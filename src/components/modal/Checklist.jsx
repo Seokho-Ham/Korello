@@ -1,19 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useUpdateApi } from '../../api/index';
+import React from 'react';
+import ChecklistForm from './ChecklistForm';
 
 const Checklist = ({ id, data, setUpdate, percent }) => {
-  const [updateData] = useUpdateApi();
-
-  const checkboxHandler = async e => {
-    const code = await updateData(`/todo/${e.target.name}/status`);
-    if (code === 200) {
-      setUpdate(p => !p);
-    } else {
-      alert('실패');
-      setUpdate(p => !p);
-    }
-  };
-
   return (
     <>
       <div className='checklist-header'>
@@ -32,17 +20,7 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
       </div>
       <div className='checklist- inner'>
         {data.map((el, i) => (
-          <div className='checklist-item' key={i}>
-            <>
-              <input
-                type='checkbox'
-                name={el.todoId}
-                checked={el.status}
-                onChange={checkboxHandler}
-              />
-              {el.title}
-            </>
-          </div>
+          <ChecklistForm key={i} el={el} setUpdate={setUpdate} />
         ))}
       </div>
     </>

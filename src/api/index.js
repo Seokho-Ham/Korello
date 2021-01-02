@@ -102,6 +102,7 @@ const useUpdateApi = () => {
     try {
       const { data } = await axios.put(serverUrl + url, body);
       console.log('update 요청');
+      console.log(data);
       if (data) {
         return data.result_code;
       }
@@ -111,5 +112,8 @@ const useUpdateApi = () => {
   };
   return [updateData];
 };
+
+//DELETE-------------------------------------------------------------------------------
+const useDeleteApi = () => {};
 
 export { useGetApi, useGetCardApi, usePostApi, useUpdateApi };
