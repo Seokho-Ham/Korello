@@ -345,4 +345,8 @@ input {
 .checklist-item-title {
   margin-left: 10px;
 }
+
+.checklist-delete {
+  float: right;
+}
 /*# sourceMappingURL=main.css.map */

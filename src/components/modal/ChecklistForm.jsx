@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useUpdateApi } from '../../api/index';
+import { useUpdateApi, useDeleteApi } from '../../api/index';
 
 const ChecklistForm = ({ el, setUpdate }) => {
   const [updateData] = useUpdateApi();
+  const [deleteData] = useDeleteApi();
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
   const onChangeTitle = e => {
@@ -38,7 +39,15 @@ const ChecklistForm = ({ el, setUpdate }) => {
       setChangebutton(p => !p);
     }
   };
-  const deleteCheckList = async () => {};
+  const deleteCheckList = async () => {
+    const code = await deleteData(`/todo/${el.todoId}`);
+    if (code === 200) {
+      setUpdate(p => !p);
+    } else {
+      alert('실패');
+      setUpdate(p => !p);
+    }
+  };
 
   return (
     <div className='checklist-item'>
@@ -59,6 +68,9 @@ const ChecklistForm = ({ el, setUpdate }) => {
             {el.title}
           </span>
         )}
+        <button className='checklist-delete' onClick={deleteCheckList}>
+          X
+        </button>
       </>
     </div>
   );
