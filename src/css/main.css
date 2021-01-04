@@ -311,7 +311,7 @@ input {
   background-color: #fff;
   border-radius: 5px;
   top: 50%;
-  margin: 1px auto;
+  margin: 2px auto;
   padding: 30px 20px;
 }
 
@@ -354,5 +354,13 @@ input {
 
 .checklist-delete {
   float: right;
+}
+
+.add-checklist-modal {
+  margin: 2px 0px;
+}
+
+.add-card-label-button {
+  margin: 2px 0px;
 }
 /*# sourceMappingURL=main.css.map */
