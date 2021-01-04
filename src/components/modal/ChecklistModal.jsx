@@ -28,7 +28,7 @@ const ChecklistModal = ({ id, setUpdate }) => {
   };
 
   return (
-    <div>
+    <div className='add-checklist-modal'>
       <button onClick={clickButton}>CheckList</button>
       {clicked ? (
         <div className='checkList-modal' style={{ overflow: 'auto' }}>
