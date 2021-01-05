@@ -42,13 +42,13 @@ const useGetCardApi = uri => {
       let { data } = await axios.get(serverUrl + uri);
       console.log('getCard 요청');
       let { result_body } = data;
-
+      console.log(result_body);
       if (result_body.length > 0) {
         const obj = {};
         const tags = [];
         const cards = [];
         result_body
-          .sort((a, b) => a.createDate - b.createDate)
+          .sort((a, b) => a.id - b.id)
           .map(el => {
             let cardObj = {
               id: el.id,
