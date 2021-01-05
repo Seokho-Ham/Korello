@@ -17,9 +17,10 @@ const LoginPage = props => {
   return (
     <>
       <button onClick={onClickLogin}>Login</button>
-      <button onClick={onClickSignIn}>SignIn</button>
+      {/* <button onClick={onClickSignIn}>SignIn</button> */}
       <div id='login'>
-        {clicked === 'login' ? <LoginForm handler={handler} /> : <SigninForm />}
+        {/* {clicked === 'login' ? <LoginForm handler={handler} /> : <SigninForm />} */}
+        <LoginForm handler={handler} />
       </div>
     </>
   );
