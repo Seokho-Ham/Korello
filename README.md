@@ -15,6 +15,3 @@
 2. npm install을 입력합니다.
 3. npm run server을 입력하여 개발서버를 실행시킵니다.
 4. http://localhost:3000/board로 접속합니다.
-
-
-### 프로젝트 구조
