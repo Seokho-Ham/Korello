@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { usePostApi } from '../../api';
 import ChecklistForm from './ChecklistForm';
+import ChecklistModal from './ChecklistModal';
 
 const Checklist = ({ id, data, setUpdate, percent }) => {
+  const [clicked, setClicked] = useState(false);
+  const [title, setTitle] = useState('');
+  const [postData] = usePostApi();
+  const clickButtonHandler = () => {
+    setClicked(p => !p);
+  };
+  const addChecklistHandler = async () => {
+    if (title.length > 0) {
+      const code = await postData(`/card/${id}/todo`, {
+        cardId: id,
+        title: title,
+      });
+      if (code === 201 || code === 200) {
+        setTitle('');
+        setClicked(p => !p);
+        setUpdate(p => !p);
+      } else {
+        alert('생성 실패!');
+      }
+    } else {
+      alert('title을 입력해주세요');
+    }
+  };
+  const onChangeHandler = e => {
+    setTitle(e.target.value);
+  };
   return (
     <>
       <div className='checklist-header'>
@@ -22,6 +50,21 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
         {data.map((el, i) => (
           <ChecklistForm key={i} el={el} setUpdate={setUpdate} />
         ))}
+      </div>
+      <div className='checklist-add-button'>
+        {clicked ? (
+          <>
+            <input
+              placeholder='title'
+              value={title}
+              onChange={onChangeHandler}
+            ></input>
+            <button onClick={addChecklistHandler}>Add</button>
+            <button onClick={clickButtonHandler}>X</button>
+          </>
+        ) : (
+          <button onClick={clickButtonHandler}>Add an item</button>
+        )}
       </div>
     </>
   );

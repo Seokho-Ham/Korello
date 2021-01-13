@@ -13,17 +13,21 @@ const ChecklistModal = ({ id, setUpdate }) => {
     setCheckListTitle(e.target.value);
   };
   const addCheckList = async () => {
-    const code = await postData(`/card/${id}/todo`, {
-      cardId: id,
-      title: checkListTitle,
-    });
-    if (code === 201 || code === 200) {
-      setUpdate(p => !p);
-      setCheckListTitle('');
-      setClicked(p => !p);
+    if (checkListTitle.length > 0) {
+      const code = await postData(`/card/${id}/todo`, {
+        cardId: id,
+        title: checkListTitle,
+      });
+      if (code === 201 || code === 200) {
+        setUpdate(p => !p);
+        setCheckListTitle('');
+        setClicked(p => !p);
+      } else {
+        alert('체크리스트 생성 실패');
+        setUpdate(p => !p);
+      }
     } else {
-      alert('체크리스트 생성 실패');
-      setUpdate(p => !p);
+      alert('title을 입력해주세요.');
     }
   };
 

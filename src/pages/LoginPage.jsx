@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from '../components/user/LoginForm';
-import SigninForm from '../components/user/SigninForm';
+// import SigninForm from '../components/user/SigninForm';
 
 const LoginPage = props => {
   const { handler } = props;
