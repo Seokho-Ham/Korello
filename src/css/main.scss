@@ -30,9 +30,10 @@ input {
   align-items: center;
   background-color: #026aa7;
   text-align: 'center';
-  &-title:hover {
-    color: aliceblue;
-  }
+  color: aliceblue;
+  // &-title:hover {
+  //   color: aliceblue;
+  // }
 }
 #login {
   text-align: center;

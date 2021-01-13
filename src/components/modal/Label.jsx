@@ -123,6 +123,8 @@ const Label = ({ id, url, setUpdate, labels }) => {
                   backgroundColor: selectColor,
                   borderRadius: '4px',
                   margin: '2px',
+                  textAlign: 'center',
+                  color: '#fff',
                 }}
               >
                 selected color

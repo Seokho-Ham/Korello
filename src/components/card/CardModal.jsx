@@ -47,16 +47,16 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             <h2>{title}</h2>
           </div>
           <div className='modal-contents'>
-            <div className='check-list-container'>
-              {data.length > 0 ? (
+            {data.length > 0 ? (
+              <div className='checklist-container'>
                 <Checklist
                   id={id}
                   data={data}
                   setUpdate={setModalUpdate}
                   percent={progressCalculator(data)}
                 />
-              ) : null}
-            </div>
+              </div>
+            ) : null}
           </div>
           <div className='modal-sidebar'>
             <Label url={url} id={id} setUpdate={setUpdate} labels={labels} />

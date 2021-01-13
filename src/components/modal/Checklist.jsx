@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { usePostApi } from '../../api';
 import ChecklistForm from './ChecklistForm';
-import ChecklistModal from './ChecklistModal';
 
 const Checklist = ({ id, data, setUpdate, percent }) => {
   const [clicked, setClicked] = useState(false);

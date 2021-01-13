@@ -1,4 +1,10 @@
 .checklist {
+  &-container {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+  }
   &-header {
     h4 {
       margin: 0px 0px 5px 0px;
@@ -34,6 +40,14 @@
   }
   &-delete {
     float: right;
+  }
+  &-add-button {
+    input {
+      display: block;
+    }
+    button {
+      margin: 2px 1px 2px 0px;
+    }
   }
 }
 .add-checklist-modal {
