@@ -4,10 +4,9 @@ import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
-  const [addCheck, setAddCheck] = useState(false);
   const [update, setUpdate] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [data] = useGetApi('get', '/boards', addCheck, update);
+  const [data] = useGetApi('get', '/boards', update);
 
   const onClickHandler = () => {
     setDisplay(p => !p);

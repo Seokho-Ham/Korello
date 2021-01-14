@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { usePostApi } from '../../api/index';
 
 const BoardForm = ({ url, data, setUpdate }) => {
-  const [boardId, setBoardId] = useState(data.id);
   const [postData] = usePostApi();
   const history = useHistory();
 
@@ -13,7 +12,7 @@ const BoardForm = ({ url, data, setUpdate }) => {
     });
   };
   const deleteBoard = async () => {
-    const code = await postData('/board/delete', { id: boardId });
+    const code = await postData('/board/delete', { id: data.id });
     if (code !== 200) {
       alert('삭제 실패!');
     }
@@ -21,22 +20,10 @@ const BoardForm = ({ url, data, setUpdate }) => {
   };
   return (
     <div className='board-element'>
-      <div
-        className='board-delete'
-        style={{
-          float: 'right',
-        }}
-      >
-        <button
-          style={{
-            border: '3px solid #d9cbb3',
-            color: 'black',
-          }}
-          onClick={deleteBoard}
-        >
-          X
-        </button>
-      </div>
+      <button className='board-delete-button' onClick={deleteBoard}>
+        X
+      </button>
+
       <div className='board-title' onClick={clickBoard}>
         <>{data.name}</>
       </div>
