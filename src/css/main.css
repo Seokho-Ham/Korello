@@ -59,9 +59,6 @@ input {
 }
 
 #board-list {
-  display: flexbox;
-  position: -webkit-sticky;
-  position: sticky;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
