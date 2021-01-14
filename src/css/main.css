@@ -140,7 +140,6 @@ input {
 }
 
 .tag-add-button {
-  display: inline-block;
   vertical-align: top;
   margin: 0px 5px;
 }
@@ -202,7 +201,13 @@ input {
 
 .new-card-form input {
   width: 98%;
+  border: 1px solid;
   border-radius: 4px;
+}
+
+.new-card-form .add-button {
+  margin-left: 0px;
+  margin-bottom: 0px;
 }
 
 .add-button {

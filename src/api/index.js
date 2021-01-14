@@ -66,10 +66,12 @@ const useGetCardApi = uri => {
               obj[el.tagValue].push(cardObj);
             }
           });
+
         for (let i in obj) {
           tags.push(i);
           cards.push(obj[i]);
         }
+
         setTagList(tags);
         setCardList(cards);
       }

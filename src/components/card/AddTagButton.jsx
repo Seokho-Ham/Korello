@@ -41,26 +41,29 @@ const AddTagButton = ({ url, setUpdate }) => {
 
   return (
     <>
-      {clicked ? (
-        <div className='tag-add-button'>
-          <input
-            placeholder='tag name'
-            value={tagName}
-            onChange={onChangeHandler}
-          />
-          <input
-            placeholder='card name'
-            value={cardName}
-            onChange={onCardChangeHandler}
-          />
-          <button onClick={addTag}>Add</button>
-          <button onClick={onClickHandler}>Cancel</button>
-        </div>
-      ) : (
-        <div className='tag-add-button'>
-          <button onClick={onClickHandler}>Add Tag</button>
-        </div>
-      )}
+      <div
+        className='tag-add-button'
+        style={{ display: clicked ? 'inline-block' : 'none' }}
+      >
+        <input
+          placeholder='tag name'
+          value={tagName}
+          onChange={onChangeHandler}
+        />
+        <input
+          placeholder='card name'
+          value={cardName}
+          onChange={onCardChangeHandler}
+        />
+        <button onClick={addTag}>Add</button>
+        <button onClick={onClickHandler}>Cancel</button>
+      </div>
+      <div
+        className='tag-add-button'
+        style={{ display: clicked ? 'none' : 'inline-block' }}
+      >
+        <button onClick={onClickHandler}>Add Tag</button>
+      </div>
     </>
   );
 };

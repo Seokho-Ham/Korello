@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { usePostApi } from '../../api/index';
 
-const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
+const AddButton = ({ tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [display, setDisplay] = useState(false);
   const [postData] = usePostApi();
 
   const onChangeHandler = e => {
-    if (e.target.name === 'title') {
-      setTitle(e.target.value);
-    } else if (e.target.name === 'description') {
-      setDescription(e.target.value);
-    }
+    setTitle(e.target.value);
   };
 
   const onClickHandler = () => {
-    setAddButton(prevState => !prevState);
+    setDisplay(prevState => !prevState);
   };
 
   const addCardHandler = async () => {
@@ -27,20 +23,23 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
 
       if (code === 201) {
         setTitle('');
+        setDisplay(prevState => !prevState);
         setUpdate(prevState => !prevState);
-        setAddButton(prevState => !prevState);
       } else {
         alert('생성에 실패했습니다.');
         setTitle('');
       }
     } else {
-      setAddButton(prevState => !prevState);
+      alert('이름을 입력해주세요.');
     }
   };
 
-  return addButton ? (
+  return (
     <>
-      <div className='new-card-form'>
+      <div
+        className='new-card-form'
+        style={{ display: display ? 'block' : 'none' }}
+      >
         <input
           name='title'
           type='text'
@@ -48,23 +47,18 @@ const AddButton = ({ addButton, setAddButton, tag, url, setUpdate }) => {
           value={title}
           onChange={onChangeHandler}
         ></input>
-        {/* <br></br> */}
-        {/* <input
-          name='description'
-          type='text'
-          placeholder='description'
-          value={description}
-          onChange={onChangeHandler}
-        ></input> */}
+        <div className='add-button'>
+          <button onClick={addCardHandler}>Add Card</button>
+          <button onClick={onClickHandler}>Cancel</button>
+        </div>
       </div>
-      <div className='add-button'>
-        <button onClick={addCardHandler}>Add Card</button>
+      <div
+        className='add-button'
+        style={{ display: display ? 'none' : 'block' }}
+      >
+        <button onClick={onClickHandler}>Add another card</button>
       </div>
     </>
-  ) : (
-    <div className='add-button'>
-      <button onClick={onClickHandler}>Add another card</button>
-    </div>
   );
 };
 

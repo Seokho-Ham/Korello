@@ -5,12 +5,9 @@ import { useUpdateApi } from '../../api/index';
 import { useDrop } from 'react-dnd';
 
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
-  const [addButton, setAddButton] = useState(false);
-  const [items, setItems] = useState();
   const [updateData] = useUpdateApi();
 
   const appendItem = useCallback(async item => {
-    setItems(item);
     if (item.tagValue !== tag) {
       const code = await updateData(
         boardUrl.slice(0, boardUrl.length - 1) + '/tag',
@@ -62,13 +59,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
             );
           })}
       </div>
-      <AddCardButton
-        addButton={addButton}
-        setAddButton={setAddButton}
-        tag={tag}
-        url={boardUrl}
-        setUpdate={setUpdate}
-      />
+      <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
     </div>
   );
 };
