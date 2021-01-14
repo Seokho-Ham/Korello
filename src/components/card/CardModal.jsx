@@ -59,7 +59,14 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             ) : null}
           </div>
           <div className='modal-sidebar'>
-            <Label url={url} id={id} setUpdate={setUpdate} labels={labels} />
+            <Label
+              url={url}
+              id={id}
+              modalUpdate={modalUpdate}
+              setModalUpdate={setModalUpdate}
+              setUpdate={setUpdate}
+              labels={labels}
+            />
             <CheckListModal id={id} setUpdate={setModalUpdate} />
             <CalendarModal />
             <div>CheckList, Duedate, Calendar</div>
