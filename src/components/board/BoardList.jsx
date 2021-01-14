@@ -6,10 +6,11 @@ import NewBoardForm from './NewBoardForm';
 const BoardList = ({ match }) => {
   const [addCheck, setAddCheck] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [display, setDisplay] = useState(false);
   const [data] = useGetApi('get', '/boards', addCheck, update);
 
   const onClickHandler = () => {
-    setAddCheck(prevState => !prevState);
+    setDisplay(p => !p);
   };
 
   const renderBoards = () => {
@@ -33,13 +34,19 @@ const BoardList = ({ match }) => {
       ) : (
         <div id='board-list'>데이터가 없습니다.</div>
       )}
-      {addCheck ? (
-        <NewBoardForm onClickHandler={onClickHandler} />
-      ) : (
-        <span id='board-add-button'>
-          <button onClick={onClickHandler}>Add Board</button>
-        </span>
-      )}
+      <span id='board-add-button'>
+        <NewBoardForm
+          onClickHandler={onClickHandler}
+          setUpdate={setUpdate}
+          display={display}
+        />
+        <button
+          onClick={onClickHandler}
+          style={{ display: display ? 'none' : 'block' }}
+        >
+          Add Board
+        </button>
+      </span>
     </div>
   );
 };
