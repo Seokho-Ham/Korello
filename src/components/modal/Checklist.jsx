@@ -59,7 +59,7 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
               onChange={onChangeHandler}
             ></input>
             <button onClick={addChecklistHandler}>Add</button>
-            <button onClick={clickButtonHandler}>X</button>
+            <button onClick={clickButtonHandler}>Cancel</button>
           </>
         ) : (
           <button onClick={clickButtonHandler}>Add an item</button>
