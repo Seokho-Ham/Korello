@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', 'scss', 'css'],
   },
   entry: { app: ['babel-polyfill', './src/index.js'] },
   module: {
@@ -33,6 +33,10 @@ module.exports = {
         },
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.jsx/,
         enforce: 'pre',
         use: ['source-map-loader'],
@@ -48,6 +52,7 @@ module.exports = {
     ],
   },
   plugins: [new RefreshWebpackPlugin()],
+
   output: {
     path: path.join(__dirname, ''),
     filename: 'index.js',

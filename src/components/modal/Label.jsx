@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import { usePostApi, useGetApi } from '../../api/index';
 import colors from '../../assets/colors';
 
@@ -128,14 +127,14 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
               onClick={addCardLabelButton}
             >
               {value.name}
-              <a
-                name={value.id}
-                onClick={deleteLabel}
-                style={{ float: 'right' }}
-              >
-                X
-              </a>
             </span>
+            <button
+              name={value.id}
+              onClick={deleteLabel}
+              style={{ float: 'right' }}
+            >
+              X
+            </button>
           </div>
         );
       } else {
