@@ -1,13 +1,20 @@
 body,
-button,
-html,
-input {
+html {
   color: #172b4d;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-  font-size: 16px;
   line-height: 20px;
   font-weight: 400;
   margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+input,
+button {
+  font-size: 16px;
 }
 
 #root {
@@ -18,37 +25,135 @@ input {
 }
 
 #header {
-  width: 100%;
-  height: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: #026aa7;
-  text-align: 'center';
+  background-color: #f9fafc;
+  display: block;
+  height: 43px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
   color: aliceblue;
 }
 
-#login {
+#header .menu-bar {
+  width: 45%;
+}
+
+#header a {
+  opacity: 0.5;
+}
+
+#header a:hover {
+  opacity: 1;
+}
+
+#header a .title-image {
+  background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+#header a .title-name {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
+  background-repeat: no-repeat;
+  background-size: 98px;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 100px;
+}
+
+.login-page {
+  height: 100%;
+  background-color: #f9fafc;
+}
+
+.login-title {
+  background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.login-name {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
+  background-repeat: no-repeat;
+  background-size: 98px;
+  display: inline-block;
+  height: 40px;
+  width: 100px;
+}
+
+.login-header {
+  background-color: #f9fafc;
+  display: block;
+  height: 43px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
   text-align: center;
 }
 
-#login button {
-  margin: 20px;
+.login-input {
+  margin-top: 30px;
+}
+
+.login-container {
+  background-color: #f9fafc;
+  border-radius: 3px;
+  padding: 25px 40px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+          box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+  height: 400px;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  top: 40px;
+  text-align: center;
+}
+
+.login-container input {
+  background-color: #edeff0;
+  border: 2px solid #dfe1e6;
+  border-radius: 4px;
+  width: 300px;
+  height: 40px;
+  margin-bottom: 20px;
+  font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+}
+
+.login-container .submit {
+  background-color: #61bd4f;
+  width: 310px;
+  height: 40px;
+}
+
+.login-container hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 370px;
 }
 
 .board-title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 10%;
   height: 80px;
-  position: relative;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -56,34 +161,58 @@ input {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  overflow: hidden;
+}
+
+.board-title p {
+  position: relative;
+  left: 10px;
+  font-size: 19px;
+  font-weight: 500;
 }
 
 .board-element {
   text-align: center;
   margin: 20px;
+  margin-top: 30px;
   float: left;
   width: 190px;
-  height: 140px;
-  border: 1px solid;
+  height: 125px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px;
+          box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px;
   border-color: black;
+  cursor: pointer;
   border-radius: 3px;
+}
+
+.board-element:hover {
+  opacity: 0.5;
+}
+
+.board-el {
+  height: 100%;
 }
 
 .board-delete-button {
+  background-image: url(https://user-images.githubusercontent.com/57708971/105025377-96febf00-5a90-11eb-806b-3f82adf34d8e.png);
+  background-repeat: no-repeat;
+  background-size: 32px;
+  height: 40px;
+  width: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   float: right;
-  background-color: #ebecf0;
-  border: 0.5px solid;
-  border-radius: 3px;
-  border-top: 0px;
-  border-right: 0px;
-  color: black;
+  opacity: 1;
 }
 
 .board-delete-button:hover {
-  background-color: #b4b4b4;
+  background-color: orange;
+  opacity: 1;
 }
 
-#board-container {
+#board-header {
+  background-color: #f9fafc;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -99,6 +228,41 @@ input {
           justify-content: center;
 }
 
+#board-header-items {
+  width: 920px;
+}
+
+#board-header h2 {
+  margin: 0px;
+  display: inline;
+  position: relative;
+  top: 35px;
+}
+
+#board-container {
+  height: 100%;
+  width: 100%;
+}
+
+#board-list-container {
+  background-color: #f9fafc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
 #board-list {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -106,10 +270,44 @@ input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
+  max-width: 920px;
+  width: 920px;
+  height: 700px;
+}
+
+#board-button {
+  position: relative;
+  top: 10px;
+  float: right;
 }
 
 #board-add-button {
   margin: 20px;
+  display: inline;
+}
+
+#board-add-button button {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 3px;
+  background-color: #fafbfc;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+#board-add-button:hover {
+  opacity: 0.5;
+}
+
+#board-add-button input {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 #one-board {

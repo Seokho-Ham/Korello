@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
-import LoginForm from '../components/user/LoginForm';
-// import SigninForm from '../components/user/SigninForm';
+import React, { useEffect } from 'react';
+import queryString from 'query-string';
+import { setAccessToken } from '../api/index';
+import { Redirect } from 'react-router-dom';
 
-const LoginPage = props => {
-  const { handler } = props;
+const LoginPage = ({ refreshToken, setLogin }) => {
+  if (queryString.parse(window.location.search).accessToken) {
+    setAccessToken(queryString.parse(window.location.search).accessToken);
+    refreshToken(queryString.parse(window.location.search).refreshToken);
+  }
 
-  // const onClickSignIn = () => {
-  //   setClicked('signin');
-  // };
-
-  return (
-    <>
-      {/* <button onClick={onClickSignIn}>SignIn</button> */}
-      <div
-        id='login'
-        style={{ textAlign: 'center', height: '1200px', margin: '20px' }}
-      >
-        {/* {clicked === 'login' ? <LoginForm handler={handler} /> : <SigninForm />} */}
-        {/* <LoginForm handler={handler} /> */}
+  return queryString.parse(window.location.search).accessToken ? (
+    <Redirect to='/boards' />
+  ) : (
+    <div className='login-page'>
+      <div className='login-header'>
+        <span className='login-title'></span>
+        <span className='login-name'></span>
+      </div>
+      <div className='login-container'>
+        <div className='login-input'>
+          <input className='email' placeholder='email'></input>
+          <input className='password' placeholder='password'></input>
+          <input
+            className='submit'
+            type='submit'
+            value='Login'
+            onClick={() => {
+              alert('카카오로 로그인해주세요.');
+            }}
+          ></input>
+        </div>
+        <div style={{ marginBottom: '15px', fontFamily: '-apple-system' }}>
+          or
+        </div>
         <a
           id='custom-login-btn'
           href='http://hyuki.app/oauth2/authorization/kakao'
@@ -27,8 +42,10 @@ const LoginPage = props => {
             width='222'
           />
         </a>
+        <hr />
+        <h3>저희 앱은 카카오 로그인으로만 로그인이 가능합니다:)</h3>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,70 @@
+.login {
+  &-page {
+    height: 100%;
+    background-color: #f9fafc;
+  }
+  &-title {
+    background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  &-name {
+    align-items: center;
+    background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
+    background-repeat: no-repeat;
+    background-size: 98px;
+    display: inline-block;
+    height: 40px;
+    width: 100px;
+  }
+  &-header {
+    background-color: #f9fafc;
+    display: block;
+    height: 43px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  &-input {
+    margin-top: 30px;
+  }
+  &-container {
+    background-color: #f9fafc;
+    border-radius: 3px;
+    padding: 25px 40px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+    height: 400px;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    top: 40px;
+    text-align: center;
+    input {
+      background-color: #edeff0;
+      border: 2px solid #dfe1e6;
+      border-radius: 4px;
+      width: 300px;
+      height: 40px;
+      margin-bottom: 20px;
+      font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      position: relative;
+    }
+
+    .submit {
+      background-color: #61bd4f;
+      width: 310px;
+      height: 40px;
+    }
+    hr {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 370px;
+    }
+  }
+}

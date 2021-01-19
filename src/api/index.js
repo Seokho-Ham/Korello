@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
+let accessToken = '';
+const setAccessToken = token => {
+  accessToken = token;
+};
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, state2) => {
@@ -13,8 +19,7 @@ const useGetApi = (method, uri, state1, state2) => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
-        console.log('get요청');
-        console.log(typeof data);
+
         if (data.result_body) {
           setData(data.result_body);
         }
@@ -37,8 +42,7 @@ const useGetCardApi = uri => {
   useEffect(() => {
     const getCard = async () => {
       let { data } = await axios.get(serverUrl + uri);
-      console.log('getCard 요청');
-      console.log(typeof data);
+
       let { result_body } = data;
 
       if (result_body.length > 0) {
@@ -85,8 +89,7 @@ const usePostApi = () => {
   const postData = async (uri, body) => {
     try {
       let { data } = await axios.post(serverUrl + uri, body);
-      console.log('post 요청');
-      console.log(typeof data);
+
       return data.result_code;
     } catch (err) {
       console.log(err);
@@ -101,8 +104,7 @@ const useUpdateApi = () => {
   const updateData = async (url, body) => {
     try {
       const { data } = await axios.put(serverUrl + url, body);
-      console.log('update 요청');
-      console.log(typeof data);
+
       if (data) {
         return data.result_code;
       }
@@ -118,8 +120,7 @@ const useDeleteApi = () => {
   const deleteData = async url => {
     try {
       const { data } = await axios.delete(serverUrl + url);
-      console.log('delete 요청');
-      console.log(data);
+
       if (data) {
         return data.result_code;
       }
@@ -130,4 +131,11 @@ const useDeleteApi = () => {
   return [deleteData];
 };
 
-export { useGetApi, useGetCardApi, usePostApi, useUpdateApi, useDeleteApi };
+export {
+  useGetApi,
+  useGetCardApi,
+  usePostApi,
+  useUpdateApi,
+  useDeleteApi,
+  setAccessToken,
+};
