@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import queryString from 'query-string';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
+import { setAccessToken } from '../api';
 
-const BoardPage = ({ match, history }) => {
+const BoardPage = ({ match, history, location }) => {
+  if (location.search.length > 0) {
+    setAccessToken(queryString.parse(location.search));
+  }
+
   return (
     <Router>
       <Route exact path={match.path} component={BoardList} />

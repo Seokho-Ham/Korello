@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import LoginForm from '../components/user/LoginForm';
-// import SigninForm from '../components/user/SigninForm';
+import queryString from 'query-string';
+import { setAccessToken } from '../api/index';
+import { Redirect } from 'react-router-dom';
 
-const LoginPage = props => {
-  const { handler } = props;
+const LoginPage = ({ refreshToken }) => {
+  if (queryString.parse(window.location.search).accessToken) {
+    setAccessToken(queryString.parse(window.location.search).accessToken);
+    refreshToken(queryString.parse(window.location.search).refreshToken);
+  }
 
-  // const onClickSignIn = () => {
-  //   setClicked('signin');
-  // };
-
-  return (
+  return queryString.parse(window.location.search).accessToken ? (
+    <Redirect to='/boards' />
+  ) : (
     <>
-      {/* <button onClick={onClickSignIn}>SignIn</button> */}
       <div
         id='login'
         style={{ textAlign: 'center', height: '1200px', margin: '20px' }}
       >
-        {/* {clicked === 'login' ? <LoginForm handler={handler} /> : <SigninForm />} */}
-        {/* <LoginForm handler={handler} /> */}
         <a
           id='custom-login-btn'
           href='http://hyuki.app/oauth2/authorization/kakao'
