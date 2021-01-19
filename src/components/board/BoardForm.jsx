@@ -20,12 +20,11 @@ const BoardForm = ({ url, data, setUpdate }) => {
   };
   return (
     <div className='board-element'>
-      <button className='board-delete-button' onClick={deleteBoard}>
-        X
-      </button>
-
-      <div className='board-title' onClick={clickBoard}>
-        <>{data.name}</>
+      <span className='board-delete-button' onClick={deleteBoard}></span>
+      <div className='board-el'>
+        <div className='board-title' onClick={clickBoard}>
+          <p>{data.name}</p>
+        </div>
       </div>
     </div>
   );

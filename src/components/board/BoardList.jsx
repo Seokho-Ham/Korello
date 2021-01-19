@@ -26,26 +26,35 @@ const BoardList = ({ match }) => {
   };
   return (
     <div id='board-container'>
-      {data.length > 0 ? (
-        <>
-          <div id='board-list'>{renderBoards()}</div>
-        </>
-      ) : (
-        <div id='board-list'>데이터가 없습니다.</div>
-      )}
-      <span id='board-add-button'>
-        <NewBoardForm
-          onClickHandler={onClickHandler}
-          setUpdate={setUpdate}
-          display={display}
-        />
-        <button
-          onClick={onClickHandler}
-          style={{ display: display ? 'none' : 'block' }}
-        >
-          Add Board
-        </button>
-      </span>
+      <div id='board-header'>
+        <div id='board-header-items'>
+          <h2>Board Lists</h2>
+          <div id='board-button'>
+            <span id='board-add-button'>
+              <NewBoardForm
+                onClickHandler={onClickHandler}
+                setUpdate={setUpdate}
+                display={display}
+              />
+              <button
+                onClick={onClickHandler}
+                style={{ display: display ? 'none' : 'block' }}
+              >
+                Add Board
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div id='board-list-container'>
+        {data.length > 0 ? (
+          <>
+            <div id='board-list'>{renderBoards()}</div>
+          </>
+        ) : (
+          <div id='board-list'>데이터가 없습니다.</div>
+        )}
+      </div>
     </div>
   );
 };

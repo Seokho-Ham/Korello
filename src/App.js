@@ -16,6 +16,7 @@ const App = () => {
   const onSilentRefresh = async token => {
     // let data = await axios.post()
   };
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     onSilentRefresh();
@@ -23,14 +24,13 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Router>
-        <div id='header'>
-          <h2 id='header-title'>Korello</h2>
-        </div>
         <Switch>
           <Route
             exact
             path='/'
-            render={() => <Login refreshToken={onSilentRefresh} />}
+            render={() => (
+              <Login refreshToken={onSilentRefresh} setLogin={setLogin} />
+            )}
           />
 
           <Route path='/boards' component={Board} />

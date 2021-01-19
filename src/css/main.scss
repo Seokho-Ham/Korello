@@ -3,16 +3,23 @@
 // }
 
 body,
-button,
-html,
-input {
+html {
   color: #172b4d;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
-    Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-  font-size: 16px;
+
   line-height: 20px;
   font-weight: 400;
   margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+* {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
+    Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  //
+}
+input,
+button {
+  font-size: 16px;
 }
 
 #root {
@@ -21,26 +28,52 @@ input {
   position: relative;
   z-index: 1;
 }
+// .container {
+//   width: 100%;
+//   height: 100%;
+// }
 
 #header {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #026aa7;
-  text-align: 'center';
-  color: aliceblue;
-  // &-title:hover {
-  //   color: aliceblue;
-  // }
-}
-#login {
+  background-color: #f9fafc;
+  display: block;
+  height: 43px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
   text-align: center;
-  button {
-    margin: 20px;
+  color: aliceblue;
+
+  .menu-bar {
+    width: 45%;
+  }
+  a {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+    .title-image {
+      background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+      background-repeat: no-repeat;
+      background-size: 40px 40px;
+      cursor: pointer;
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+    }
+    .title-name {
+      align-items: center;
+      background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
+      background-repeat: no-repeat;
+      background-size: 98px;
+      cursor: pointer;
+      display: inline-block;
+      height: 40px;
+      width: 100px;
+    }
   }
 }
+@import './login';
 @import './board';
 @import './card';
 @import './modal';
