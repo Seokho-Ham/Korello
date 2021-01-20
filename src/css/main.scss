@@ -5,7 +5,7 @@
 body,
 html {
   color: #172b4d;
-
+  background-color: #f9fafc;
   line-height: 20px;
   font-weight: 400;
   margin: 0px;
@@ -20,6 +20,23 @@ html {
 input,
 button {
   font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 3px;
+  background-color: #fafbfc;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  font-family: Noteworthy;
 }
 
 #root {
@@ -53,21 +70,24 @@ button {
       opacity: 1;
     }
     .title-image {
-      background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+      background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
       background-repeat: no-repeat;
-      background-size: 40px 40px;
+      background-size: 60px;
       cursor: pointer;
       display: inline-block;
-      height: 40px;
-      width: 40px;
+      height: 50px;
+      width: 60px;
     }
     .title-name {
       align-items: center;
       background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
       background-repeat: no-repeat;
-      background-size: 98px;
+      background-size: 100px;
       cursor: pointer;
       display: inline-block;
+      position: relative;
+      bottom: 4px;
+      right: 9px;
       height: 40px;
       width: 100px;
     }

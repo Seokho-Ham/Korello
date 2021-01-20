@@ -4,19 +4,24 @@
     background-color: #f9fafc;
   }
   &-title {
-    background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+    background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
     background-repeat: no-repeat;
-    background-size: 40px 40px;
+    background-size: 60px;
+    cursor: pointer;
     display: inline-block;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 60px;
   }
   &-name {
     align-items: center;
     background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
     background-repeat: no-repeat;
-    background-size: 98px;
+    background-size: 100px;
+    cursor: pointer;
     display: inline-block;
+    position: relative;
+    bottom: 4px;
+    right: 9px;
     height: 40px;
     width: 100px;
   }

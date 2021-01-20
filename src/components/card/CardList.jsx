@@ -11,29 +11,37 @@ const CardList = ({ history, location }) => {
   };
 
   return (
-    <div id='one-board'>
-      <button className='go-back' onClick={onClickHandler}>
-        뒤로가기
-      </button>
-      <AddTagButton url={location.pathname} setUpdate={setUpdate} />
-      {cardList.length > 0 ? (
-        <div id='tag-all-list'>
-          {cardList.map((el, i) => {
-            let index = cardList.indexOf(el);
-            return (
-              <TagForm
-                key={i}
-                data={el}
-                tag={tagList[index]}
-                boardUrl={location.pathname}
-                setUpdate={setUpdate}
-              />
-            );
-          })}
+    <div className='card-container'>
+      <div id='card-header'>
+        <div id='card-header-items'>
+          <div className='go-back'>
+            <a className='go-back-button' onClick={onClickHandler}>
+              <span className='go-back-img'></span>
+            </a>
+          </div>
+          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
         </div>
-      ) : (
-        <div id='tag-all-list'></div>
-      )}
+      </div>
+      <div id='card-list-container'>
+        {cardList.length > 0 ? (
+          <div id='tag-all-list'>
+            {cardList.map((el, i) => {
+              let index = cardList.indexOf(el);
+              return (
+                <TagForm
+                  key={i}
+                  data={el}
+                  tag={tagList[index]}
+                  boardUrl={location.pathname}
+                  setUpdate={setUpdate}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div id='tag-all-list'></div>
+        )}
+      </div>
     </div>
   );
 };

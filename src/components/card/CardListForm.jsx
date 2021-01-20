@@ -104,7 +104,9 @@ const CardListForm = ({
             <button onClick={sendUpdate}>save</button>
           </div>
         ) : (
-          <div onClick={editCard}>{title}</div>
+          <div className='card-title' onClick={editCard}>
+            {title}
+          </div>
         )}
         {edit ? null : (
           <div className='card-buttons'>

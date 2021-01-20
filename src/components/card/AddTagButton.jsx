@@ -55,14 +55,20 @@ const AddTagButton = ({ url, setUpdate }) => {
           value={cardName}
           onChange={onCardChangeHandler}
         />
-        <button onClick={addTag}>Add</button>
-        <button onClick={onClickHandler}>Cancel</button>
+        <button className='tag-add-bt' onClick={addTag}>
+          Add
+        </button>
+        <button className='tag-add-bt' onClick={onClickHandler}>
+          Cancel
+        </button>
       </div>
       <div
         className='tag-add-button'
         style={{ display: clicked ? 'none' : 'inline-block' }}
       >
-        <button onClick={onClickHandler}>Add Tag</button>
+        <button className='tag-add-bt' onClick={onClickHandler}>
+          Add Tag
+        </button>
       </div>
     </>
   );
