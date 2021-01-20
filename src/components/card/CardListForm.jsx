@@ -104,16 +104,16 @@ const CardListForm = ({
             <button onClick={sendUpdate}>save</button>
           </div>
         ) : (
-          <div onClick={editCard}>{title}</div>
+          <div className='card-title' onClick={editCard}>
+            {title}
+          </div>
         )}
         {edit ? null : (
           <div className='card-buttons'>
             <button className='modal' onClick={clickModal}>
               modal
             </button>
-            <button className='card-delete-button' onClick={deleteCard}>
-              X
-            </button>
+            <span className='card-delete-button' onClick={deleteCard}></span>
           </div>
         )}
       </div>

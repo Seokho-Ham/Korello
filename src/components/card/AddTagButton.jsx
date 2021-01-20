@@ -20,7 +20,7 @@ const AddTagButton = ({ url, setUpdate }) => {
   };
 
   const addTag = async () => {
-    if (tagName.length === 0 && cardName.length === 0) {
+    if (tagName.length === 0 || cardName.length === 0) {
       alert('빈칸이 있습니다.');
     } else {
       const code = await postData(`${url.slice(0, url.length - 1)}`, {
@@ -55,14 +55,20 @@ const AddTagButton = ({ url, setUpdate }) => {
           value={cardName}
           onChange={onCardChangeHandler}
         />
-        <button onClick={addTag}>Add</button>
-        <button onClick={onClickHandler}>Cancel</button>
+        <button className='tag-add-bt' onClick={addTag}>
+          Add
+        </button>
+        <button className='tag-add-bt' onClick={onClickHandler}>
+          Cancel
+        </button>
       </div>
       <div
         className='tag-add-button'
         style={{ display: clicked ? 'none' : 'inline-block' }}
       >
-        <button onClick={onClickHandler}>Add Tag</button>
+        <button className='tag-add-bt' onClick={onClickHandler}>
+          Add Tag
+        </button>
       </div>
     </>
   );

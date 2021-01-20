@@ -1,11 +1,14 @@
 body,
 html {
   color: #172b4d;
+  background-color: #f9fafc;
   line-height: 20px;
   font-weight: 400;
   margin: 0px;
   width: 100%;
   height: 100%;
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #7392d6), to(#4cdcda));
+  background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
 }
 
 * {
@@ -15,6 +18,24 @@ html {
 input,
 button {
   font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 3px;
+  background-color: #fafbfc;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  font-family: Noteworthy;
 }
 
 #root {
@@ -34,6 +55,8 @@ button {
   padding-bottom: 40px;
   text-align: center;
   color: aliceblue;
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #7392d6), to(#4cdcda));
+  background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
 }
 
 #header .menu-bar {
@@ -41,21 +64,21 @@ button {
 }
 
 #header a {
-  opacity: 0.5;
-}
-
-#header a:hover {
   opacity: 1;
 }
 
+#header a:hover {
+  opacity: 0.5;
+}
+
 #header a .title-image {
-  background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+  background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
   background-repeat: no-repeat;
-  background-size: 40px 40px;
+  background-size: 60px;
   cursor: pointer;
   display: inline-block;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 60px;
 }
 
 #header a .title-name {
@@ -64,9 +87,12 @@ button {
           align-items: center;
   background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
   background-repeat: no-repeat;
-  background-size: 98px;
+  background-size: 100px;
   cursor: pointer;
   display: inline-block;
+  position: relative;
+  bottom: 4px;
+  right: 9px;
   height: 40px;
   width: 100px;
 }
@@ -77,12 +103,13 @@ button {
 }
 
 .login-title {
-  background-image: url(https://a.trellocdn.com/prgb/dist/images/pinned-tab-icon.225c8d1cf8bbf74add43.svg);
+  background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
   background-repeat: no-repeat;
-  background-size: 40px 40px;
+  background-size: 60px;
+  cursor: pointer;
   display: inline-block;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 60px;
 }
 
 .login-name {
@@ -91,8 +118,12 @@ button {
           align-items: center;
   background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
   background-repeat: no-repeat;
-  background-size: 98px;
+  background-size: 100px;
+  cursor: pointer;
   display: inline-block;
+  position: relative;
+  bottom: 4px;
+  right: 9px;
   height: 40px;
   width: 100px;
 }
@@ -153,7 +184,7 @@ button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 80px;
+  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -166,8 +197,9 @@ button {
 
 .board-title p {
   position: relative;
-  left: 10px;
-  font-size: 19px;
+  width: 80%;
+  left: 20px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -186,7 +218,9 @@ button {
 }
 
 .board-element:hover {
-  opacity: 0.5;
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #ef6678), to(#ec8c6a));
+  background: linear-gradient(to right, #ef6678 1%, #ec8c6a 100%);
+  color: #fff;
 }
 
 .board-el {
@@ -194,10 +228,10 @@ button {
 }
 
 .board-delete-button {
-  background-image: url(https://user-images.githubusercontent.com/57708971/105025377-96febf00-5a90-11eb-806b-3f82adf34d8e.png);
+  background-image: url(https://user-images.githubusercontent.com/57708971/105132203-d8917780-5b2d-11eb-98e9-8f97fbb7a9be.png);
   background-repeat: no-repeat;
-  background-size: 32px;
-  height: 40px;
+  background-size: 30px;
+  height: 30px;
   width: 30px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -207,8 +241,7 @@ button {
 }
 
 .board-delete-button:hover {
-  background-color: orange;
-  opacity: 1;
+  opacity: 0.5;
 }
 
 #board-header {
@@ -310,9 +343,91 @@ button {
   line-height: 20px;
 }
 
-#one-board {
-  padding: 20px;
-  width: auto;
+#card-list-container {
+  background-color: #f9fafc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#card-header {
+  background-color: #f9fafc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 76px;
+}
+
+#card-header-items {
+  width: 1520px;
+}
+
+#card-header .go-back {
+  display: inline;
+  position: relative;
+  top: 15px;
+}
+
+#card-header .go-back-img {
+  background-image: url(https://user-images.githubusercontent.com/57708971/105121722-226f6300-5b18-11eb-8785-0534d6bf4de6.png);
+  background-repeat: no-repeat;
+  background-size: 60px;
+  height: 60px;
+  width: 60px;
+  display: inline-block;
+  opacity: 1;
+  -webkit-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+}
+
+#card-header .go-back-img:hover {
+  opacity: 0.5;
+  -webkit-transform: rotate(15deg);
+          transform: rotate(15deg);
+}
+
+#tag-all-list {
+  background-color: #f9fafc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  overflow: scroll;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  width: 1500px;
+  min-height: 240px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
 
 .tag {
@@ -322,33 +437,52 @@ button {
   vertical-align: top;
   margin: 20px;
   background-color: #ebecf0;
+  min-width: 300px;
   width: 300px;
-  height: 100%;
+  height: auto;
   border-radius: 6px;
 }
 
 .tag-header {
-  margin: 15px 0px 0px 0px;
+  margin: 15px 0px 10px 0px;
   border-radius: 6px;
   padding: 0 0 0 20px;
   font-size: large;
   font-weight: 700;
   color: #172b4d;
   background-color: #ebecf0;
+  font-family: Noteworthy;
 }
 
 .tag-add-button {
-  vertical-align: top;
+  float: right;
+  position: relative;
+  top: 33px;
   margin: 0px 5px;
 }
 
 .tag-add-button input {
-  display: block;
+  display: inline-block;
+  margin: 2px;
+}
+
+.tag-add-button button {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 3px;
+  background-color: #fafbfc;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.tag-add-button .tag-add-bt:hover {
+  opacity: 0.5;
 }
 
 .card {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   position: relative;
   background-color: #fff;
   border-radius: 4px;
@@ -356,6 +490,18 @@ button {
   padding: 8px;
   -webkit-box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
           box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+  min-height: 40px;
+}
+
+.card-container {
+  height: 100%;
+  width: 100%;
+}
+
+.card:hover {
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #ef6678), to(#ec8c6a));
+  background: linear-gradient(to right, #ef6678 1%, #ec8c6a 100%);
+  color: #fff;
 }
 
 .card span {
@@ -366,11 +512,36 @@ button {
 }
 
 .card-delete-button {
-  margin: 0px 1px;
+  background-image: url(https://user-images.githubusercontent.com/57708971/105132203-d8917780-5b2d-11eb-98e9-8f97fbb7a9be.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  height: 30px;
+  width: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  float: right;
+  opacity: 1;
+}
+
+.card-delete-button:hover {
+  opacity: 0.5;
 }
 
 .card .modal {
   margin: 0px 1px;
+}
+
+.card .modal:hover {
+  opacity: 0.5;
+}
+
+.card-title {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  left: 5px;
+  font-size: 18px;
 }
 
 .card-labels {
@@ -390,7 +561,7 @@ button {
 .card-buttons {
   margin: 2px;
   padding: 2px;
-  position: relative;
+  float: right;
 }
 
 .new-card-form {
@@ -399,8 +570,6 @@ button {
 
 .new-card-form input {
   width: 98%;
-  border: 1px solid;
-  border-radius: 4px;
 }
 
 .new-card-form .add-button {
@@ -417,10 +586,12 @@ button {
   width: auto;
   height: auto;
   padding: 2px 0px;
+  border-radius: 3px;
 }
 
 .drop-area.drop-area-hovered {
-  background: #5abeff;
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #faf58c), to(#fafad2));
+  background: linear-gradient(to right, #faf58c 1%, #fafad2 100%);
 }
 
 .modal-container {

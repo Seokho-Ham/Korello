@@ -21,8 +21,8 @@ const BoardForm = ({ url, data, setUpdate }) => {
   return (
     <div className='board-element'>
       <span className='board-delete-button' onClick={deleteBoard}></span>
-      <div className='board-el'>
-        <div className='board-title' onClick={clickBoard}>
+      <div className='board-el' onClick={clickBoard}>
+        <div className='board-title'>
           <p>{data.name}</p>
         </div>
       </div>
