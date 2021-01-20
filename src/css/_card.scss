@@ -1,8 +1,4 @@
 #card {
-  &-container {
-    height: 100%;
-    width: 100%;
-  }
   &-list-container {
     background-color: #f9fafc;
     display: flex;
@@ -53,8 +49,6 @@
   overflow: scroll;
   align-items: flex-start;
   justify-content: left;
-  // height: 1000px;
-
   width: 1700px;
 
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
@@ -110,6 +104,10 @@
 }
 
 .card {
+  &-container {
+    height: 100%;
+    width: 100%;
+  }
   position: relative;
   background-color: #fff;
   border-radius: 4px;
