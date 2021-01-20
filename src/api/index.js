@@ -76,6 +76,9 @@ const useGetCardApi = uri => {
 
         setTagList(tags);
         setCardList(cards);
+      } else {
+        setTagList([]);
+        setCardList([]);
       }
     };
     getCard();

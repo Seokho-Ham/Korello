@@ -39,7 +39,9 @@ const CardList = ({ history, location }) => {
             })}
           </div>
         ) : (
-          <div id='tag-all-list'></div>
+          <div id='tag-all-list'>
+            <div className='no-card'>Please Make a Card</div>
+          </div>
         )}
       </div>
     </div>

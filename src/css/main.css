@@ -381,7 +381,7 @@ button {
 }
 
 #card-header-items {
-  width: 1700px;
+  width: 1520px;
 }
 
 #card-header .go-back {
@@ -424,7 +424,8 @@ button {
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
-  width: 1700px;
+  width: 1500px;
+  min-height: 240px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
           box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
@@ -511,8 +512,16 @@ button {
 }
 
 .card-delete-button {
-  margin: 0px 1px;
-  min-width: 25px;
+  background-image: url(https://user-images.githubusercontent.com/57708971/105132203-d8917780-5b2d-11eb-98e9-8f97fbb7a9be.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  height: 30px;
+  width: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  float: right;
+  opacity: 1;
 }
 
 .card-delete-button:hover {

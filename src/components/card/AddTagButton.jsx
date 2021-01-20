@@ -20,7 +20,7 @@ const AddTagButton = ({ url, setUpdate }) => {
   };
 
   const addTag = async () => {
-    if (tagName.length === 0 && cardName.length === 0) {
+    if (tagName.length === 0 || cardName.length === 0) {
       alert('빈칸이 있습니다.');
     } else {
       const code = await postData(`${url.slice(0, url.length - 1)}`, {

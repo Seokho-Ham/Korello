@@ -113,9 +113,7 @@ const CardListForm = ({
             <button className='modal' onClick={clickModal}>
               modal
             </button>
-            <button className='card-delete-button' onClick={deleteCard}>
-              X
-            </button>
+            <span className='card-delete-button' onClick={deleteCard}></span>
           </div>
         )}
       </div>

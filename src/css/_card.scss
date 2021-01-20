@@ -16,7 +16,7 @@
     justify-content: center;
     height: 76px;
     &-items {
-      width: 1700px;
+      width: 1520px;
     }
     .go-back {
       display: inline;
@@ -49,7 +49,8 @@
   overflow: scroll;
   align-items: flex-start;
   justify-content: left;
-  width: 1700px;
+  width: 1500px;
+  min-height: 240px;
 
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
@@ -127,9 +128,15 @@
     display: inline;
   }
   &-delete-button {
-    margin: 0px 1px;
-    min-width: 25px;
-    // float: right;
+    background-image: url(https://user-images.githubusercontent.com/57708971/105132203-d8917780-5b2d-11eb-98e9-8f97fbb7a9be.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    float: right;
+    opacity: 1;
+
     &:hover {
       opacity: 0.5;
     }
