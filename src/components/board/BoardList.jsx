@@ -6,6 +6,7 @@ import NewBoardForm from './NewBoardForm';
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
   const [display, setDisplay] = useState(false);
+
   const [data] = useGetApi('get', '/boards', update);
 
   const onClickHandler = () => {
@@ -28,35 +29,44 @@ const BoardList = ({ match }) => {
   };
   return (
     <div id='board-container'>
-      <div id='board-header'>
-        <div id='board-header-items'>
-          <h2>Board Lists</h2>
-          <div id='board-button'>
-            <span id='board-add-button'>
+      <div id='board-sidebar'>
+        <nav className='board-sidebar-nav'>
+          <div className='nav1'>
+            <a className='board-sidebar-boards' href='/boards'>
+              Boards
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div id='board-list-container'>
+        <div>
+          <div className='list-type'>
+            <span className='workspace'></span>
+            <h3>Workspace</h3>
+          </div>
+          <div id='board-list'>
+            {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
+            <div
+              className='board-element'
+              // style={{ backgroundImage: ` url(${image}) ` }}
+            >
+              <div
+                className='board-el-newform'
+                onClick={onClickHandler}
+                style={{ display: display ? 'none' : 'block' }}
+              >
+                <div className='board-title-newform'>
+                  <div>Create New Board</div>
+                </div>
+              </div>
               <NewBoardForm
                 onClickHandler={onClickHandler}
                 setUpdate={setUpdate}
                 display={display}
               />
-              <button
-                className='board-add-bt'
-                onClick={onClickHandler}
-                style={{ display: display ? 'none' : 'block' }}
-              >
-                Add Board
-              </button>
-            </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div id='board-list-container'>
-        {data.length > 0 ? (
-          <>
-            <div id='board-list'>{renderBoards()}</div>
-          </>
-        ) : (
-          <div id='board-list'>데이터가 없습니다.</div>
-        )}
       </div>
     </div>
   );

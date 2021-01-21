@@ -14,9 +14,8 @@ const LoginPage = ({ refreshToken }) => {
     <Redirect to='/boards' />
   ) : (
     <div className='login-page'>
-      <div className='login-header'>
-        <span className='login-title'></span>
-        <span className='login-name'></span>
+      <div id='header'>
+        <span className='login-title-image'></span>
       </div>
       <div className='login-container'>
         <div className='login-input'>

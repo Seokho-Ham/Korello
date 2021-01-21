@@ -1,19 +1,25 @@
+@mixin container-sets(
+  $display: flex,
+  $fd: row,
+  $alignItems: flex-start,
+  $justify: center
+) {
+  display: $display;
+  flex-direction: $fd;
+  align-items: $alignItems;
+  justify-content: $justify;
+}
+
 #card {
   &-list-container {
+    @include container-sets();
     background-color: #f9fafc;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
     height: 100%;
     width: 100%;
   }
   &-header {
+    @include container-sets();
     background-color: #f9fafc;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
     height: 76px;
     &-items {
       width: 1520px;
@@ -52,7 +58,6 @@
   justify-content: left;
   width: 1550px;
   height: 600px;
-
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
 

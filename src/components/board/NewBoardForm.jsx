@@ -37,24 +37,26 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
   };
 
   return (
-    <span
-      className='add-board-form'
+    <div
+      className='board-el-newform'
       style={{ display: display ? 'block' : 'none' }}
     >
-      <input
-        ref={inputRef}
-        placeholder='board name'
-        value={boardName}
-        onChange={onChangeHandler}
-        onKeyPress={keyHandler}
-      />
-      <button className='board-add-bt' onClick={addBoard}>
-        Add
-      </button>
-      <button className='board-add-bt' onClick={onClickHandler}>
-        Cancel
-      </button>
-    </span>
+      <div className='board-title-newform'>
+        <input
+          ref={inputRef}
+          placeholder='board name'
+          value={boardName}
+          onChange={onChangeHandler}
+          onKeyPress={keyHandler}
+        />
+        <button className='board-add-bt' onClick={addBoard}>
+          Add
+        </button>
+        <button className='board-add-bt' onClick={onClickHandler}>
+          Cancel
+        </button>
+      </div>
+    </div>
   );
 };
 

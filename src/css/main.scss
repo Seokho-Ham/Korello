@@ -14,11 +14,10 @@ body {
 * {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
     Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-  //
 }
 input,
 button {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   padding: 3px;
@@ -28,16 +27,9 @@ button {
   margin: 3px;
   cursor: pointer;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button {
-  font-family: Noteworthy;
+a {
+  text-decoration: none;
 }
-
 #root {
   width: 100%;
   height: 100%;
@@ -50,16 +42,14 @@ button {
 // }
 
 #header {
-  background-color: #f9fafc;
-  display: block;
-  height: 43px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  background-color: #026aa7;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  max-height: 40px;
+  overflow: hidden;
   text-align: center;
-  color: aliceblue;
-  background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
+  padding: 4px;
   .menu-bar {
     width: 45%;
   }
@@ -68,31 +58,17 @@ button {
     &:hover {
       opacity: 0.5;
     }
-    .title-image {
-      background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
-      background-repeat: no-repeat;
-      background-size: 60px;
-      cursor: pointer;
-      display: inline-block;
-      height: 50px;
-      width: 60px;
-    }
-    .title-name {
-      align-items: center;
-      background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
-      background-repeat: no-repeat;
-      background-size: 100px;
-      cursor: pointer;
-      display: inline-block;
-      position: relative;
-      bottom: 4px;
-      right: 9px;
-      height: 40px;
-      width: 100px;
-    }
+  }
+  .title-image {
+    background-image: url('/src/assets/img/title-logo.png');
+    background-repeat: no-repeat;
+    background-size: 120px;
+    cursor: pointer;
+    display: inline-block;
+    height: 33px;
+    width: 120px;
   }
 }
 @import './login';
 @import './board';
-@import './card';
 @import './modal';
