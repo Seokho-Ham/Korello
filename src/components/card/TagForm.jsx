@@ -35,30 +35,32 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   });
 
   return (
-    <div className='tag'>
-      <div className='tag-header'>{tag}</div>
-      <div
-        className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
-        ref={drop}
-      >
-        {data
-          .sort((a, b) => a.id - b.id)
-          .map(el => {
-            return (
-              <CardListForm
-                key={el.id}
-                id={el.id}
-                title={el.name}
-                memberNames={el.memberNames}
-                labels={el.labels}
-                tag={tag}
-                url={boardUrl}
-                setUpdate={setUpdate}
-              />
-            );
-          })}
+    <div className='tag-wrapper'>
+      <div className='tag'>
+        <div className='tag-header'>{tag}</div>
+        <div
+          className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
+          ref={drop}
+        >
+          {data
+            .sort((a, b) => a.id - b.id)
+            .map(el => {
+              return (
+                <CardListForm
+                  key={el.id}
+                  id={el.id}
+                  title={el.name}
+                  memberNames={el.memberNames}
+                  labels={el.labels}
+                  tag={tag}
+                  url={boardUrl}
+                  setUpdate={setUpdate}
+                />
+              );
+            })}
+        </div>
+        <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
       </div>
-      <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
     </div>
   );
 };

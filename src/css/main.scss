@@ -36,39 +36,8 @@ a {
   position: relative;
   z-index: 1;
 }
-// .container {
-//   width: 100%;
-//   height: 100%;
-// }
 
-#header {
-  background-color: #026aa7;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  max-height: 40px;
-  overflow: hidden;
-  text-align: center;
-  padding: 4px;
-  .menu-bar {
-    width: 45%;
-  }
-  a {
-    opacity: 1;
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-  .title-image {
-    background-image: url('/src/assets/img/title-logo.png');
-    background-repeat: no-repeat;
-    background-size: 120px;
-    cursor: pointer;
-    display: inline-block;
-    height: 33px;
-    width: 120px;
-  }
-}
+@import './nav';
 @import './login';
 @import './board';
 @import './modal';

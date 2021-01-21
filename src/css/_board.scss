@@ -42,7 +42,7 @@
     }
   }
   &-element {
-    margin: 14px;
+    margin: 10px;
     margin-top: 20px;
     float: left;
     width: 193px;
@@ -132,19 +132,18 @@
     }
   }
   &-list-container {
-    @include container-sets();
     background-color: #f9fafc;
-    margin: 40px 12px 0px;
+    margin: 40px 15px 0px;
     width: 100%;
-    max-width: 825px;
+    max-width: 860px;
     min-width: 288px;
   }
   &-list {
-    justify-content: center;
-    align-items: center;
-    display: inline;
-    width: 920px;
-    height: 530px;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 288px;
+    width: 860px;
+    max-height: 700px;
     overflow: auto;
     @media screen {
     }

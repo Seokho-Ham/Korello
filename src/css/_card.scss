@@ -12,66 +12,51 @@
 
 #card {
   &-list-container {
-    @include container-sets();
-    background-color: #f9fafc;
+    position: absolute;
     height: 100%;
     width: 100%;
   }
   &-header {
-    @include container-sets();
-    background-color: #f9fafc;
-    height: 76px;
+    height: 36px;
     &-items {
       width: 1520px;
       height: 100%;
-    }
-    .go-back {
-      display: inline;
-      position: relative;
-      top: 15px;
-      &-img {
-        background-image: url('/src/assets/img/arrow-icon.png');
-        background-repeat: no-repeat;
-        background-size: 60px;
-        height: 60px;
-        width: 60px;
-        display: inline-block;
-        opacity: 1;
-        transition: all ease 0.5s;
-        cursor: pointer;
-        &:hover {
-          opacity: 0.5;
-
-          transform: rotate(15deg);
-        }
-      }
     }
   }
 }
 
 #tag-all-list {
-  background-color: #f9fafc;
-  display: flex;
-  flex-direction: row;
-  overflow: scroll;
-  align-items: flex-start;
-  justify-content: left;
-  width: 1550px;
-  height: 600px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding-bottom: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
 }
-
-.tag {
+.tag-wrapper {
+  width: 272px;
+  margin: 0 4px;
+  height: 100%;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
-  margin: 20px;
+  white-space: nowrap;
+}
+.tag {
   background-color: #ebecf0;
-  min-width: 300px;
-  width: 300px;
-  max-height: 550px;
-  border-radius: 6px;
-
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  overflow-y: auto;
   &-header {
     margin: 15px 0px 10px 0px;
     border-radius: 6px;
@@ -83,9 +68,8 @@
     font-family: Noteworthy;
   }
   &-add-button {
-    float: right;
     position: relative;
-    bottom: 33px;
+
     margin: 0px 5px;
     input {
       display: inline-block;
@@ -114,6 +98,7 @@
   &-container {
     height: 100%;
     width: 100%;
+    overflow-y: auto;
   }
   position: relative;
   background-color: #fff;
@@ -157,9 +142,9 @@
   &-title {
     display: inline-block;
     position: relative;
-    top: 4px;
-    left: 4px;
-    font-size: 18px;
+    top: 1px;
+    left: 3px;
+    font-size: 16px;
   }
   &-labels {
     overflow: auto;
@@ -175,7 +160,6 @@
     }
   }
   &-buttons {
-    // display: inline-block;
     position: relative;
     bottom: 8px;
     margin: 2px;
@@ -185,23 +169,23 @@
 }
 
 .new-card-form {
-  margin: 10px;
   input {
-    width: 98%;
+    width: 93%;
   }
   .add-button {
-    margin-left: 0px;
-    margin-bottom: 0px;
+    margin: 0px 5px 10px 5px;
   }
 }
 .add-button {
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 0px 5px 10px 5px;
+  button {
+    margin: 0px;
+  }
 }
 
 .drop-area {
   width: auto;
-  height: 385px;
+  max-height: 860px;
   padding: 2px 0px;
   overflow: scroll;
   border-radius: 3px;

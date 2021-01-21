@@ -39,32 +39,30 @@ const BoardList = ({ match }) => {
         </nav>
       </div>
       <div id='board-list-container'>
-        <div>
-          <div className='list-type'>
-            <span className='workspace'></span>
-            <h3>Workspace</h3>
-          </div>
-          <div id='board-list'>
-            {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
+        <div className='list-type'>
+          <span className='workspace'></span>
+          <h3>Workspace</h3>
+        </div>
+        <div id='board-list'>
+          {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
+          <div
+            className='board-element'
+            // style={{ backgroundImage: ` url(${image}) ` }}
+          >
             <div
-              className='board-element'
-              // style={{ backgroundImage: ` url(${image}) ` }}
+              className='board-el-newform'
+              onClick={onClickHandler}
+              style={{ display: display ? 'none' : 'block' }}
             >
-              <div
-                className='board-el-newform'
-                onClick={onClickHandler}
-                style={{ display: display ? 'none' : 'block' }}
-              >
-                <div className='board-title-newform'>
-                  <div>Create New Board</div>
-                </div>
+              <div className='board-title-newform'>
+                <div>Create New Board</div>
               </div>
-              <NewBoardForm
-                onClickHandler={onClickHandler}
-                setUpdate={setUpdate}
-                display={display}
-              />
             </div>
+            <NewBoardForm
+              onClickHandler={onClickHandler}
+              setUpdate={setUpdate}
+              display={display}
+            />
           </div>
         </div>
       </div>
