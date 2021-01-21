@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import queryString from 'query-string';
 import { setAccessToken } from '../api/index';
 import { Redirect } from 'react-router-dom';
 
-const LoginPage = ({ refreshToken, setLogin }) => {
+const LoginPage = ({ refreshToken }) => {
   if (queryString.parse(window.location.search).accessToken) {
     console.log(queryString.parse(window.location.search).accessToken);
     setAccessToken(queryString.parse(window.location.search).accessToken);
@@ -41,6 +41,7 @@ const LoginPage = ({ refreshToken, setLogin }) => {
           <img
             src='//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg'
             width='222'
+            alt='login'
           />
         </a>
         <hr />

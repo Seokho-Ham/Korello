@@ -11,7 +11,7 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
 
   const progressCalculator = data => {
     let count = 0;
-    data.map(el => {
+    data.forEach(el => {
       if (el.status) {
         count++;
       }
@@ -69,7 +69,6 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             />
             <CheckListModal id={id} setUpdate={setModalUpdate} />
             <CalendarModal />
-            <div>CheckList, Duedate, Calendar</div>
           </div>
         </div>
       </div>

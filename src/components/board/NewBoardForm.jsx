@@ -20,7 +20,7 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
       const code = await postData('/board', {
         name: boardName,
       });
-      console.log(code);
+
       if (code === 201) {
         setBoardName('');
         onClickHandler();
