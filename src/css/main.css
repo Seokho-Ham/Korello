@@ -114,6 +114,29 @@ a {
   background-color: #f9fafc;
 }
 
+.login-header {
+  background-color: #026aa7;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  max-height: 40px;
+  overflow: hidden;
+  text-align: center;
+  padding: 4px;
+}
+
 .login-title-image {
   background-image: url("/src/assets/img/title-logo.png");
   background-repeat: no-repeat;

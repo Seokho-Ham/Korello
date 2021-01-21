@@ -3,6 +3,18 @@
     height: 100%;
     background-color: #f9fafc;
   }
+  &-header {
+    background-color: #026aa7;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-height: 40px;
+    overflow: hidden;
+    text-align: center;
+    padding: 4px;
+  }
   &-title-image {
     background-image: url('/src/assets/img/title-logo.png');
     background-repeat: no-repeat;
