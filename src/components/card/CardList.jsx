@@ -15,9 +15,9 @@ const CardList = ({ history, location }) => {
       <div id='card-header'>
         <div id='card-header-items'>
           <div className='go-back'>
-            <a className='go-back-button' onClick={onClickHandler}>
-              <span className='go-back-img'></span>
-            </a>
+            <div className='go-back-button'>
+              <span className='go-back-img' onClick={onClickHandler}></span>
+            </div>
           </div>
           <AddTagButton url={location.pathname} setUpdate={setUpdate} />
         </div>

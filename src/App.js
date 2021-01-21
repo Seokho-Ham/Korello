@@ -10,7 +10,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import axios from 'axios';
 
 const App = () => {
   const onSilentRefresh = async token => {

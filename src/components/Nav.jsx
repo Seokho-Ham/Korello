@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Nav = () => {
-  const onClickHandler = e => {
-    e.preventDefault();
-  };
+  // const onClickHandler = e => {
+  //   e.preventDefault();
+  // };
 
   return (
     <div id='header'>

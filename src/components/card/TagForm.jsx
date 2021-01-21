@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
 import { useUpdateApi } from '../../api/index';
@@ -7,7 +7,7 @@ import { useDrop } from 'react-dnd';
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
   const [updateData] = useUpdateApi();
 
-  const appendItem = useCallback(async item => {
+  const appendItem = async item => {
     if (item.tagValue !== tag) {
       const code = await updateData(
         boardUrl.slice(0, boardUrl.length - 1) + '/tag',
@@ -22,7 +22,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         alert('이동 실패');
       }
     }
-  });
+  };
 
   const [{ hovered }, drop] = useDrop({
     accept: 'card',
@@ -41,7 +41,6 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
         ref={drop}
       >
-        {console.log(data)}
         {data
           .sort((a, b) => a.id - b.id)
           .map(el => {

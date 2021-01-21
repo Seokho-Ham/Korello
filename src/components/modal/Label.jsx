@@ -66,7 +66,7 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
 
   const checkOverlap = (arr, id) => {
     let result = false;
-    arr.map(el => {
+    arr.forEach(el => {
       if (el.id === id) {
         result = true;
       }
@@ -93,7 +93,7 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
 
   const newRenderColors = () => {
     let colorlist = {};
-    data.map(el => {
+    data.forEach(el => {
       colorlist[el.color] = data.indexOf(el);
     });
 
