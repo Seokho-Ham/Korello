@@ -13,16 +13,18 @@ const BoardList = ({ match }) => {
   };
 
   const renderBoards = () => {
-    return data.map(el => {
-      return (
-        <BoardForm
-          key={el.id}
-          url={match.path}
-          data={el}
-          setUpdate={setUpdate}
-        />
-      );
-    });
+    return data
+      .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
+      .map(el => {
+        return (
+          <BoardForm
+            key={el.id}
+            url={match.path}
+            data={el}
+            setUpdate={setUpdate}
+          />
+        );
+      });
   };
   return (
     <div id='board-container'>
