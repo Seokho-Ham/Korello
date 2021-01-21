@@ -26,7 +26,6 @@
     width: 100px;
   }
   &-header {
-    background-color: #f9fafc;
     display: block;
     height: 43px;
     margin-left: auto;
@@ -34,6 +33,7 @@
     padding-top: 40px;
     padding-bottom: 40px;
     text-align: center;
+    background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
   }
   &-input {
     margin-top: 30px;

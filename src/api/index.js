@@ -4,6 +4,7 @@ import axios from 'axios';
 const serverUrl = 'http://222.117.225.28:8080/api/v1';
 let accessToken = '';
 const setAccessToken = token => {
+  console.log(token);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
