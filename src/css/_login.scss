@@ -4,7 +4,7 @@
     background-color: #f9fafc;
   }
   &-title {
-    background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
+    background-image: url('/src/assets/img/title-icon.png');
     background-repeat: no-repeat;
     background-size: 60px;
     cursor: pointer;
@@ -14,7 +14,7 @@
   }
   &-name {
     align-items: center;
-    background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
+    background-image: url('/src/assets/img/title-name.png');
     background-repeat: no-repeat;
     background-size: 100px;
     cursor: pointer;

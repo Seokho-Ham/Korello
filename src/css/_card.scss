@@ -23,7 +23,7 @@
       position: relative;
       top: 15px;
       &-img {
-        background-image: url(https://user-images.githubusercontent.com/57708971/105121722-226f6300-5b18-11eb-8785-0534d6bf4de6.png);
+        background-image: url('/src/assets/img/arrow-icon.png');
         background-repeat: no-repeat;
         background-size: 60px;
         height: 60px;
@@ -128,7 +128,7 @@
     display: inline;
   }
   &-delete-button {
-    background-image: url(https://user-images.githubusercontent.com/57708971/105132203-d8917780-5b2d-11eb-98e9-8f97fbb7a9be.png);
+    background-image: url('/src/assets/img/delete-icon.png');
     background-repeat: no-repeat;
     background-size: 30px;
     height: 30px;
