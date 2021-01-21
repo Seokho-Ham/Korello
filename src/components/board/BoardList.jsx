@@ -39,6 +39,7 @@ const BoardList = ({ match }) => {
                 display={display}
               />
               <button
+                className='board-add-bt'
                 onClick={onClickHandler}
                 style={{ display: display ? 'none' : 'block' }}
               >

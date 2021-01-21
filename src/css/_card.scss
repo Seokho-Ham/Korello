@@ -17,6 +17,7 @@
     height: 76px;
     &-items {
       width: 1520px;
+      height: 100%;
     }
     .go-back {
       display: inline;
@@ -31,7 +32,7 @@
         display: inline-block;
         opacity: 1;
         transition: all ease 0.5s;
-
+        cursor: pointer;
         &:hover {
           opacity: 0.5;
 
@@ -49,8 +50,8 @@
   overflow: scroll;
   align-items: flex-start;
   justify-content: left;
-  width: 1500px;
-  min-height: 240px;
+  width: 1550px;
+  height: 600px;
 
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
@@ -63,7 +64,7 @@
   background-color: #ebecf0;
   min-width: 300px;
   width: 300px;
-  height: auto;
+  max-height: 550px;
   border-radius: 6px;
 
   &-header {
@@ -79,7 +80,7 @@
   &-add-button {
     float: right;
     position: relative;
-    top: 33px;
+    bottom: 33px;
     margin: 0px 5px;
     input {
       display: inline-block;
@@ -151,15 +152,16 @@
   &-title {
     display: inline-block;
     position: relative;
-    top: 10px;
-    left: 5px;
+    top: 4px;
+    left: 4px;
     font-size: 18px;
   }
   &-labels {
     overflow: auto;
     position: relative;
+    min-height: 8px;
     span {
-      margin: 2px;
+      margin: 0px 2px 2px 2px;
       padding: 1px, 2px;
       border-radius: 10px;
       float: left;
@@ -169,6 +171,8 @@
   }
   &-buttons {
     // display: inline-block;
+    position: relative;
+    bottom: 8px;
     margin: 2px;
     padding: 2px;
     float: right;
@@ -192,9 +196,9 @@
 
 .drop-area {
   width: auto;
-  height: auto;
+  height: 385px;
   padding: 2px 0px;
-
+  overflow: scroll;
   border-radius: 3px;
   &.drop-area-hovered {
     // background: linear-gradient(to right, #94eb3e 1%, #cbff75 100%);

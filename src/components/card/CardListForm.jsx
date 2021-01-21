@@ -97,7 +97,9 @@ const CardListForm = ({
                 ></span>
               ))}
           </div>
-        ) : null}
+        ) : (
+          <div className='card-labels'></div>
+        )}
         {edit ? (
           <div className='card-input'>
             <input value={cardTitle} onChange={inputHandler} />

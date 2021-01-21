@@ -9,6 +9,10 @@ html {
   height: 100%;
 }
 
+body {
+  overflow: hidden;
+}
+
 * {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -243,6 +247,10 @@ button {
   opacity: 0.5;
 }
 
+.board-add-bt:hover {
+  opacity: 0.5;
+}
+
 #board-header {
   background-color: #f9fafc;
   display: -webkit-box;
@@ -317,29 +325,7 @@ button {
 
 #board-add-button {
   margin: 20px;
-  display: inline;
-}
-
-#board-add-button button {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 20px;
-  padding: 3px;
-  background-color: #fafbfc;
-  border: 2px solid #dfe1e6;
-  border-radius: 3px;
-  margin: 3px;
-  cursor: pointer;
-}
-
-#board-add-button:hover {
-  opacity: 0.5;
-}
-
-#board-add-button input {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 20px;
+  display: inline-block;
 }
 
 #card-list-container {
@@ -381,6 +367,7 @@ button {
 
 #card-header-items {
   width: 1520px;
+  height: 100%;
 }
 
 #card-header .go-back {
@@ -399,6 +386,7 @@ button {
   opacity: 1;
   -webkit-transition: all ease 0.5s;
   transition: all ease 0.5s;
+  cursor: pointer;
 }
 
 #card-header .go-back-img:hover {
@@ -423,8 +411,8 @@ button {
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
-  width: 1500px;
-  min-height: 240px;
+  width: 1550px;
+  height: 600px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
           box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
 }
@@ -438,7 +426,7 @@ button {
   background-color: #ebecf0;
   min-width: 300px;
   width: 300px;
-  height: auto;
+  max-height: 550px;
   border-radius: 6px;
 }
 
@@ -456,7 +444,7 @@ button {
 .tag-add-button {
   float: right;
   position: relative;
-  top: 33px;
+  bottom: 33px;
   margin: 0px 5px;
 }
 
@@ -538,18 +526,19 @@ button {
 .card-title {
   display: inline-block;
   position: relative;
-  top: 10px;
-  left: 5px;
+  top: 4px;
+  left: 4px;
   font-size: 18px;
 }
 
 .card-labels {
   overflow: auto;
   position: relative;
+  min-height: 8px;
 }
 
 .card-labels span {
-  margin: 2px;
+  margin: 0px 2px 2px 2px;
   padding: 1px, 2px;
   border-radius: 10px;
   float: left;
@@ -558,6 +547,8 @@ button {
 }
 
 .card-buttons {
+  position: relative;
+  bottom: 8px;
   margin: 2px;
   padding: 2px;
   float: right;
@@ -583,8 +574,9 @@ button {
 
 .drop-area {
   width: auto;
-  height: auto;
+  height: 385px;
   padding: 2px 0px;
+  overflow: scroll;
   border-radius: 3px;
 }
 
@@ -598,12 +590,16 @@ button {
           box-sizing: border-box;
   display: block;
   position: fixed;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 999;
+  z-index: 2;
 }
 
 .modal-wrapper {
@@ -615,7 +611,7 @@ button {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 3;
   overflow: auto;
   outline: 0;
 }
@@ -623,17 +619,18 @@ button {
 .modal-inner {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  display: block;
   position: relative;
   -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
-  height: 800px;
-  top: 50%;
+  height: 700px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  margin: 0 auto;
+  margin: 0px auto;
+  margin-top: 600px;
   padding: 30px 20px;
 }
 

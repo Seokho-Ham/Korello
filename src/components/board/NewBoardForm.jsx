@@ -48,8 +48,12 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
         onChange={onChangeHandler}
         onKeyPress={keyHandler}
       />
-      <button onClick={addBoard}>Add</button>
-      <button onClick={onClickHandler}>Cancel</button>
+      <button className='board-add-bt' onClick={addBoard}>
+        Add
+      </button>
+      <button className='board-add-bt' onClick={onClickHandler}>
+        Cancel
+      </button>
     </span>
   );
 };
