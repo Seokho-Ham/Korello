@@ -4,10 +4,8 @@
 현재 레파지토리는 프론트의 코드만을 가지고 있습니다.
 
 ### 참여자
----
 함석호(Frontend), 강동혁(Backend)
 
 ### 서비스 url
----
 http://ec2-15-164-153-156.ap-northeast-2.compute.amazonaws.com/
 
