@@ -11,17 +11,17 @@
 }
 
 #card {
-  &-list-container {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
   &-header {
+    position: relative;
     height: 36px;
     &-items {
-      width: 1520px;
       height: 100%;
     }
+  }
+  &-list-container {
+    position: absolute;
+    height: 95%;
+    width: 100%;
   }
 }
 
@@ -29,10 +29,10 @@
   white-space: nowrap;
   margin-bottom: 8px;
   overflow-x: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-bottom: 8px;
   position: absolute;
-  top: 0;
+  top: 8px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -40,8 +40,8 @@
 }
 .tag-wrapper {
   width: 272px;
-  margin: 0 4px;
-  height: 100%;
+  margin: 10px 10px;
+  height: 90%;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
@@ -53,7 +53,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  max-height: 90%;
   position: relative;
   white-space: normal;
   overflow-y: auto;
@@ -65,12 +65,10 @@
     font-weight: 700;
     color: #172b4d;
     background-color: #ebecf0;
-    font-family: Noteworthy;
   }
   &-add-button {
     position: relative;
-
-    margin: 0px 5px;
+    margin: 4px 7px;
     input {
       display: inline-block;
       margin: 2px;
@@ -99,6 +97,14 @@
     height: 100%;
     width: 100%;
     overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex: 1 1 0%;
+    overflow-y: auto;
+    background-image: url('/src/api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
   position: relative;
   background-color: #fff;

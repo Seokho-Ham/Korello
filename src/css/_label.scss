@@ -1,3 +1,36 @@
 .add-card-label-button {
   margin: 2px 0px;
 }
+
+.label {
+  &-modal {
+    overflow: auto;
+  }
+  &-list {
+    display: flex;
+  }
+  &-el {
+    color: #fff;
+    display: inline-block;
+    margin: 2px;
+    width: 180px;
+    height: 20px;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  &-el-colors {
+    color: #fff;
+    display: inline-block;
+    margin: 1px;
+    padding: 3px;
+    width: 180px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  &-input-title {
+    width: 175px;
+    border-radius: 3px;
+  }
+}

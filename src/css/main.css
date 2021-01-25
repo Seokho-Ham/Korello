@@ -187,29 +187,29 @@ a {
   width: 370px;
 }
 
-#card-list-container {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
-
 #card-header {
+  position: relative;
   height: 36px;
 }
 
 #card-header-items {
-  width: 1520px;
   height: 100%;
+}
+
+#card-list-container {
+  position: absolute;
+  height: 95%;
+  width: 100%;
 }
 
 #tag-all-list {
   white-space: nowrap;
   margin-bottom: 8px;
   overflow-x: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-bottom: 8px;
   position: absolute;
-  top: 0;
+  top: 8px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -218,8 +218,8 @@ a {
 
 .tag-wrapper {
   width: 272px;
-  margin: 0 4px;
-  height: 100%;
+  margin: 10px 10px;
+  height: 90%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   display: inline-block;
@@ -239,7 +239,7 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-height: 100%;
+  max-height: 90%;
   position: relative;
   white-space: normal;
   overflow-y: auto;
@@ -253,12 +253,11 @@ a {
   font-weight: 700;
   color: #172b4d;
   background-color: #ebecf0;
-  font-family: Noteworthy;
 }
 
 .tag-add-button {
   position: relative;
-  margin: 0px 5px;
+  margin: 4px 7px;
 }
 
 .tag-add-button input {
@@ -297,6 +296,20 @@ a {
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0%;
+          flex: 1 1 0%;
+  overflow-y: auto;
+  background-image: url("/src/api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .card:hover {
@@ -677,13 +690,13 @@ a {
 .checkList-modal {
   display: block;
   position: relative;
-  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 5px;
   top: 50%;
-  margin: 2px auto;
-  padding: 30px 20px;
+  margin: 1px auto;
+  padding: 25px 8px;
 }
 
 .checklist-container {
@@ -723,16 +736,20 @@ a {
   transition: width 0.2s ease-in-out;
 }
 
+.checklist-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .checklist-item {
   margin-bottom: 10px;
 }
 
 .checklist-item-title {
+  display: inline-block;
+  width: 395px;
   margin-left: 10px;
-}
-
-.checklist-delete {
-  float: right;
 }
 
 .checklist-add-button input {
@@ -749,5 +766,42 @@ a {
 
 .add-card-label-button {
   margin: 2px 0px;
+}
+
+.label-modal {
+  overflow: auto;
+}
+
+.label-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.label-el {
+  color: #fff;
+  display: inline-block;
+  margin: 2px;
+  width: 180px;
+  height: 20px;
+  padding: 3px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.label-el-colors {
+  color: #fff;
+  display: inline-block;
+  margin: 1px;
+  padding: 3px;
+  width: 180px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.label-input-title {
+  width: 175px;
+  border-radius: 3px;
 }
 /*# sourceMappingURL=main.css.map */

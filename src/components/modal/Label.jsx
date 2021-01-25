@@ -21,9 +21,11 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     setOpenLabel(p => !p);
   };
   const selectButton = e => {
-    setSelectColor(e.target.className);
+    setSelectColor(e.target.getAttribute('name'));
   };
   const handleDisplay = () => {
+    setLabelName('');
+    setSelectColor('');
     setDisplay(p => !p);
   };
 
@@ -102,57 +104,35 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
         let value = data[colorlist[el.color]];
 
         return (
-          <div
-            key={i}
-            style={{
-              display: 'flex',
-            }}
-          >
+          <div className='label-list' key={i}>
             <span
-              // key={i}
               id={value.id}
-              className={value.color}
+              className='label-el'
+              name={value.color}
               style={{
                 backgroundColor: value.color,
-                color: '#fff',
-                display: 'block',
-                // float: 'left',
-                margin: '2px',
-                width: '160px',
-                height: '20px',
-                padding: '3px',
-                cursor: 'pointer',
-                borderRadius: '3px',
               }}
               onClick={addCardLabelButton}
             >
               {value.name}
             </span>
-            <button
+            {/* <button
               name={value.id}
               onClick={deleteLabel}
-              style={{ float: 'right' }}
+              style={{ height: '25px' }}
             >
               X
-            </button>
+            </button> */}
           </div>
         );
       } else {
         return (
-          <div key={i} style={{ display: 'flex' }}>
+          <div className='label-list' key={i}>
             <span
-              // key={i}
-              className={el.color}
+              className='label-el-colors'
+              name={el.color}
               style={{
                 backgroundColor: el.color,
-                color: '#fff',
-                display: 'inline-block',
-                margin: '1px',
-                padding: '3px',
-                width: '160px',
-                height: '20px',
-                cursor: 'pointer',
-                borderRadius: '3px',
               }}
               onClick={selectButton}
             ></span>
@@ -165,19 +145,19 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     <div className='add-card-label-button'>
       <button onClick={openLabelButton}>Label</button>
       {openLabel ? (
-        <div className='label-modal' style={{ overflow: 'auto' }}>
+        <div className='label-modal'>
           {newRenderColors()}
           <div
             className='label-form'
             style={{ display: display ? 'block' : 'none' }}
           >
             <input
+              className='label-input-title'
               value={labelName}
               onChange={onChangeHandler}
               style={{
                 backgroundColor: selectColor,
-                width: '160px',
-                borderRadius: '3px',
+
                 color: selectColor === '' ? 'black' : '#fff',
               }}
               placeholder='title'

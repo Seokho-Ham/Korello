@@ -32,15 +32,18 @@
       }
     }
   }
+  &-inner {
+    display: flex;
+  }
   &-item {
     margin-bottom: 10px;
     &-title {
+      display: inline-block;
+      width: 395px;
       margin-left: 10px;
     }
   }
-  &-delete {
-    float: right;
-  }
+
   &-add-button {
     input {
       display: block;
