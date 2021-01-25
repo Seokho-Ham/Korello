@@ -41,6 +41,24 @@ a {
   z-index: 1;
 }
 
+.container {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: url("/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 #header {
   background-color: #026aa7;
   -webkit-box-sizing: border-box;
@@ -188,11 +206,21 @@ a {
 }
 
 #card-header {
-  height: 45px;
+  height: 50px;
 }
 
 #card-header-items {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #card-list-container {
@@ -291,7 +319,6 @@ a {
 
 .card-container {
   height: 100%;
-  width: 100%;
   overflow-y: auto;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -304,9 +331,6 @@ a {
       -ms-flex: 1 1 0%;
           flex: 1 1 0%;
   overflow-y: auto;
-  background-image: url("/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
 .card:hover {
@@ -815,5 +839,130 @@ a {
 .label-input-title {
   width: 175px;
   border-radius: 3px;
+}
+
+.log-button {
+  display: inline-block;
+}
+
+.log-img {
+  display: inline-block;
+  background-image: url("/src/assets/img/logs.png");
+  background-size: 28px;
+  width: 29px;
+  height: 28px;
+  border-radius: 3px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.log-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 300px;
+  height: 100%;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 12px 24px -6px rgba(9, 30, 66, 0.25);
+          box-shadow: 0 12px 24px -6px rgba(9, 30, 66, 0.25);
+  background-color: aliceblue;
+  -webkit-transition: width 0.3s ease-in;
+  transition: width 0.3s ease-in;
+  right: 0;
+  background-color: #f4f5f7;
+}
+
+.log-container hr {
+  position: relative;
+  left: 15px;
+  size: 10px;
+  background-color: rgba(9, 30, 66, 0.13);
+  border: 0;
+  height: 1px;
+  margin: 16px 0;
+  padding: 0;
+  width: 90%;
+}
+
+.log-header {
+  width: 100%;
+  text-align: center;
+  height: 60px;
+}
+
+.log-header .log-close {
+  vertical-align: top;
+  position: relative;
+  bottom: 50px;
+  left: 145px;
+  height: 30px;
+  width: 30px;
+  font-size: large;
+}
+
+.log-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+.log-element {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.log-profile {
+  background-image: url("/src/assets/img/profile.png");
+  background-size: 35px;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 35px;
+  margin: 0px 15px;
+}
+
+.log-time {
+  font-size: small;
+}
+
+.log-type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 14px 15px;
+}
+
+.log-type span {
+  display: inline-block;
+  background-image: url("/src/assets/img/activity.png");
+  background-size: 25px;
+  background-repeat: no-repeat;
+  width: 27px;
+  height: 25px;
+}
+
+.log-type h4 {
+  display: inline;
+  margin: 0px 5px;
 }
 /*# sourceMappingURL=main.css.map */

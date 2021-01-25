@@ -12,10 +12,13 @@
 
 #card {
   &-header {
-    height: 45px;
+    height: 50px;
 
     &-items {
       height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
   }
   &-list-container {
@@ -96,16 +99,13 @@
 .card {
   &-container {
     height: 100%;
-    width: 100%;
+    // width: 100%;
     overflow-y: auto;
     align-items: center;
     justify-content: center;
     position: relative;
     flex: 1 1 0%;
     overflow-y: auto;
-    background-image: url('/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
   }
   position: relative;
   background-color: #fff;
