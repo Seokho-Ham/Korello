@@ -1,18 +1,36 @@
 import React, { useState } from 'react';
 import { useGetApi } from '../../api/index';
+import CardListForm from '../card/CardListForm';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
   const [display, setDisplay] = useState(false);
-
   const [data] = useGetApi('get', '/boards', update);
 
   const onClickHandler = () => {
     setDisplay(p => !p);
   };
 
+  const renderRecentBoards = () => {
+    let list = JSON.parse(localStorage.getItem('lastView'));
+
+    let boards = list.map(element => {
+      return data.filter(e => e.id === element)[0];
+    });
+
+    return boards.map(el => {
+      return (
+        <BoardForm
+          key={el.id}
+          url={match.path}
+          data={el}
+          setUpdate={setUpdate}
+        />
+      );
+    });
+  };
   const renderBoards = () => {
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
@@ -39,6 +57,17 @@ const BoardList = ({ match }) => {
         </nav>
       </div>
       <div id='board-list-container'>
+        {localStorage.getItem('lastView') ? (
+          <div>
+            <div className='list-type'>
+              <span className='recent'></span>
+              <h3>Recently Viewed</h3>
+            </div>
+            <div id='board-list'>
+              {data.length > 0 ? renderRecentBoards() : null}
+            </div>
+          </div>
+        ) : null}
         <div className='list-type'>
           <span className='workspace'></span>
           <h3>Workspace</h3>

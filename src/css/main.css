@@ -188,8 +188,7 @@ a {
 }
 
 #card-header {
-  position: relative;
-  height: 36px;
+  height: 45px;
 }
 
 #card-header-items {
@@ -197,7 +196,6 @@ a {
 }
 
 #card-list-container {
-  position: absolute;
   height: 95%;
   width: 100%;
 }
@@ -208,12 +206,11 @@ a {
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 8px;
-  position: absolute;
   top: 8px;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 100%;
+  height: 97%;
 }
 
 .tag-wrapper {
@@ -256,13 +253,13 @@ a {
 }
 
 .tag-add-button {
-  position: relative;
   margin: 4px 7px;
 }
 
 .tag-add-button input {
   display: inline-block;
   margin: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .tag-add-button button {
@@ -270,15 +267,15 @@ a {
   font-weight: 400;
   line-height: 20px;
   padding: 3px;
-  background-color: #fafbfc;
-  border: 2px solid #dfe1e6;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 3px;
   margin: 3px;
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .tag-add-button .tag-add-bt:hover {
-  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .card {
@@ -307,7 +304,7 @@ a {
       -ms-flex: 1 1 0%;
           flex: 1 1 0%;
   overflow-y: auto;
-  background-image: url("/src/api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg");
+  background-image: url("/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -395,12 +392,18 @@ a {
 
 .add-button button {
   margin: 0px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.add-button button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .drop-area {
   width: auto;
   max-height: 860px;
   padding: 2px 0px;
+  margin: 5px 1px;
   overflow: scroll;
   border-radius: 3px;
 }
@@ -504,6 +507,15 @@ a {
   background-image: url("/src/assets/img/workspace.png");
   background-repeat: no-repeat;
   background-size: 25px;
+  width: 35px;
+  height: 25px;
+}
+
+.recent {
+  display: inline-block;
+  background-image: url("/src/assets/img/recent.png");
+  background-repeat: no-repeat;
+  background-size: 27px;
   width: 35px;
   height: 25px;
 }

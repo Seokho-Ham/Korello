@@ -16,6 +16,13 @@ const BoardForm = ({ url, data, setUpdate }) => {
     const code = await postData('/board/delete', { id: data.id });
     if (code !== 200) {
       alert('삭제 실패!');
+    } else {
+      if (localStorage.getItem('lastView')) {
+        let list = JSON.parse(localStorage.getItem('lastView'));
+        let result = list.filter(el => el !== data.id);
+        localStorage.removeItem('lastView');
+        localStorage.setItem('lastView', JSON.stringify(result));
+      }
     }
     setUpdate(prevState => !prevState);
   };

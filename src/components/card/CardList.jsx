@@ -5,7 +5,30 @@ import AddTagButton from './AddTagButton';
 
 const CardList = ({ history, location }) => {
   const [tagList, cardList, setUpdate] = useGetCardApi(`${location.pathname}`);
+  let lastViewList = JSON.parse(localStorage.getItem('lastView'));
+  if (lastViewList) {
+    if (lastViewList.includes(location.state.id.toString())) {
+      lastViewList.splice(
+        lastViewList.indexOf(location.state.id.toString()),
+        1,
+      );
+      localStorage.setItem(
+        'lastView',
+        JSON.stringify([location.state.id, ...lastViewList]),
+      );
+    } else {
+      localStorage.setItem(
+        'lastView',
+        JSON.stringify([location.state.id, ...lastViewList]),
+      );
+    }
+  } else {
+    localStorage.setItem('lastView', JSON.stringify([location.state.id]));
+  }
 
+  // if(lastViewList.length>0)
+
+  console.log(location.state.id);
   const onClickHandler = () => {
     history.goBack();
   };
