@@ -122,10 +122,7 @@ const getRefreshToken = async () => {
       localStorage.setItem('accessToken', data.result_body.accessToken);
       localStorage.setItem('refreshToken', data.result_body.refreshToken);
       sessionStorage.setItem('loginStatus', true);
-      setAccessToken(data.result_body.accessToken);
-      setTimeout(() => {
-        getRefreshToken();
-      }, 50000);
+
       return 200;
     } else {
       return data.result_message;
