@@ -14,9 +14,12 @@ const BoardPage = ({ match, history, location }) => {
       let result = await getRefreshToken();
       if (result === 200) {
         setInterval(() => {
-          getRefreshToken();
+          checkToken();
         }, 50000);
       } else if (result === 401) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        sessionStorage.removeItem('loginStatus');
         alert('토큰이 만료되었습니다. 다시 로그인해주세요!');
         history.push('/');
       } else {
@@ -43,9 +46,7 @@ const BoardPage = ({ match, history, location }) => {
   ) : (
     <>
       {alert('로그인 해주세요!')}
-      {localStorage.removeItem('accessToken')}
-      {localStorage.removeItem('refreshToken')}
-      {sessionStorage.removeItem('loginStatus')}
+
       <Redirect to='/' />
     </>
   );
