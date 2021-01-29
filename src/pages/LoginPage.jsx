@@ -22,7 +22,7 @@ const LoginPage = () => {
     );
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    sessionStorage.setItem('loginStatus', true);
+    localStorage.setItem('loginStatus', true);
     history.push('/boards');
   }
 

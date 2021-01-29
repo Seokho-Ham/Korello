@@ -115,12 +115,12 @@ const getRefreshToken = async () => {
     ) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      sessionStorage.setItem('loginStatus', false);
+      localStorage.setItem('loginStatus', false);
       return 401;
     } else if (data.result_code === 200) {
       localStorage.setItem('accessToken', data.result_body.accessToken);
       localStorage.setItem('refreshToken', data.result_body.refreshToken);
-      sessionStorage.setItem('loginStatus', true);
+      localStorage.setItem('loginStatus', true);
       setAccessToken(data.result_body.accessToken);
       return 200;
     } else {
