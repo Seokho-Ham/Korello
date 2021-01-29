@@ -45,6 +45,7 @@ const BoardPage = ({ match, history, location }) => {
       {alert('로그인 해주세요!')}
       {localStorage.removeItem('accessToken')}
       {localStorage.removeItem('refreshToken')}
+      {sessionStorage.removeItem('loginStatus')}
       <Redirect to='/' />
     </>
   );
