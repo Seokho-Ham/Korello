@@ -106,7 +106,7 @@ const usePostApi = () => {
 const getRefreshToken = async () => {
   let refresh = localStorage.getItem('refreshToken');
   setAccessToken(refresh);
-  let { data } = await axios.post(serverUrl + '/oauth2/refresh');
+  let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
   console.log(data);
   if (data !== undefined) {
     if (
@@ -123,9 +123,9 @@ const getRefreshToken = async () => {
       localStorage.setItem('refreshToken', data.result_body.refreshToken);
       sessionStorage.setItem('loginStatus', true);
       setAccessToken(data.result_body.accessToken);
-      // setTimeout(() => {
-      //   getRefreshToken();
-      // }, 50000);
+      setTimeout(() => {
+        getRefreshToken();
+      }, 50000);
       return 200;
     } else {
       return data.result_message;
