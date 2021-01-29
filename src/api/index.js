@@ -107,6 +107,7 @@ const getRefreshToken = async () => {
   let refresh = localStorage.getItem('refreshToken');
   setAccessToken(refresh);
   let { data } = await axios.post(serverUrl + '/oauth2/refresh');
+  console.log(data);
   if (data !== undefined) {
     if (
       data.result_code === 401001 ||

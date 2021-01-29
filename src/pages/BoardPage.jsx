@@ -18,7 +18,9 @@ const BoardPage = ({ match, history, location }) => {
     </Router>
   ) : (
     <>
-      {/* {alert('로그인 해주세요!')} */}
+      {alert('로그인 해주세요!')}
+      {localStorage.removeItem('accessToken')}
+      {localStorage.removeItem('refreshToken')}
       <Redirect to='/' />
     </>
   );

@@ -26,7 +26,7 @@ const LoginPage = () => {
     history.push('/boards');
   }
 
-  return login ? (
+  return login === 'true' ? (
     <Redirect to='/boards' />
   ) : (
     <div className='login-page'>
