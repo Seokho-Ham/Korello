@@ -30,8 +30,7 @@ const BoardPage = ({ match, history, location }) => {
     checkToken();
   }, []);
 
-  const login = sessionStorage.getItem('loginStatus');
-  return login === 'true' ? (
+  return (
     <Router>
       <Nav />
       <Route path={match.path} component={BoardList} />
@@ -40,11 +39,6 @@ const BoardPage = ({ match, history, location }) => {
         component={CardList}
       />
     </Router>
-  ) : (
-    <>
-      {alert('로그인 해주세요!')}
-      <Redirect to='/' />
-    </>
   );
 };
 
