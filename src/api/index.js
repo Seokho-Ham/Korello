@@ -42,7 +42,7 @@ const useGetCardApi = uri => {
 
   useEffect(() => {
     const getCard = async () => {
-      let { data } = await axios.post(serverUrl + uri);
+      let { data } = await axios.get(serverUrl + uri);
 
       let { result_body } = data;
 
@@ -106,7 +106,7 @@ const usePostApi = () => {
 const getRefreshToken = async () => {
   let refresh = localStorage.getItem('refreshToken');
   setAccessToken(refresh);
-  let { result_code, result_message, result_body } = await axios.get(
+  let { result_code, result_message, result_body } = await axios.post(
     serverUrl + '/oauth2/refresh',
   ).data;
   if (
@@ -116,12 +116,12 @@ const getRefreshToken = async () => {
   ) {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    localStorage.setItem('loginStatus', false);
+    sessionStorage.setItem('loginStatus', false);
     return 401;
   } else if (result_code === 200) {
     localStorage.setItem('accessToken', result_body.accessToken);
     localStorage.setItem('refreshToken', result_body.refreshToken);
-    localStorage.setItem('loginStatus', true);
+    sessionStorage.setItem('loginStatus', true);
     setAccessToken(result_body.accessToken);
     return 200;
   } else {

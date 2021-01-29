@@ -6,7 +6,7 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 
 const BoardPage = ({ match, history, location }) => {
-  const login = localStorage.getItem('loginStatus');
+  const login = sessionStorage.getItem('loginStatus');
   return login === 'true' ? (
     <Router>
       <Nav />

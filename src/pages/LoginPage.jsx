@@ -21,7 +21,7 @@ const LoginPage = () => {
     );
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    localStorage.setItem('loginStatus', true);
+    sessionStorage.setItem('loginStatus', true);
     history.push('/boards');
   }
   let login = localStorage.getItem('loginStatus');
