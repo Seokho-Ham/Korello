@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import { setAccessToken } from '../api/index';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+// import cookie from 'react-cookie';
 
-const LoginPage = ({ refreshToken }) => {
-  if (queryString.parse(window.location.search).accessToken) {
+const LoginPage = () => {
+  const history = useHistory();
+  console.log('다녀감!');
+  if (
+    queryString.parse(window.location.search).accessToken &&
+    queryString.parse(window.location.search).refreshToken
+  ) {
+    localStorage.setItem(
+      'accessToken',
+      queryString.parse(window.location.search).accessToken,
+    );
+    localStorage.setItem(
+      'refreshToken',
+      queryString.parse(window.location.search).refreshToken,
+    );
+
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    refreshToken(queryString.parse(window.location.search).refreshToken);
+    localStorage.setItem('loginStatus', true);
+    history.push('/boards');
   }
+  let login = localStorage.getItem('loginStatus');
 
-  return queryString.parse(window.location.search).accessToken ? (
+  return login === 'true' ? (
     <Redirect to='/boards' />
   ) : (
     <div className='login-page'>

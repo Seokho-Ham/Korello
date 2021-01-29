@@ -4,14 +4,10 @@ import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
-import { setAccessToken, accessToken } from '../api';
 
 const BoardPage = ({ match, history, location }) => {
-  if (location.search.length > 0) {
-    setAccessToken(queryString.parse(location.search));
-  }
-
-  return accessToken.length > 0 ? (
+  const login = localStorage.getItem('loginStatus');
+  return login === 'true' ? (
     <Router>
       <Nav />
       <Route path={match.path} component={BoardList} />
@@ -22,7 +18,7 @@ const BoardPage = ({ match, history, location }) => {
     </Router>
   ) : (
     <>
-      {alert('로그인을 해주세요')}
+      {alert('로그인 해주세요!')}
       <Redirect to='/' />
     </>
   );

@@ -1,10 +1,6 @@
 import React from 'react';
 
 const Nav = () => {
-  // const onClickHandler = e => {
-  //   e.preventDefault();
-  // };
-
   return (
     <div id='header'>
       <div className='header-buttons'>

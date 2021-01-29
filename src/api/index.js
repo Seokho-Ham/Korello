@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const serverUrl = 'http://222.117.225.28:8080/api/v1';
+const serverUrl = 'https://hyuki.app';
 let accessToken = '';
+
 const setAccessToken = token => {
-  console.log(token);
+  // console.log(token);
   accessToken = token;
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 };
 
-// axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, state2) => {
+  console.log('gkgk');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
-
+  setAccessToken(localStorage.getItem('accessToken'));
   useEffect(() => {
     const getData = async () => {
       try {
@@ -32,7 +32,7 @@ const useGetApi = (method, uri, state1, state2) => {
       }
     };
     getData();
-  }, [state1, state2]);
+  }, [state1]);
   return [data, code, loading];
 };
 
@@ -104,6 +104,32 @@ const usePostApi = () => {
   return [postData];
 };
 
+const getRefreshToken = async () => {
+  let refresh = localStorage.getItem('refreshToken');
+  setAccessToken(refresh);
+  let { result_code, result_message, result_body } = await axios.get(
+    serverUrl + '/oauth2/refresh',
+  ).data;
+  if (
+    result_code === 401001 ||
+    result_code === 401002 ||
+    result_code === 401003
+  ) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.setItem('loginStatus', false);
+    return 401;
+  } else if (result_code === 200) {
+    localStorage.setItem('accessToken', result_body.accessToken);
+    localStorage.setItem('refreshToken', result_body.refreshToken);
+    localStorage.setItem('loginStatus', true);
+    setAccessToken(result_body.accessToken);
+    return 200;
+  } else {
+    return result_message;
+  }
+};
+
 //UPDATE--------------------------------------------------------------------------------
 const useUpdateApi = () => {
   const updateData = async (url, body) => {
@@ -131,6 +157,7 @@ const useDeleteApi = () => {
       }
     } catch (err) {
       console.log(err);
+      return err;
     }
   };
   return [deleteData];
@@ -144,4 +171,5 @@ export {
   useDeleteApi,
   setAccessToken,
   accessToken,
+  getRefreshToken,
 };
