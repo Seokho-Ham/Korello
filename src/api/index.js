@@ -106,26 +106,28 @@ const usePostApi = () => {
 const getRefreshToken = async () => {
   let refresh = localStorage.getItem('refreshToken');
   setAccessToken(refresh);
-  let { result_code, result_message, result_body } = await axios.post(
-    serverUrl + '/oauth2/refresh',
-  ).data;
-  if (
-    result_code === 401001 ||
-    result_code === 401002 ||
-    result_code === 401003
-  ) {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    sessionStorage.setItem('loginStatus', false);
-    return 401;
-  } else if (result_code === 200) {
-    localStorage.setItem('accessToken', result_body.accessToken);
-    localStorage.setItem('refreshToken', result_body.refreshToken);
-    sessionStorage.setItem('loginStatus', true);
-    setAccessToken(result_body.accessToken);
-    return 200;
+  let { data } = await axios.post(serverUrl + '/oauth2/refresh');
+  if (data !== undefined) {
+    if (
+      data.result_code === 401001 ||
+      data.result_code === 401002 ||
+      data.result_code === 401003
+    ) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      sessionStorage.setItem('loginStatus', false);
+      return 401;
+    } else if (data.result_code === 200) {
+      localStorage.setItem('accessToken', data.result_body.accessToken);
+      localStorage.setItem('refreshToken', data.result_body.refreshToken);
+      sessionStorage.setItem('loginStatus', true);
+      setAccessToken(data.result_body.accessToken);
+      return 200;
+    } else {
+      return data.result_message;
+    }
   } else {
-    return result_message;
+    return 404;
   }
 };
 
