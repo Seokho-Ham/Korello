@@ -35,7 +35,7 @@ const BoardPage = ({ match, history, location }) => {
   };
   useEffect(() => {
     checkToken();
-  });
+  }, []);
   return (
     <Router>
       <Nav />
