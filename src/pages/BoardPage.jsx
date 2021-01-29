@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
-import { getRefreshToken } from '../api/index.js';
+import { getRefreshToken, setAccessToken } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
   const checkToken = async () => {
     if (
@@ -13,7 +13,7 @@ const BoardPage = ({ match, history, location }) => {
     ) {
       let result = await getRefreshToken();
       if (result === 200) {
-        setAccessToken(data.result_body.accessToken);
+        setAccessToken(localStorage.accessToken);
         setInterval(() => {
           getRefreshToken();
         }, 50000);
