@@ -7,7 +7,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 const LoginPage = () => {
   const history = useHistory();
   console.log('다녀감!');
-  let login = localStorage.getItem('loginStatus');
+  let login = sessionStorage.getItem('loginStatus');
   if (
     queryString.parse(window.location.search).accessToken &&
     queryString.parse(window.location.search).refreshToken
@@ -22,7 +22,7 @@ const LoginPage = () => {
     );
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    localStorage.setItem('loginStatus', true);
+    sessionStorage.setItem('loginStatus', true);
     history.push('/boards');
   }
 

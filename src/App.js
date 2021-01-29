@@ -11,7 +11,7 @@ const App = () => {
   const history = useHistory();
 
   const logoutHandler = () => {
-    localStorage.setItem('loginStatus', false);
+    sessionStorage.setItem('loginStatus', false);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     alert('로그아웃 되었습니다');
@@ -24,7 +24,7 @@ const App = () => {
     ) {
       let result = await getRefreshToken();
       if (result === 200) {
-        setTimeout(() => {
+        setInterval(() => {
           getRefreshToken();
         }, 50000);
       } else if (result === 401) {
@@ -34,7 +34,7 @@ const App = () => {
         alert(result);
       }
     } else {
-      localStorage.setItem('loginStatus', false);
+      sessionStorage.setItem('loginStatus', false);
     }
   };
   useEffect(() => {

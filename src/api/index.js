@@ -115,13 +115,16 @@ const getRefreshToken = async () => {
     ) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      localStorage.setItem('loginStatus', false);
+      sessionStorage.setItem('loginStatus', false);
       return 401;
     } else if (data.result_code === 200) {
       localStorage.setItem('accessToken', data.result_body.accessToken);
       localStorage.setItem('refreshToken', data.result_body.refreshToken);
-      localStorage.setItem('loginStatus', true);
+      sessionStorage.setItem('loginStatus', true);
       setAccessToken(data.result_body.accessToken);
+      // setTimeout(() => {
+      //   getRefreshToken();
+      // }, 50000);
       return 200;
     } else {
       return data.result_message;
