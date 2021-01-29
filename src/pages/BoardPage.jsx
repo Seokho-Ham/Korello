@@ -14,9 +14,9 @@ const BoardPage = ({ match, history, location }) => {
     ) {
       let result = await getRefreshToken();
       if (result === 200) {
-        setTimeout(() => {
-          checkToken();
-        }, 50000);
+        // setTimeout(() => {
+        //   checkToken();
+        // }, 50000);
       } else if (result === 401) {
         alert('토큰이 만료되었습니다. 다시 로그인해주세요!');
         history.push('/');
