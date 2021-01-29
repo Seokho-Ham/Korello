@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const serverUrl = 'https://hyuki.app';
+const serverUrl = 'https://hyuki.app/api/v1';
 let accessToken = '';
 
 const setAccessToken = token => {
