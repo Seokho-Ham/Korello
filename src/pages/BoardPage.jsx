@@ -13,7 +13,7 @@ const BoardPage = ({ match, history, location }) => {
     ) {
       let result = await getRefreshToken();
       if (result === 200) {
-        setAccessToken(localStorage.getItem(accessToken));
+        setAccessToken(localStorage.getItem('accessToken'));
         setInterval(() => {
           getRefreshToken();
         }, 10000);
