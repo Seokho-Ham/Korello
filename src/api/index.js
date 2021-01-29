@@ -12,7 +12,6 @@ const setAccessToken = token => {
 
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, state2) => {
-  console.log('gkgk');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
@@ -21,7 +20,7 @@ const useGetApi = (method, uri, state1, state2) => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
-
+        console.log(data);
         if (data.result_body) {
           setData(data.result_body);
         }
