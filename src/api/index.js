@@ -15,7 +15,7 @@ const useGetApi = (method, uri, state1, state2) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
-  setAccessToken(localStorage.getItem('accessToken'));
+  // setAccessToken(localStorage.getItem('accessToken'));
   useEffect(() => {
     const getData = async () => {
       try {

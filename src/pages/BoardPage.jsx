@@ -14,8 +14,8 @@ const BoardPage = ({ match, history, location }) => {
       let result = await getRefreshToken();
       if (result === 200) {
         setAccessToken(localStorage.accessToken);
-        setInterval(() => {
-          getRefreshToken();
+        setTimeout(() => {
+          checkToken();
         }, 50000);
       } else if (result === 401) {
         localStorage.removeItem('accessToken');
