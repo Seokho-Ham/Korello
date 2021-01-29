@@ -22,12 +22,10 @@ const App = () => {
       localStorage.getItem('refreshToken') &&
       localStorage.getItem('accessToken')
     ) {
-      let refreshToken = localStorage.getItem('refreshToken');
-
       let result = await getRefreshToken();
       if (result === 200) {
         setTimeout(() => {
-          getRefreshToken();
+          checkToken();
         }, 50000);
       } else if (result === 401) {
         alert('토큰이 만료되었습니다. 다시 로그인해주세요!');

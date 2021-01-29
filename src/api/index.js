@@ -42,7 +42,7 @@ const useGetCardApi = uri => {
 
   useEffect(() => {
     const getCard = async () => {
-      let { data } = await axios.get(serverUrl + uri);
+      let { data } = await axios.post(serverUrl + uri);
 
       let { result_body } = data;
 
