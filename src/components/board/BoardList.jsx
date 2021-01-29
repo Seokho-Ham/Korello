@@ -9,9 +9,7 @@ const BoardList = ({ match, history }) => {
   const [update, setUpdate] = useState(false);
   const [display, setDisplay] = useState(false);
   const [data, code] = useGetApi('get', '/boards', update);
-  if (code !== 200) {
-    history.push('/boards');
-  }
+
   const onClickHandler = () => {
     setDisplay(p => !p);
   };
