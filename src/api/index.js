@@ -143,4 +143,5 @@ export {
   useUpdateApi,
   useDeleteApi,
   setAccessToken,
+  accessToken,
 };

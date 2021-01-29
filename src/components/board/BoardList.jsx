@@ -74,10 +74,7 @@ const BoardList = ({ match }) => {
         </div>
         <div id='board-list'>
           {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
-          <div
-            className='board-element'
-            // style={{ backgroundImage: ` url(${image}) ` }}
-          >
+          <div className='board-element'>
             <div
               className='board-el-newform'
               onClick={onClickHandler}

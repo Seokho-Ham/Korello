@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 const LoginPage = ({ refreshToken }) => {
   if (queryString.parse(window.location.search).accessToken) {
-    console.log(queryString.parse(window.location.search).accessToken);
     setAccessToken(queryString.parse(window.location.search).accessToken);
     refreshToken(queryString.parse(window.location.search).refreshToken);
   }
