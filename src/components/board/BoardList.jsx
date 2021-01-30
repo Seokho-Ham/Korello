@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useGetApi } from '../../api/index';
 import CardListForm from '../card/CardListForm';
@@ -12,7 +12,7 @@ const BoardList = ({ match, setUpdate, data }) => {
     setDisplay(p => !p);
   };
 
-  const renderRecentBoards = () => {
+  const renderRecentBoards = useCallback(() => {
     let list = JSON.parse(localStorage.getItem('lastView'));
 
     let boards = list.map(element => {
@@ -29,8 +29,8 @@ const BoardList = ({ match, setUpdate, data }) => {
         />
       );
     });
-  };
-  const renderBoards = () => {
+  });
+  const renderBoards = useCallback(() => {
     console.log('Boards');
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
@@ -44,7 +44,7 @@ const BoardList = ({ match, setUpdate, data }) => {
           />
         );
       });
-  };
+  });
   return (
     <div id='board-container'>
       <div id='board-sidebar'>

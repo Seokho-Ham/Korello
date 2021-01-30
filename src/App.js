@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { getRefreshToken, setAccessToken } from './api/index';
+import { setAccessToken } from './api/index';
 
 const App = () => {
   const history = useHistory();
@@ -18,7 +18,8 @@ const App = () => {
     history.push('/');
   };
   useEffect(async () => {
-    await getRefreshToken();
+    let token = localStorage.getItem('accessToken');
+    setAccessToken(token);
   }, []);
   return (
     <DndProvider backend={HTML5Backend}>

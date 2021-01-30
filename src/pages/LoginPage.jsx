@@ -48,9 +48,7 @@ const LoginPage = () => {
     }
   }, []);
 
-  return login === 'true' ? (
-    <Redirect to='/boards' />
-  ) : (
+  return (
     <div className='login-page'>
       <div className='login-header'>
         <span className='login-title-image'></span>

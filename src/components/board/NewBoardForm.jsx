@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { usePostApi } from '../../api/index';
 
 const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
@@ -15,7 +15,7 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
       addBoard();
     }
   };
-  const addBoard = async () => {
+  const addBoard = useCallback(async () => {
     if (boardName.length > 0) {
       const code = await postData('/board', {
         name: boardName,
@@ -34,7 +34,7 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
       alert('이름을 입력해주세요.');
       inputRef.current.focus();
     }
-  };
+  });
 
   return (
     <div
