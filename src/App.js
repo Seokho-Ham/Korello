@@ -17,7 +17,15 @@ const App = () => {
     alert('로그아웃 되었습니다');
     history.push('/');
   };
-
+  useEffect(async () => {
+    let loginStatus = localStorage.getItem('loginStatus');
+    if (loginStatus) {
+      let result = await initializeUser();
+      if (!result) {
+        history.push('/');
+      }
+    }
+  });
   return (
     <DndProvider backend={HTML5Backend}>
       <button onClick={logoutHandler}>logout</button>

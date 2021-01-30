@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
