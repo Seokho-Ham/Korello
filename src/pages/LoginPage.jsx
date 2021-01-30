@@ -7,11 +7,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 const LoginPage = () => {
   const history = useHistory();
   console.log('다녀감!');
-  let login = sessionStorage.getItem('loginStatus');
-  if (
-    queryString.parse(window.location.search).accessToken &&
-    queryString.parse(window.location.search).refreshToken
-  ) {
+  let login = localStorage.getItem('loginStatus');
+
+  const firstLogin = () => {
     localStorage.setItem(
       'accessToken',
       queryString.parse(window.location.search).accessToken,
@@ -22,9 +20,17 @@ const LoginPage = () => {
     );
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    sessionStorage.setItem('loginStatus', true);
-    history.push('/boards');
-  }
+    localStorage.setItem('loginStatus', true);
+    // history.push('/boards');
+  };
+  useEffect(() => {
+    if (
+      queryString.parse(window.location.search).accessToken &&
+      queryString.parse(window.location.search).refreshToken
+    ) {
+      firstLogin();
+    }
+  }, []);
 
   return login === 'true' ? (
     <Redirect to='/boards' />

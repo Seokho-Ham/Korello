@@ -4,8 +4,15 @@ import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
-import { getRefreshToken, setAccessToken } from '../api/index.js';
+import { initializeUser } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
+  useEffect(async () => {
+    let result = await initializeUser();
+    console.log(result);
+    if (!result) {
+      history.push('/');
+    }
+  });
   return (
     <Router>
       <Nav />

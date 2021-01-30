@@ -5,41 +5,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { getRefreshToken, setAccessToken } from './api/index';
+import { initializeUser, getRefreshToken } from './api/index';
 
 const App = () => {
   const history = useHistory();
-  const checkToken = async () => {
-    if (
-      localStorage.getItem('refreshToken') &&
-      localStorage.getItem('accessToken')
-    ) {
-      let result = await getRefreshToken();
-      if (result === 200) {
-        setAccessToken(localStorage.getItem('accessToken'));
-        setInterval(() => {
-          getRefreshToken();
-        }, 50000);
-      } else if (result === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        sessionStorage.removeItem('loginStatus');
-        alert('토큰이 만료되었습니다. 다시 로그인해주세요!');
-        history.push('/');
-      } else {
-        alert(result);
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        sessionStorage.removeItem('loginStatus');
-        history.push('/');
-      }
-    } else {
-      sessionStorage.setItem('loginStatus', false);
-    }
-  };
-  useEffect(() => {
-    checkToken();
-  }, []);
+
   const logoutHandler = () => {
     sessionStorage.setItem('loginStatus', false);
     localStorage.removeItem('accessToken');
@@ -48,6 +18,15 @@ const App = () => {
     history.push('/');
   };
 
+  useEffect(async () => {
+    let result = await initializeUser();
+    if (result) {
+      setTimeout(() => {
+        getRefreshToken();
+      }, 10000);
+      history.push('/boards');
+    }
+  }, []);
   return (
     <DndProvider backend={HTML5Backend}>
       <button onClick={logoutHandler}>logout</button>

@@ -103,35 +103,6 @@ const usePostApi = () => {
   return [postData];
 };
 
-const getRefreshToken = async () => {
-  let refresh = localStorage.getItem('refreshToken');
-  setAccessToken(refresh);
-  let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
-  console.log(data);
-  if (data !== undefined) {
-    if (
-      data.result_code === 401001 ||
-      data.result_code === 401002 ||
-      data.result_code === 401003
-    ) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      sessionStorage.setItem('loginStatus', false);
-      return 401;
-    } else if (data.result_code === 200) {
-      localStorage.setItem('accessToken', data.result_body.accessToken);
-      localStorage.setItem('refreshToken', data.result_body.refreshToken);
-      sessionStorage.setItem('loginStatus', true);
-
-      return 200;
-    } else {
-      return data.result_message;
-    }
-  } else {
-    return 404;
-  }
-};
-
 //UPDATE--------------------------------------------------------------------------------
 const useUpdateApi = () => {
   const updateData = async (url, body) => {
@@ -164,6 +135,52 @@ const useDeleteApi = () => {
   };
   return [deleteData];
 };
+//TOKEN----------------------------------------------
+const getRefreshToken = async () => {
+  let refresh = localStorage.getItem('refreshToken');
+  setAccessToken(refresh);
+  let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
+  console.log('getRefreshToken: ' + data);
+  if (data !== undefined) {
+    if (
+      data.result_code === 401001 ||
+      data.result_code === 401002 ||
+      data.result_code === 401003
+    ) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('loginStatus', false);
+      return 401;
+    } else if (data.result_code === 200) {
+      localStorage.setItem('accessToken', data.result_body.accessToken);
+      localStorage.setItem('refreshToken', data.result_body.refreshToken);
+      localStorage.setItem('loginStatus', true);
+      setAccessToken(localStorage.accessToken);
+
+      return 200;
+    } else {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('loginStatus', false);
+      return data.result_message;
+    }
+  } else {
+    return 404;
+  }
+};
+
+const initializeUser = async () => {
+  let accessToken = localStorage.getItem('accessToken');
+  let refreshToken = localStorage.getItem('refreshToken');
+  if (accessToken !== undefined && refreshToken !== undefined) {
+    let code = await getRefreshToken();
+    if (code === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
 
 export {
   useGetApi,
@@ -174,4 +191,5 @@ export {
   setAccessToken,
   accessToken,
   getRefreshToken,
+  initializeUser,
 };
