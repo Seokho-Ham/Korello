@@ -7,15 +7,8 @@ import CardList from '../components/card/CardList';
 import { initializeUser } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
   let login = localStorage.getItem('loginStatus');
-  // useEffect(async () => {
-  //   let result = await initializeUser();
-  //   console.log(result);
-  //   if (!result) {
-  //     history.push('/');
-  //   }
-  // }, []);
-  console.log(login);
-  return login !== undefined ? (
+
+  return login === 'null' ? (
     <Router>
       <Nav />
       <Route path={match.path} component={BoardList} />

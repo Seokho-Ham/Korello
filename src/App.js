@@ -11,24 +11,13 @@ const App = () => {
   const history = useHistory();
 
   const logoutHandler = () => {
-    sessionStorage.setItem('loginStatus', false);
+    localStorage.removeItem('loginStatus');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     alert('로그아웃 되었습니다');
     history.push('/');
   };
 
-  useEffect(async () => {
-    if (localStorage.getItem('refreshToken') !== undefined) {
-      let result = await initializeUser();
-      if (result) {
-        setTimeout(() => {
-          getRefreshToken();
-        }, 10000);
-        history.push('/boards');
-      }
-    }
-  }, []);
   return (
     <DndProvider backend={HTML5Backend}>
       <button onClick={logoutHandler}>logout</button>

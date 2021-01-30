@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
-import { setAccessToken } from '../api/index';
+import { setAccessToken, initializeUser, getRefreshToken } from '../api/index';
 import { Redirect, useHistory } from 'react-router-dom';
 // import cookie from 'react-cookie';
 
@@ -22,12 +22,21 @@ const LoginPage = () => {
     setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
   };
-  useEffect(() => {
-    if (
-      queryString.parse(window.location.search).accessToken &&
-      queryString.parse(window.location.search).refreshToken
-    ) {
-      firstLogin();
+  useEffect(async () => {
+    if (localStorage.getItem('refreshToken') !== undefined) {
+      let result = await initializeUser();
+      if (result) {
+        setTimeout(() => {
+          getRefreshToken();
+        }, 10000);
+      }
+    } else {
+      if (
+        queryString.parse(window.location.search).accessToken &&
+        queryString.parse(window.location.search).refreshToken
+      ) {
+        firstLogin();
+      }
     }
   }, []);
 
