@@ -12,7 +12,7 @@ const clearStorage = () => {
   localStorage.removeItem('loginStatus');
 };
 //GET--------------------------------------------------------------------------------
-const useGetApi = (method, uri, state1, history) => {
+const useGetApi = useCallback((method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
@@ -39,7 +39,7 @@ const useGetApi = (method, uri, state1, history) => {
     getData();
   }, [state1]);
   return [data, code, loading];
-};
+});
 
 const useGetCardApi = uri => {
   const [update, setUpdate] = useState(false);
