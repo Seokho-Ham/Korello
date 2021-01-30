@@ -12,7 +12,7 @@ const BoardList = ({ match, setUpdate, data }) => {
     setDisplay(p => !p);
   };
 
-  const renderRecentBoards = useCallback(() => {
+  const renderRecentBoards = () => {
     let list = JSON.parse(localStorage.getItem('lastView'));
 
     let boards = list.map(element => {
@@ -29,8 +29,8 @@ const BoardList = ({ match, setUpdate, data }) => {
         />
       );
     });
-  });
-  const renderBoards = useCallback(() => {
+  };
+  const renderBoards = () => {
     console.log('Boards');
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
@@ -44,7 +44,7 @@ const BoardList = ({ match, setUpdate, data }) => {
           />
         );
       });
-  });
+  };
   return (
     <div id='board-container'>
       <div id='board-sidebar'>

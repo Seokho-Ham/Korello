@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { setAccessToken, getRefreshToken } from './api/index';
+import { setAccessToken, initializeUser } from './api/index';
 import queryString from 'query-string';
 
 const App = () => {
@@ -18,10 +18,18 @@ const App = () => {
     alert('로그아웃 되었습니다');
     history.push('/');
   };
+
   useEffect(async () => {
-    await getRefreshToken();
-    let token = localStorage.getItem('accessToken');
-    setAccessToken(token);
+    let loginStatus = localStorage.getItem('loginStatus');
+
+    if (loginStatus === 'true') {
+      let loginState = await initializeUser();
+      if (loginState) {
+        history.push('/boards')
+      } else {
+        history.push('/')
+      }
+    }
   }, []);
   return (
     <DndProvider backend={HTML5Backend}>

@@ -16,7 +16,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
-  setAccessToken(localStorage.getItem('accessToken'));
+  // setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
     const getData = async () => {
@@ -29,7 +29,7 @@ const useGetApi = (method, uri, state1, history) => {
         setCode(data.result_code);
         setLoading('finished');
       } catch (err) {
-        console.log('get!');
+        // console.log('get!');
         console.log(err);
         alert(err);
         clearStorage();
@@ -150,7 +150,7 @@ const getRefreshToken = async token => {
     if (data.result_code >= 401001) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      localStorage.removeItem('loginStatus', false);
+      localStorage.setItem('loginStatus', false);
       return 401;
     } else if (data.result_code === 200) {
       localStorage.setItem('accessToken', data.result_body.accessToken);
@@ -162,7 +162,7 @@ const getRefreshToken = async token => {
     } else {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      localStorage.removeItem('loginStatus', false);
+      localStorage.setItem('loginStatus', false);
       return data.result_message;
     }
   } else {

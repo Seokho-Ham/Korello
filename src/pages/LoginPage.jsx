@@ -24,24 +24,24 @@ const LoginPage = () => {
     localStorage.setItem('loginStatus', true);
   };
   useEffect(async () => {
-    let data = localStorage.getItem('refreshToken');
+    // let data = localStorage.getItem('refreshToken');
 
-    if (data !== null) {
-      let result = await initializeUser();
-      console.log(result);
-      if (result) {
-        history.push('/boards');
-      } else {
-        alert('dd');
-        history.push('/');
-      }
-    }
+    // if (data !== null) {
+    //   let result = await initializeUser();
+    //   console.log(result);
+    //   if (result) {
+    //     history.push('/boards');
+    //   } else {
+    //     alert('dd');
+    //     history.push('/');
+    //   }
+    // }
     if (
       queryString.parse(window.location.search).accessToken !== undefined &&
       queryString.parse(window.location.search).refreshToken !== undefined
     ) {
       firstLogin();
-      console.log('login 끝!');
+      // console.log('login 끝!');
       history.push('/boards');
     }
   }, []);
