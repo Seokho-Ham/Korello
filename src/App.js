@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { initializeUser, getRefreshToken } from './api/index';
+import { setAccessToken } from './api/index';
 
 const App = () => {
   const history = useHistory();
@@ -18,12 +18,9 @@ const App = () => {
     history.push('/');
   };
   useEffect(async () => {
-    let loginStatus = localStorage.getItem('loginStatus');
-    if (loginStatus !== null) {
-      let result = await initializeUser();
-      if (!result) {
-        history.push('/');
-      }
+    let token = localStorage.getItem('accessToken');
+    if (token !== null) {
+      setAccessToken(token);
     }
   }, []);
   return (
