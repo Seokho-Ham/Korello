@@ -19,13 +19,13 @@ const App = () => {
   };
   useEffect(async () => {
     let loginStatus = localStorage.getItem('loginStatus');
-    if (loginStatus) {
+    if (loginStatus !== null) {
       let result = await initializeUser();
       if (!result) {
         history.push('/');
       }
     }
-  });
+  }, []);
   return (
     <DndProvider backend={HTML5Backend}>
       <button onClick={logoutHandler}>logout</button>
