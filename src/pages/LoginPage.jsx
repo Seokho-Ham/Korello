@@ -25,7 +25,7 @@ const LoginPage = () => {
     history.push('/boards');
   };
   useEffect(async () => {
-    if (localStorage.getItem('refreshToken') !== undefined) {
+    if (localStorage.getItem('refreshToken') !== 'null') {
       let result = await initializeUser();
       if (result) {
         setTimeout(() => {
