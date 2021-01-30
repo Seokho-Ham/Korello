@@ -14,6 +14,7 @@ const BoardPage = ({ match, history, location }) => {
   //     history.push('/');
   //   }
   // }, []);
+  console.log(data);
   return login !== undefined ? (
     <Router>
       <Nav />

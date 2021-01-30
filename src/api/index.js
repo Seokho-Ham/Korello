@@ -170,6 +170,7 @@ const getRefreshToken = async () => {
 };
 
 const initializeUser = async () => {
+  console.log('initializeUser');
   let accessToken = localStorage.getItem('accessToken');
   let refreshToken = localStorage.getItem('refreshToken');
   if (accessToken !== undefined && refreshToken !== undefined) {
