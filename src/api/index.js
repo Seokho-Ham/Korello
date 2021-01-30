@@ -153,8 +153,8 @@ const getRefreshToken = async token => {
       localStorage.setItem('loginStatus', false);
       return 401;
     } else if (data.result_code === 200) {
-      localStorage.setItem('accessToken', data.result_body.accessToken);
-      localStorage.setItem('refreshToken', data.result_body.refreshToken);
+      localStorage.setItem('accessToken', data.result_body.access_token);
+      localStorage.setItem('refreshToken', data.result_body.refresh_token);
       localStorage.setItem('loginStatus', true);
       setAccessToken(localStorage.accessToken);
 
