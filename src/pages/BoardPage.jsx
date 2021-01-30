@@ -8,7 +8,7 @@ import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
   const [update, setUpdate] = useState(false);
   const [data, code] = useGetApi('get', '/boards', update, history);
-
+  console.log('First Board');
   return (
     <Router>
       <Nav />

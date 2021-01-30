@@ -18,7 +18,7 @@ const BoardList = ({ match, setUpdate, data }) => {
     let boards = list.map(element => {
       return data.filter(e => e.id === element)[0];
     });
-
+    console.log('recentBoards');
     return boards.map(el => {
       return (
         <BoardForm
@@ -31,6 +31,7 @@ const BoardList = ({ match, setUpdate, data }) => {
     });
   };
   const renderBoards = () => {
+    console.log('Boards');
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
       .map(el => {

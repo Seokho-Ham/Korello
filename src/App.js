@@ -19,9 +19,8 @@ const App = () => {
   };
   useEffect(async () => {
     let token = localStorage.getItem('accessToken');
-    if (token !== null) {
-      setAccessToken(token);
-    }
+
+    setAccessToken(token);
   }, []);
   return (
     <DndProvider backend={HTML5Backend}>
