@@ -6,14 +6,15 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
-  useEffect(async () => {
-    let result = await initializeUser();
-    console.log(result);
-    if (!result) {
-      history.push('/');
-    }
-  }, []);
-  return (
+  let login = localStorage.getItem('loginStatus');
+  // useEffect(async () => {
+  //   let result = await initializeUser();
+  //   console.log(result);
+  //   if (!result) {
+  //     history.push('/');
+  //   }
+  // }, []);
+  return login !== undefined ? (
     <Router>
       <Nav />
       <Route path={match.path} component={BoardList} />
@@ -22,6 +23,8 @@ const BoardPage = ({ match, history, location }) => {
         component={CardList}
       />
     </Router>
+  ) : (
+    <Redirect to='/' />
   );
 };
 
