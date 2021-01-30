@@ -22,24 +22,29 @@ const LoginPage = () => {
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
-    history.push('/boards');
   };
   useEffect(async () => {
-    if (localStorage.getItem('refreshToken') !== 'null') {
+    let data = localStorage.getItem('refreshToken');
+
+    if (data !== null) {
       let result = await initializeUser();
+      console.log(result);
       if (result) {
         setTimeout(() => {
           getRefreshToken();
         }, 10000);
         history.push('/boards');
+      } else {
+        alert('dd');
+        history.push('/');
       }
-    } else {
-      if (
-        queryString.parse(window.location.search).accessToken &&
-        queryString.parse(window.location.search).refreshToken
-      ) {
-        firstLogin();
-      }
+    }
+    if (
+      queryString.parse(window.location.search).accessToken !== undefined &&
+      queryString.parse(window.location.search).refreshToken !== undefined
+    ) {
+      firstLogin();
+      history.push('/boards');
     }
   }, []);
 

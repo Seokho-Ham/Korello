@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useGetApi } from '../../api/index';
 import CardListForm from '../card/CardListForm';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
-const BoardList = ({ match, history }) => {
-  const [update, setUpdate] = useState(false);
+const BoardList = ({ match, setUpdate, data }) => {
   const [display, setDisplay] = useState(false);
-  const [data, code] = useGetApi('get', '/boards', update);
 
   const onClickHandler = () => {
     setDisplay(p => !p);

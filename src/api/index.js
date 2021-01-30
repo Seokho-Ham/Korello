@@ -9,9 +9,13 @@ const setAccessToken = token => {
   accessToken = token;
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 };
-
+const clearStorage = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('loginStatus');
+};
 //GET--------------------------------------------------------------------------------
-const useGetApi = (method, uri, state1, state2) => {
+const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
@@ -28,6 +32,10 @@ const useGetApi = (method, uri, state1, state2) => {
         setLoading('finished');
       } catch (err) {
         console.log(err);
+        alert(err);
+        clearStorage();
+        // console.log(history);
+        history.push('/');
       }
     };
     getData();
@@ -136,9 +144,8 @@ const useDeleteApi = () => {
   return [deleteData];
 };
 //TOKEN----------------------------------------------
-const getRefreshToken = async () => {
-  let refresh = localStorage.getItem('refreshToken');
-  setAccessToken(refresh);
+const getRefreshToken = async token => {
+  setAccessToken(token);
   let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
   console.log('getRefreshToken: ' + data);
   if (data !== undefined) {
@@ -171,15 +178,18 @@ const getRefreshToken = async () => {
 
 const initializeUser = async () => {
   console.log('initializeUser');
-  let accessToken = localStorage.getItem('accessToken');
+
   let refreshToken = localStorage.getItem('refreshToken');
-  if (accessToken !== undefined && refreshToken !== undefined) {
-    let code = await getRefreshToken();
+  if (refreshToken !== 'null') {
+    let code = await getRefreshToken(refreshToken);
+    console.log(code);
     if (code === 200) {
       return true;
     } else {
       return false;
     }
+  } else {
+    return false;
   }
 };
 
