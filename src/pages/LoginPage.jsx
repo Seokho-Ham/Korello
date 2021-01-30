@@ -21,6 +21,7 @@ const LoginPage = () => {
 
     setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
+    history.push('/boards');
   };
   useEffect(async () => {
     if (localStorage.getItem('refreshToken') !== undefined) {
@@ -29,6 +30,7 @@ const LoginPage = () => {
         setTimeout(() => {
           getRefreshToken();
         }, 10000);
+        history.push('/boards');
       }
     } else {
       if (
