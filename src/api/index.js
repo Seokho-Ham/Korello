@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const serverUrl = 'https://hyuki.app/api/v1';
@@ -18,7 +18,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [code, setCode] = useState(0);
   // setAccessToken(localStorage.getItem('accessToken'));
 
-  useEffect(() => {
+  useEffect(async () => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
