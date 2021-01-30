@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const serverUrl = 'https://hyuki.app/api/v1';
-let accessToken = '';
 
 const setAccessToken = token => {
-  // console.log(token);
-  accessToken = token;
-  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 const clearStorage = () => {
   localStorage.removeItem('accessToken');
@@ -15,11 +12,10 @@ const clearStorage = () => {
   localStorage.removeItem('loginStatus');
 };
 //GET--------------------------------------------------------------------------------
-const useGetApi = (method, uri, state1, history) => {
+const useGetApi = (method, uri, state1) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
-  setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
     const getData = async () => {
@@ -33,9 +29,9 @@ const useGetApi = (method, uri, state1, history) => {
         setLoading('finished');
       } catch (err) {
         console.log(err);
-        alert(err);
-        clearStorage();
-        history.push('/');
+        // alert(err);
+        // clearStorage();
+        // history.push('/');
       }
     };
     getData();
@@ -177,13 +173,16 @@ const getRefreshToken = async token => {
 };
 
 const initializeUser = async () => {
-  console.log('initializeUser');
+  console.log('initializeUser method');
 
   let refreshToken = localStorage.getItem('refreshToken');
   if (refreshToken !== 'null') {
     let code = await getRefreshToken(refreshToken);
     console.log(code);
     if (code === 200) {
+      setTimeout(() => {
+        getRefreshToken();
+      }, 10000);
       return true;
     } else {
       return false;
@@ -200,7 +199,6 @@ export {
   useUpdateApi,
   useDeleteApi,
   setAccessToken,
-  accessToken,
   getRefreshToken,
   initializeUser,
 };

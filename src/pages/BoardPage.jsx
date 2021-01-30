@@ -6,10 +6,11 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
+  const initializeResult = initializeUser();
   const [update, setUpdate] = useState(false);
   const [data, code] = useGetApi('get', '/boards', update, history);
   console.log('First Board');
-  return (
+  return initializeResult ? (
     <Router>
       <Nav />
       <Route
@@ -28,6 +29,8 @@ const BoardPage = ({ match, history, location }) => {
         component={CardList}
       />
     </Router>
+  ) : (
+    <Redirect to='/' />
   );
 };
 
