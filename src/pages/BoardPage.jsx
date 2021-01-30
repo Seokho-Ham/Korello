@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import queryString from 'query-string';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
@@ -6,11 +6,11 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
-  const initializeResult = initializeUser();
   const [update, setUpdate] = useState(false);
   const [data, code] = useGetApi('get', '/boards', update, history);
-  console.log('First Board');
-  return initializeResult ? (
+  // let login = localStorage.getItem('loginStatus');
+
+  return (
     <Router>
       <Nav />
       <Route
@@ -29,8 +29,6 @@ const BoardPage = ({ match, history, location }) => {
         component={CardList}
       />
     </Router>
-  ) : (
-    <Redirect to='/' />
   );
 };
 

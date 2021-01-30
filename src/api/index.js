@@ -12,10 +12,11 @@ const clearStorage = () => {
   localStorage.removeItem('loginStatus');
 };
 //GET--------------------------------------------------------------------------------
-const useGetApi = (method, uri, state1) => {
+const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
+  setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
     const getData = async () => {
@@ -28,10 +29,11 @@ const useGetApi = (method, uri, state1) => {
         setCode(data.result_code);
         setLoading('finished');
       } catch (err) {
+        console.log('get!');
         console.log(err);
-        // alert(err);
-        // clearStorage();
-        // history.push('/');
+        alert(err);
+        clearStorage();
+        history.push('/');
       }
     };
     getData();
@@ -143,13 +145,9 @@ const useDeleteApi = () => {
 const getRefreshToken = async token => {
   setAccessToken(token);
   let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
-  console.log('getRefreshToken: ' + data);
+  console.log('getRefreshToken: ', data);
   if (data !== undefined) {
-    if (
-      data.result_code === 401001 ||
-      data.result_code === 401002 ||
-      data.result_code === 401003
-    ) {
+    if (data.result_code >= 401001) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('loginStatus', false);
@@ -176,13 +174,11 @@ const initializeUser = async () => {
   console.log('initializeUser method');
 
   let refreshToken = localStorage.getItem('refreshToken');
-  if (refreshToken !== 'null') {
+  // console.log('refreshToken: ', refreshToken);
+  if (refreshToken !== null) {
     let code = await getRefreshToken(refreshToken);
     console.log(code);
     if (code === 200) {
-      setTimeout(() => {
-        getRefreshToken();
-      }, 10000);
       return true;
     } else {
       return false;
