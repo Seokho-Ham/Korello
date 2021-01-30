@@ -5,6 +5,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 // import cookie from 'react-cookie';
 
 const LoginPage = () => {
+  let history = useHistory();
   console.log('다녀감!');
   let login = localStorage.getItem('loginStatus');
 
