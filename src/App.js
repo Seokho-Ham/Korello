@@ -19,12 +19,14 @@ const App = () => {
   };
 
   useEffect(async () => {
-    let result = await initializeUser();
-    if (result) {
-      setTimeout(() => {
-        getRefreshToken();
-      }, 10000);
-      history.push('/boards');
+    if (localStorage.getItem('refreshToken') !== undefined) {
+      let result = await initializeUser();
+      if (result) {
+        setTimeout(() => {
+          getRefreshToken();
+        }, 10000);
+        history.push('/boards');
+      }
     }
   }, []);
   return (

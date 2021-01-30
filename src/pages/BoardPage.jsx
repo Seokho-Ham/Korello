@@ -12,7 +12,7 @@ const BoardPage = ({ match, history, location }) => {
     if (!result) {
       history.push('/');
     }
-  });
+  }, []);
   return (
     <Router>
       <Nav />
