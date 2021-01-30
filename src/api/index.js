@@ -20,6 +20,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
   // setAccessToken(localStorage.getItem('accessToken'));
+  console.log(accessToken);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -34,7 +35,6 @@ const useGetApi = (method, uri, state1, history) => {
         console.log(err);
         alert(err);
         clearStorage();
-        // console.log(history);
         history.push('/');
       }
     };
