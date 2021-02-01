@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { clearStorage } from '../api/index';
-const Nav = ({ history }) => {
+const Nav = ({ history, setLogin }) => {
   const logoutHandler = () => {
     clearStorage();
     alert('로그아웃 되었습니다');
-
+    setLogin(p => !p);
     history.push('/');
   };
   return (
