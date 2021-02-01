@@ -30,10 +30,10 @@ const useGetApi = (method, uri, state1, history) => {
         setLoading('finished');
       } catch (err) {
         // console.log('get!');
-        console.log(err);
-        alert(err);
-        clearStorage();
-        history.push('/');
+        // console.log(err);
+        // alert(err);
+        // clearStorage();
+        // history.push('/');
       }
     };
     getData();
