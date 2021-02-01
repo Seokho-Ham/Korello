@@ -16,6 +16,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
+  const [recentList, setRecentList] = useState([]);
   setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
@@ -26,6 +27,17 @@ const useGetApi = (method, uri, state1, history) => {
         // console.log(data);
         if (data.result_body) {
           setData(data.result_body);
+          let boards = JSON.parse(localStorage.getItem('lastView'))
+            .map(element => {
+              return data.result_body.filter(e => e.id === element)[0];
+            })
+            .filter(el => el);
+
+          if (boards === undefined) {
+            localStorage.removeItem('lastView');
+          } else {
+            setRecentList(boards);
+          }
         }
         setCode(data.result_code);
         setLoading('finished');
@@ -39,7 +51,7 @@ const useGetApi = (method, uri, state1, history) => {
     };
     getData();
   }, [state1]);
-  return [data, code, loading];
+  return [data, code, loading, recentList];
 };
 
 const useGetCardApi = uri => {

@@ -7,7 +7,7 @@ import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
-  const [data, code, loading] = useGetApi('get', '/boards', update);
+  const [data, code, loading, recentList] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
 
   const onClickHandler = () => {
@@ -15,13 +15,7 @@ const BoardList = ({ match }) => {
   };
 
   const renderRecentBoards = () => {
-    let list = JSON.parse(localStorage.getItem('lastView'));
-
-    let boards = list.map(element => {
-      return data.filter(e => e.id === element)[0];
-    });
-
-    return boards.map(el => {
+    return recentList.map(el => {
       return (
         <BoardForm
           key={el.id}
@@ -71,7 +65,7 @@ const BoardList = ({ match }) => {
                 <h3>Recently Viewed</h3>
               </div>
               <div id='board-list'>
-                {data.length > 0 ? renderRecentBoards() : null}
+                {recentList.length > 0 ? renderRecentBoards() : null}
               </div>
             </div>
           ) : null}
