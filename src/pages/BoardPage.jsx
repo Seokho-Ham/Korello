@@ -5,23 +5,12 @@ import Nav from '../components/Nav.jsx';
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
-const BoardPage = ({ match, history, location }) => {
+const BoardPage = ({ match }) => {
   let login = localStorage.getItem('loginStatus');
 
   return login === 'true' ? (
     <Router>
       <Nav />
-      {/* <Route
-        path={match.path}
-        render={props => (
-          <BoardList
-            {...props}
-            data={data}
-            update={update}
-            setUpdate={setUpdate}
-          />
-        )}
-      /> */}
       <Route path={match.path} component={BoardList} />
       <Route
         path={`${match.path.slice(0, match.path.length - 1)}/:id/cards`}

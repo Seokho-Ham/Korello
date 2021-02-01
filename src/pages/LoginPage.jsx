@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
-import { setAccessToken, initializeUser, getRefreshToken } from '../api/index';
-import { Redirect, useHistory } from 'react-router-dom';
-// import cookie from 'react-cookie';
+import { setAccessToken } from '../api/index';
+import { useHistory } from 'react-router-dom';
 
 const LoginPage = () => {
   let history = useHistory();
-  console.log('다녀감!');
-  let login = localStorage.getItem('loginStatus');
 
   const firstLogin = () => {
     console.log('first Login');
@@ -23,25 +20,12 @@ const LoginPage = () => {
     setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
   };
-  useEffect(async () => {
-    // let data = localStorage.getItem('refreshToken');
-
-    // if (data !== null) {
-    //   let result = await initializeUser();
-    //   console.log(result);
-    //   if (result) {
-    //     history.push('/boards');
-    //   } else {
-    //     alert('dd');
-    //     history.push('/');
-    //   }
-    // }
+  useEffect(() => {
     if (
       queryString.parse(window.location.search).accessToken !== undefined &&
       queryString.parse(window.location.search).refreshToken !== undefined
     ) {
       firstLogin();
-      // console.log('login 끝!');
       history.push('/boards');
     }
   }, []);
