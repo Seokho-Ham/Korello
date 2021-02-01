@@ -5,11 +5,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { getRefreshToken } from './api/index';
+import { getRefreshToken, useInitializeUser } from './api/index';
 import queryString from 'query-string';
 
 const App = () => {
   const history = useHistory();
+  const [loginState] = useInitializeUser();
 
   const logoutHandler = () => {
     localStorage.removeItem('loginStatus');
@@ -19,34 +20,29 @@ const App = () => {
     history.push('/');
   };
 
-  useEffect(() => {
-    let loginStatus = localStorage.getItem('loginStatus');
+  // useEffect(() => {
+  //   let loginStatus = localStorage.getItem('loginStatus');
 
-    const initializeUser = async () => {
-      console.log('initializeUser method 실행!');
+  //   const initializeUser = async () => {
+  //     console.log('initializeUser method 실행!');
 
-      let refreshToken = localStorage.getItem('refreshToken');
-      if (refreshToken !== null) {
-        let code = await getRefreshToken(refreshToken);
-        console.log('refresh token 결과: ', code);
-        if (code === 200) {
-          setTimeout(() => {
-            getRefreshToken();
-          }, 45000);
-          history.push('/boards');
-        } else {
-          alert('토큰이 만료되었습니다.');
-          history.push('/');
-        }
-      } else {
-        alert('토큰이 없습니다.');
-        history.push('/');
-      }
-    };
-    if (loginStatus === 'true') {
-      initializeUser();
-    }
-  }, []);
+  //     let refreshToken = localStorage.getItem('refreshToken');
+  //     if (refreshToken !== null) {
+  //       let code = await getRefreshToken(refreshToken);
+  //       console.log('refresh token 결과: ', code);
+  //       if (code === 200) {
+  //         history.push('/boards');
+  //       } else if (code === 401) {
+  //         history.push('/');
+  //       }
+  //     } else {
+  //       history.push('/');
+  //     }
+  //   };
+  //   if (loginStatus === 'true') {
+  //     initializeUser();
+  //   }
+  // }, []);
   return (
     <DndProvider backend={HTML5Backend}>
       <button onClick={logoutHandler}>logout</button>
@@ -54,7 +50,10 @@ const App = () => {
       <Switch>
         <Route exact path='/' render={props => <Login {...props} />} />
 
-        <Route path='/boards' render={props => <Board {...props} />} />
+        <Route
+          path='/boards'
+          render={props => <Board {...props} login={loginState} />}
+        />
         <Redirect from='/board/:id/cards' to='/boards' />
         <Route component={NotFound} />
       </Switch>

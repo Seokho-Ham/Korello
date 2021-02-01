@@ -5,10 +5,10 @@ import Nav from '../components/Nav.jsx';
 import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
-const BoardPage = ({ match }) => {
-  let login = localStorage.getItem('loginStatus');
+const BoardPage = ({ match, login }) => {
+  // let login = localStorage.getItem('loginStatus');
 
-  return login === 'true' ? (
+  return login === true ? (
     <Router>
       <Nav />
       <Route path={match.path} component={BoardList} />
@@ -18,7 +18,9 @@ const BoardPage = ({ match }) => {
       />
     </Router>
   ) : (
-    <Redirect to='/' />
+    <>
+      <Redirect to='/' />
+    </>
   );
 };
 
