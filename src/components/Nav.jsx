@@ -5,7 +5,13 @@ const Nav = ({ history, setLogin }) => {
   const logoutHandler = () => {
     clearStorage();
     alert('로그아웃 되었습니다');
-    setLogin(p => !p);
+    setLogin(p => {
+      if (p === 'true') {
+        setLogin('false');
+      } else {
+        setLogin('true');
+      }
+    });
     history.push('/');
   };
   return (

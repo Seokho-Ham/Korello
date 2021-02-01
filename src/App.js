@@ -10,12 +10,10 @@ import Nav from './components/Nav';
 
 const App = () => {
   const history = useHistory();
-  const [login, setLogin] = useState(
-    Boolean(localStorage.getItem('loginStatus')),
-  );
+  const [login, setLogin] = useState(localStorage.getItem('loginStatus'));
   return (
     <DndProvider backend={HTML5Backend}>
-      {login ? <Nav history={history} setLogin={setLogin} /> : null}
+      {login === 'true' ? <Nav history={history} setLogin={setLogin} /> : null}
       <Switch>
         <Route exact path='/' render={props => <Login {...props} />} />
 
