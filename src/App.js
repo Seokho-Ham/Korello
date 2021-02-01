@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -11,6 +11,9 @@ import Nav from './components/Nav';
 const App = () => {
   const history = useHistory();
   const [login, setLogin] = useState(localStorage.getItem('loginStatus'));
+  useEffect(() => {
+    setLogin(localStorage.getItem('loginStatus'));
+  }, []);
   return (
     <DndProvider backend={HTML5Backend}>
       {login === 'true' ? <Nav history={history} setLogin={setLogin} /> : null}
