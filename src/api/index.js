@@ -18,7 +18,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [code, setCode] = useState(0);
   // setAccessToken(localStorage.getItem('accessToken'));
 
-  useEffect(async () => {
+  useEffect(() => {
     const getData = async () => {
       try {
         let { data } = await axios[method](serverUrl + uri);
@@ -189,6 +189,29 @@ const initializeUser = async () => {
   } else {
     return false;
   }
+};
+
+const useInitialize = () => {
+  const [result, setResult] = useState(false);
+  useEffect(async () => {
+    let refreshToken = localStorage.getItem('refreshToken');
+    // console.log('refreshToken: ', refreshToken);
+    if (refreshToken !== null) {
+      let code = await getRefreshToken(refreshToken);
+      console.log(code);
+      if (code === 200) {
+        setTimeout(() => {
+          getRefreshToken();
+        }, 45000);
+        setResult(true);
+      } else {
+        setResult(false);
+      }
+    } else {
+      setResult(false);
+    }
+  }, []);
+  return [result];
 };
 
 export {

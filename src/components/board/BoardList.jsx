@@ -7,7 +7,7 @@ import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
-  const [data, code] = useGetApi('get', '/boards', update);
+  const [data, code, loading] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
 
   const onClickHandler = () => {
@@ -58,42 +58,48 @@ const BoardList = ({ match }) => {
           </div>
         </nav>
       </div>
-      <div id='board-list-container'>
-        {localStorage.getItem('lastView') ? (
-          <div>
-            <div className='list-type'>
-              <span className='recent'></span>
-              <h3>Recently Viewed</h3>
-            </div>
-            <div id='board-list'>
-              {data.length > 0 ? renderRecentBoards() : null}
-            </div>
-          </div>
-        ) : null}
-        <div className='list-type'>
-          <span className='workspace'></span>
-          <h3>Workspace</h3>
+      {loading === 'loading' ? (
+        <div id='board-list-container'>
+          <h3>Loading...</h3>
         </div>
-        <div id='board-list'>
-          {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
-          <div className='board-element'>
-            <div
-              className='board-el-newform'
-              onClick={onClickHandler}
-              style={{ display: display ? 'none' : 'block' }}
-            >
-              <div className='board-title-newform'>
-                <div>Create New Board</div>
+      ) : (
+        <div id='board-list-container'>
+          {localStorage.getItem('lastView') ? (
+            <div>
+              <div className='list-type'>
+                <span className='recent'></span>
+                <h3>Recently Viewed</h3>
+              </div>
+              <div id='board-list'>
+                {data.length > 0 ? renderRecentBoards() : null}
               </div>
             </div>
-            <NewBoardForm
-              onClickHandler={onClickHandler}
-              setUpdate={setUpdate}
-              display={display}
-            />
+          ) : null}
+          <div className='list-type'>
+            <span className='workspace'></span>
+            <h3>Workspace</h3>
+          </div>
+          <div id='board-list'>
+            {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
+            <div className='board-element'>
+              <div
+                className='board-el-newform'
+                onClick={onClickHandler}
+                style={{ display: display ? 'none' : 'block' }}
+              >
+                <div className='board-title-newform'>
+                  <div>Create New Board</div>
+                </div>
+              </div>
+              <NewBoardForm
+                onClickHandler={onClickHandler}
+                setUpdate={setUpdate}
+                display={display}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

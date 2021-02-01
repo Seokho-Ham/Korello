@@ -6,8 +6,6 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
-  // const [update, setUpdate] = useState(false);
-  // const [data, code] = useGetApi('get', '/boards', update, history);
   let login = localStorage.getItem('loginStatus');
 
   return login === 'true' ? (
