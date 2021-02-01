@@ -16,7 +16,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState('loading');
   const [code, setCode] = useState(0);
-  // setAccessToken(localStorage.getItem('accessToken'));
+  setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
     const getData = async () => {
@@ -31,7 +31,7 @@ const useGetApi = (method, uri, state1, history) => {
         setLoading('finished');
       } catch (err) {
         // console.log('get!');
-        // console.log(err);
+        console.log(err);
         // alert(err);
         // clearStorage();
         // history.push('/');
@@ -46,7 +46,7 @@ const useGetCardApi = uri => {
   const [update, setUpdate] = useState(false);
   const [tagList, setTagList] = useState([]);
   const [cardList, setCardList] = useState([]);
-
+  setAccessToken(localStorage.getItem('accessToken'));
   useEffect(() => {
     const getCard = async () => {
       let { data } = await axios.get(serverUrl + uri);
@@ -98,6 +98,7 @@ const useGetCardApi = uri => {
 //POST--------------------------------------------------------------------------------
 const usePostApi = () => {
   const postData = async (uri, body) => {
+    setAccessToken(localStorage.getItem('accessToken'));
     try {
       let { data } = await axios.post(serverUrl + uri, body);
 
@@ -113,6 +114,7 @@ const usePostApi = () => {
 //UPDATE--------------------------------------------------------------------------------
 const useUpdateApi = () => {
   const updateData = async (url, body) => {
+    setAccessToken(localStorage.getItem('accessToken'));
     try {
       const { data } = await axios.put(serverUrl + url, body);
 
@@ -129,6 +131,7 @@ const useUpdateApi = () => {
 //DELETE-------------------------------------------------------------------------------
 const useDeleteApi = () => {
   const deleteData = async url => {
+    setAccessToken(localStorage.getItem('accessToken'));
     try {
       const { data } = await axios.delete(serverUrl + url);
 
@@ -143,50 +146,18 @@ const useDeleteApi = () => {
   return [deleteData];
 };
 //TOKEN----------------------------------------------
-const getRefreshToken = async token => {
-  setAccessToken(token);
-  let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
-  console.log('getRefreshToken: ', data);
-  if (data !== undefined) {
-    if (data.result_code >= 401001) {
-      if (data.result_code === 401001) {
-        alert('토큰이 만료됨!');
-      }
-      if (data.result_code === 401002) {
-        alert('토큰이 유효하지 않음');
-      }
-      if (data.result_code === 401003) {
-        alert('토큰이 없음!');
-      }
-      clearStorage();
-      return 401;
-    } else if (data.result_code === 200) {
-      localStorage.setItem('accessToken', data.result_body.access_token);
-      localStorage.setItem('refreshToken', data.result_body.refresh_token);
-      localStorage.setItem('loginStatus', true);
-      setAccessToken(localStorage.accessToken);
-      setTimeout(() => {
-        getRefreshToken(localStorage.getItem('refreshToken'));
-      }, 45000);
-      return 200;
-    } else {
-      alert(data.result_message);
-      clearStorage();
-      return data.result_message;
-    }
-  } else {
-    return 404;
-  }
-};
 
 const useInitializeUser = () => {
-  const [loginState, setLoginState] = useState(false);
+  const [loginState, setLoginState] = useState(
+    Boolean(localStorage.getItem('loginStatus')),
+  );
 
   useEffect(() => {
+    let timeout;
     const getRefreshToken = async () => {
       setAccessToken(localStorage.getItem('refreshToken'));
       let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
-      console.log('getRefreshToken: ', data);
+
       if (data !== undefined) {
         if (data.result_code >= 401001) {
           if (data.result_code === 401001) {
@@ -205,16 +176,17 @@ const useInitializeUser = () => {
           localStorage.setItem('accessToken', data.result_body.access_token);
           localStorage.setItem('refreshToken', data.result_body.refresh_token);
           localStorage.setItem('loginStatus', true);
-          setAccessToken(localStorage.accessToken);
-          setTimeout(() => {
+          timeout = setTimeout(() => {
+            console.log('자동 갱신!');
             getRefreshToken(localStorage.getItem('refreshToken'));
-          }, 45000);
+          }, 50000);
           setLoginState(true);
           return 200;
         } else {
           alert(data.result_message);
           clearStorage();
           setLoginState(false);
+
           return data.result_message;
         }
       } else {
@@ -224,6 +196,9 @@ const useInitializeUser = () => {
     if (localStorage.getItem('loginStatus') === 'true') {
       getRefreshToken();
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
   return [loginState];
 };
@@ -235,6 +210,7 @@ export {
   useUpdateApi,
   useDeleteApi,
   setAccessToken,
-  getRefreshToken,
+  // getRefreshToken,
   useInitializeUser,
+  clearStorage,
 };

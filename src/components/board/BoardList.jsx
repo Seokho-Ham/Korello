@@ -20,7 +20,7 @@ const BoardList = ({ match }) => {
     let boards = list.map(element => {
       return data.filter(e => e.id === element)[0];
     });
-    console.log('recentBoards');
+
     return boards.map(el => {
       return (
         <BoardForm

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import { setAccessToken } from '../api/index';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const LoginPage = () => {
   let history = useHistory();
@@ -21,6 +21,9 @@ const LoginPage = () => {
     localStorage.setItem('loginStatus', true);
   };
   useEffect(() => {
+    if (localStorage.getItem('loginStatus') === 'true') {
+      history.push('/boards');
+    }
     if (
       queryString.parse(window.location.search).accessToken !== undefined &&
       queryString.parse(window.location.search).refreshToken !== undefined

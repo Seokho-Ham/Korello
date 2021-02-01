@@ -20,7 +20,6 @@ const BoardForm = ({ url, data, setUpdate }) => {
       if (localStorage.getItem('lastView')) {
         let list = JSON.parse(localStorage.getItem('lastView'));
         let result = list.filter(el => el !== data.id);
-        localStorage.removeItem('lastView');
         localStorage.setItem('lastView', JSON.stringify(result));
       }
     }
