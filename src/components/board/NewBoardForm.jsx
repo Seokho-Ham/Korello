@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { usePostApi } from '../../api/index';
 
 const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
@@ -15,7 +15,8 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
       addBoard();
     }
   };
-  const addBoard = async () => {
+  const addBoard = async e => {
+    e.preventDefault();
     if (boardName.length > 0) {
       const code = await postData('/board', {
         name: boardName,
@@ -42,19 +43,19 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
       style={{ display: display ? 'block' : 'none' }}
     >
       <div className='board-title-newform'>
-        <input
-          ref={inputRef}
-          placeholder='board name'
-          value={boardName}
-          onChange={onChangeHandler}
-          onKeyPress={keyHandler}
-        />
-        <button className='board-add-bt' onClick={addBoard}>
-          Add
-        </button>
-        <button className='board-add-bt' onClick={onClickHandler}>
-          Cancel
-        </button>
+        <form onSubmit={addBoard}>
+          <input
+            ref={inputRef}
+            placeholder='board name'
+            value={boardName}
+            onChange={onChangeHandler}
+            onKeyPress={keyHandler}
+          />
+          <button className='board-add-bt'>Add</button>
+          <button className='board-add-bt' onClick={onClickHandler}>
+            Cancel
+          </button>
+        </form>
       </div>
     </div>
   );
