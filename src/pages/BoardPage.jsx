@@ -8,9 +8,9 @@ import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
   const [update, setUpdate] = useState(false);
   const [data, code] = useGetApi('get', '/boards', update, history);
-  // let login = localStorage.getItem('loginStatus');
+  let login = localStorage.getItem('loginStatus');
 
-  return (
+  return login === 'true' ? (
     <Router>
       <Nav />
       <Route
@@ -29,6 +29,8 @@ const BoardPage = ({ match, history, location }) => {
         component={CardList}
       />
     </Router>
+  ) : (
+    <Redirect to='/' />
   );
 };
 

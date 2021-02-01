@@ -179,6 +179,9 @@ const initializeUser = async () => {
     let code = await getRefreshToken(refreshToken);
     console.log(code);
     if (code === 200) {
+      setTimeout(() => {
+        getRefreshToken();
+      }, 45000);
       return true;
     } else {
       return false;

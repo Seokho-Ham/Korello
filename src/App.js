@@ -25,9 +25,9 @@ const App = () => {
     if (loginStatus === 'true') {
       let loginState = await initializeUser();
       if (loginState) {
-        history.push('/boards')
+        history.push('/boards');
       } else {
-        history.push('/')
+        history.push('/');
       }
     }
   }, []);
