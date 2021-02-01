@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { usePostApi, useUpdateApi } from '../../api/index';
+import { usePostApi, useUpdateApi, getRefreshToken } from '../../api/index';
 import { useDrag } from 'react-dnd';
 import CardModal from './CardModal';
 
@@ -35,7 +35,8 @@ const CardListForm = ({
     setModalVisible(p => !p);
   };
 
-  const sendUpdate = async () => {
+  const sendUpdate = async e => {
+    e.preventDefault();
     if (cardTitle !== title) {
       let code = await updateData(url.slice(0, url.length - 1) + '/name', {
         id: id,
@@ -44,6 +45,9 @@ const CardListForm = ({
       if (code === 200) {
         setEdit(p => !p);
         setUpdate(prevState => !prevState);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await sendUpdate();
       } else {
         alert('update 실패');
       }
@@ -54,11 +58,14 @@ const CardListForm = ({
 
   const deleteCard = async () => {
     console.log(id);
-    let result_code = await postData(url.slice(0, url.length - 1) + '/delete', {
+    let code = await postData(url.slice(0, url.length - 1) + '/delete', {
       id: id,
     });
-    if (result_code === 201) {
+    if (code === 201) {
       setUpdate(prevState => !prevState);
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await deleteCard();
     } else {
       alert('삭제에 실패하였습니다.');
       setUpdate(prevState => !prevState);
@@ -102,8 +109,10 @@ const CardListForm = ({
         )}
         {edit ? (
           <div className='card-input'>
-            <input value={cardTitle} onChange={inputHandler} />
-            <button onClick={sendUpdate}>save</button>
+            <form onSubmit={sendUpdate}>
+              <input value={cardTitle} onChange={inputHandler} />
+              <button>save</button>
+            </form>
           </div>
         ) : (
           <div className='card-title' onClick={editCard}>

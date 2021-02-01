@@ -11,6 +11,39 @@ const clearStorage = () => {
   localStorage.removeItem('refreshToken');
   localStorage.setItem('loginStatus', false);
 };
+const getRefreshToken = async () => {
+  setAccessToken(localStorage.getItem('refreshToken'));
+  let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
+
+  if (data !== undefined) {
+    if (data.result_code >= 401001) {
+      if (data.result_code === 401001) {
+        alert('토큰이 만료됨!');
+      }
+      if (data.result_code === 401002) {
+        alert('토큰이 유효하지 않음');
+      }
+      if (data.result_code === 401003) {
+        alert('토큰이 없음!');
+      }
+      clearStorage();
+
+      return 401;
+    } else if (data.result_code === 200) {
+      localStorage.setItem('accessToken', data.result_body.access_token);
+      localStorage.setItem('refreshToken', data.result_body.refresh_token);
+      localStorage.setItem('loginStatus', true);
+      return 200;
+    } else {
+      alert(data.result_message);
+      clearStorage();
+      return data.result_message;
+    }
+  } else {
+    return 404;
+  }
+};
+
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
@@ -42,11 +75,12 @@ const useGetApi = (method, uri, state1, history) => {
         setCode(data.result_code);
         setLoading('finished');
       } catch (err) {
-        // console.log('get!');
-        console.log(err);
-        // alert(err);
-        // clearStorage();
-        // history.push('/');
+        if (err.response.data.result_code >= 401001) {
+          await getRefreshToken();
+          await getData();
+        } else {
+          console.log(err);
+        }
       }
     };
     getData();
@@ -61,44 +95,53 @@ const useGetCardApi = uri => {
   setAccessToken(localStorage.getItem('accessToken'));
   useEffect(() => {
     const getCard = async () => {
-      let { data } = await axios.get(serverUrl + uri);
+      try {
+        let { data } = await axios.get(serverUrl + uri);
 
-      let { result_body } = data;
+        let { result_body } = data;
 
-      if (result_body.length > 0) {
-        const obj = {};
-        const tags = [];
-        const cards = [];
-        result_body
-          .sort((a, b) => a.id - b.id)
-          .map(el => {
-            let cardObj = {
-              id: el.id,
-              name: el.name,
-              tagValue: el.tagValue,
-              memberNames: el.memberNames,
-              labels: el.labels,
-              createDate: el.createDate,
-              updateDate: el.updateDate,
-            };
+        if (result_body.length > 0) {
+          const obj = {};
+          const tags = [];
+          const cards = [];
+          result_body
+            .sort((a, b) => a.id - b.id)
+            .map(el => {
+              let cardObj = {
+                id: el.id,
+                name: el.name,
+                tagValue: el.tagValue,
+                memberNames: el.memberNames,
+                labels: el.labels,
+                createDate: el.createDate,
+                updateDate: el.updateDate,
+              };
 
-            if (!obj[el.tagValue]) {
-              obj[el.tagValue] = [cardObj];
-            } else {
-              obj[el.tagValue].push(cardObj);
-            }
-          });
+              if (!obj[el.tagValue]) {
+                obj[el.tagValue] = [cardObj];
+              } else {
+                obj[el.tagValue].push(cardObj);
+              }
+            });
 
-        for (let i in obj) {
-          tags.push(i);
-          cards.push(obj[i]);
+          for (let i in obj) {
+            tags.push(i);
+            cards.push(obj[i]);
+          }
+
+          setTagList(tags);
+          setCardList(cards);
+        } else {
+          setTagList([]);
+          setCardList([]);
         }
-
-        setTagList(tags);
-        setCardList(cards);
-      } else {
-        setTagList([]);
-        setCardList([]);
+      } catch (err) {
+        if (err.response.data.result_code >= 401001) {
+          await getRefreshToken();
+          await getCard();
+        } else {
+          console.log(err);
+        }
       }
     };
     getCard();
@@ -109,14 +152,15 @@ const useGetCardApi = uri => {
 
 //POST--------------------------------------------------------------------------------
 const usePostApi = () => {
-  const postData = async (uri, body) => {
-    setAccessToken(localStorage.getItem('accessToken'));
+  const postData = async (uri, body, func) => {
     try {
+      setAccessToken(localStorage.getItem('accessToken'));
+
       let { data } = await axios.post(serverUrl + uri, body);
 
       return data.result_code;
     } catch (err) {
-      console.log(err);
+      return err.response.data.result_code;
     }
   };
 
@@ -126,15 +170,14 @@ const usePostApi = () => {
 //UPDATE--------------------------------------------------------------------------------
 const useUpdateApi = () => {
   const updateData = async (url, body) => {
-    setAccessToken(localStorage.getItem('accessToken'));
     try {
+      setAccessToken(localStorage.getItem('accessToken'));
+
       const { data } = await axios.put(serverUrl + url, body);
 
-      if (data) {
-        return data.result_code;
-      }
+      return data.result_code;
     } catch (err) {
-      console.log(err);
+      return err.response.data.result_code;
     }
   };
   return [updateData];
@@ -151,69 +194,12 @@ const useDeleteApi = () => {
         return data.result_code;
       }
     } catch (err) {
-      console.log(err);
-      return err;
+      return err.response.data.result_code;
     }
   };
   return [deleteData];
 };
 //TOKEN----------------------------------------------
-
-const useInitializeUser = () => {
-  const [loginState, setLoginState] = useState(
-    Boolean(localStorage.getItem('loginStatus')),
-  );
-
-  useEffect(() => {
-    let timeout;
-    const getRefreshToken = async () => {
-      setAccessToken(localStorage.getItem('refreshToken'));
-      let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
-
-      if (data !== undefined) {
-        if (data.result_code >= 401001) {
-          if (data.result_code === 401001) {
-            alert('토큰이 만료됨!');
-          }
-          if (data.result_code === 401002) {
-            alert('토큰이 유효하지 않음');
-          }
-          if (data.result_code === 401003) {
-            alert('토큰이 없음!');
-          }
-          clearStorage();
-          setLoginState(false);
-          return 401;
-        } else if (data.result_code === 200) {
-          localStorage.setItem('accessToken', data.result_body.access_token);
-          localStorage.setItem('refreshToken', data.result_body.refresh_token);
-          localStorage.setItem('loginStatus', true);
-          timeout = setTimeout(() => {
-            console.log('자동 갱신!');
-            getRefreshToken(localStorage.getItem('refreshToken'));
-          }, 50000);
-          setLoginState(true);
-          return 200;
-        } else {
-          alert(data.result_message);
-          clearStorage();
-          setLoginState(false);
-
-          return data.result_message;
-        }
-      } else {
-        return 404;
-      }
-    };
-    if (localStorage.getItem('loginStatus') === 'true') {
-      getRefreshToken();
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
-  return [loginState];
-};
 
 export {
   useGetApi,
@@ -222,7 +208,6 @@ export {
   useUpdateApi,
   useDeleteApi,
   setAccessToken,
-  // getRefreshToken,
-  useInitializeUser,
   clearStorage,
+  getRefreshToken,
 };

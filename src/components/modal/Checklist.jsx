@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePostApi } from '../../api';
+import { usePostApi, getRefreshToken } from '../../api';
 import ChecklistForm from './ChecklistForm';
 
 const Checklist = ({ id, data, setUpdate, percent }) => {
@@ -19,6 +19,9 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
         setTitle('');
         setClicked(p => !p);
         setUpdate(p => !p);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addChecklistHandler();
       } else {
         alert('생성 실패!');
       }
@@ -53,12 +56,14 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
       <div className='checklist-add-button'>
         {clicked ? (
           <>
-            <input
-              placeholder='title'
-              value={title}
-              onChange={onChangeHandler}
-            ></input>
-            <button onClick={addChecklistHandler}>Add</button>
+            <form onSubmit={addChecklistHandler}>
+              <input
+                placeholder='title'
+                value={title}
+                onChange={onChangeHandler}
+              ></input>
+              <button>Add</button>
+            </form>
             <button onClick={clickButtonHandler}>Cancel</button>
           </>
         ) : (

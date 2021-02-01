@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePostApi } from '../../api/index';
+import { usePostApi, getRefreshToken } from '../../api/index';
 
 const AddButton = ({ tag, url, setUpdate }) => {
   const [title, setTitle] = useState('');
@@ -14,7 +14,8 @@ const AddButton = ({ tag, url, setUpdate }) => {
     setDisplay(prevState => !prevState);
   };
 
-  const addCardHandler = async () => {
+  const addCardHandler = async e => {
+    e.preventDefault();
     if (title.length > 0) {
       const code = await postData(`${url.slice(0, url.length - 1)}`, {
         tagValue: tag,
@@ -25,6 +26,9 @@ const AddButton = ({ tag, url, setUpdate }) => {
         setTitle('');
         setDisplay(prevState => !prevState);
         setUpdate(prevState => !prevState);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addCardHandler();
       } else {
         alert('생성에 실패했습니다.');
         setTitle('');
@@ -40,17 +44,18 @@ const AddButton = ({ tag, url, setUpdate }) => {
         className='new-card-form'
         style={{ display: display ? 'block' : 'none' }}
       >
-        <input
-          name='title'
-          type='text'
-          placeholder='title'
-          value={title}
-          onChange={onChangeHandler}
-        ></input>
-        <div className='add-button'>
-          <button onClick={addCardHandler}>Add Card</button>
-          <button onClick={onClickHandler}>Cancel</button>
-        </div>
+        <form onSubmit={addCardHandler}>
+          <input
+            name='title'
+            type='text'
+            placeholder='title'
+            value={title}
+            onChange={onChangeHandler}
+          ></input>
+
+          <button>Add Card</button>
+        </form>
+        <button onClick={onClickHandler}>Cancel</button>
       </div>
       <div
         className='add-button'

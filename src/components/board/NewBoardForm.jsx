@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { usePostApi } from '../../api/index';
+import { usePostApi, getRefreshToken } from '../../api/index';
 
 const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
   const [boardName, setBoardName] = useState('');
@@ -10,12 +10,6 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
     setBoardName(e.target.value);
   };
 
-  // const keyHandler = e => {
-  //   if (e.key === 'Enter') {
-  //     addBoard();
-  //   }
-  // };
-  // onKeyPress={keyHandler}
   const addBoard = async e => {
     e.preventDefault();
     if (boardName.length > 0) {
@@ -27,6 +21,9 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
         setBoardName('');
         onClickHandler();
         setUpdate(p => !p);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addBoard();
       } else {
         alert('생성에 실패했습니다.');
         setBoardName('');
@@ -52,10 +49,10 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
             onChange={onChangeHandler}
           />
           <button className='board-add-bt'>Add</button>
-          <button className='board-add-bt' onClick={onClickHandler}>
-            Cancel
-          </button>
         </form>
+        <button className='board-add-bt' onClick={onClickHandler}>
+          Cancel
+        </button>
       </div>
     </div>
   );

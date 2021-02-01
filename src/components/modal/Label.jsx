@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePostApi, useGetApi } from '../../api/index';
+import { usePostApi, useGetApi, getRefreshToken } from '../../api/index';
 import colors from '../../assets/colors';
 
 const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
@@ -46,7 +46,8 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     // }
   };
 
-  const addBoardLabelButton = async () => {
+  const addBoardLabelButton = async e => {
+    e.preventDefault();
     if (labelName.length > 0 && selectColor.length > 0) {
       const code = await postData(url.slice(0, url.length - 6) + '/label', {
         name: labelName,
@@ -58,6 +59,9 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
         setLabelName('');
         setDisplay(p => !p);
         setModalUpdate(p => !p);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addBoardLabelButton();
       } else {
         alert('추가 실패');
       }
@@ -87,6 +91,9 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
 
     if (code === 201 || code === 200) {
       setUpdate(p => !p);
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await addCardLabelButton();
     } else {
       alert('실패');
       setUpdate(p => !p);
@@ -116,13 +123,6 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
             >
               {value.name}
             </span>
-            {/* <button
-              name={value.id}
-              onClick={deleteLabel}
-              style={{ height: '25px' }}
-            >
-              X
-            </button> */}
           </div>
         );
       } else {
@@ -151,18 +151,20 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
             className='label-form'
             style={{ display: display ? 'block' : 'none' }}
           >
-            <input
-              className='label-input-title'
-              value={labelName}
-              onChange={onChangeHandler}
-              style={{
-                backgroundColor: selectColor,
+            <form onSubmit={addBoardLabelButton}>
+              <input
+                className='label-input-title'
+                value={labelName}
+                onChange={onChangeHandler}
+                style={{
+                  backgroundColor: selectColor,
 
-                color: selectColor === '' ? 'black' : '#fff',
-              }}
-              placeholder='title'
-            />
-            <button onClick={addBoardLabelButton}>Add Label</button>
+                  color: selectColor === '' ? 'black' : '#fff',
+                }}
+                placeholder='title'
+              />
+              <button>Add Label</button>
+            </form>
             <button onClick={handleDisplay}>Cancel</button>
           </div>
 

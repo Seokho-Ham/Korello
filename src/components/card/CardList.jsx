@@ -33,10 +33,6 @@ const CardList = ({ history, location }) => {
     localStorage.setItem('lastView', JSON.stringify([location.state.id]));
   }
 
-  const onClickHandler = () => {
-    history.goBack();
-  };
-
   return (
     <div className='container'>
       <div className='card-container'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { usePostApi } from '../../api/index';
+import { getRefreshToken, usePostApi } from '../../api/index';
 import randomImage from '../../api/images';
 
 const BoardForm = ({ url, data, setUpdate }) => {
@@ -14,14 +14,17 @@ const BoardForm = ({ url, data, setUpdate }) => {
   };
   const deleteBoard = async () => {
     const code = await postData('/board/delete', { id: data.id });
-    if (code !== 200) {
-      alert('삭제 실패!');
-    } else {
+    if (code === 200) {
       if (localStorage.getItem('lastView')) {
         let list = JSON.parse(localStorage.getItem('lastView'));
         let result = list.filter(el => el !== data.id);
         localStorage.setItem('lastView', JSON.stringify(result));
       }
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await deleteBoard();
+    } else {
+      alert('삭제 실패!');
     }
     setUpdate(prevState => !prevState);
   };

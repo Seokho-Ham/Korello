@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePostApi } from '../../api/index';
+import { getRefreshToken, usePostApi } from '../../api/index';
 
 const AddTagButton = ({ url, setUpdate }) => {
   const [tagName, setTagName] = useState('');
@@ -19,7 +19,8 @@ const AddTagButton = ({ url, setUpdate }) => {
     setCardName(e.target.value);
   };
 
-  const addTag = async () => {
+  const addTag = async e => {
+    e.preventDefault();
     if (tagName.length === 0 || cardName.length === 0) {
       alert('빈칸이 있습니다.');
     } else {
@@ -28,10 +29,11 @@ const AddTagButton = ({ url, setUpdate }) => {
         name: cardName,
       });
       if (code === 201) {
-        setTagName('');
-        setCardName('');
+        onClickHandler();
         setUpdate(prevState => !prevState);
-        setClicked(prevState => !prevState);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addTag();
       } else {
         alert('생성에 실패했습니다.');
         setTagName('');
@@ -45,19 +47,20 @@ const AddTagButton = ({ url, setUpdate }) => {
         className='tag-add-button'
         style={{ display: clicked ? 'inline-block' : 'none' }}
       >
-        <input
-          placeholder='tag name'
-          value={tagName}
-          onChange={onChangeHandler}
-        />
-        <input
-          placeholder='card name'
-          value={cardName}
-          onChange={onCardChangeHandler}
-        />
-        <button className='tag-add-bt' onClick={addTag}>
-          Add
-        </button>
+        <form onSubmit={addTag}>
+          <input
+            placeholder='tag name'
+            value={tagName}
+            onChange={onChangeHandler}
+          />
+          <input
+            placeholder='card name'
+            value={cardName}
+            onChange={onCardChangeHandler}
+          />
+
+          <button className='tag-add-bt'>Add</button>
+        </form>
         <button className='tag-add-bt' onClick={onClickHandler}>
           Cancel
         </button>

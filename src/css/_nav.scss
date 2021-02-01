@@ -18,19 +18,22 @@
       opacity: 0.5;
     }
   }
-  .title-image {
-    background-image: url('/src/assets/img/title-logo.png');
-    background-repeat: no-repeat;
-    background-size: 120px;
-    cursor: pointer;
-    display: inline-block;
-    height: 33px;
-    width: 120px;
+  .title {
+    flex-basis: 20%;
+    &-image {
+      background-image: url('/src/assets/img/title-logo.png');
+      background-repeat: no-repeat;
+      background-size: 120px;
+      cursor: pointer;
+      display: inline-block;
+      height: 33px;
+      width: 120px;
+    }
   }
   .header {
     &-buttons {
       display: flex;
-      flex-basis: 50%;
+      flex-basis: 40%;
 
       a {
         height: 31px;
@@ -49,5 +52,9 @@
         height: 25px;
       }
     }
+  }
+  .logout-bt {
+    flex-basis: 40%;
+    text-align: right;
   }
 }

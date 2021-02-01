@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import { setAccessToken } from '../api/index';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const LoginPage = () => {
   let history = useHistory();

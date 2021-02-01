@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUpdateApi, useDeleteApi } from '../../api/index';
+import { useUpdateApi, useDeleteApi, getRefreshToken } from '../../api/index';
 
 const ChecklistForm = ({ el, setUpdate }) => {
   const [updateData] = useUpdateApi();
@@ -13,12 +13,16 @@ const ChecklistForm = ({ el, setUpdate }) => {
     const code = await updateData(`/todo/${e.target.name}/status`);
     if (code === 200) {
       setUpdate(p => !p);
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await checkboxHandler();
     } else {
       alert('실패');
       setUpdate(p => !p);
     }
   };
-  const changeChecklist = async () => {
+  const changeChecklist = async e => {
+    e.preventDefault();
     if (changeButton) {
       if (newTitle.length > 0 && newTitle !== el.title) {
         const code = await updateData(`/todo/${el.todoId}`, {
@@ -28,6 +32,9 @@ const ChecklistForm = ({ el, setUpdate }) => {
         if (code === 200) {
           setChangebutton(false);
           setUpdate(p => !p);
+        } else if (code >= 401001) {
+          await getRefreshToken();
+          await changeChecklist();
         } else {
           alert('실패');
           setUpdate(p => !p);
@@ -43,6 +50,9 @@ const ChecklistForm = ({ el, setUpdate }) => {
     const code = await deleteData(`/todo/${el.todoId}`);
     if (code === 200) {
       setUpdate(p => !p);
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await deleteCheckList();
     } else {
       alert('실패');
       setUpdate(p => !p);
@@ -60,8 +70,10 @@ const ChecklistForm = ({ el, setUpdate }) => {
         />
         {changeButton ? (
           <span className='checklist-item-title'>
-            <input value={newTitle} onChange={onChangeTitle} />
-            <button onClick={changeChecklist}>수정</button>
+            <form onSubmit={changeChecklist}>
+              <input value={newTitle} onChange={onChangeTitle} />
+              <button>수정</button>
+            </form>
           </span>
         ) : (
           <span className='checklist-item-title' onClick={changeChecklist}>

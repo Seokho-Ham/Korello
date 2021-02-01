@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import { useUpdateApi } from '../../api/index';
+import { useUpdateApi, getRefreshToken } from '../../api/index';
 import { useDrop } from 'react-dnd';
 
 const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
@@ -18,6 +18,9 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
       );
       if (code === 200) {
         setUpdate(p => !p);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await appendItem();
       } else {
         alert('이동 실패');
       }

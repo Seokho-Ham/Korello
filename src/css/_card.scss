@@ -179,8 +179,12 @@
   input {
     width: 93%;
   }
-  .add-button {
-    margin: 0px 5px 10px 5px;
+  button {
+    margin: 0px 2px 10px 3px;
+    background-color: hsla(0, 0%, 100%, 0.5);
+    &:hover {
+      background-color: hsla(0, 0%, 100%, 0.1);
+    }
   }
 }
 .add-button {

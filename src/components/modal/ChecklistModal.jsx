@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePostApi } from '../../api';
+import { usePostApi, getRefreshToken } from '../../api';
 
 const ChecklistModal = ({ id, setUpdate }) => {
   const [clicked, setClicked] = useState(false);
@@ -12,7 +12,8 @@ const ChecklistModal = ({ id, setUpdate }) => {
   const onChangeHandler = e => {
     setCheckListTitle(e.target.value);
   };
-  const addCheckList = async () => {
+  const addCheckList = async e => {
+    e.preventDefault();
     if (checkListTitle.length > 0) {
       const code = await postData(`/card/${id}/todo`, {
         cardId: id,
@@ -22,6 +23,9 @@ const ChecklistModal = ({ id, setUpdate }) => {
         setUpdate(p => !p);
         setCheckListTitle('');
         setClicked(p => !p);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addCheckList();
       } else {
         alert('체크리스트 생성 실패');
         setUpdate(p => !p);
@@ -36,13 +40,15 @@ const ChecklistModal = ({ id, setUpdate }) => {
       <button onClick={clickButton}>CheckList</button>
       {clicked ? (
         <div className='checkList-modal' style={{ overflow: 'auto' }}>
-          <input
-            placeholder='checklist title'
-            value={checkListTitle}
-            onChange={onChangeHandler}
-            style={{ display: 'block' }}
-          />
-          <button onClick={addCheckList}>Add Checklist</button>
+          <form onSubmit={addCheckList}>
+            <input
+              placeholder='checklist title'
+              value={checkListTitle}
+              onChange={onChangeHandler}
+              style={{ display: 'block' }}
+            />
+            <button>Add Checklist</button>
+          </form>
         </div>
       ) : null}
     </div>
