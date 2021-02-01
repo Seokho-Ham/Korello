@@ -5,7 +5,9 @@ import CardListForm from '../card/CardListForm';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
-const BoardList = ({ match, setUpdate, data }) => {
+const BoardList = ({ match }) => {
+  const [update, setUpdate] = useState(false);
+  const [data, code] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
 
   const onClickHandler = () => {

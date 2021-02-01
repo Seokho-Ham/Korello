@@ -6,14 +6,14 @@ import BoardList from '../components/board/BoardList';
 import CardList from '../components/card/CardList';
 import { initializeUser, useGetApi } from '../api/index.js';
 const BoardPage = ({ match, history, location }) => {
-  const [update, setUpdate] = useState(false);
-  const [data, code] = useGetApi('get', '/boards', update, history);
+  // const [update, setUpdate] = useState(false);
+  // const [data, code] = useGetApi('get', '/boards', update, history);
   let login = localStorage.getItem('loginStatus');
 
   return login === 'true' ? (
     <Router>
       <Nav />
-      <Route
+      {/* <Route
         path={match.path}
         render={props => (
           <BoardList
@@ -23,7 +23,8 @@ const BoardPage = ({ match, history, location }) => {
             setUpdate={setUpdate}
           />
         )}
-      />
+      /> */}
+      <Route path={match.path} component={BoardList} />
       <Route
         path={`${match.path.slice(0, match.path.length - 1)}/:id/cards`}
         component={CardList}
