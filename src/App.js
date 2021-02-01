@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import { setAccessToken, initializeUser, getRefreshToken } from './api/index';
+import { getRefreshToken } from './api/index';
 import queryString from 'query-string';
 
 const App = () => {

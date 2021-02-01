@@ -170,50 +170,6 @@ const getRefreshToken = async token => {
   }
 };
 
-const initializeUser = async () => {
-  console.log('initializeUser method');
-
-  let refreshToken = localStorage.getItem('refreshToken');
-  // console.log('refreshToken: ', refreshToken);
-  if (refreshToken !== null) {
-    let code = await getRefreshToken(refreshToken);
-    console.log(code);
-    if (code === 200) {
-      setTimeout(() => {
-        getRefreshToken();
-      }, 45000);
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-};
-
-const useInitialize = () => {
-  const [result, setResult] = useState(false);
-  useEffect(async () => {
-    let refreshToken = localStorage.getItem('refreshToken');
-    // console.log('refreshToken: ', refreshToken);
-    if (refreshToken !== null) {
-      let code = await getRefreshToken(refreshToken);
-      console.log(code);
-      if (code === 200) {
-        setTimeout(() => {
-          getRefreshToken();
-        }, 45000);
-        setResult(true);
-      } else {
-        setResult(false);
-      }
-    } else {
-      setResult(false);
-    }
-  }, []);
-  return [result];
-};
-
 export {
   useGetApi,
   useGetCardApi,
@@ -222,5 +178,4 @@ export {
   useDeleteApi,
   setAccessToken,
   getRefreshToken,
-  initializeUser,
 };
