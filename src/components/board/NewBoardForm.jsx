@@ -10,11 +10,12 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
     setBoardName(e.target.value);
   };
 
-  const keyHandler = e => {
-    if (e.key === 'Enter') {
-      addBoard();
-    }
-  };
+  // const keyHandler = e => {
+  //   if (e.key === 'Enter') {
+  //     addBoard();
+  //   }
+  // };
+  // onKeyPress={keyHandler}
   const addBoard = async e => {
     e.preventDefault();
     if (boardName.length > 0) {
@@ -49,7 +50,6 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
             placeholder='board name'
             value={boardName}
             onChange={onChangeHandler}
-            onKeyPress={keyHandler}
           />
           <button className='board-add-bt'>Add</button>
           <button className='board-add-bt' onClick={onClickHandler}>
