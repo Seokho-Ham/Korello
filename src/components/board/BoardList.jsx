@@ -56,15 +56,13 @@ const BoardList = ({ match }) => {
         </div>
       ) : (
         <div id='board-list-container'>
-          {localStorage.getItem('lastView') ? (
+          {recentList.length > 0 ? (
             <div>
               <div className='list-type'>
                 <span className='recent'></span>
                 <h3>Recently Viewed</h3>
               </div>
-              <div id='board-list'>
-                {recentList.length > 0 ? renderRecentBoards() : null}
-              </div>
+              <div id='board-list'>{renderRecentBoards()}</div>
             </div>
           ) : null}
           <div className='list-type'>
