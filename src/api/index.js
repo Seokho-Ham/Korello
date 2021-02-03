@@ -43,7 +43,7 @@ const getRefreshToken = async () => {
     return 404;
   }
 };
-let lastView = JSON.parse(localStorage.getItem('lastView'));
+
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
@@ -63,10 +63,10 @@ const useGetApi = (method, uri, state1, history) => {
         if (data.result_body) {
           setData(data.result_body);
         }
-
+        let lastView = localStorage.getItem('lastView');
         if (lastView !== null) {
-          if (lastView.length > 0) {
-            let boards = lastView
+          if (JSON.parse(lastView).length > 0) {
+            let boards = JSON.parse(lastView)
               .map(element => {
                 return data.result_body.filter(e => e.id === element)[0];
               })
