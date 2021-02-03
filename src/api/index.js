@@ -81,12 +81,12 @@ const useGetApi = (method, uri, state1, history) => {
       } catch (err) {
         if (err.response) {
           console.log(err.response);
-          if (err.response.data.result_code >= 401001) {
-            await getRefreshToken();
-            await getData();
-          } else {
-            console.log('error-response: ', err.response);
-          }
+          // if (err.response.data.result_code >= 401001) {
+          //   await getRefreshToken();
+          //   await getData();
+          // } else {
+          //   console.log('error-response: ', err.response);
+          // }
         } else if (err.request) {
           console.log('error-request: ', err.request);
         } else {
