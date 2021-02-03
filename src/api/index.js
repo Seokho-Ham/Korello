@@ -79,8 +79,8 @@ const useGetApi = (method, uri, state1, history) => {
         setCode(data.result_code);
         setLoading(false);
       } catch (err) {
-        console.log(err.response);
         if (err.response) {
+          console.log(err.response);
           if (err.response.data.result_code >= 401001) {
             await getRefreshToken();
             await getData();
