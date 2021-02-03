@@ -68,6 +68,7 @@ const useGetApi = (method, uri, state1, history) => {
 
           if (boards === undefined) {
             localStorage.removeItem('lastView');
+            setRecentList([]);
           } else {
             setRecentList(boards);
           }
