@@ -57,16 +57,16 @@ const useGetApi = (method, uri, state1, history) => {
       try {
         console.log('get요청');
 
-        console.log(localStorage.getItem('lastView') === null);
         setLoading(true);
         let { data } = await axios[method](serverUrl + uri);
 
         if (data.result_body) {
           setData(data.result_body);
         }
-        if (localStorage.getItem('lastView') !== null) {
-          if (JSON.parse(localStorage.getItem('lastView')).length > 0) {
-            let boards = JSON.parse(localStorage.getItem('lastView'))
+        let lastView = JSON.parse(localStorage.getItem('lastView'));
+        if (lastView !== null) {
+          if (lastView.length > 0) {
+            let boards = lastView
               .map(element => {
                 return data.result_body.filter(e => e.id === element)[0];
               })
