@@ -4,11 +4,18 @@ html {
   background-color: #f9fafc;
   line-height: 20px;
   font-weight: 400;
-  margin: 0px;
-  width: 100%;
+
+  // width: 100%;
   height: 100%;
 }
+html {
+  display: block;
+  overflow: hidden;
+}
 body {
+  margin: 0px;
+  position: relative;
+  z-index: 0;
   overflow: hidden;
 }
 * {
@@ -41,7 +48,7 @@ form {
 }
 .container {
   height: 100%;
-  width: 100%;
+  // width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 import { usePostApi, useUpdateApi, getRefreshToken } from '../../api/index';
 import { useDrag } from 'react-dnd';
 import CardModal from './CardModal';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 const CardListForm = ({
   id,
@@ -11,13 +12,14 @@ const CardListForm = ({
   labels,
   url,
   setUpdate,
+  index,
 }) => {
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: 'card', id: id, tagValue: tag },
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+  // const [{ isDragging }, drag] = useDrag({
+  //   item: { type: 'card', id: id, tagValue: tag },
+  //   collect: monitor => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // });
   const [edit, setEdit] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const [modalVisible, setModalVisible] = useState(false);
@@ -73,62 +75,75 @@ const CardListForm = ({
   };
 
   return (
-    <>
-      {modalVisible ? (
-        <CardModal
-          onClose={clickModal}
-          id={id}
-          title={title}
-          tag={tag}
-          url={url}
-          setUpdate={setUpdate}
-          labels={labels}
-        />
-      ) : null}
-      <div
-        className='card'
-        opacity={isDragging ? 0.5 : 1}
-        ref={edit ? null : drag}
-      >
-        {labels.length > 0 ? (
-          <div className='card-labels'>
-            {labels
-              .sort((a, b) => a.id - b.id)
-              .map((el, i) => (
-                <span
-                  key={i}
-                  className='label'
-                  style={{
-                    backgroundColor: el.color,
-                  }}
-                ></span>
-              ))}
+    <Draggable draggableId={id} index={index}>
+      {provided => {
+        return (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {modalVisible ? (
+              <CardModal
+                onClose={clickModal}
+                id={id}
+                title={title}
+                tag={tag}
+                url={url}
+                setUpdate={setUpdate}
+                labels={labels}
+              />
+            ) : null}
+            <div
+              className='card'
+              // opacity={isDragging ? 0.5 : 1}
+              // ref={edit ? null : drag}
+            >
+              {labels.length > 0 ? (
+                <div className='card-labels'>
+                  {labels
+                    .sort((a, b) => a.id - b.id)
+                    .map((el, i) => (
+                      <span
+                        key={i}
+                        className='label'
+                        style={{
+                          backgroundColor: el.color,
+                        }}
+                      ></span>
+                    ))}
+                </div>
+              ) : (
+                <div className='card-labels'></div>
+              )}
+              {edit ? (
+                <div className='card-input'>
+                  <form onSubmit={sendUpdate}>
+                    <input value={cardTitle} onChange={inputHandler} />
+                    <button>save</button>
+                  </form>
+                </div>
+              ) : (
+                <div className='card-title' onClick={editCard}>
+                  {title}
+                </div>
+              )}
+              {edit ? null : (
+                <div className='card-buttons'>
+                  <button className='modal' onClick={clickModal}>
+                    modal
+                  </button>
+                  <span
+                    className='card-delete-button'
+                    onClick={deleteCard}
+                  ></span>
+                </div>
+              )}
+            </div>
           </div>
-        ) : (
-          <div className='card-labels'></div>
-        )}
-        {edit ? (
-          <div className='card-input'>
-            <form onSubmit={sendUpdate}>
-              <input value={cardTitle} onChange={inputHandler} />
-              <button>save</button>
-            </form>
-          </div>
-        ) : (
-          <div className='card-title' onClick={editCard}>
-            {title}
-          </div>
-        )}
-        {edit ? null : (
-          <div className='card-buttons'>
-            <button className='modal' onClick={clickModal}>
-              modal
-            </button>
-            <span className='card-delete-button' onClick={deleteCard}></span>
-          </div>
-        )}
-      </div>
-    </>
+        );
+      }}
+    </Draggable>
   );
 };
 

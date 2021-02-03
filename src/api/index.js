@@ -98,7 +98,6 @@ const useGetApi = (method, uri, state1, history) => {
 
 const useGetCardApi = uri => {
   const [update, setUpdate] = useState(false);
-  const [tagList, setTagList] = useState([]);
   const [cardList, setCardList] = useState([]);
   setAccessToken(localStorage.getItem('accessToken'));
   useEffect(() => {
@@ -110,7 +109,6 @@ const useGetCardApi = uri => {
 
         if (result_body.length > 0) {
           const obj = {};
-          const tags = [];
           const cards = [];
           result_body
             .sort((a, b) => a.id - b.id)
@@ -133,14 +131,11 @@ const useGetCardApi = uri => {
             });
 
           for (let i in obj) {
-            tags.push(i);
             cards.push(obj[i]);
           }
-
-          setTagList(tags);
+          // localStorage.setItem('cardList',Object.keys(obj))
           setCardList(cards);
         } else {
-          setTagList([]);
           setCardList([]);
         }
       } catch (err) {
@@ -155,7 +150,7 @@ const useGetCardApi = uri => {
     getCard();
   }, [update]);
 
-  return [tagList, cardList, setUpdate];
+  return [cardList, setUpdate];
 };
 
 //POST--------------------------------------------------------------------------------
