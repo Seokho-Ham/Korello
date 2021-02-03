@@ -62,7 +62,9 @@ const BoardList = ({ match }) => {
                 <span className='recent'></span>
                 <h3>Recently Viewed</h3>
               </div>
-              <div id='board-list'>{renderRecentBoards()}</div>
+              <div id='board-list'>
+                {recentList.length > 0 ? renderRecentBoards() : null}
+              </div>
             </div>
           ) : null}
           <div className='list-type'>
