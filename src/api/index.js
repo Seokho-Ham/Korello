@@ -51,7 +51,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [code, setCode] = useState(0);
   const [recentList, setRecentList] = useState([]);
   setAccessToken(localStorage.getItem('accessToken'));
-
+  let lastView = JSON.parse(localStorage.getItem('lastView'));
   useEffect(() => {
     const getData = async () => {
       try {
@@ -63,7 +63,7 @@ const useGetApi = (method, uri, state1, history) => {
         if (data.result_body) {
           setData(data.result_body);
         }
-        let lastView = JSON.parse(localStorage.getItem('lastView'));
+
         if (lastView !== null) {
           if (lastView.length > 0) {
             let boards = lastView
