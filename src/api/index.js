@@ -47,7 +47,7 @@ const getRefreshToken = async () => {
 //GET--------------------------------------------------------------------------------
 const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState('loading');
+  const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(0);
   const [recentList, setRecentList] = useState([]);
   setAccessToken(localStorage.getItem('accessToken'));
@@ -56,6 +56,7 @@ const useGetApi = (method, uri, state1, history) => {
     const getData = async () => {
       try {
         console.log('get요청');
+        setLoading(true);
         let { data } = await axios[method](serverUrl + uri);
         // console.log(data);
         if (data.result_body) {
@@ -76,13 +77,19 @@ const useGetApi = (method, uri, state1, history) => {
           }
         }
         setCode(data.result_code);
-        setLoading('finished');
+        setLoading(false);
       } catch (err) {
-        if (err.response.data.result_code >= 401001) {
-          await getRefreshToken();
-          await getData();
+        if (err.response) {
+          if (err.response.data.result_code >= 401001) {
+            await getRefreshToken();
+            await getData();
+          } else {
+            console.log('error-response: ', err.response);
+          }
+        } else if (err.request) {
+          console.log('error-request: ', err.request);
         } else {
-          console.log(err);
+          console.log('error: ', err);
         }
       }
     };
