@@ -7,7 +7,7 @@ const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
   const [data, code, loading, recentList] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
-
+  console.log(data);
   const onClickHandler = () => {
     setDisplay(p => !p);
   };
