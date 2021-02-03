@@ -5,12 +5,26 @@ import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
-  const [data, code, loading, recentList] = useGetApi('get', '/boards', update);
+  const [data, code, loading] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
-  console.log(data);
+
   const onClickHandler = () => {
     setDisplay(p => !p);
   };
+  const makeRecentBoards = () => {
+    let lastView = JSON.parse(localStorage.getItem('lastView'));
+    if (lastView !== null && lastView.length > 0) {
+      let boards = lastView
+        .map(element => {
+          return data.filter(e => e.id === element)[0];
+        })
+        .filter(el => el);
+      return boards;
+    } else {
+      return [];
+    }
+  };
+  let recentList = makeRecentBoards();
 
   const renderRecentBoards = () => {
     return recentList.map(el => {
@@ -50,7 +64,7 @@ const BoardList = ({ match }) => {
           </div>
         </nav>
       </div>
-      {loading === 'loading' ? (
+      {loading ? (
         <div id='board-list-container'>
           <h3>Loading...</h3>
         </div>
@@ -62,9 +76,7 @@ const BoardList = ({ match }) => {
                 <span className='recent'></span>
                 <h3>Recently Viewed</h3>
               </div>
-              <div id='board-list'>
-                {recentList.length > 0 ? renderRecentBoards() : null}
-              </div>
+              <div id='board-list'>{renderRecentBoards()}</div>
             </div>
           ) : null}
           <div className='list-type'>
