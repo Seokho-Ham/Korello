@@ -5,26 +5,12 @@ import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
-  const [data, code, loading] = useGetApi('get', '/boards', update);
+  const [data, code, loading, recentList] = useGetApi('get', '/boards', update);
   const [display, setDisplay] = useState(false);
 
   const onClickHandler = () => {
     setDisplay(p => !p);
   };
-  const makeRecentBoards = () => {
-    let lastView = JSON.parse(localStorage.getItem('lastView'));
-    if (lastView !== null && lastView.length > 0) {
-      let boards = lastView
-        .map(element => {
-          return data.filter(e => e.id === element)[0];
-        })
-        .filter(el => el);
-      return boards;
-    } else {
-      return [];
-    }
-  };
-  let recentList = makeRecentBoards();
 
   const renderRecentBoards = () => {
     return recentList.map(el => {
