@@ -56,6 +56,8 @@ const useGetApi = (method, uri, state1, history) => {
     const getData = async () => {
       try {
         console.log('get요청');
+
+        console.log(localStorage.getItem('lastView') === null);
         setLoading(true);
         let { data } = await axios[method](serverUrl + uri);
 
