@@ -61,7 +61,7 @@ const useGetApi = (method, uri, state1, history) => {
 
         if (data.result_body) {
           setData(data.result_body);
-          if (localStorage.getItem('lastView') !== null) {
+          if (JSON.parse(localStorage.getItem('lastView')) !== null) {
             if (JSON.parse(localStorage.getItem('lastView').length) > 0) {
               let boards = JSON.parse(localStorage.getItem('lastView'))
                 .map(element => {
