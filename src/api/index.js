@@ -60,17 +60,19 @@ const useGetApi = (method, uri, state1, history) => {
         // console.log(data);
         if (data.result_body) {
           setData(data.result_body);
-          let boards = JSON.parse(localStorage.getItem('lastView'))
-            .map(element => {
-              return data.result_body.filter(e => e.id === element)[0];
-            })
-            .filter(el => el);
-
-          if (boards === undefined) {
-            localStorage.removeItem('lastView');
-            setRecentList([]);
+          if (localStorage.getItem('lastView') !== null) {
+            if (localStorage.getItem('lastView').length > 0) {
+              let boards = JSON.parse(localStorage.getItem('lastView'))
+                .map(element => {
+                  return data.result_body.filter(e => e.id === element)[0];
+                })
+                .filter(el => el);
+              setRecentList(boards);
+            } else {
+              setRecentList([]);
+            }
           } else {
-            setRecentList(boards);
+            setRecentList([]);
           }
         }
         setCode(data.result_code);
