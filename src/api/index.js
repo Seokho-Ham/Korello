@@ -64,17 +64,13 @@ const useGetApi = (method, uri, state1, history) => {
           setData(data.result_body);
         }
         let lastView = localStorage.getItem('lastView');
-        if (lastView !== null) {
-          if (JSON.parse(lastView).length > 0) {
-            let boards = JSON.parse(lastView)
-              .map(element => {
-                return data.result_body.filter(e => e.id === element)[0];
-              })
-              .filter(el => el);
-            setRecentList(boards);
-          } else {
-            setRecentList([]);
-          }
+        if (lastView !== null && JSON.parse(lastView).length > 0) {
+          let boards = JSON.parse(lastView)
+            .map(element => {
+              return data.result_body.filter(e => e.id === element)[0];
+            })
+            .filter(el => el);
+          setRecentList(boards);
         } else {
           setRecentList([]);
         }
