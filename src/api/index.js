@@ -49,7 +49,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(0);
-  // const [recentList, setRecentList] = useState([]);
+  const [recentList, setRecentList] = useState([]);
   setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
