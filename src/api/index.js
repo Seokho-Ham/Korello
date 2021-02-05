@@ -26,7 +26,6 @@ const getRefreshToken = async () => {
       if (data.result_code === 401003) {
         alert('토큰이 없음!');
       }
-      clearStorage();
 
       return 401;
     } else if (data.result_code === 200) {
@@ -50,6 +49,7 @@ const useGetApi = (method, uri, state1, history) => {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(0);
   const [recentList, setRecentList] = useState([]);
+
   setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => {
@@ -74,15 +74,19 @@ const useGetApi = (method, uri, state1, history) => {
         } else {
           setRecentList([]);
         }
+
         setCode(data.result_code);
         setLoading(false);
       } catch (err) {
         if (err.response) {
-          if (err.response.data.result_code >= 401001) {
+          if (err.response.data.result_code === 401001) {
+            console.log(err.response.data.result_code);
             await getRefreshToken();
             await getData();
           } else {
             console.log('error-response: ', err.response);
+            clearStorage();
+            window.location.reload();
           }
         } else if (err.request) {
           console.log('error-request: ', err.request);
@@ -148,7 +152,8 @@ const useGetCardApi = uri => {
           await getRefreshToken();
           await getCard();
         } else {
-          console.log(err);
+          clearStorage();
+          window.location.reload();
         }
       }
     };

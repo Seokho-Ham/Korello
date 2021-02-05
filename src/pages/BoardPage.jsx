@@ -7,7 +7,6 @@ import { useInitializeUser } from '../api/index.js';
 
 const BoardPage = ({ match, history }) => {
   let login = localStorage.getItem('loginStatus');
-  // const [loginState] = useInitializeUser();
 
   return login === 'true' ? (
     <Router>
