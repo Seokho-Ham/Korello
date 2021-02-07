@@ -82,7 +82,7 @@ const useGetApi = (method, uri, state1, history) => {
           if (err.response.data.result_code === 401001) {
             console.log(err.response.data.result_code);
             let code = await getRefreshToken();
-            if (code === 401) {
+            if (code === 200) {
               await getData();
             } else {
               clearStorage();
