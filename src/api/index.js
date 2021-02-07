@@ -81,8 +81,13 @@ const useGetApi = (method, uri, state1, history) => {
         if (err.response) {
           if (err.response.data.result_code === 401001) {
             console.log(err.response.data.result_code);
-            await getRefreshToken();
-            await getData();
+            let code = await getRefreshToken();
+            if (code === 401) {
+              await getData();
+            } else {
+              clearStorage();
+              window.location.reload();
+            }
           } else {
             console.log('error-response: ', err.response);
             clearStorage();
