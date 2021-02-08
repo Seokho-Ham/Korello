@@ -1,7 +1,36 @@
 import React, { useState, useRef } from 'react';
 import { usePostApi, getRefreshToken } from '../../api/index';
-
-const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
+const obj = [
+  {
+    createDate: '2021-01-04T22:28:12.375633',
+    id: '203',
+    memberNames: [],
+    name: '보드2',
+    updateDate: '2021-01-04T22:28:12.375648',
+  },
+  {
+    createDate: '2021-01-04T22:28:12.375633',
+    id: '204',
+    memberNames: [],
+    name: '보드2',
+    updateDate: '2021-01-04T22:28:12.375648',
+  },
+  {
+    createDate: '2021-01-04T22:28:12.375633',
+    id: '205',
+    memberNames: [],
+    name: '보드2',
+    updateDate: '2021-01-04T22:28:12.375648',
+  },
+  {
+    createDate: '2021-01-04T22:28:12.375633',
+    id: '206',
+    memberNames: [],
+    name: '보드2',
+    updateDate: '2021-01-04T22:28:12.375648',
+  },
+];
+const NewBoardForm = ({ onClickHandler, setUpdate, display, setData }) => {
   const [boardName, setBoardName] = useState('');
   const inputRef = useRef(null);
   const [postData] = usePostApi();
@@ -10,8 +39,8 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
     setBoardName(e.target.value);
   };
 
-  const addBoard = async e => {
-    e.preventDefault();
+  const addBoard = async () => {
+    // e.preventDefault();
     if (boardName.length > 0) {
       const code = await postData('/board', {
         name: boardName,
@@ -21,6 +50,7 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
         setBoardName('');
         onClickHandler();
         setUpdate(p => !p);
+        // setData(obj);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();
@@ -48,7 +78,9 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
             value={boardName}
             onChange={onChangeHandler}
           />
-          <button className='board-add-bt'>Add</button>
+          <button className='board-add-bt' onClick={addBoard}>
+            Add
+          </button>
         </form>
         <button className='board-add-bt' onClick={onClickHandler}>
           Cancel

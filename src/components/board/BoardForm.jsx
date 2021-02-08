@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getRefreshToken, usePostApi } from '../../api/index';
 import randomImage from '../../api/images';
@@ -7,11 +7,13 @@ const BoardForm = ({ url, data, setUpdate }) => {
   const [postData] = usePostApi();
   const history = useHistory();
   const [image, setImage] = useState(randomImage());
+
   const clickBoard = () => {
     history.push(`${url.slice(0, url.length - 1)}/${data.id}/cards`, {
       id: data.id,
     });
   };
+
   const deleteBoard = async () => {
     const code = await postData('/board/delete', { id: data.id });
     if (code === 200) {

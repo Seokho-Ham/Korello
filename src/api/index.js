@@ -11,6 +11,7 @@ const clearStorage = () => {
   localStorage.removeItem('refreshToken');
   localStorage.setItem('loginStatus', false);
 };
+//REFRESH TOKEN--------------------------------------------------------------------------------
 const getRefreshToken = async () => {
   setAccessToken(localStorage.getItem('refreshToken'));
   let { data } = await axios.post('https://hyuki.app/oauth2/refresh');
@@ -26,7 +27,6 @@ const getRefreshToken = async () => {
       if (data.result_code === 401003) {
         alert('토큰이 없음!');
       }
-
       return 401;
     } else if (data.result_code === 200) {
       localStorage.setItem('accessToken', data.result_body.access_token);
@@ -59,7 +59,7 @@ const useGetApi = (method, uri, state1, history) => {
 
         setLoading(true);
         let { data } = await axios[method](serverUrl + uri);
-
+        console.log(data.result_body);
         if (data.result_body) {
           setData(data.result_body);
         }
@@ -102,7 +102,7 @@ const useGetApi = (method, uri, state1, history) => {
     };
     getData();
   }, [state1]);
-  return [data, code, loading, recentList];
+  return [data, code, loading, recentList, setData];
 };
 
 const useGetCardApi = uri => {

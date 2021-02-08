@@ -3,11 +3,10 @@ import queryString from 'query-string';
 import { setAccessToken } from '../api/index';
 import { useHistory } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = ({ login }) => {
   let history = useHistory();
 
-  const firstLogin = () => {
-    console.log('first Login');
+  const setLoginInfo = () => {
     localStorage.setItem(
       'accessToken',
       queryString.parse(window.location.search).accessToken,
@@ -20,15 +19,16 @@ const LoginPage = () => {
     setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
   };
+
   useEffect(() => {
-    if (localStorage.getItem('loginStatus') === 'true') {
+    if (login === 'true') {
       history.push('/boards');
     }
     if (
       queryString.parse(window.location.search).accessToken !== undefined &&
       queryString.parse(window.location.search).refreshToken !== undefined
     ) {
-      firstLogin();
+      setLoginInfo();
       history.push('/boards');
     }
   }, []);

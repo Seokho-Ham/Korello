@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useGetApi } from '../../api/index';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
 const BoardList = ({ match }) => {
   const [update, setUpdate] = useState(false);
-  const [data, code, loading, recentList] = useGetApi('get', '/boards', update);
+  const [data, code, loading, recentList, setData] = useGetApi(
+    'get',
+    '/boards',
+    update,
+  );
   const [display, setDisplay] = useState(false);
 
   const onClickHandler = () => {
@@ -85,6 +89,7 @@ const BoardList = ({ match }) => {
                 onClickHandler={onClickHandler}
                 setUpdate={setUpdate}
                 display={display}
+                setData={setData}
               />
             </div>
           </div>

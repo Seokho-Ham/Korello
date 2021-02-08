@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
@@ -14,18 +14,24 @@ const App = () => {
   useEffect(() => {
     setLogin(localStorage.getItem('loginStatus'));
   }, []);
+
   return (
     <DndProvider backend={HTML5Backend}>
       {login === 'true' ? <Nav history={history} setLogin={setLogin} /> : null}
       <Switch>
-        <Route exact path='/' render={props => <Login {...props} />} />
-
-        <Route path='/boards' render={props => <Board {...props} />} />
+        <Route
+          exact
+          path='/'
+          render={props => <Login {...props} login={login} />}
+        />
+        <Route
+          path='/boards'
+          render={props => <Board {...props} login={login} />}
+        />
         <Route
           path='/board/:id/cards'
           render={props => <CardList {...props} />}
         />
-
         <Route component={NotFound} />
       </Switch>
     </DndProvider>
