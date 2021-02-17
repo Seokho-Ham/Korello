@@ -23,6 +23,7 @@ const board = handleActions(
   {
     [GETBOARD]: setState,
     [ADDBOARD]: setState,
+    [DELETEBOARD]: setState,
   },
   initialState,
 );

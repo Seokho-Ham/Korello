@@ -1,12 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getRefreshToken, usePostApi } from '../../api/index';
+import { getRefreshToken } from '../../api/index';
 import randomImage from '../../api/images';
+import postData from '../../api/postAPI';
+import getData from '../../api/getAPI';
+import { del } from '../../reducers/board.reducer';
+import { useDispatch } from 'react-redux';
 
-const BoardForm = ({ url, data, setUpdate }) => {
-  const [postData] = usePostApi();
+const BoardForm = ({ data }) => {
   const history = useHistory();
   const [image, setImage] = useState(randomImage());
+  const dispatch = useDispatch();
 
   const clickBoard = () => {
     console.log(history);
@@ -23,14 +27,22 @@ const BoardForm = ({ url, data, setUpdate }) => {
         let result = list.filter(el => el !== data.id);
         localStorage.setItem('lastView', JSON.stringify(result));
       }
+      let { board, code, loading, error } = await getData('/boards');
+      let payload = {
+        data: board ? board : [],
+        code: code ? code : 0,
+        loading: loading ? loading : false,
+        error: error ? error : '',
+      };
+      dispatch(del(payload));
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteBoard();
     } else {
       alert('삭제 실패!');
     }
-    setUpdate(prevState => !prevState);
   };
+
   return (
     <div
       className='board-element'
@@ -46,4 +58,4 @@ const BoardForm = ({ url, data, setUpdate }) => {
   );
 };
 
-export default BoardForm;
+export default React.memo(BoardForm);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getRefreshToken, setAccessToken } from './index';
+import { setAccessToken } from './index';
 const serverUrl = 'https://hyuki.app/api/v1';
 const postData = async (uri, body) => {
   try {
@@ -14,4 +14,4 @@ const postData = async (uri, body) => {
   }
 };
 
-export { postData };
+export default postData;

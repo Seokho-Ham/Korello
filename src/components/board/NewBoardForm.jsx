@@ -1,16 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { usePostApi, getRefreshToken } from '../../api/index';
-import { postData as pd } from '../../api/postAPI';
+import { getRefreshToken } from '../../api/index';
+import postData from '../../api/postAPI';
 import getData from '../../api/getAPI';
 import { add } from '../../reducers/board.reducer';
-const NewBoardForm = ({ setUpdate, setData }) => {
+const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
-  const inputRef = useRef(null);
-  const [postData] = usePostApi();
   const [display, setDisplay] = useState(false);
-
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
 
   const addBoard = async e => {
     if (e) {
@@ -18,7 +16,7 @@ const NewBoardForm = ({ setUpdate, setData }) => {
     }
 
     if (boardName.length > 0) {
-      let code = await pd('/board', {
+      let code = await postData('/board', {
         name: boardName,
       });
       if (code === 201) {
