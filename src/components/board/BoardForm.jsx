@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { getRefreshToken } from '../../api/index';
 import randomImage from '../../api/images';
 import postData from '../../api/postAPI';
-import getData from '../../api/getAPI';
+import { getData } from '../../api/getAPI';
 import { del } from '../../reducers/board.reducer';
 import { useDispatch } from 'react-redux';
 
@@ -27,12 +27,10 @@ const BoardForm = ({ data }) => {
         let result = list.filter(el => el !== data.id);
         localStorage.setItem('lastView', JSON.stringify(result));
       }
-      let { board, code, loading, error } = await getData('/boards');
+      let [board, code] = await getData('/boards');
       let payload = {
         data: board ? board : [],
         code: code ? code : 0,
-        loading: loading ? loading : false,
-        error: error ? error : '',
       };
       dispatch(del(payload));
     } else if (code >= 401001) {

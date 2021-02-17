@@ -1,17 +1,13 @@
 import React, { memo, useState } from 'react';
-import { usePostApi, useUpdateApi, getRefreshToken } from '../../api/index';
+import { getRefreshToken } from '../../api/index';
 import { useDrag } from 'react-dnd';
 import CardModal from './CardModal';
+import postData from '../../api/postAPI';
+import { useDispatch } from 'react-redux';
+import updateData from '../../api/updateAPI';
+import { fetchCard } from '../../containers/CardContainer';
 
-const CardListForm = ({
-  id,
-  title,
-  tag,
-  memberNames,
-  labels,
-  url,
-  setUpdate,
-}) => {
+const CardListForm = ({ id, title, tag, memberNames, labels, url }) => {
   const [{ isDragging }, drag] = useDrag({
     item: { type: 'card', id: id, tagValue: tag },
     collect: monitor => ({
@@ -21,9 +17,8 @@ const CardListForm = ({
   const [edit, setEdit] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const [modalVisible, setModalVisible] = useState(false);
-  const [postData] = usePostApi();
-  const [updateData] = useUpdateApi();
 
+  const dispatch = useDispatch();
   const editCard = () => {
     setEdit(p => !p);
   };
@@ -44,10 +39,10 @@ const CardListForm = ({
       });
       if (code === 200) {
         setEdit(p => !p);
-        setUpdate(prevState => !prevState);
+        fetchCard(url, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await sendUpdate();
+        await sendUpdate(e);
       } else {
         alert('update 실패');
       }
@@ -62,19 +57,18 @@ const CardListForm = ({
       id: id,
     });
     if (code === 201) {
-      setUpdate(prevState => !prevState);
+      fetchCard(url, dispatch);
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteCard();
     } else {
       alert('삭제에 실패하였습니다.');
-      setUpdate(prevState => !prevState);
     }
   };
 
   return (
     <>
-      {modalVisible ? (
+      {/* {modalVisible ? (
         <CardModal
           onClose={clickModal}
           id={id}
@@ -84,7 +78,7 @@ const CardListForm = ({
           setUpdate={setUpdate}
           labels={labels}
         />
-      ) : null}
+      ) : null} */}
       <div
         className='card'
         opacity={isDragging ? 0.5 : 1}

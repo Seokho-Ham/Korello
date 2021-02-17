@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { usePostApi, getRefreshToken } from '../../api/index';
+import { getRefreshToken } from '../../api/index';
+import postData from '../../api/postAPI';
+import { useDispatch } from 'react-redux';
+import { fetchCard } from '../../containers/CardContainer';
 
-const AddButton = ({ tag, url, setUpdate }) => {
+const AddButton = ({ tag, url }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
-  const [postData] = usePostApi();
-
+  const dispatch = useDispatch();
   const onChangeHandler = e => {
     setTitle(e.target.value);
   };
@@ -25,10 +27,10 @@ const AddButton = ({ tag, url, setUpdate }) => {
       if (code === 201) {
         setTitle('');
         setDisplay(prevState => !prevState);
-        setUpdate(prevState => !prevState);
+        fetchCard(url, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addCardHandler();
+        await addCardHandler(e);
       } else {
         alert('생성에 실패했습니다.');
         setTitle('');

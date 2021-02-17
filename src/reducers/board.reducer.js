@@ -14,8 +14,6 @@ export const del = createAction(DELETEBOARD);
 const initialState = {
   data: [],
   code: 0,
-  loading: false,
-  error: '',
 };
 
 //handleActions(Reducer)

@@ -1,5 +1,4 @@
 import React from 'react';
-import List from './List';
 import BoardContainer from '../../containers/BoardContainer';
 
 const BoardList = ({ match }) => {
@@ -15,7 +14,6 @@ const BoardList = ({ match }) => {
         </nav>
       </div>
       <BoardContainer match={match} />
-      {/* <List match={match} /> */}
     </div>
   );
 };

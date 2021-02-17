@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import { useUpdateApi, getRefreshToken } from '../../api/index';
+import { getRefreshToken } from '../../api/index';
+import updateData from '../../api/updateAPI';
 import { useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import { fetchCard } from '../../containers/CardContainer';
 
-const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
-  const [updateData] = useUpdateApi();
-
+const TagForm = ({ data, tag, boardUrl }) => {
+  const dispatch = useDispatch();
   const appendItem = async item => {
     if (item.tagValue !== tag) {
       const code = await updateData(
@@ -17,10 +19,10 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
         },
       );
       if (code === 200) {
-        setUpdate(p => !p);
+        fetchCard(boardUrl, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await appendItem();
+        await appendItem(item);
       } else {
         alert('이동 실패');
       }
@@ -57,12 +59,11 @@ const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
                   labels={el.labels}
                   tag={tag}
                   url={boardUrl}
-                  setUpdate={setUpdate}
                 />
               );
             })}
         </div>
-        <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
+        <AddCardButton tag={tag} url={boardUrl} />
       </div>
     </div>
   );

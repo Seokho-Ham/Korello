@@ -3,36 +3,88 @@ import { getRefreshToken, clearStorage, setAccessToken } from './index';
 const serverUrl = 'https://hyuki.app/api/v1';
 
 const getData = async uri => {
-  let board = [];
-  let code = 0;
-  let loading = false;
-  let error = '';
   setAccessToken(localStorage.getItem('accessToken'));
   try {
-    console.log('get요청');
-
-    loading = false;
     let { data } = await axios.get(serverUrl + uri);
-    console.log(data.result_body);
     if (data.result_body) {
-      board = data.result_body;
+      return [data.result_body, data.result_code];
     }
-
-    code = data.result_code;
-    loading = false;
-    return { board, code, loading };
   } catch (err) {
     if (err.response) {
       if (err.response.data.result_code >= 401001) {
         console.log(err.response.data.result_code);
         let code = await getRefreshToken();
         if (code === 200) {
-          error = err;
+          // error = err;
           return await getData(uri);
         } else {
+          console.log('error', err);
           // clearStorage();
-          return { error: err };
+          // window.location.reload();
+        }
+      } else {
+        console.log('error-response: ', err.response);
+        // clearStorage();
+        // window.location.reload();
+      }
+    } else if (err.request) {
+      console.log('error-request: ', err.request);
+      return { error: err };
+    } else {
+      console.log('error: ', err);
+      return { error: err };
+    }
+  }
+};
+//GETCARD----------------------------------------
+const getCardApi = async uri => {
+  setAccessToken(localStorage.getItem('accessToken'));
+  try {
+    let { data } = await axios.get(serverUrl + uri);
 
+    let { result_body } = data;
+
+    if (result_body.length > 0) {
+      const obj = {};
+      const tags = [];
+      const cards = [];
+      result_body
+        .sort((a, b) => a.id - b.id)
+        .map(el => {
+          let cardObj = {
+            id: el.id,
+            name: el.name,
+            tagValue: el.tagValue,
+            memberNames: el.memberNames,
+            labels: el.labels,
+            createDate: el.createDate,
+            updateDate: el.updateDate,
+          };
+
+          if (!obj[el.tagValue]) {
+            obj[el.tagValue] = [cardObj];
+          } else {
+            obj[el.tagValue].push(cardObj);
+          }
+        });
+
+      for (let i in obj) {
+        tags.push(i);
+        cards.push(obj[i]);
+      }
+      return [tags, cards];
+    } else {
+      return [[], []];
+    }
+  } catch (err) {
+    if (err.response) {
+      if (err.response.data.result_code === 401001) {
+        console.log(err.response.data.result_code);
+        let code = await getRefreshToken();
+        if (code === 200) {
+          return await getCardApi(uri);
+        } else {
+          // clearStorage();
           // window.location.reload();
         }
       } else {
@@ -48,6 +100,4 @@ const getData = async uri => {
   }
 };
 
-//GETCARD
-
-export default getData;
+export { getData, getCardApi };

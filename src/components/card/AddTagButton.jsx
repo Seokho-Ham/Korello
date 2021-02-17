@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { getRefreshToken, usePostApi } from '../../api/index';
+import { useDispatch } from 'react-redux';
+import { getRefreshToken } from '../../api/index';
+import postData from '../../api/postAPI';
+import { fetchCard } from '../../containers/CardContainer';
 
-const AddTagButton = ({ url, setUpdate }) => {
+const AddTagButton = ({ url }) => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [clicked, setClicked] = useState(false);
-  const [postData] = usePostApi();
 
+  const dispatch = useDispatch();
   const onClickHandler = () => {
     setTagName('');
     setCardName('');
@@ -20,7 +23,10 @@ const AddTagButton = ({ url, setUpdate }) => {
   };
 
   const addTag = async e => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     if (tagName.length === 0 || cardName.length === 0) {
       alert('빈칸이 있습니다.');
     } else {
@@ -30,10 +36,10 @@ const AddTagButton = ({ url, setUpdate }) => {
       });
       if (code === 201) {
         onClickHandler();
-        setUpdate(prevState => !prevState);
+        fetchCard(url, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addTag();
+        await addTag(e);
       } else {
         alert('생성에 실패했습니다.');
         setTagName('');

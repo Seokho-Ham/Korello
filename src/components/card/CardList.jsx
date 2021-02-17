@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TagForm from './TagForm';
 import { useGetCardApi } from '../../api/index';
 import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
 import LogList from './LogList';
-
-const CardList = ({ location }) => {
+import { useDispatch } from 'react-redux';
+const CardList = ({ location, data, fetchCard }) => {
   const [openLog, setOpenLog] = useState(false);
-
+  const { tagList, cardList } = data;
+  const dispatch = useDispatch();
   const openLogHandler = () => {
     setOpenLog(p => !p);
   };
-  const [tagList, cardList, setUpdate] = useGetCardApi(`${location.pathname}`);
+
   let lastViewList = JSON.parse(localStorage.getItem('lastView'));
   if (lastViewList) {
     if (lastViewList.includes(location.state.id.toString())) {
@@ -33,12 +34,15 @@ const CardList = ({ location }) => {
     localStorage.setItem('lastView', JSON.stringify([location.state.id]));
   }
 
+  useEffect(() => {
+    fetchCard(`${location.pathname}`, dispatch);
+  }, []);
   return (
     <div className='container'>
       <div className='card-container'>
         <div id='card-header'>
           <div id='card-header-items'>
-            <AddTagButton url={location.pathname} setUpdate={setUpdate} />
+            <AddTagButton url={location.pathname} />
             <LogBt openLogHandler={openLogHandler} />
           </div>
         </div>
@@ -53,7 +57,6 @@ const CardList = ({ location }) => {
                     data={el}
                     tag={tagList[index]}
                     boardUrl={location.pathname}
-                    setUpdate={setUpdate}
                   />
                 );
               })}

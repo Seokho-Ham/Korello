@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+// import { getData, getCardApi } from './getAPI';
+// import postData from './postAPI';
+// import updateData from './updateAPI';
 const serverUrl = 'https://hyuki.app/api/v1';
 
 const setAccessToken = token => {

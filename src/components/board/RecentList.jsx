@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import BoardForm from './BoardForm';
 
-const RecentList = ({ data, match, setUpdate }) => {
+const RecentList = ({ data, match }) => {
   const makeRecentList = () => {
     let result = [];
     let lastView = localStorage.getItem('lastView');
@@ -21,14 +21,7 @@ const RecentList = ({ data, match, setUpdate }) => {
     let recentList = makeRecentList();
     return recentList.length > 0
       ? recentList.map(el => {
-          return (
-            <BoardForm
-              key={el.id}
-              url={match.path}
-              data={el}
-              setUpdate={setUpdate}
-            />
-          );
+          return <BoardForm key={el.id} url={match.path} data={el} />;
         })
       : null;
   };
