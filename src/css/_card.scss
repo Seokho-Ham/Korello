@@ -24,14 +24,15 @@
   &-list-container {
     height: 95%;
     width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
   }
 }
 
 #tag-all-list {
   white-space: nowrap;
   margin-bottom: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
+
   padding-bottom: 8px;
 
   top: 8px;
@@ -99,13 +100,13 @@
 .card {
   &-container {
     height: 100%;
-    // width: 100%;
+    width: 100%;
     overflow-y: auto;
+    overflow-x: auto;
     align-items: center;
     justify-content: center;
     position: relative;
     flex: 1 1 0%;
-    overflow-y: auto;
   }
   position: relative;
   background-color: #fff;
@@ -198,16 +199,16 @@
   }
 }
 
-.drop-area {
-  width: auto;
-  max-height: 860px;
-  padding: 2px 0px;
-  margin: 5px 1px;
-  overflow: scroll;
-  border-radius: 3px;
-  &.drop-area-hovered {
-    // background: linear-gradient(to right, #94eb3e 1%, #cbff75 100%);
-    background: linear-gradient(to right, #faf58c 1%, #fafad2 100%);
-  }
-}
+// .drop-area {
+//   width: auto;
+//   max-height: 860px;
+//   padding: 2px 0px;
+//   margin: 5px 1px;
+//   overflow: scroll;
+//   border-radius: 3px;
+//   &.drop-area-hovered {
+//     // background: linear-gradient(to right, #94eb3e 1%, #cbff75 100%);
+//     background: linear-gradient(to right, #faf58c 1%, #fafad2 100%);
+//   }
+// }
 //

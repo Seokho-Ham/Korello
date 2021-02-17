@@ -2,9 +2,8 @@ import axios from 'axios';
 import { setAccessToken } from './index';
 const serverUrl = 'https://hyuki.app/api/v1';
 const updateData = async (url, body) => {
+  setAccessToken(localStorage.getItem('accessToken'));
   try {
-    setAccessToken(localStorage.getItem('accessToken'));
-
     const { data } = await axios.put(serverUrl + url, body);
 
     return data.result_code;
