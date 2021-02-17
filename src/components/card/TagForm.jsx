@@ -2,66 +2,67 @@ import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
 import { useUpdateApi, getRefreshToken } from '../../api/index';
-import { useDrop } from 'react-dnd';
+// import { useDrop } from 'react-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-const TagForm = ({ data, tag, boardUrl, setUpdate }) => {
-  const [updateData] = useUpdateApi();
+const TagForm = ({ data, tag, boardUrl, setUpdate, tagIndex }) => {
+  // const [updateData] = useUpdateApi();
 
-  const appendItem = async item => {
-    if (item.tagValue !== tag) {
-      const code = await updateData(
-        boardUrl.slice(0, boardUrl.length - 1) + '/tag',
-        {
-          id: item.id,
-          tagValue: tag,
-        },
-      );
-      if (code === 200) {
-        setUpdate(p => !p);
-      } else if (code >= 401001) {
-        await getRefreshToken();
-        await appendItem();
-      } else {
-        alert('이동 실패');
-      }
-    }
-  };
-
-  const [{ hovered }, drop] = useDrop({
-    accept: 'card',
-    drop: appendItem,
-    collect: monitor => {
-      return {
-        hovered: monitor.isOver(),
-      };
-    },
-  });
+  // const updateCard = async item => {
+  //   if (item.tagValue !== tag) {
+  //     const code = await updateData(
+  //       boardUrl.slice(0, boardUrl.length - 1) + '/tag',
+  //       {
+  //         id: item.id,
+  //         tagValue: tag,
+  //       },
+  //     );
+  //     if (code === 200) {
+  //       setUpdate(p => !p);
+  //     } else if (code >= 401001) {
+  //       await getRefreshToken();
+  //       await updateCard();
+  //     } else {
+  //       alert('이동 실패');
+  //     }
+  //   }
+  // };
+  // console.log(boardUrl.slice(0, boardUrl.length - 1));
 
   return (
     <div className='tag-wrapper'>
       <div className='tag'>
         <div className='tag-header'>{tag}</div>
-        <div
-          className={`drop-area ${hovered ? 'drop-area-hovered' : ''}`}
-          ref={drop}
-        >
-          {data
-            .sort((a, b) => a.id - b.id)
-            .map(el => {
-              return (
-                <CardListForm
-                  key={el.id}
-                  id={el.id}
-                  title={el.name}
-                  memberNames={el.memberNames}
-                  labels={el.labels}
-                  tag={tag}
-                  url={boardUrl}
-                  setUpdate={setUpdate}
-                />
-              );
-            })}
-        </div>
+        <Droppable droppableId={tag}>
+          {provided => {
+            return (
+              <div
+                className={tag}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {data
+                  .sort((a, b) => a.id - b.id)
+                  .map((el, i) => {
+                    return (
+                      <CardListForm
+                        key={el.id}
+                        index={i}
+                        id={el.id}
+                        title={el.name}
+                        memberNames={el.memberNames}
+                        labels={el.labels}
+                        tag={tag}
+                        url={boardUrl}
+                        setUpdate={setUpdate}
+                      />
+                    );
+                  })}
+                {provided.placeholder}
+              </div>
+            );
+          }}
+        </Droppable>
         <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
       </div>
     </div>
