@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
-import { useGetApi } from '../../api';
+
+import { getData } from '../../api/getAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { getModal } from '../../reducers/card.reducer';
 
 const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
   const [modalUpdate, setModalUpdate] = useState(false);
-  const [data] = useGetApi('get', `/card/${id}/todo`, modalUpdate);
+  const { modalList } = useSelector(state => state.card);
+  const dispatch = useDispatch();
 
   const progressCalculator = data => {
     let count = 0;
@@ -20,6 +24,16 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
     return result;
   };
 
+  useEffect(() => {
+    const fetchModal = async () => {
+      const [data] = await getData(`/card/${id}/todo`);
+      let payload = {
+        modalList: data,
+      };
+      dispatch(getModal(payload));
+    };
+    fetchModal();
+  }, []);
   return (
     <>
       <div className='modal-container' />
@@ -47,13 +61,13 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             <h2>{title}</h2>
           </div>
           <div className='modal-contents'>
-            {data.length > 0 ? (
+            {modalList.length > 0 ? (
               <div className='checklist-container'>
                 <Checklist
                   id={id}
-                  data={data}
+                  data={modalList}
                   setUpdate={setModalUpdate}
-                  percent={progressCalculator(data)}
+                  percent={progressCalculator(modalList)}
                 />
               </div>
             ) : null}

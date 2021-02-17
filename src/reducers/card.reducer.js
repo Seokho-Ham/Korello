@@ -5,15 +5,17 @@ const GETCARD = '/card/GETCARD';
 const UPDATECARD = '/card/UPDATECARD';
 const ADDCARD = '/card/ADDCARD';
 const DELETECARD = '/card/DELETECARD';
+const GETMODAL = '/card/GETMODAL';
 
 export const getCards = createAction(GETCARD);
 export const updateCard = createAction(UPDATECARD);
 export const addCard = createAction(ADDCARD);
 export const deleteCard = createAction(DELETECARD);
-
+export const getModal = createAction(GETMODAL);
 const initialState = {
   tagList: [],
   cardList: [],
+  modalList: [],
 };
 
 const card = handleActions(
@@ -22,6 +24,7 @@ const card = handleActions(
     [UPDATECARD]: setState,
     [ADDCARD]: setState,
     [DELETECARD]: setState,
+    [GETMODAL]: setState,
   },
   initialState,
 );

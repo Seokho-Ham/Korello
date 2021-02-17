@@ -6,7 +6,7 @@ import postData from '../../api/postAPI';
 import { useDispatch } from 'react-redux';
 import updateData from '../../api/updateAPI';
 import { fetchCard } from '../../containers/CardContainer';
-
+import { getModal } from '../../reducers/card.reducer';
 const CardListForm = ({ id, title, tag, memberNames, labels, url }) => {
   const [{ isDragging }, drag] = useDrag({
     item: { type: 'card', id: id, tagValue: tag },
@@ -28,6 +28,11 @@ const CardListForm = ({ id, title, tag, memberNames, labels, url }) => {
 
   const clickModal = () => {
     setModalVisible(p => !p);
+
+    let payload = {
+      modalList: [],
+    };
+    dispatch(getModal(payload));
   };
 
   const sendUpdate = async e => {
@@ -68,17 +73,16 @@ const CardListForm = ({ id, title, tag, memberNames, labels, url }) => {
 
   return (
     <>
-      {/* {modalVisible ? (
+      {modalVisible ? (
         <CardModal
           onClose={clickModal}
           id={id}
           title={title}
           tag={tag}
           url={url}
-          setUpdate={setUpdate}
           labels={labels}
         />
-      ) : null} */}
+      ) : null}
       <div
         className='card'
         opacity={isDragging ? 0.5 : 1}
