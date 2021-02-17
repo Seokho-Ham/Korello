@@ -44,11 +44,10 @@ const getRefreshToken = async () => {
 };
 
 //GET--------------------------------------------------------------------------------
-const useGetApi = (method, uri, state1, history) => {
+const useGetApi = (method, uri, state1) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(0);
-  const [recentList, setRecentList] = useState([]);
 
   setAccessToken(localStorage.getItem('accessToken'));
 
@@ -62,17 +61,6 @@ const useGetApi = (method, uri, state1, history) => {
         console.log(data.result_body);
         if (data.result_body) {
           setData(data.result_body);
-        }
-        let lastView = localStorage.getItem('lastView');
-        if (lastView !== null && JSON.parse(lastView).length > 0) {
-          let boards = JSON.parse(lastView)
-            .map(element => {
-              return data.result_body.filter(e => e.id === element)[0];
-            })
-            .filter(el => el);
-          setRecentList(boards);
-        } else {
-          setRecentList([]);
         }
 
         setCode(data.result_code);
@@ -102,7 +90,7 @@ const useGetApi = (method, uri, state1, history) => {
     };
     getData();
   }, [state1]);
-  return [data, code, loading, recentList, setData];
+  return [data, loading, setData];
 };
 
 const useGetCardApi = uri => {
@@ -153,12 +141,25 @@ const useGetCardApi = uri => {
           setCardList([]);
         }
       } catch (err) {
-        if (err.response.data.result_code >= 401001) {
-          await getRefreshToken();
-          await getCard();
+        if (err.response) {
+          if (err.response.data.result_code === 401001) {
+            console.log(err.response.data.result_code);
+            let code = await getRefreshToken();
+            if (code === 200) {
+              await getCard();
+            } else {
+              clearStorage();
+              window.location.reload();
+            }
+          } else {
+            console.log('error-response: ', err.response);
+            clearStorage();
+            window.location.reload();
+          }
+        } else if (err.request) {
+          console.log('error-request: ', err.request);
         } else {
-          clearStorage();
-          window.location.reload();
+          console.log('error: ', err);
         }
       }
     };

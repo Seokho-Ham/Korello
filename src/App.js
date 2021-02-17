@@ -5,8 +5,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-import CardList from './components/card/CardList.jsx';
 import Nav from './components/Nav';
+import CardPage from './pages/CardPage.jsx';
 
 const App = () => {
   const history = useHistory();
@@ -30,8 +30,9 @@ const App = () => {
         />
         <Route
           path='/board/:id/cards'
-          render={props => <CardList {...props} />}
+          render={props => <CardPage {...props} login={login} />}
         />
+
         <Route component={NotFound} />
       </Switch>
     </DndProvider>

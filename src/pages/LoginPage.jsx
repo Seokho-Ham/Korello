@@ -22,6 +22,7 @@ const LoginPage = ({ login }) => {
 
   useEffect(() => {
     if (login === 'true') {
+      setAccessToken(localStorage.getItem('accessToken'));
       history.push('/boards');
     }
     if (

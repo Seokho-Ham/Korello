@@ -1,56 +1,37 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { usePostApi, getRefreshToken } from '../../api/index';
-const obj = [
-  {
-    createDate: '2021-01-04T22:28:12.375633',
-    id: '203',
-    memberNames: [],
-    name: '보드2',
-    updateDate: '2021-01-04T22:28:12.375648',
-  },
-  {
-    createDate: '2021-01-04T22:28:12.375633',
-    id: '204',
-    memberNames: [],
-    name: '보드2',
-    updateDate: '2021-01-04T22:28:12.375648',
-  },
-  {
-    createDate: '2021-01-04T22:28:12.375633',
-    id: '205',
-    memberNames: [],
-    name: '보드2',
-    updateDate: '2021-01-04T22:28:12.375648',
-  },
-  {
-    createDate: '2021-01-04T22:28:12.375633',
-    id: '206',
-    memberNames: [],
-    name: '보드2',
-    updateDate: '2021-01-04T22:28:12.375648',
-  },
-];
-const NewBoardForm = ({ onClickHandler, setUpdate, display, setData }) => {
+import { postData as pd } from '../../api/postAPI';
+import getData from '../../api/getAPI';
+import { add } from '../../reducers/board.reducer';
+const NewBoardForm = ({ setUpdate, setData }) => {
   const [boardName, setBoardName] = useState('');
   const inputRef = useRef(null);
   const [postData] = usePostApi();
+  const [display, setDisplay] = useState(false);
 
-  const onChangeHandler = e => {
-    setBoardName(e.target.value);
-  };
+  const dispatch = useDispatch();
 
-  const addBoard = async () => {
-    // e.preventDefault();
+  const addBoard = async e => {
+    if (e) {
+      e.preventDefault();
+    }
+
     if (boardName.length > 0) {
-      const code = await postData('/board', {
+      let code = await pd('/board', {
         name: boardName,
       });
-
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        setUpdate(p => !p);
-        // setData(obj);
+        let { board, code, loading, error } = await getData('/boards');
+        let payload = {
+          data: board ? board : [],
+          code: code ? code : 0,
+          loading: loading ? loading : false,
+          error: error ? error : '',
+        };
+        dispatch(add(payload));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();
@@ -65,28 +46,47 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display, setData }) => {
     }
   };
 
+  const onClickHandler = () => {
+    setDisplay(p => !p);
+  };
+
+  const onChangeHandler = e => {
+    setBoardName(e.target.value);
+  };
+
   return (
-    <div
-      className='board-el-newform'
-      style={{ display: display ? 'block' : 'none' }}
-    >
-      <div className='board-title-newform'>
-        <form onSubmit={addBoard}>
-          <input
-            ref={inputRef}
-            placeholder='board name'
-            value={boardName}
-            onChange={onChangeHandler}
-          />
-          <button className='board-add-bt' onClick={addBoard}>
-            Add
-          </button>
-        </form>
-        <button className='board-add-bt' onClick={onClickHandler}>
-          Cancel
-        </button>
+    <>
+      <div
+        className='board-el-newform'
+        onClick={onClickHandler}
+        style={{ display: display ? 'none' : 'block' }}
+      >
+        <div className='board-title-newform'>
+          <div>Create New Board</div>
+        </div>
       </div>
-    </div>
+      <div
+        className='board-el-newform'
+        style={{ display: display ? 'block' : 'none' }}
+      >
+        <div className='board-title-newform'>
+          <form onSubmit={addBoard}>
+            <input
+              ref={inputRef}
+              placeholder='board name'
+              value={boardName}
+              onChange={onChangeHandler}
+            />
+            <button className='board-add-bt' onClick={addBoard}>
+              Add
+            </button>
+          </form>
+          <button className='board-add-bt' onClick={onClickHandler}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 

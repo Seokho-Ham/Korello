@@ -5,7 +5,7 @@ import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
 import LogList from './LogList';
 
-const CardList = ({ history, location }) => {
+const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
 
   const openLogHandler = () => {

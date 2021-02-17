@@ -9,7 +9,8 @@ const BoardForm = ({ url, data, setUpdate }) => {
   const [image, setImage] = useState(randomImage());
 
   const clickBoard = () => {
-    history.push(`${url.slice(0, url.length - 1)}/${data.id}/cards`, {
+    console.log(history);
+    history.push(`/board/${data.id}/cards`, {
       id: data.id,
     });
   };
