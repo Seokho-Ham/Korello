@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
-
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
 import Nav from './components/Nav';
 import CardPage from './pages/CardPage.jsx';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 const App = () => {
   const history = useHistory();
   const [login, setLogin] = useState(localStorage.getItem('loginStatus'));

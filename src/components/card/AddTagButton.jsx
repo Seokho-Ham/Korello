@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getRefreshToken } from '../../api/index';
-import postData from '../../api/postAPI';
+import { getRefreshToken, postData } from '../../api';
 import { fetchCard } from '../../containers/CardContainer';
 
 const AddTagButton = ({ url }) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { clearStorage } from '../api/index';
+import { clearStorage } from '../api';
 const Nav = ({ history, setLogin }) => {
   const logoutHandler = () => {
     clearStorage();

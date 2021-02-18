@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { usePostApi, getRefreshToken } from '../../api';
+import { getRefreshToken } from '../../api';
 import ChecklistForm from './ChecklistForm';
+import postData from '../../api/postAPI';
 
 const Checklist = ({ id, data, setUpdate, percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
-  const [postData] = usePostApi();
+  // const [postData] = usePostApi();
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
+
   const addChecklistHandler = async () => {
     if (title.length > 0) {
       const code = await postData(`/card/${id}/todo`, {

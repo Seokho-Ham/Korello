@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { getRefreshToken } from '../../api/index';
-import postData from '../../api/postAPI';
-import { getData } from '../../api/getAPI';
+import { fetchData, postData, getRefreshToken } from '../../api';
 import { add } from '../../reducers/board.reducer';
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
@@ -22,7 +20,7 @@ const NewBoardForm = () => {
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        let [board, code] = await getData('/boards');
+        let [board, code] = await fetchData('/boards');
         let payload = {
           data: board ? board : [],
           code: code ? code : 0,

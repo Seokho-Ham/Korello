@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import RecentList from './RecentList';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 
-const List = ({ match, boardlist, getBoard }) => {
+const List = ({ match, boardlist }) => {
   const { data } = boardlist;
 
-  useEffect(() => {
-    getBoard();
-  }, []);
   const renderBoards = () => {
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))

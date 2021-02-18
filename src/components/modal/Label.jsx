@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
-import { usePostApi, useGetApi, getRefreshToken } from '../../api/index';
+import React, { useEffect, useState } from 'react';
+import { getRefreshToken } from '../../api/index';
 import colors from '../../assets/colors';
+import postData from '../../api/postAPI';
+import { getData } from '../../api/getAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { getModal } from '../../reducers/card.reducer';
 
 const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const [postData] = usePostApi();
-  const [data] = useGetApi(
-    'get',
-    url.slice(0, url.length - 6) + '/label',
-    modalUpdate,
-  );
-
+  const dispatch = useDispatch();
+  const data = [];
+  // const [data] = useGetApi(
+  //   'get',
+  //   url.slice(0, url.length - 6) + '/label',
+  //   modalUpdate,
+  // );
+  // useEffect(() => {});
   const onChangeHandler = e => {
     setLabelName(e.target.value);
   };
@@ -27,23 +32,6 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     setLabelName('');
     setSelectColor('');
     setDisplay(p => !p);
-  };
-
-  const deleteLabel = async e => {
-    // console.log(e.target.name);
-    // console.log(url);
-    // const code = await postData(
-    //   url.slice(0, url.length - 6) + '/label/delete',
-    //   {
-    //     labelsIds: e.target.name,
-    //   },
-    // );
-    // if (code === 200) {
-    //   setSelectColor('');
-    //   setLabelName('');
-    // } else {
-    //   alert('삭제 실패');
-    // }
   };
 
   const addBoardLabelButton = async e => {
@@ -61,7 +49,7 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
         setModalUpdate(p => !p);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addBoardLabelButton();
+        await addBoardLabelButton(e);
       } else {
         alert('추가 실패');
       }
@@ -90,13 +78,11 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
         });
 
     if (code === 201 || code === 200) {
-      setUpdate(p => !p);
     } else if (code >= 401001) {
       await getRefreshToken();
-      await addCardLabelButton();
+      await addCardLabelButton(e);
     } else {
       alert('실패');
-      setUpdate(p => !p);
     }
   };
 

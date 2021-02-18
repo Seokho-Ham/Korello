@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getRefreshToken, clearStorage, setAccessToken } from './index';
 const serverUrl = 'https://hyuki.app/api/v1';
 
-const getData = async uri => {
+const fetchData = async uri => {
   setAccessToken(localStorage.getItem('accessToken'));
   try {
     let { data } = await axios.get(serverUrl + uri);
@@ -16,7 +16,7 @@ const getData = async uri => {
         let code = await getRefreshToken();
         if (code === 200) {
           // error = err;
-          return await getData(uri);
+          return await fetchData(uri);
         } else {
           console.log('error', err);
           // clearStorage();
@@ -100,4 +100,4 @@ const getCardApi = async uri => {
   }
 };
 
-export { getData, getCardApi };
+export { fetchData, getCardApi };

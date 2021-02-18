@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { usePostApi, getRefreshToken } from '../../api';
-
+import { getRefreshToken } from '../../api';
+import postData from '../../api/postAPI';
 const ChecklistModal = ({ id, setUpdate }) => {
   const [clicked, setClicked] = useState(false);
   const [checkListTitle, setCheckListTitle] = useState('');
-  const [postData] = usePostApi();
+  // const [postData] = usePostApi();
 
   const clickButton = () => {
     setClicked(p => !p);

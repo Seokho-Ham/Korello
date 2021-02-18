@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
-import { setAccessToken } from '../api/index';
+import { setAccessToken } from '../api';
 import { useHistory } from 'react-router-dom';
 
 const LoginPage = ({ login }) => {

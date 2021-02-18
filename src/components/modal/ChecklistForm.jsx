@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useUpdateApi, useDeleteApi, getRefreshToken } from '../../api/index';
-
+import { getRefreshToken } from '../../api/index';
+import updateData from '../../api/updateAPI';
+import deleteData from '../../api/deleteAPI';
 const ChecklistForm = ({ el, setUpdate }) => {
-  const [updateData] = useUpdateApi();
-  const [deleteData] = useDeleteApi();
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
   const onChangeTitle = e => {

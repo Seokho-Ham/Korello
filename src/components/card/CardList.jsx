@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import TagForm from './TagForm';
-import { useGetCardApi, useUpdateApi, getRefreshToken } from '../../api/index';
+import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
 import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
-import updateData from '../../api/updateAPI';
 import { useDispatch } from 'react-redux';
 const CardList = ({ location, data, fetchCard }) => {
   const [openLog, setOpenLog] = useState(false);
-  const { tagList, cardList } = data;
+  const { cardList } = data;
   const dispatch = useDispatch();
   const openLogHandler = () => {
     setOpenLog(p => !p);
@@ -73,9 +72,9 @@ const CardList = ({ location, data, fetchCard }) => {
   } else {
     localStorage.setItem('lastView', JSON.stringify([location.state.id]));
   }
-  useEffect(() => {
-    fetchCard(`${location.pathname}`, dispatch);
-  }, []);
+  // useEffect(() => {
+  //   fetchCard(`${location.pathname}`, dispatch);
+  // }, []);
 
   const renderCards = () => {
     return cardList.map((el, i) => {
@@ -85,7 +84,6 @@ const CardList = ({ location, data, fetchCard }) => {
           data={el}
           tag={el[0].tagValue}
           boardUrl={location.pathname}
-          // setUpdate={setUpdate}
           tagIndex={i}
         />
       );

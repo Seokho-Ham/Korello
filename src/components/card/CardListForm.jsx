@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import { getRefreshToken } from '../../api/index';
-import { useDrag } from 'react-dnd';
+
 import CardModal from './CardModal';
-import postData from '../../api/postAPI';
+import { postData, updateData } from '../../api';
 import { useDispatch } from 'react-redux';
-import updateData from '../../api/updateAPI';
+
 import { fetchCard } from '../../containers/CardContainer';
 import { getModal } from '../../reducers/card.reducer';
 import { Draggable, Droppable } from 'react-beautiful-dnd';

@@ -4,7 +4,7 @@ import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
 
-import { getData } from '../../api/getAPI';
+import { fetchData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getModal } from '../../reducers/card.reducer';
 
@@ -26,7 +26,7 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
 
   useEffect(() => {
     const fetchModal = async () => {
-      const [data] = await getData(`/card/${id}/todo`);
+      const [data] = await fetchData(`/card/${id}/todo`);
       let payload = {
         modalList: data,
       };
@@ -78,7 +78,7 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
               id={id}
               modalUpdate={modalUpdate}
               setModalUpdate={setModalUpdate}
-              setUpdate={setUpdate}
+              // setUpdate={setUpdate}
               labels={labels}
             />
             <CheckListModal id={id} setUpdate={setModalUpdate} />

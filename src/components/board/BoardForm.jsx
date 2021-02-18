@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getRefreshToken } from '../../api/index';
 import randomImage from '../../api/images';
-import postData from '../../api/postAPI';
-import { getData } from '../../api/getAPI';
 import { del } from '../../reducers/board.reducer';
 import { useDispatch } from 'react-redux';
+import { fetchData, postData, getRefreshToken } from '../../api';
+import { getBoard } from '../../containers/BoardContainer';
 
 const BoardForm = ({ data }) => {
   const history = useHistory();
@@ -27,12 +26,7 @@ const BoardForm = ({ data }) => {
         let result = list.filter(el => el !== data.id);
         localStorage.setItem('lastView', JSON.stringify(result));
       }
-      let [board, code] = await getData('/boards');
-      let payload = {
-        data: board ? board : [],
-        code: code ? code : 0,
-      };
-      dispatch(del(payload));
+      await getBoard(dispatch);
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteBoard();
