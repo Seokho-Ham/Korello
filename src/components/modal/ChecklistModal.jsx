@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { getRefreshToken } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData, getRefreshToken } from '../../api';
 import postData from '../../api/postAPI';
-const ChecklistModal = ({ id, setUpdate }) => {
+import { setData } from '../../reducers/card.reducer';
+
+const ChecklistModal = () => {
   const [clicked, setClicked] = useState(false);
   const [checkListTitle, setCheckListTitle] = useState('');
-  // const [postData] = usePostApi();
+  const { currentCardId } = useSelector(state => state.card);
+  const dispatch = useDispatch();
 
   const clickButton = () => {
     setClicked(p => !p);
@@ -15,20 +19,20 @@ const ChecklistModal = ({ id, setUpdate }) => {
   const addCheckList = async e => {
     e.preventDefault();
     if (checkListTitle.length > 0) {
-      const code = await postData(`/card/${id}/todo`, {
-        cardId: id,
+      const code = await postData(`/card/${currentCardId}/todo`, {
+        cardId: currentCardId,
         title: checkListTitle,
       });
       if (code === 201 || code === 200) {
-        setUpdate(p => !p);
         setCheckListTitle('');
         setClicked(p => !p);
+        const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
+        dispatch(setData({ checklist: checklist ? checklist : [] }));
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addCheckList();
+        await addCheckList(e);
       } else {
         alert('체크리스트 생성 실패');
-        setUpdate(p => !p);
       }
     } else {
       alert('title을 입력해주세요.');

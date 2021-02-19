@@ -10,6 +10,7 @@ const postData = async (uri, body) => {
 
     return data.result_code;
   } catch (err) {
+    console.log(err);
     return err.response.data.result_code;
   }
 };

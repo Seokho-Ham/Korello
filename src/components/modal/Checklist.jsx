@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
-import { getRefreshToken } from '../../api';
-import ChecklistForm from './ChecklistForm';
-import postData from '../../api/postAPI';
+import ChecklistElement from './ChecklistElement';
+import { postData, fetchData, getRefreshToken } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '../../reducers/card.reducer';
 
-const Checklist = ({ id, data, setUpdate, percent }) => {
+const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
-  // const [postData] = usePostApi();
+  const { checklist, currentCardId } = useSelector(state => state.card);
+  const dispatch = useDispatch();
+
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
 
-  const addChecklistHandler = async () => {
+  const addChecklistHandler = async e => {
+    e.preventDefault();
     if (title.length > 0) {
-      const code = await postData(`/card/${id}/todo`, {
-        cardId: id,
+      const code = await postData(`/card/${currentCardId}/todo`, {
+        cardId: currentCardId,
         title: title,
       });
       if (code === 201 || code === 200) {
         setTitle('');
         setClicked(p => !p);
-        setUpdate(p => !p);
+        const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
+        dispatch(setData({ checklist: checklist ? checklist : [] }));
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addChecklistHandler();
+        await addChecklistHandler(e);
       } else {
         alert('생성 실패!');
       }
@@ -51,8 +56,8 @@ const Checklist = ({ id, data, setUpdate, percent }) => {
         </div>
       </div>
       <div className='checklist- inner'>
-        {data.map((el, i) => (
-          <ChecklistForm key={i} el={el} setUpdate={setUpdate} />
+        {checklist.map((el, i) => (
+          <ChecklistElement key={i} el={el} />
         ))}
       </div>
       <div className='checklist-add-button'>

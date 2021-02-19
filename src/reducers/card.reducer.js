@@ -2,29 +2,48 @@ import { createAction, handleActions } from 'redux-actions';
 import setState from './reduxUtils';
 
 const GETCARD = '/card/GETCARD';
-const UPDATECARD = '/card/UPDATECARD';
-const ADDCARD = '/card/ADDCARD';
-const DELETECARD = '/card/DELETECARD';
-const GETMODAL = '/card/GETMODAL';
+const MOVECARD = '/card/MOVECARD';
+const SETSTATE = '/card/SETSTATE';
 
 export const getCards = createAction(GETCARD);
-export const updateCard = createAction(UPDATECARD);
-export const addCard = createAction(ADDCARD);
-export const deleteCard = createAction(DELETECARD);
-export const getModal = createAction(GETMODAL);
+export const setData = createAction(SETSTATE);
+
+export const moveCard = createAction(MOVECARD);
+
 const initialState = {
-  tagList: [],
-  cardList: [],
-  modalList: [],
+  taglist: [],
+  cardlist: [],
+  checklist: [],
+  labellist: [],
+  currentBoardUrl: '',
+  currentCardId: '',
 };
 
 const card = handleActions(
   {
     [GETCARD]: setState,
-    [UPDATECARD]: setState,
-    [ADDCARD]: setState,
-    [DELETECARD]: setState,
-    [GETMODAL]: setState,
+    [SETSTATE]: setState,
+    [MOVECARD]: (state, action) => {
+      console.log('move!!!!!');
+      let { destination, source } = action.payload;
+      //옮겨질 태그 번호
+      let result = state.cardList.slice();
+      let endNum = state.tagList.indexOf(destination.droppableId);
+      let startNum = state.tagList.indexOf(source.droppableId);
+      //cardList의 해당 num위치의 배열에 destination.index에 추가.
+      //cardList의 source.droppableId의 num위치에 index 번호 삭제.
+      result[endNum].splice(
+        destination.index,
+        0,
+        result[startNum][source.index],
+      );
+      result[startNum].splice(source.index, 1);
+      console.log(result);
+      return {
+        ...state,
+        cardList: result,
+      };
+    },
   },
   initialState,
 );

@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TagForm from './TagForm';
 import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
 import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
-const CardList = ({ location, data, fetchCard }) => {
+import { useDispatch, useSelector } from 'react-redux';
+// import { moveCard } from '../../reducers/card.reducer';
+import { getCard } from '../../containers/CardContainer';
+
+const CardList = () => {
   const [openLog, setOpenLog] = useState(false);
-  const { cardList } = data;
+  const { taglist, currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
+
   const openLogHandler = () => {
     setOpenLog(p => !p);
   };
+
   const updateCard = async (url, destination, source, draggableId) => {
     if (
       source.droppableId !== destination.droppableId &&
@@ -23,7 +28,7 @@ const CardList = ({ location, data, fetchCard }) => {
         tagValue: destination.droppableId,
       });
       if (code === 200) {
-        fetchCard(`${location.pathname}`, dispatch);
+        getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
         await updateCard(url, destination, source, draggableId);
@@ -34,7 +39,8 @@ const CardList = ({ location, data, fetchCard }) => {
   };
 
   const onDragEnd = result => {
-    const url = location.pathname.slice(0, location.pathname.length - 1);
+    console.log('drag-data: ', result);
+    const url = currentBoardUrl.slice(0, currentBoardUrl.length - 1);
     let { destination, source, draggableId } = result;
 
     if (
@@ -47,61 +53,34 @@ const CardList = ({ location, data, fetchCard }) => {
     }
     if (source.droppableId === destination.droppableId) {
       //순서 바꾸는 작업
+      // let payload = {
+      //   destination,
+      //   source,
+      // };
+      // dispatch(moveCard(payload));
     } else {
       updateCard(url, destination, source, draggableId);
     }
   };
 
-  let lastViewList = JSON.parse(localStorage.getItem('lastView'));
-  if (lastViewList) {
-    if (lastViewList.includes(location.state.id.toString())) {
-      lastViewList.splice(
-        lastViewList.indexOf(location.state.id.toString()),
-        1,
-      );
-      localStorage.setItem(
-        'lastView',
-        JSON.stringify([location.state.id, ...lastViewList]),
-      );
-    } else {
-      localStorage.setItem(
-        'lastView',
-        JSON.stringify([location.state.id, ...lastViewList]),
-      );
-    }
-  } else {
-    localStorage.setItem('lastView', JSON.stringify([location.state.id]));
-  }
-  // useEffect(() => {
-  //   fetchCard(`${location.pathname}`, dispatch);
-  // }, []);
-
   const renderCards = () => {
-    return cardList.map((el, i) => {
-      return (
-        <TagForm
-          key={i}
-          data={el}
-          tag={el[0].tagValue}
-          boardUrl={location.pathname}
-          tagIndex={i}
-        />
-      );
+    return taglist.map((el, i) => {
+      return <TagForm key={i} tag={el} tagIndex={i} />;
     });
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className='container'>
-        <div className='card-container'>
-          <div id='card-header'>
-            <div id='card-header-items'>
-              <AddTagButton url={location.pathname} />
-              <LogBt openLogHandler={openLogHandler} />
-            </div>
+    <div className='container'>
+      <div className='card-container'>
+        <div id='card-header'>
+          <div id='card-header-items'>
+            <AddTagButton />
+            <LogBt openLogHandler={openLogHandler} />
           </div>
+        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
           <div id='card-list-container'>
-            {cardList.length > 0 ? (
+            {taglist.length > 0 ? (
               <div id='tag-all-list'>{renderCards()}</div>
             ) : (
               <div id='tag-all-list'>
@@ -109,11 +88,11 @@ const CardList = ({ location, data, fetchCard }) => {
               </div>
             )}
           </div>
-        </div>
-
-        <LogList openLog={openLog} openLogHandler={openLogHandler} />
+        </DragDropContext>
       </div>
-    </DragDropContext>
+
+      <LogList openLog={openLog} openLogHandler={openLogHandler} />
+    </div>
   );
 };
 

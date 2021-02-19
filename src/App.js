@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';

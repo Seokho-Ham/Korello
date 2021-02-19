@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import randomImage from '../../api/images';
-import { del } from '../../reducers/board.reducer';
 import { useDispatch } from 'react-redux';
-import { fetchData, postData, getRefreshToken } from '../../api';
+import { postData, getRefreshToken } from '../../api';
 import { getBoard } from '../../containers/BoardContainer';
 
 const BoardForm = ({ data }) => {

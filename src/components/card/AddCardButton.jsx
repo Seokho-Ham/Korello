@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { getRefreshToken, postData } from '../../api';
-import { useDispatch } from 'react-redux';
-import { fetchCard } from '../../containers/CardContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCard } from '../../containers/CardContainer';
 
-const AddButton = ({ tag, url }) => {
+const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
+  const { currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
+
   const onChangeHandler = e => {
     setTitle(e.target.value);
   };
@@ -18,15 +20,18 @@ const AddButton = ({ tag, url }) => {
   const addCardHandler = async e => {
     e.preventDefault();
     if (title.length > 0) {
-      const code = await postData(`${url.slice(0, url.length - 1)}`, {
-        tagValue: tag,
-        name: title,
-      });
+      const code = await postData(
+        `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
+        {
+          tagValue: tag,
+          name: title,
+        },
+      );
 
       if (code === 201) {
         setTitle('');
         setDisplay(prevState => !prevState);
-        fetchCard(url, dispatch);
+        getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardHandler(e);

@@ -7,6 +7,7 @@ const fetchData = async uri => {
   try {
     let { data } = await axios.get(serverUrl + uri);
     if (data.result_body) {
+      console.log('rawdata: ', data.result_body);
       return [data.result_body, data.result_code];
     }
   } catch (err) {
@@ -37,19 +38,19 @@ const fetchData = async uri => {
   }
 };
 //GETCARD----------------------------------------
-const getCardApi = async uri => {
+const fetchCard = async uri => {
   setAccessToken(localStorage.getItem('accessToken'));
   try {
     let { data } = await axios.get(serverUrl + uri);
 
     let { result_body } = data;
-
+    console.log('raw data: ', result_body);
     if (result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
       result_body
-        .sort((a, b) => a.id - b.id)
+        // .sort((a, b) => a.id - b.id)
         .map(el => {
           let cardObj = {
             id: el.id,
@@ -72,9 +73,11 @@ const getCardApi = async uri => {
         tags.push(i);
         cards.push(obj[i]);
       }
+      console.log('tags: ', tags);
+      console.log('cards: ', cards);
       return [tags, cards];
     } else {
-      return [[], []];
+      return [[]];
     }
   } catch (err) {
     if (err.response) {
@@ -82,7 +85,7 @@ const getCardApi = async uri => {
         console.log(err.response.data.result_code);
         let code = await getRefreshToken();
         if (code === 200) {
-          return await getCardApi(uri);
+          return await fetchCard(uri);
         } else {
           // clearStorage();
           // window.location.reload();
@@ -100,4 +103,4 @@ const getCardApi = async uri => {
   }
 };
 
-export { fetchData, getCardApi };
+export { fetchData, fetchCard };

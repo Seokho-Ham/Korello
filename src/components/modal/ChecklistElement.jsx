@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
-import { getRefreshToken } from '../../api/index';
-import updateData from '../../api/updateAPI';
-import deleteData from '../../api/deleteAPI';
-const ChecklistForm = ({ el, setUpdate }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { getRefreshToken, fetchData, updateData, deleteData } from '../../api';
+import { setData } from '../../reducers/card.reducer';
+
+const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
+  const { currentCardId } = useSelector(state => state.card);
+  const dispatch = useDispatch();
+
   const onChangeTitle = e => {
     setNewTitle(e.target.value);
   };
+
   const checkboxHandler = async e => {
     const code = await updateData(`/todo/${e.target.name}/status`);
     if (code === 200) {
-      setUpdate(p => !p);
+      const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
+      dispatch(setData({ checklist: checklist ? checklist : [] }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await checkboxHandler();
     } else {
       alert('실패');
-      setUpdate(p => !p);
     }
   };
   const changeChecklist = async e => {
@@ -30,13 +35,13 @@ const ChecklistForm = ({ el, setUpdate }) => {
 
         if (code === 200) {
           setChangebutton(false);
-          setUpdate(p => !p);
+          const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
+          dispatch(setData({ checklist: checklist ? checklist : [] }));
         } else if (code >= 401001) {
           await getRefreshToken();
-          await changeChecklist();
+          await changeChecklist(e);
         } else {
           alert('실패');
-          setUpdate(p => !p);
         }
       } else {
         setChangebutton(p => !p);
@@ -48,13 +53,13 @@ const ChecklistForm = ({ el, setUpdate }) => {
   const deleteCheckList = async () => {
     const code = await deleteData(`/todo/${el.todoId}`);
     if (code === 200) {
-      setUpdate(p => !p);
+      const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
+      dispatch(setData({ checklist: checklist ? checklist : [] }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteCheckList();
     } else {
       alert('실패');
-      setUpdate(p => !p);
     }
   };
 
@@ -87,4 +92,4 @@ const ChecklistForm = ({ el, setUpdate }) => {
   );
 };
 
-export default ChecklistForm;
+export default ChecklistElement;
