@@ -21,7 +21,7 @@ const CardContainer = ({ location }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(location);
+    // console.log(location);
     let lastViewList = JSON.parse(localStorage.getItem('lastView'));
     if (lastViewList) {
       if (lastViewList.includes(location.state.id.toString())) {

@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 
 const TagForm = ({ tag, tagIndex }) => {
   const { cardlist } = useSelector(state => state.card);
-  const dispatch = useDispatch();
 
   return (
     <div className='tag-wrapper'>

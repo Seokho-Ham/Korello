@@ -10,7 +10,7 @@ const List = ({ match, boardlist }) => {
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
       .map(el => {
-        return <BoardForm key={el.id} url={match.path} data={el} />;
+        return <BoardForm key={el.id} data={el} />;
       });
   };
 
@@ -22,7 +22,7 @@ const List = ({ match, boardlist }) => {
         </div>
       ) : (
         <div id='board-list-container'>
-          <RecentList data={data} match={match} />
+          <RecentList data={data} />
           <div className='list-type'>
             <span className='workspace'></span>
             <h3>Workspace</h3>

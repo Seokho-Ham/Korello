@@ -7,26 +7,28 @@ const fetchData = async uri => {
   try {
     let { data } = await axios.get(serverUrl + uri);
     if (data.result_body) {
-      console.log('rawdata: ', data.result_body);
+      // console.log('rawdata: ', data.result_body);
       return [data.result_body, data.result_code];
     }
   } catch (err) {
     if (err.response) {
       if (err.response.data.result_code >= 401001) {
-        console.log(err.response.data.result_code);
+        // console.log(err.response.data.result_code);
         let code = await getRefreshToken();
         if (code === 200) {
           // error = err;
           return await fetchData(uri);
         } else {
           console.log('error', err);
-          // clearStorage();
-          // window.location.reload();
+          clearStorage();
+          alert('다시 로그인 해주세요!');
+          window.location.reload();
         }
       } else {
         console.log('error-response: ', err.response);
-        // clearStorage();
-        // window.location.reload();
+        clearStorage();
+        alert('다시 로그인 해주세요!');
+        window.location.reload();
       }
     } else if (err.request) {
       console.log('error-request: ', err.request);
@@ -44,14 +46,14 @@ const fetchCard = async uri => {
     let { data } = await axios.get(serverUrl + uri);
 
     let { result_body } = data;
-    console.log('raw data: ', result_body);
+    // console.log('raw data: ', result_body);
     if (result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
       result_body
         // .sort((a, b) => a.id - b.id)
-        .map(el => {
+        .forEach(el => {
           let cardObj = {
             id: el.id,
             name: el.name,
@@ -73,8 +75,8 @@ const fetchCard = async uri => {
         tags.push(i);
         cards.push(obj[i]);
       }
-      console.log('tags: ', tags);
-      console.log('cards: ', cards);
+      // console.log('tags: ', tags);
+      // console.log('cards: ', cards);
       return [tags, cards];
     } else {
       return [[]];
@@ -87,13 +89,15 @@ const fetchCard = async uri => {
         if (code === 200) {
           return await fetchCard(uri);
         } else {
-          // clearStorage();
-          // window.location.reload();
+          clearStorage();
+          alert('다시 로그인 해주세요!');
+          window.location.reload();
         }
       } else {
         console.log('error-response: ', err.response);
-        // clearStorage();
-        // window.location.reload();
+        clearStorage();
+        alert('다시 로그인 해주세요!');
+        window.location.reload();
       }
     } else if (err.request) {
       console.log('error-request: ', err.request);

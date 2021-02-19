@@ -11,7 +11,7 @@ const BoardForm = ({ data }) => {
   const dispatch = useDispatch();
 
   const clickBoard = () => {
-    console.log(history);
+    // console.log(history);
     history.push(`/board/${data.id}/cards`, {
       id: data.id,
     });

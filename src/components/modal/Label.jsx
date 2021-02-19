@@ -9,7 +9,7 @@ const Label = ({ labels }) => {
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl, currentCardId } = useSelector(state => state.card);
+  const { currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const onChangeHandler = e => {
