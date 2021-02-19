@@ -1,33 +1,11 @@
 import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
-import { useUpdateApi, getRefreshToken } from '../../api/index';
-// import { useDrop } from 'react-dnd';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useSelector } from 'react-redux';
+import { Droppable } from 'react-beautiful-dnd';
 
-const TagForm = ({ data, tag, boardUrl, setUpdate, tagIndex }) => {
-  // const [updateData] = useUpdateApi();
-
-  // const updateCard = async item => {
-  //   if (item.tagValue !== tag) {
-  //     const code = await updateData(
-  //       boardUrl.slice(0, boardUrl.length - 1) + '/tag',
-  //       {
-  //         id: item.id,
-  //         tagValue: tag,
-  //       },
-  //     );
-  //     if (code === 200) {
-  //       setUpdate(p => !p);
-  //     } else if (code >= 401001) {
-  //       await getRefreshToken();
-  //       await updateCard();
-  //     } else {
-  //       alert('이동 실패');
-  //     }
-  //   }
-  // };
-  // console.log(boardUrl.slice(0, boardUrl.length - 1));
+const TagForm = ({ tag, tagIndex }) => {
+  const { cardlist } = useSelector(state => state.card);
 
   return (
     <div className='tag-wrapper'>
@@ -41,7 +19,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate, tagIndex }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {data
+                {cardlist[tagIndex]
                   .sort((a, b) => a.id - b.id)
                   .map((el, i) => {
                     return (
@@ -50,11 +28,8 @@ const TagForm = ({ data, tag, boardUrl, setUpdate, tagIndex }) => {
                         index={i}
                         id={el.id}
                         title={el.name}
-                        memberNames={el.memberNames}
                         labels={el.labels}
                         tag={tag}
-                        url={boardUrl}
-                        setUpdate={setUpdate}
                       />
                     );
                   })}
@@ -63,7 +38,7 @@ const TagForm = ({ data, tag, boardUrl, setUpdate, tagIndex }) => {
             );
           }}
         </Droppable>
-        <AddCardButton tag={tag} url={boardUrl} setUpdate={setUpdate} />
+        <AddCardButton tag={tag} />
       </div>
     </div>
   );

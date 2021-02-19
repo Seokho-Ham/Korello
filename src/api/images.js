@@ -1,5 +1,3 @@
-import path from 'path';
-
 const images = {
   1: 'https://user-images.githubusercontent.com/57708971/105352968-f8aa5f00-5c31-11eb-983a-fe853ede8df8.jpg',
   2: 'https://user-images.githubusercontent.com/57708971/105352972-fa742280-5c31-11eb-9e8b-bb5278e3559d.jpg',

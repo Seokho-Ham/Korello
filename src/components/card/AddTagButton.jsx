@@ -1,39 +1,44 @@
 import React, { useState } from 'react';
-import { getRefreshToken, usePostApi } from '../../api/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRefreshToken, postData } from '../../api';
+import { getCard } from '../../containers/CardContainer';
 
-const AddTagButton = ({ url, setUpdate }) => {
+const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [clicked, setClicked] = useState(false);
-  const [postData] = usePostApi();
+  const { currentBoardUrl } = useSelector(state => state.card);
+  const dispatch = useDispatch();
 
-  const onClickHandler = () => {
+  const buttonStatusHandler = () => {
     setTagName('');
     setCardName('');
     setClicked(prevState => !prevState);
   };
   const onChangeHandler = e => {
-    setTagName(e.target.value);
-  };
-  const onCardChangeHandler = e => {
-    setCardName(e.target.value);
+    e.target.name === 'tag'
+      ? setTagName(e.target.value)
+      : setCardName(e.target.value);
   };
 
   const addTag = async e => {
     e.preventDefault();
-    if (tagName.length === 0 || cardName.length === 0) {
+    if (!tagName || !cardName) {
       alert('빈칸이 있습니다.');
     } else {
-      const code = await postData(`${url.slice(0, url.length - 1)}`, {
-        tagValue: tagName,
-        name: cardName,
-      });
+      const code = await postData(
+        `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
+        {
+          tagValue: tagName,
+          name: cardName,
+        },
+      );
       if (code === 201) {
-        onClickHandler();
-        setUpdate(prevState => !prevState);
+        buttonStatusHandler();
+        getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addTag();
+        await addTag(e);
       } else {
         alert('생성에 실패했습니다.');
         setTagName('');
@@ -49,19 +54,21 @@ const AddTagButton = ({ url, setUpdate }) => {
       >
         <form onSubmit={addTag}>
           <input
+            name='tag'
             placeholder='tag name'
             value={tagName}
             onChange={onChangeHandler}
           />
           <input
+            name='card'
             placeholder='card name'
             value={cardName}
-            onChange={onCardChangeHandler}
+            onChange={onChangeHandler}
           />
 
           <button className='tag-add-bt'>Add</button>
         </form>
-        <button className='tag-add-bt' onClick={onClickHandler}>
+        <button className='tag-add-bt' onClick={buttonStatusHandler}>
           Cancel
         </button>
       </div>
@@ -69,7 +76,7 @@ const AddTagButton = ({ url, setUpdate }) => {
         className='tag-add-button'
         style={{ display: clicked ? 'none' : 'inline-block' }}
       >
-        <button className='tag-add-bt' onClick={onClickHandler}>
+        <button className='tag-add-bt' onClick={buttonStatusHandler}>
           Add Tag
         </button>
       </div>

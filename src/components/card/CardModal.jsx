@@ -1,31 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
-import { useGetApi } from '../../api';
+import { useSelector } from 'react-redux';
 
-const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
-  const [modalUpdate, setModalUpdate] = useState(false);
-  const [data] = useGetApi('get', `/card/${id}/todo`, modalUpdate);
+const progressCalculator = data => {
+  let count = 0;
+  data.forEach(el => {
+    if (el.status) {
+      count++;
+    }
+  });
+  const result = Math.round((count / data.length) * 100);
+  return result;
+};
 
-  const progressCalculator = data => {
-    let count = 0;
-    data.forEach(el => {
-      if (el.status) {
-        count++;
-      }
-    });
-    const result = Math.round((count / data.length) * 100);
-    return result;
-  };
+const CardModal = ({ clickModal, title, labels }) => {
+  const { checklist } = useSelector(state => state.card);
 
   return (
     <>
       <div className='modal-container' />
       <div className='modal-wrapper'>
         <div tabIndex='0' className='modal-inner'>
-          <button className='modal-close' onClick={onClose}>
+          <button className='modal-close' onClick={clickModal}>
             X
           </button>
           <div className='modal-header'>
@@ -47,27 +46,15 @@ const CardModal = ({ onClose, id, title, tag, url, setUpdate, labels }) => {
             <h2>{title}</h2>
           </div>
           <div className='modal-contents'>
-            {data.length > 0 ? (
+            {checklist.length > 0 ? (
               <div className='checklist-container'>
-                <Checklist
-                  id={id}
-                  data={data}
-                  setUpdate={setModalUpdate}
-                  percent={progressCalculator(data)}
-                />
+                <Checklist percent={progressCalculator(checklist)} />
               </div>
             ) : null}
           </div>
           <div className='modal-sidebar'>
-            <Label
-              url={url}
-              id={id}
-              modalUpdate={modalUpdate}
-              setModalUpdate={setModalUpdate}
-              setUpdate={setUpdate}
-              labels={labels}
-            />
-            <CheckListModal id={id} setUpdate={setModalUpdate} />
+            <Label labels={labels} />
+            <CheckListModal />
             <CalendarModal />
           </div>
         </div>

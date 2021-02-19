@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { usePostApi, useGetApi, getRefreshToken } from '../../api/index';
-import colors from '../../assets/colors';
+import { fetchData, postData, getRefreshToken } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '../../reducers/card.reducer';
+import LabelList from './LabelList';
 
-const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
+const Label = ({ labels }) => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const [postData] = usePostApi();
-  const [data] = useGetApi(
-    'get',
-    url.slice(0, url.length - 6) + '/label',
-    modalUpdate,
-  );
+  const { currentBoardUrl } = useSelector(state => state.card);
+  const dispatch = useDispatch();
 
   const onChangeHandler = e => {
     setLabelName(e.target.value);
@@ -29,39 +27,28 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     setDisplay(p => !p);
   };
 
-  const deleteLabel = async e => {
-    // console.log(e.target.name);
-    // console.log(url);
-    // const code = await postData(
-    //   url.slice(0, url.length - 6) + '/label/delete',
-    //   {
-    //     labelsIds: e.target.name,
-    //   },
-    // );
-    // if (code === 200) {
-    //   setSelectColor('');
-    //   setLabelName('');
-    // } else {
-    //   alert('삭제 실패');
-    // }
-  };
-
   const addBoardLabelButton = async e => {
     e.preventDefault();
     if (labelName.length > 0 && selectColor.length > 0) {
-      const code = await postData(url.slice(0, url.length - 6) + '/label', {
-        name: labelName,
-        color: selectColor,
-      });
+      const code = await postData(
+        currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
+        {
+          name: labelName,
+          color: selectColor,
+        },
+      );
 
       if (code === 201) {
         setSelectColor('');
         setLabelName('');
         setDisplay(p => !p);
-        setModalUpdate(p => !p);
+        let [labels] = await fetchData(
+          currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
+        );
+        dispatch(setData({ labellist: labels ? labels : [] }));
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addBoardLabelButton();
+        await addBoardLabelButton(e);
       } else {
         alert('추가 실패');
       }
@@ -70,83 +57,12 @@ const Label = ({ id, url, modalUpdate, setModalUpdate, setUpdate, labels }) => {
     }
   };
 
-  const checkOverlap = (arr, id) => {
-    let result = false;
-    arr.forEach(el => {
-      if (el.id === id) {
-        result = true;
-      }
-    });
-    return result;
-  };
-
-  const addCardLabelButton = async e => {
-    const code = checkOverlap(labels, e.target.id)
-      ? await postData(`/card/${id}/label/delete`, {
-          labelIds: [e.target.id],
-        })
-      : await postData(`/card/${id}/label`, {
-          labelId: e.target.id,
-        });
-
-    if (code === 201 || code === 200) {
-      setUpdate(p => !p);
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await addCardLabelButton();
-    } else {
-      alert('실패');
-      setUpdate(p => !p);
-    }
-  };
-
-  const newRenderColors = () => {
-    let colorlist = {};
-    data.forEach(el => {
-      colorlist[el.color] = data.indexOf(el);
-    });
-
-    return colors.map((el, i) => {
-      if (colorlist[el.color] !== undefined) {
-        let value = data[colorlist[el.color]];
-
-        return (
-          <div className='label-list' key={i}>
-            <span
-              id={value.id}
-              className='label-el'
-              name={value.color}
-              style={{
-                backgroundColor: value.color,
-              }}
-              onClick={addCardLabelButton}
-            >
-              {value.name}
-            </span>
-          </div>
-        );
-      } else {
-        return (
-          <div className='label-list' key={i}>
-            <span
-              className='label-el-colors'
-              name={el.color}
-              style={{
-                backgroundColor: el.color,
-              }}
-              onClick={selectButton}
-            ></span>
-          </div>
-        );
-      }
-    });
-  };
   return (
     <div className='add-card-label-button'>
       <button onClick={openLabelButton}>Label</button>
       {openLabel ? (
         <div className='label-modal'>
-          {newRenderColors()}
+          <LabelList selectButton={selectButton} labels={labels} />
           <div
             className='label-form'
             style={{ display: display ? 'block' : 'none' }}

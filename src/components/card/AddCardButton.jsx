@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { usePostApi, getRefreshToken } from '../../api/index';
+import { getRefreshToken, postData } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCard } from '../../containers/CardContainer';
 
-const AddButton = ({ tag, url, setUpdate }) => {
+const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
-  const [postData] = usePostApi();
+  const { currentBoardUrl } = useSelector(state => state.card);
+  const dispatch = useDispatch();
 
   const onChangeHandler = e => {
     setTitle(e.target.value);
@@ -17,18 +20,21 @@ const AddButton = ({ tag, url, setUpdate }) => {
   const addCardHandler = async e => {
     e.preventDefault();
     if (title.length > 0) {
-      const code = await postData(`${url.slice(0, url.length - 1)}`, {
-        tagValue: tag,
-        name: title,
-      });
+      const code = await postData(
+        `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
+        {
+          tagValue: tag,
+          name: title,
+        },
+      );
 
       if (code === 201) {
         setTitle('');
         setDisplay(prevState => !prevState);
-        setUpdate(prevState => !prevState);
+        getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addCardHandler();
+        await addCardHandler(e);
       } else {
         alert('생성에 실패했습니다.');
         setTitle('');
