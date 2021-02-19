@@ -61,7 +61,9 @@ const AddButton = ({ tag }) => {
 
           <button>Add Card</button>
         </form>
-        <button onClick={onClickHandler}>Cancel</button>
+        <button class='cancel' onClick={onClickHandler}>
+          X
+        </button>
       </div>
       <div
         className='add-button'
