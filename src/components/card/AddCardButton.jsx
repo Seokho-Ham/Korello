@@ -61,7 +61,7 @@ const AddButton = ({ tag }) => {
 
           <button>Add Card</button>
         </form>
-        <button class='cancel' onClick={onClickHandler}>
+        <button className='cancel' onClick={onClickHandler}>
           X
         </button>
       </div>
@@ -69,7 +69,7 @@ const AddButton = ({ tag }) => {
         className='add-button'
         style={{ display: display ? 'none' : 'block' }}
       >
-        <button onClick={onClickHandler}>Add another card</button>
+        <button onClick={onClickHandler}>+ Add another card</button>
       </div>
     </>
   );

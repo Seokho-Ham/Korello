@@ -56,7 +56,6 @@ const CardModal = ({ clickModal, title, labels }) => {
   };
   return (
     <>
-      <div className='modal-container' />
       <div className='modal-wrapper'>
         <div tabIndex='0' className='modal-inner'>
           <button className='modal-close' onClick={clickModal}>
@@ -101,6 +100,7 @@ const CardModal = ({ clickModal, title, labels }) => {
             ) : null}
           </div>
           <div className='modal-sidebar'>
+            <div>Sidebar</div>
             <Label labels={labels} />
             <CheckListModal />
             <CalendarModal />

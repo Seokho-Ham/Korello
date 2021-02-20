@@ -45,9 +45,9 @@ const fetchCard = async uri => {
   try {
     let { data } = await axios.get(serverUrl + uri);
 
-    let { result_body } = data;
+    let { result_body, result_code } = data;
     // console.log('raw data: ', result_body);
-    if (result_body.length > 0) {
+    if (result_body && result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
@@ -77,9 +77,9 @@ const fetchCard = async uri => {
       }
       // console.log('tags: ', tags);
       // console.log('cards: ', cards);
-      return [tags, cards];
+      return [tags, cards, result_code];
     } else {
-      return [[]];
+      return [[], [], result_code];
     }
   } catch (err) {
     if (err.response) {
@@ -103,6 +103,7 @@ const fetchCard = async uri => {
       console.log('error-request: ', err.request);
     } else {
       console.log('error: ', err);
+      return {};
     }
   }
 };

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchCard, fetchData } from '../api';
 import CardList from '../components/card/CardList';
@@ -6,7 +7,8 @@ import { getCards } from '../reducers/card.reducer';
 
 //card 데이터를 받아와서 dispatch까지 하는 동작
 export const getCard = async (uri, dispatch) => {
-  let [tags, cards] = await fetchCard(uri);
+  let [tags, cards, code] = await fetchCard(uri);
+
   let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
   let payload = {
     taglist: tags ? tags : [],
@@ -19,28 +21,26 @@ export const getCard = async (uri, dispatch) => {
 
 const CardContainer = ({ location }) => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
-    // console.log(location);
+    const boardId = location.pathname.split('/')[2];
+
     let lastViewList = JSON.parse(localStorage.getItem('lastView'));
     if (lastViewList) {
-      if (lastViewList.includes(location.state.id.toString())) {
-        lastViewList.splice(
-          lastViewList.indexOf(location.state.id.toString()),
-          1,
-        );
+      if (lastViewList.includes(boardId)) {
+        lastViewList.splice(lastViewList.indexOf(boardId), 1);
         localStorage.setItem(
           'lastView',
-          JSON.stringify([location.state.id, ...lastViewList]),
+          JSON.stringify([parseInt(boardId), ...lastViewList]),
         );
       } else {
         localStorage.setItem(
           'lastView',
-          JSON.stringify([location.state.id, ...lastViewList]),
+          JSON.stringify([parseInt(boardId), ...lastViewList]),
         );
       }
     } else {
-      localStorage.setItem('lastView', JSON.stringify([location.state.id]));
+      localStorage.setItem('lastView', JSON.stringify([parseInt(boardId)]));
     }
 
     getCard(`${location.pathname}`, dispatch);

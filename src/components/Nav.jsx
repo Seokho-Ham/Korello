@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { clearStorage } from '../api';
+import { getCard } from '../containers/CardContainer';
+import card from '../reducers/card.reducer';
+import BoardButtonModal from './BoardButtonModal';
 const Nav = ({ history, setLogin }) => {
+  const [boardButton, setBoardButton] = useState(false);
+
   const logoutHandler = () => {
     clearStorage();
     alert('로그아웃 되었습니다');
@@ -14,12 +19,21 @@ const Nav = ({ history, setLogin }) => {
     });
     history.push('/');
   };
+  const onCklickHandler = () => {
+    // if (!boardButton) {
+    //   getCard();
+    // }
+    setBoardButton(p => !p);
+  };
+
   return (
     <div id='header'>
       <div className='header-buttons'>
         <a href='/boards'>
           <span className='home-button'></span>
         </a>
+        {/* <button onClick={onCklickHandler}>Boards</button>
+        {boardButton ? <BoardButtonModal /> : null} */}
       </div>
       <div className='title'>
         <a href='/boards'>

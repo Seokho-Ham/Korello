@@ -34,7 +34,7 @@ const App = () => {
           render={props => <CardPage {...props} login={login} />}
         />
 
-        <Route component={NotFound} />
+        <Route path='/notfound' render={NotFound} />
       </Switch>
     </>
   );

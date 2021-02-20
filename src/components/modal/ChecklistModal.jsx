@@ -51,7 +51,7 @@ const ChecklistModal = () => {
               onChange={onChangeHandler}
               style={{ display: 'block' }}
             />
-            <button>Add Checklist</button>
+            <button>+ Add Checklist</button>
           </form>
         </div>
       ) : null}
