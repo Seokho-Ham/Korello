@@ -81,7 +81,9 @@ const CardList = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <div id='card-list-container'>
             {taglist.length > 0 ? (
-              <div id='tag-all-list'>{renderCards()}</div>
+              <>
+                <div id='tag-all-list'>{renderCards()}</div>
+              </>
             ) : (
               <div id='tag-all-list'>
                 <div className='no-card'>Please Make a Card</div>

@@ -4,7 +4,7 @@ import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateData, getRefreshToken } from '../../api';
+import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from '../../containers/CardContainer';
 
 const progressCalculator = data => {
@@ -54,6 +54,22 @@ const CardModal = ({ clickModal, title, labels }) => {
       setEditButton(p => !p);
     }
   };
+  const deleteCard = async () => {
+    let code = await postData(
+      currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/delete',
+      {
+        id: currentCardId,
+      },
+    );
+    if (code === 201) {
+      getCard(currentBoardUrl, dispatch);
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await deleteCard();
+    } else {
+      alert('삭제에 실패하였습니다.');
+    }
+  };
   return (
     <>
       <div className='modal-wrapper'>
@@ -61,6 +77,7 @@ const CardModal = ({ clickModal, title, labels }) => {
           <button className='modal-close' onClick={clickModal}>
             X
           </button>
+          <span className='card-delete-button' onClick={deleteCard}></span>
           <div className='modal-header'>
             <div className='modal-labels'>
               {labels.length > 0

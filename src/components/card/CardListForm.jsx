@@ -1,8 +1,8 @@
 import React, { memo, useState } from 'react';
 import CardModal from './CardModal';
-import { postData, getRefreshToken, fetchData } from '../../api';
+import { fetchData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard } from '../../containers/CardContainer';
+
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -40,29 +40,11 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
     setModalVisible(p => !p);
   };
 
-  const deleteCard = async () => {
-    let code = await postData(
-      currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/delete',
-      {
-        id: id,
-      },
-    );
-    if (code === 201) {
-      getCard(currentBoardUrl, dispatch);
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await deleteCard();
-    } else {
-      alert('삭제에 실패하였습니다.');
-    }
-  };
-
   return (
     <>
       {modalVisible ? (
         <CardModal
           clickModal={clickModal}
-          id={id}
           title={title}
           tag={tag}
           labels={labels}
@@ -72,6 +54,7 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
         {provided => {
           return (
             <div
+              className='card-wrapper'
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -102,10 +85,6 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
                     {/* <button className='modal' >
                       modal
                     </button> */}
-                    <span
-                      className='card-delete-button'
-                      onClick={deleteCard}
-                    ></span>
                   </div>
                 )}
               </div>

@@ -20,7 +20,7 @@ const ChecklistElement = ({ el }) => {
       dispatch(setData({ checklist: checklist ? checklist : [] }));
     } else if (code >= 401001) {
       await getRefreshToken();
-      await checkboxHandler();
+      await checkboxHandler(e);
     } else {
       alert('실패');
     }
