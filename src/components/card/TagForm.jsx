@@ -15,7 +15,7 @@ const TagForm = ({ tag, tagIndex }) => {
           {provided => {
             return (
               <div
-                className={tag}
+                className='tag-element'
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >

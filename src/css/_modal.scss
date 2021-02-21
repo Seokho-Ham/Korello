@@ -1,43 +1,27 @@
 .modal {
-  &-container {
-    box-sizing: border-box;
-    display: block;
-    position: fixed;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2;
-  }
   &-wrapper {
     box-sizing: border-box;
-    display: block;
+    display: flex;
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 3;
-    overflow: auto;
-    outline: 0;
+    z-index: 2;
+    overflow-y: auto;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
   }
   &-inner {
     box-sizing: border-box;
     display: block;
     position: relative;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-
     background-color: #ebecf0;
     border-radius: 10px;
     width: 768px;
     height: 700px;
-
-    transform: translateY(-50%);
-    margin: 0px auto;
-    margin-top: 600px;
+    margin: 48px 0 80px;
     padding: 30px 20px;
   }
   &-contents {
@@ -53,9 +37,9 @@
     z-index: 0;
   }
   &-sidebar {
-    background-color: #fff;
+    // background-color: #fff;
     border-radius: 6px;
-    box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+    // box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
     float: right;
     padding: 0 16px 8px 8px;
     width: 210px;
@@ -90,10 +74,11 @@
 .checkList-modal {
   display: block;
   position: relative;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 3px;
   top: 50%;
+  left: 3px;
   margin: 1px auto;
   padding: 25px 8px;
 }

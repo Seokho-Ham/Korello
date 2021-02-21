@@ -63,7 +63,7 @@ form {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-image: url("/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg");
+  background-image: url("/src/api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -108,11 +108,13 @@ form {
 #header .title-image {
   background-image: url("/src/assets/img/title-logo.png");
   background-repeat: no-repeat;
-  background-size: 120px;
+  background-size: 133px;
   cursor: pointer;
   display: inline-block;
-  height: 33px;
+  height: 40px;
   width: 120px;
+  position: relative;
+  bottom: 8px;
 }
 
 #header .header-buttons {
@@ -145,6 +147,36 @@ form {
   -ms-flex-preferred-size: 40%;
       flex-basis: 40%;
   text-align: right;
+}
+
+#header .logout-bt button {
+  border: 0;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#header .logout-bt button:hover {
+  opacity: 0.5;
+}
+
+.boardModal {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50px;
+  height: 200px;
+  position: fixed;
+  top: 44px;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .login-page {
@@ -290,12 +322,16 @@ form {
   overflow-y: auto;
 }
 
+.tag-element {
+  overflow: scroll;
+}
+
 .tag-header {
-  margin: 15px 0px 10px 0px;
+  margin: 15px 0px 3px 0px;
   border-radius: 6px;
-  padding: 0 0 0 20px;
-  font-size: large;
-  font-weight: 700;
+  padding: 0 0 0 14px;
+  font-size: 18px;
+  font-weight: 500;
   color: #172b4d;
   background-color: #ebecf0;
 }
@@ -330,7 +366,7 @@ form {
   position: relative;
   background-color: #fff;
   border-radius: 4px;
-  margin: 20px 10px;
+  margin: 10px 10px;
   padding: 8px;
   -webkit-box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
           box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
@@ -354,12 +390,6 @@ form {
           flex: 1 1 0%;
 }
 
-.card:hover {
-  background: -webkit-gradient(linear, left top, right top, color-stop(1%, #ef6678), to(#ec8c6a));
-  background: linear-gradient(to right, #ef6678 1%, #ec8c6a 100%);
-  color: #fff;
-}
-
 .card span {
   font-size: medium;
   color: #172b4d;
@@ -370,7 +400,7 @@ form {
 .card-delete-button {
   background-image: url("/src/assets/img/delete-icon.png");
   background-repeat: no-repeat;
-  background-size: 30px;
+  background-size: 25px;
   height: 30px;
   width: 30px;
   -webkit-box-align: center;
@@ -397,7 +427,8 @@ form {
   position: relative;
   top: 1px;
   left: 3px;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .card-labels {
@@ -423,30 +454,58 @@ form {
   float: right;
 }
 
+.new-card-form {
+  position: relative;
+  left: 6px;
+  width: 90%;
+}
+
 .new-card-form input {
-  width: 93%;
+  width: 100%;
 }
 
 .new-card-form button {
   margin: 0px 2px 10px 3px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #5aac44;
+  color: #fff;
+  padding: 7px;
+  border-radius: 6px;
 }
 
 .new-card-form button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #458534;
+}
+
+.new-card-form .cancel {
+  background-color: #ebecf0;
+  border: 0;
+  color: #172b4d;
+}
+
+.new-card-form .cancel:hover {
+  background-color: rgba(189, 189, 189, 0.5);
 }
 
 .add-button {
   margin: 0px 5px 10px 5px;
+  position: relative;
+  left: 6px;
+  width: 92%;
 }
 
 .add-button button {
+  text-align: left;
+  height: 35px;
+  width: 100%;
   margin: 0px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #ebecf0;
+  border: 0px;
+  color: #5e6c84;
 }
 
 .add-button button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(189, 189, 189, 0.5);
+  color: #172b4d;
 }
 
 .board-sidebar-nav {
@@ -520,9 +579,9 @@ form {
 .board-delete-button {
   background-image: url("/src/assets/img/delete-icon.png");
   background-repeat: no-repeat;
-  background-size: 30px;
+  background-size: 25px;
   height: 30px;
-  width: 30px;
+  width: 25px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -633,35 +692,24 @@ form {
   overflow: auto;
 }
 
-.modal-container {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  display: block;
-  position: fixed;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 2;
-}
-
 .modal-wrapper {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 3;
-  overflow: auto;
-  outline: 0;
+  z-index: 2;
+  overflow-y: auto;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .modal-inner {
@@ -669,16 +717,11 @@ form {
           box-sizing: border-box;
   display: block;
   position: relative;
-  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
   height: 700px;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  margin: 0px auto;
-  margin-top: 600px;
+  margin: 48px 0 80px;
   padding: 30px 20px;
 }
 
@@ -696,10 +739,7 @@ form {
 }
 
 .modal-sidebar {
-  background-color: #fff;
   border-radius: 6px;
-  -webkit-box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
-          box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
   float: right;
   padding: 0 16px 8px 8px;
   width: 210px;
@@ -738,11 +778,12 @@ form {
 .checkList-modal {
   display: block;
   position: relative;
-  -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 3px;
   top: 50%;
+  left: 3px;
   margin: 1px auto;
   padding: 25px 8px;
 }
@@ -812,8 +853,32 @@ form {
   margin: 2px 0px;
 }
 
+.add-checklist-modal button {
+  background-color: rgba(9, 30, 66, 0.04);
+  width: 100%;
+  height: 30px;
+  border: 0;
+  color: #172b4d;
+}
+
+.add-checklist-modal button:hover {
+  background-color: rgba(189, 189, 189, 0.5);
+}
+
 .add-card-label-button {
   margin: 2px 0px;
+}
+
+.add-card-label-button button {
+  background-color: rgba(9, 30, 66, 0.04);
+  width: 100%;
+  height: 30px;
+  border: 0;
+  color: #172b4d;
+}
+
+.add-card-label-button button:hover {
+  background-color: rgba(189, 189, 189, 0.5);
 }
 
 .label-modal {

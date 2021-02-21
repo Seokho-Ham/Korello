@@ -4,8 +4,6 @@ html {
   background-color: #f9fafc;
   line-height: 20px;
   font-weight: 400;
-
-  // width: 100%;
   height: 100%;
 }
 html {
@@ -48,11 +46,10 @@ form {
 }
 .container {
   height: 100%;
-  // width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-image: url('/src/api/bg-images/austin-distel-TluMvvrZ57g-unsplash.jpg');
+  background-image: url('/src/api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
