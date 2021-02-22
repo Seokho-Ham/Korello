@@ -19,8 +19,8 @@ export const setLastViewList = location => {
 
   let lastViewList = JSON.parse(localStorage.getItem('lastView'));
   if (lastViewList) {
-    if (lastViewList.includes(boardId)) {
-      lastViewList.splice(lastViewList.indexOf(boardId), 1);
+    if (lastViewList.includes(parseInt(boardId))) {
+      lastViewList.splice(lastViewList.indexOf(parseInt(boardId)), 1);
       localStorage.setItem(
         'lastView',
         JSON.stringify([parseInt(boardId), ...lastViewList]),
