@@ -6,7 +6,8 @@ import CalendarModal from '../modal/CalendarModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from './card_utils';
-
+import deleteImage from '../../assets/img/delete-icon.png';
+import styled from 'styled-components';
 const progressCalculator = data => {
   let count = 0;
   data.forEach(el => {
@@ -72,28 +73,22 @@ const CardModal = ({ clickModal, title, labels }) => {
   };
   return (
     <>
-      <div className='modal-wrapper'>
-        <div tabIndex='0' className='modal-inner'>
+      <ModalWrapper>
+        <ModalInner tabIndex='0'>
           <button className='modal-close' onClick={clickModal}>
             X
           </button>
-          <span className='card-delete-button' onClick={deleteCard}></span>
-          <div className='modal-header'>
-            <div className='modal-labels'>
+          <CardDeleteButton onClick={deleteCard}></CardDeleteButton>
+          <ModalHeader className='modal-header'>
+            <ModalLabels>
               {labels.length > 0
                 ? labels.map((el, i) => (
-                    <span
-                      key={i}
-                      className='label'
-                      style={{
-                        backgroundColor: el.color,
-                      }}
-                    >
+                    <ModalLabelElement key={i} color={el.color}>
                       {el.name}
-                    </span>
+                    </ModalLabelElement>
                   ))
                 : null}
-            </div>
+            </ModalLabels>
             {editButton ? (
               <span className='card-input'>
                 <h2>
@@ -108,24 +103,119 @@ const CardModal = ({ clickModal, title, labels }) => {
                 <h2>{title}</h2>
               </span>
             )}
-          </div>
-          <div className='modal-contents'>
+          </ModalHeader>
+          <ModalContents>
             {checklist.length > 0 ? (
-              <div className='checklist-container'>
+              <ChecklistContainer>
                 <Checklist percent={progressCalculator(checklist)} />
-              </div>
+              </ChecklistContainer>
             ) : null}
-          </div>
-          <div className='modal-sidebar'>
+          </ModalContents>
+          <ModalSidebar>
             <div>Sidebar</div>
             <Label labels={labels} />
             <CheckListModal />
             <CalendarModal />
-          </div>
-        </div>
-      </div>
+          </ModalSidebar>
+        </ModalInner>
+      </ModalWrapper>
     </>
   );
 };
 
 export default CardModal;
+
+const ModalWrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  overflow-y: auto;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+`;
+
+const ModalInner = styled.div`
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  background-color: #ebecf0;
+  border-radius: 10px;
+  width: 768px;
+  height: 700px;
+  margin: 48px 0px 80px;
+  padding: 30px 20px;
+  /* top: 50%; */
+`;
+
+const CardDeleteButton = styled.span`
+  background-image: url(${deleteImage});
+  background-repeat: no-repeat;
+  background-size: 25px;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  float: right;
+  opacity: 1;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const ModalHeader = styled.div``;
+const ModalLabels = styled.div`
+  overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+  color: #fff;
+`;
+const ModalLabelElement = styled.span`
+  background-color: ${props => props.color};
+  margin: 2px;
+  padding: 2px 2px;
+  border-radius: 4px;
+  float: left;
+  width: auto;
+  min-width: 50px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  border-radius: 6px;
+  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+`;
+
+const ModalContents = styled.div`
+  float: left;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 24px;
+  padding: 0 8px 8px 16px;
+  position: relative;
+  width: 470px;
+  height: 80%;
+  z-index: 0;
+`;
+
+const ChecklistContainer = styled.div`
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+`;
+
+const ModalSidebar = styled.div`
+  border-radius: 6px;
+
+  float: right;
+  padding: 0 16px 8px 8px;
+  width: 210px;
+  height: 80%;
+  z-index: 10;
+`;

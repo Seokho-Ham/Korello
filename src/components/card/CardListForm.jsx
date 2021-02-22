@@ -60,13 +60,12 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
             >
               <Card onClick={clickModal}>
                 {labels.length > 0 ? (
-                  <CardLabels className='card-labels'>
+                  <CardLabels>
                     {labels
                       .sort((a, b) => a.id - b.id)
                       .map((el, i) => (
                         <span
                           key={i}
-                          className='label'
                           style={{
                             backgroundColor: el.color,
                           }}
@@ -74,11 +73,9 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
                       ))}
                   </CardLabels>
                 ) : (
-                  <CardLabels className='card-labels'></CardLabels>
+                  <CardLabels></CardLabels>
                 )}
-                <CardTitle className='card-title' onClick={editCard}>
-                  {title}
-                </CardTitle>
+                <CardTitle onClick={editCard}>{title}</CardTitle>
               </Card>
             </CardWrapper>
           );
