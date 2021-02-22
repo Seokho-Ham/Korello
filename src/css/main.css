@@ -366,7 +366,6 @@ form {
   position: relative;
   background-color: #fff;
   border-radius: 4px;
-  margin: 10px 10px;
   padding: 8px;
   -webkit-box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
           box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
@@ -388,6 +387,13 @@ form {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 0%;
           flex: 1 1 0%;
+}
+
+.card-wrapper {
+  display: block;
+  border-radius: 4px;
+  margin: 10px;
+  min-height: 40px;
 }
 
 .card span {

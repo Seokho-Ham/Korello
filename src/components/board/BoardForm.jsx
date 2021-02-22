@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import randomImage from '../../api/images';
 import { useDispatch } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
-import { getBoard } from '../../containers/BoardContainer';
+import { getBoard } from './board_utils';
 
 const BoardForm = ({ data }) => {
   const history = useHistory();

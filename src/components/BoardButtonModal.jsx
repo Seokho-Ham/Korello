@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoard } from '../containers/BoardContainer';
 import { useHistory } from 'react-router-dom';
 const BoardButtonModal = () => {
   const { data } = useSelector(state => state.board);

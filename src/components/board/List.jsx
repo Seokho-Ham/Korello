@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import RecentList from './RecentList';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBoard } from './board_utils';
 
-const List = ({ match, boardlist }) => {
-  const { data } = boardlist;
+const List = () => {
+  const { data } = useSelector(state => state.board);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getBoard(dispatch);
+  }, []);
 
   const renderBoards = () => {
     return data
@@ -22,7 +29,7 @@ const List = ({ match, boardlist }) => {
         </div>
       ) : (
         <div id='board-list-container'>
-          <RecentList data={data} />
+          {data.length > 0 ? <RecentList /> : null}
           <div className='list-type'>
             <span className='workspace'></span>
             <h3>Workspace</h3>

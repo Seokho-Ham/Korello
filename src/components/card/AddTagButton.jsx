@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
-import { getCard } from '../../containers/CardContainer';
+import { getCard } from './card_utils';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');

@@ -80,13 +80,6 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
                 <div className='card-title' onClick={editCard}>
                   {title}
                 </div>
-                {editButton ? null : (
-                  <div className='card-buttons'>
-                    {/* <button className='modal' >
-                      modal
-                    </button> */}
-                  </div>
-                )}
               </div>
             </div>
           );

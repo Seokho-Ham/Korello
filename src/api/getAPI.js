@@ -7,7 +7,7 @@ const fetchData = async uri => {
   try {
     let { data } = await axios.get(serverUrl + uri);
     if (data.result_body) {
-      // console.log('rawdata: ', data.result_body);
+      console.log('rawdata: ', data.result_body);
       return [data.result_body, data.result_code];
     }
   } catch (err) {

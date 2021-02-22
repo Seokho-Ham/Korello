@@ -101,6 +101,13 @@
 }
 
 .card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+  min-height: 40px;
+
   &-container {
     height: 100%;
     width: 100%;
@@ -111,14 +118,13 @@
     position: relative;
     flex: 1 1 0%;
   }
-  position: relative;
-  background-color: #fff;
-  border-radius: 4px;
-  margin: 10px 10px;
-  padding: 8px;
-  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
-  min-height: 40px;
 
+  &-wrapper {
+    display: block;
+    border-radius: 4px;
+    margin: 10px;
+    min-height: 40px;
+  }
   span {
     font-size: medium;
     color: #172b4d;

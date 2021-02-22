@@ -1,7 +1,8 @@
 import React from 'react';
 import BoardForm from './BoardForm';
-
-const RecentList = ({ data }) => {
+import { useSelector } from 'react-redux';
+const RecentList = () => {
+  const { data } = useSelector(state => state.board);
   const makeRecentList = () => {
     let result = [];
     let lastView = localStorage.getItem('lastView');

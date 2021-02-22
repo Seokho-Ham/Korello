@@ -1,7 +1,7 @@
 import React from 'react';
-import BoardContainer from '../../containers/BoardContainer';
+import List from './List';
 
-const BoardList = ({ match }) => {
+const BoardList = () => {
   return (
     <div id='board-container'>
       <div id='board-sidebar'>
@@ -13,7 +13,7 @@ const BoardList = ({ match }) => {
           </div>
         </nav>
       </div>
-      <BoardContainer match={match} />
+      <List />
     </div>
   );
 };

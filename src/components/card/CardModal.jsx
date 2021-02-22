@@ -5,7 +5,7 @@ import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
-import { getCard } from '../../containers/CardContainer';
+import { getCard } from './card_utils';
 
 const progressCalculator = data => {
   let count = 0;

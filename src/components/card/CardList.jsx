@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TagForm from './TagForm';
 import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
@@ -7,9 +7,10 @@ import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 // import { moveCard } from '../../reducers/card.reducer';
-import { getCard } from '../../containers/CardContainer';
 
-const CardList = () => {
+import { getCard, setLastViewList } from './card_utils';
+
+const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
   const { taglist, currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
@@ -62,7 +63,10 @@ const CardList = () => {
       updateCard(url, destination, source, draggableId);
     }
   };
-
+  useEffect(() => {
+    setLastViewList(location);
+    getCard(`${location.pathname}`, dispatch);
+  }, []);
   const renderCards = () => {
     return taglist.map((el, i) => {
       return <TagForm key={i} tag={el} tagIndex={i} />;

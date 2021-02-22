@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard } from '../../containers/CardContainer';
+import { getCard } from './card_utils';
 
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
