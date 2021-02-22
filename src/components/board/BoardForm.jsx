@@ -4,7 +4,7 @@ import randomImage from '../../api/images';
 import { useDispatch } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import { getBoard } from './board_utils';
-import { BoardElement } from './board.style/style';
+import { BoardElement } from './BoardList';
 import styled from 'styled-components';
 
 const BoardForm = ({ data }) => {

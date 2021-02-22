@@ -7,9 +7,9 @@ import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 // import { moveCard } from '../../reducers/card.reducer';
-
 import { getCard, setLastViewList } from './card_utils';
-
+import styled from 'styled-components';
+import bgImage from '../../api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg';
 const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
   const { taglist, currentBoardUrl } = useSelector(state => state.card);
@@ -53,20 +53,16 @@ const CardList = ({ location }) => {
       return '';
     }
     if (source.droppableId === destination.droppableId) {
-      //순서 바꾸는 작업
-      // let payload = {
-      //   destination,
-      //   source,
-      // };
-      // dispatch(moveCard(payload));
     } else {
       updateCard(url, destination, source, draggableId);
     }
   };
+
   useEffect(() => {
     setLastViewList(location);
     getCard(`${location.pathname}`, dispatch);
   }, []);
+
   const renderCards = () => {
     return taglist.map((el, i) => {
       return <TagForm key={i} tag={el} tagIndex={i} />;
@@ -74,32 +70,75 @@ const CardList = ({ location }) => {
   };
 
   return (
-    <div className='container'>
-      <div className='card-container'>
-        <div id='card-header'>
-          <div id='card-header-items'>
-            <AddTagButton />
+    <Container>
+      <CardContainer>
+        <CardHeader>
+          <CardHeaderItems>
             <LogBt openLogHandler={openLogHandler} />
-          </div>
-        </div>
+          </CardHeaderItems>
+        </CardHeader>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div id='card-list-container'>
+          <CardListContainer>
             {taglist.length > 0 ? (
               <>
-                <div id='tag-all-list'>{renderCards()}</div>
+                <TagList>
+                  {renderCards()}
+                  <AddTagButton />
+                </TagList>
               </>
             ) : (
-              <div id='tag-all-list'>
-                <div className='no-card'>Please Make a Card</div>
-              </div>
+              <TagList id='tag-all-list'>
+                <div>Please Make a Card</div>
+              </TagList>
             )}
-          </div>
+          </CardListContainer>
         </DragDropContext>
-      </div>
-
+      </CardContainer>
       <LogList openLog={openLog} openLogHandler={openLogHandler} />
-    </div>
+    </Container>
   );
 };
 
 export default CardList;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-image: url(${bgImage});
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+`;
+
+const CardContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 1 1 0%;
+`;
+const CardHeader = styled.div`
+  height: 50px;
+`;
+const CardHeaderItems = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const CardListContainer = styled.div`
+  height: 95%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+`;
+const TagList = styled.div`
+  white-space: nowrap;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  height: 97%;
+`;

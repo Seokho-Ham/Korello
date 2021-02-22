@@ -10,96 +10,6 @@
   justify-content: $justify;
 }
 
-#card {
-  &-header {
-    height: 50px;
-
-    &-items {
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-  &-list-container {
-    height: 95%;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
-  }
-}
-
-#tag-all-list {
-  white-space: nowrap;
-  margin-bottom: 8px;
-
-  padding-bottom: 8px;
-
-  top: 8px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 97%;
-}
-.tag-wrapper {
-  width: 272px;
-  margin: 10px 10px;
-  height: 90%;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: top;
-  white-space: nowrap;
-}
-.tag {
-  background-color: #ebecf0;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  max-height: 90%;
-  position: relative;
-  white-space: normal;
-  overflow-y: auto;
-  &-element {
-    overflow: scroll;
-  }
-  &-header {
-    margin: 15px 0px 3px 0px;
-    border-radius: 6px;
-    padding: 0 0 0 14px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #172b4d;
-    background-color: #ebecf0;
-  }
-  &-add-button {
-    // position: relative;
-
-    margin: 4px 7px;
-    input {
-      display: inline-block;
-      margin: 2px;
-      background-color: hsla(0, 0%, 100%, 0.5);
-    }
-    button {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 20px;
-      padding: 3px;
-      border: 2px solid hsla(0, 0%, 100%, 0.5);
-      border-radius: 3px;
-      margin: 3px;
-      cursor: pointer;
-      background-color: hsla(0, 0%, 100%, 0.5);
-    }
-    .tag-add-bt {
-      &:hover {
-        background-color: hsla(0, 0%, 100%, 0.2);
-      }
-    }
-  }
-}
-
 .card {
   position: relative;
   background-color: #fff;
@@ -107,17 +17,6 @@
   padding: 8px;
   box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
   min-height: 40px;
-
-  &-container {
-    height: 100%;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex: 1 1 0%;
-  }
 
   &-wrapper {
     display: block;
@@ -179,53 +78,5 @@
     margin: 2px;
     padding: 2px;
     float: right;
-  }
-}
-
-.new-card-form {
-  position: relative;
-  left: 6px;
-  width: 90%;
-  input {
-    width: 100%;
-  }
-  button {
-    margin: 0px 2px 10px 3px;
-    background-color: #5aac44;
-    color: #fff;
-    padding: 7px;
-    border-radius: 6px;
-
-    &:hover {
-      background-color: #458534;
-    }
-  }
-  .cancel {
-    background-color: #ebecf0;
-    border: 0;
-    color: #172b4d;
-    &:hover {
-      background-color: hsla(0, 0%, 74%, 0.5);
-    }
-  }
-}
-.add-button {
-  margin: 0px 5px 10px 5px;
-  position: relative;
-  left: 6px;
-  width: 92%;
-  button {
-    text-align: left;
-    height: 35px;
-    width: 100%;
-    margin: 0px;
-    background-color: #ebecf0;
-    border: 0px;
-    color: #5e6c84;
-
-    &:hover {
-      background-color: hsla(0, 0%, 74%, 0.5);
-      color: #172b4d;
-    }
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import BoardForm from './BoardForm';
 import { useSelector } from 'react-redux';
-import { ListType, List } from './board.style/style';
+import { ListType, List } from './BoardList';
 
 const RecentList = () => {
   const { recentBoard } = useSelector(state => state.board);
