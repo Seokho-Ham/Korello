@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-
 import { clearStorage } from '../api';
-import { getCard } from '../containers/CardContainer';
-import card from '../reducers/card.reducer';
-import BoardButtonModal from './BoardButtonModal';
 const Nav = ({ history, setLogin }) => {
   const [boardButton, setBoardButton] = useState(false);
 

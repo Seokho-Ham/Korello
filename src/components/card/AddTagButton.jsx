@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
-import { getCard } from '../../containers/CardContainer';
-
+import { getCard } from './card_utils';
+import styled from 'styled-components';
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
@@ -48,40 +48,98 @@ const AddTagButton = () => {
 
   return (
     <>
-      <div
-        className='tag-add-button'
-        style={{ display: clicked ? 'inline-block' : 'none' }}
-      >
-        <form onSubmit={addTag}>
-          <input
-            name='tag'
-            placeholder='tag name'
-            value={tagName}
-            onChange={onChangeHandler}
-          />
-          <input
-            name='card'
-            placeholder='card name'
-            value={cardName}
-            onChange={onChangeHandler}
-          />
+      <TagAddContainer clicked={clicked}>
+        {clicked ? (
+          <TagAddForm>
+            <form onSubmit={addTag}>
+              <TagAddInput
+                name='tag'
+                placeholder='tag name'
+                value={tagName}
+                onChange={onChangeHandler}
+              />
+              <TagAddInput
+                name='card'
+                placeholder='card name'
+                value={cardName}
+                onChange={onChangeHandler}
+              />
 
-          <button className='tag-add-bt'>Add</button>
-        </form>
-        <button className='tag-add-bt' onClick={buttonStatusHandler}>
-          Cancel
-        </button>
-      </div>
-      <div
-        className='tag-add-button'
-        style={{ display: clicked ? 'none' : 'inline-block' }}
-      >
-        <button className='tag-add-bt' onClick={buttonStatusHandler}>
-          Add Tag
-        </button>
-      </div>
+              <TagAddButton>Add</TagAddButton>
+            </form>
+            <TagCancelButton onClick={buttonStatusHandler}>
+              Cancel
+            </TagCancelButton>
+          </TagAddForm>
+        ) : (
+          <TagAddStateButton onClick={buttonStatusHandler}>
+            + Add Another Tag
+          </TagAddStateButton>
+        )}
+      </TagAddContainer>
     </>
   );
 };
 
 export default AddTagButton;
+
+const TagAddContainer = styled.div`
+  width: 272px;
+  margin: 10px 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: ${props => (props.clicked ? '#ebecf0' : '')};
+  border-radius: 4px;
+`;
+const TagAddInput = styled.input`
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0px;
+  border: 0.5px;
+  margin-bottom: 3px;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  box-shadow: inset 0 0 0 2px #0079bf;
+  padding: 5px;
+`;
+const TagAddForm = styled.div`
+  box-sizing: border-box;
+  margin: 7px;
+`;
+const TagAddButton = styled.button`
+  margin: 2px;
+  background-color: #5aac44;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px;
+  &:hover {
+    background-color: #458534;
+  }
+`;
+const TagCancelButton = styled.button`
+  display: inline-block;
+  background-color: #ebecf0;
+  border: 0px;
+  margin: 4px;
+  padding: 6px;
+  color: #172b4d;
+  &:hover {
+    background-color: hsla(0, 0%, 74%, 0.5);
+  }
+`;
+const TagAddStateButton = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 3px;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  border-radius: 3px;
+  margin: 3px;
+  text-align: center;
+  cursor: pointer;
+  background-color: hsla(0, 0%, 100%, 0.24);
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
+`;

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { Redirect } from 'react-router-dom';
-import BoardList from '../components/board/BoardList';
+import BoardContainer from '../components/board/BoardContainer';
 
-const BoardPage = ({ match, login }) => {
+const BoardPage = ({ login }) => {
   return login === 'true' ? (
     <>
-      <BoardList match={match} />
+      <BoardContainer />
     </>
   ) : (
     <>

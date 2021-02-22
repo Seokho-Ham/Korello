@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchData, getRefreshToken } from '../../api';
-import postData from '../../api/postAPI';
+import { postData, fetchData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 
 const ChecklistModal = () => {

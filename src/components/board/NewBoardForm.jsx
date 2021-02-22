@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchData, postData, getRefreshToken } from '../../api';
 import { add } from '../../reducers/board.reducer';
+import styled from 'styled-components';
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
   const [display, setDisplay] = useState(false);
@@ -50,38 +51,64 @@ const NewBoardForm = () => {
 
   return (
     <>
-      <div
-        className='board-el-newform'
-        onClick={onClickHandler}
-        style={{ display: display ? 'none' : 'block' }}
-      >
-        <div className='board-title-newform'>
-          <div>Create New Board</div>
-        </div>
-      </div>
-      <div
-        className='board-el-newform'
-        style={{ display: display ? 'block' : 'none' }}
-      >
-        <div className='board-title-newform'>
-          <form onSubmit={addBoard}>
-            <input
-              ref={inputRef}
-              placeholder='board name'
-              value={boardName}
-              onChange={onChangeHandler}
-            />
-            <button className='board-add-bt' onClick={addBoard}>
-              Add
-            </button>
-          </form>
-          <button className='board-add-bt' onClick={onClickHandler}>
-            Cancel
-          </button>
-        </div>
-      </div>
+      <AddBoardForm>
+        {!display ? (
+          <AddBoardContainer>
+            <div onClick={onClickHandler}>Create New Board</div>
+          </AddBoardContainer>
+        ) : (
+          <AddBoardContainer>
+            <form onSubmit={addBoard}>
+              <input
+                ref={inputRef}
+                placeholder='board name'
+                value={boardName}
+                onChange={onChangeHandler}
+              />
+              <AddBoardButton name='add' onClick={addBoard}>
+                Add
+              </AddBoardButton>
+            </form>
+            <AddBoardButton onClick={onClickHandler}>Cancel</AddBoardButton>
+          </AddBoardContainer>
+        )}
+      </AddBoardForm>
     </>
   );
 };
 
 export default NewBoardForm;
+
+const AddBoardForm = styled.div`
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.21);
+  border-radius: 4px;
+`;
+const AddBoardContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  div {
+    width: 100%;
+    height: 100%;
+    font-size: 17px;
+    font-weight: 500;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    p {
+    }
+  }
+`;
+const AddBoardButton = styled.button`
+  border-radius: 6px;
+  border: 0px;
+  padding: 8px;
+  color: ${props => (props.name ? '#fff' : '')};
+  background-color: ${props => (props.name ? '#5aac44' : '')};
+  &:hover {
+    opacity: 0.5;
+  }
+`;

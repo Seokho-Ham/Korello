@@ -2,7 +2,7 @@ import React from 'react';
 import colors from '../../assets/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
-import { getCard } from '../../containers/CardContainer';
+import { getCard } from '../card/card_utils';
 
 const LabelList = ({ selectButton, labels }) => {
   const { labellist, currentBoardUrl, currentCardId } = useSelector(
