@@ -6,6 +6,7 @@ const fetchData = async uri => {
   setAccessToken(localStorage.getItem('accessToken'));
   try {
     let { data } = await axios.get(serverUrl + uri);
+
     if (data.result_body) {
       console.log('rawdata: ', data.result_body);
       return [data.result_body, data.result_code];
@@ -46,13 +47,14 @@ const fetchCard = async uri => {
     let { data } = await axios.get(serverUrl + uri);
 
     let { result_body, result_code } = data;
-    // console.log('raw data: ', result_body);
+    console.log('raw data: ', result_body);
     if (result_body && result_body.length > 0) {
       const obj = {};
       const tags = [];
       const cards = [];
+
       result_body
-        // .sort((a, b) => a.id - b.id)
+        .sort((a, b) => new Date(a.createDate) - new Date(b.createDate))
         .forEach(el => {
           let cardObj = {
             id: el.id,
@@ -75,8 +77,8 @@ const fetchCard = async uri => {
         tags.push(i);
         cards.push(obj[i]);
       }
-      // console.log('tags: ', tags);
-      // console.log('cards: ', cards);
+      console.log('tags: ', tags);
+      console.log('cards: ', cards);
       return [tags, cards, result_code];
     } else {
       return [[], [], result_code];
