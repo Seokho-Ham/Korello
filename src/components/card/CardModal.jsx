@@ -173,7 +173,6 @@ const ModalHeader = styled.div`
     margin-left: 15px;
     h2 {
       display: inline-block;
-      width: 100px;
     }
     button {
       background-color: #5aac44;
