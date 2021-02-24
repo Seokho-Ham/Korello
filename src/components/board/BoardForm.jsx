@@ -6,7 +6,7 @@ import { postData, getRefreshToken } from '../../api';
 import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
 import styled from 'styled-components';
-
+import cancelImage from '../../assets/img/cancel-icon.png';
 const BoardForm = ({ data }) => {
   const history = useHistory();
   const [image, setImage] = useState(randomImage());
@@ -38,7 +38,7 @@ const BoardForm = ({ data }) => {
 
   return (
     <BoardElement image={image}>
-      <BoardDeleteButton onClick={deleteBoard}>X</BoardDeleteButton>
+      <BoardDeleteButton onClick={deleteBoard}></BoardDeleteButton>
       <BoardCover onClick={clickBoard}>
         <BoardTitle>{data.name}</BoardTitle>
       </BoardCover>
@@ -48,16 +48,23 @@ const BoardForm = ({ data }) => {
 
 export default React.memo(BoardForm);
 
-const BoardDeleteButton = styled.div`
-  height: 30px;
-  width: 25px;
-  text-align: center;
-  font-size: 18px;
-  float: right;
-  opacity: 1;
+const BoardDeleteButton = styled.span`
+  background-image: url(${cancelImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px;
+  width: 5px;
+  height: 13px;
+  background-color: hsla(0, 0%, 74%, 0.5);
+  border: 0px;
+  border-radius: 3px;
+  margin-left: 3px;
+  padding: 8px 15px;
+  color: #172b4d;
   &:hover {
-    opacity: 0.5;
+    background-color: hsla(0, 0%, 74%, 1);
   }
+  float: right;
 `;
 const BoardCover = styled.div`
   height: 100%;

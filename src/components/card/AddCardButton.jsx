@@ -3,6 +3,7 @@ import { getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from './card_utils';
 import styled from 'styled-components';
+import cancelImage from '../../assets/img/cancel-icon.png';
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
@@ -60,9 +61,7 @@ const AddButton = ({ tag }) => {
 
               <CardAddButton>Add Card</CardAddButton>
             </form>
-            <CardCancelButton className='cancel' onClick={onClickHandler}>
-              X
-            </CardCancelButton>
+            <CardCancelButton onClick={onClickHandler}></CardCancelButton>
           </NewCardForm>
         ) : (
           // <div className='add-button'>
@@ -104,11 +103,18 @@ const CardAddStateButton = styled.button`
     color: #172b4d;
   }
 `;
-const CardCancelButton = styled.button`
+const CardCancelButton = styled.span`
+  background-image: url(${cancelImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px;
+  width: 40px;
+  height: 20px;
   background-color: #ebecf0;
   border: 0px;
-  margin-left: 5px;
-  padding: 7px;
+  border-radius: 3px;
+  margin-left: 3px;
+  padding: 8px 15px;
   color: #172b4d;
   &:hover {
     background-color: hsla(0, 0%, 74%, 0.5);
