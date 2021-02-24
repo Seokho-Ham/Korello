@@ -75,11 +75,11 @@ const CardModal = ({ clickModal, title, labels }) => {
     <>
       <ModalWrapper>
         <ModalInner tabIndex='0'>
-          <button className='modal-close' onClick={clickModal}>
+          <button style={{ float: 'right' }} onClick={clickModal}>
             X
           </button>
           <CardDeleteButton onClick={deleteCard}></CardDeleteButton>
-          <ModalHeader className='modal-header'>
+          <ModalHeader>
             <ModalLabels>
               {labels.length > 0
                 ? labels.map((el, i) => (
@@ -90,7 +90,7 @@ const CardModal = ({ clickModal, title, labels }) => {
                 : null}
             </ModalLabels>
             {editButton ? (
-              <span className='card-input'>
+              <span>
                 <h2>
                   <form onSubmit={sendUpdate}>
                     <input value={cardTitle} onChange={inputHandler} />

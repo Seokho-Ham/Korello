@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, fetchData, updateData, deleteData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
+import styled from 'styled-components';
 
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
@@ -64,7 +65,7 @@ const ChecklistElement = ({ el }) => {
   };
 
   return (
-    <div className='checklist-item'>
+    <CheckListItem>
       <>
         <input
           type='checkbox'
@@ -73,23 +74,28 @@ const ChecklistElement = ({ el }) => {
           onChange={checkboxHandler}
         />
         {changeButton ? (
-          <span className='checklist-item-title'>
+          <CheckListTitle>
             <form onSubmit={changeChecklist}>
               <input value={newTitle} onChange={onChangeTitle} />
               <button>수정</button>
             </form>
-          </span>
+          </CheckListTitle>
         ) : (
-          <span className='checklist-item-title' onClick={changeChecklist}>
-            {el.title}
-          </span>
+          <CheckListTitle onClick={changeChecklist}>{el.title}</CheckListTitle>
         )}
-        <button className='checklist-delete' onClick={deleteCheckList}>
-          X
-        </button>
+        <button onClick={deleteCheckList}>X</button>
       </>
-    </div>
+    </CheckListItem>
   );
 };
 
 export default ChecklistElement;
+
+const CheckListItem = styled.div`
+  margin-bottom: 10px;
+`;
+const CheckListTitle = styled.span`
+  display: inline-block;
+  width: 395px;
+  margin-left: 10px;
+`;

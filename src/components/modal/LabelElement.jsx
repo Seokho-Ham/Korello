@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import editImage from '../../assets/img/pencil.png';
-import { updateData, getRefreshToken } from '../../api';
+import { updateData, getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from '../card/card_utils';
 
@@ -27,12 +27,20 @@ const LabelElement = ({ id, name, color, onClick, selectButton }) => {
       if (labelInput === name || labelInput === '') {
         onEditLabelClick();
       } else {
-        const code = await updateData(`/label/${id}`, {
-          color: color,
-          name: labelInput,
-        });
+        const code = id
+          ? await updateData(`/label/${id}`, {
+              color: color,
+              name: labelInput,
+            })
+          : await postData(
+              currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
+              {
+                name: labelInput,
+                color: color,
+              },
+            );
 
-        if (code === 200) {
+        if (code === 200 || code === 201) {
           setLabelInput('');
           onEditLabelClick();
           getCard(currentBoardUrl, dispatch);

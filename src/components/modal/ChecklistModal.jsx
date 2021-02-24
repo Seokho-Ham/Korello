@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, fetchData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
+import styled from 'styled-components';
 
 const ChecklistModal = () => {
   const [clicked, setClicked] = useState(false);
@@ -39,12 +40,12 @@ const ChecklistModal = () => {
   };
 
   return (
-    <div className='add-checklist-modal'>
+    <ChecklistModalButton>
       <button onClick={clickButton}>CheckList</button>
       {clicked ? (
-        <div className='checkList-modal' style={{ overflow: 'auto' }}>
+        <ChecklistAddModal>
           <form onSubmit={addCheckList}>
-            <input
+            <ChecklistInput
               placeholder='checklist title'
               value={checkListTitle}
               onChange={onChangeHandler}
@@ -52,10 +53,61 @@ const ChecklistModal = () => {
             />
             <button>+ Add Checklist</button>
           </form>
-        </div>
+        </ChecklistAddModal>
       ) : null}
-    </div>
+    </ChecklistModalButton>
   );
 };
 
 export default ChecklistModal;
+
+const ChecklistModalButton = styled.div`
+  margin: 2px 0px;
+  button {
+    background-color: rgba(9, 30, 66, 0.04);
+    width: 98%;
+    height: 30px;
+    border: 0;
+    color: #172b4d;
+    &:hover {
+      background-color: hsla(0, 0%, 74%, 0.5);
+    }
+  }
+`;
+
+const ChecklistAddModal = styled.div`
+  min-width: 270px;
+  display: block;
+  position: relative;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 3px;
+  top: 50%;
+  left: 3px;
+  margin: 1px auto;
+  padding: 25px 8px;
+  button {
+    background-color: #5aac44;
+    height: 30px;
+    border: 0;
+    color: #fff;
+    border-radius: 3px;
+    &:hover {
+      opacity: 0.8;
+      background-color: #5aac44;
+    }
+  }
+`;
+
+const ChecklistInput = styled.input`
+  border-radius: 3px;
+  display: inline-block;
+  margin: 2px;
+  width: 96%;
+  height: 25px;
+  padding: 3px;
+  border: 0px;
+  border-radius: 3px;
+  background-color: ${props => props.color};
+  box-shadow: inset 0 0 0 2px #0079bf;
+`;

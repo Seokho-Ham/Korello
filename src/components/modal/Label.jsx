@@ -78,7 +78,7 @@ const Label = ({ labels }) => {
               <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
             </div>
           ) : (
-            <LabelButton onClick={handleDisplay}>Add Label</LabelButton>
+            <LabelButton onClick={handleDisplay}>+ Add Label</LabelButton>
           )}
         </LabelModal>
       ) : null}

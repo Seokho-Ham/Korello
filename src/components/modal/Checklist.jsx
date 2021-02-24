@@ -3,7 +3,7 @@ import ChecklistElement from './ChecklistElement';
 import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
-
+import styled from 'styled-components';
 const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
@@ -41,26 +41,21 @@ const Checklist = ({ percent }) => {
   };
   return (
     <>
-      <div className='checklist-header'>
+      <div>
         <h4 style={{ margin: '0px 0px 5px 0px' }}>CheckList</h4>
-        <div className='progress-container'>
-          <div className='progress-percent'>{percent}%</div>
-          <div className='progress-bar'>
-            <div
-              className='progress-percent-bar'
-              style={{
-                width: `${percent}%`,
-              }}
-            ></div>
-          </div>
-        </div>
+        <ProgressContainer>
+          <ProgressContent>{percent}%</ProgressContent>
+          <ProgressBar>
+            <ProgressPercentBar percent={percent}></ProgressPercentBar>
+          </ProgressBar>
+        </ProgressContainer>
       </div>
-      <div className='checklist- inner'>
+      <CheckListInner>
         {checklist.map((el, i) => (
           <ChecklistElement key={i} el={el} />
         ))}
-      </div>
-      <div className='checklist-add-button'>
+      </CheckListInner>
+      <CheckListAddForm>
         {clicked ? (
           <>
             <form onSubmit={addChecklistHandler}>
@@ -76,9 +71,43 @@ const Checklist = ({ percent }) => {
         ) : (
           <button onClick={clickButtonHandler}>Add an item</button>
         )}
-      </div>
+      </CheckListAddForm>
     </>
   );
 };
 
 export default Checklist;
+
+const ProgressContainer = styled.div`
+  position: relative;
+  margin-bottom: 6px;
+`;
+const ProgressContent = styled.div`
+  color: #5e6c84;
+  font-size: 11px;
+`;
+const ProgressBar = styled.div`
+  overflow: hidden;
+  position: relative;
+  height: 8px;
+  background-color: rgba(9, 30, 66, 0.08);
+  border-radius: 50px;
+`;
+const ProgressPercentBar = styled.div`
+  width: ${props => props.percent};
+  height: 100%;
+  background-color: #3333;
+  transition: width 0.2s ease-in-out;
+`;
+const CheckListInner = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const CheckListAddForm = styled.div`
+  input {
+    display: block;
+  }
+  button {
+    margin: 2px 1px 2px 0px;
+  }
+`;
