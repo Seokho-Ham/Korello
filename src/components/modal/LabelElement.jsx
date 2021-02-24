@@ -5,7 +5,7 @@ import { updateData, getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from '../card/card_utils';
 
-const LabelElement = ({ id, name, color, onClick, selectButton }) => {
+const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
   const [labelInput, setLabelInput] = useState(name);
   const { currentBoardUrl } = useSelector(state => state.card);
@@ -27,18 +27,10 @@ const LabelElement = ({ id, name, color, onClick, selectButton }) => {
       if (labelInput === name || labelInput === '') {
         onEditLabelClick();
       } else {
-        const code = id
-          ? await updateData(`/label/${id}`, {
-              color: color,
-              name: labelInput,
-            })
-          : await postData(
-              currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
-              {
-                name: labelInput,
-                color: color,
-              },
-            );
+        const code = await updateData(`/label/${id}`, {
+          color: color,
+          name: labelInput,
+        });
 
         if (code === 200 || code === 201) {
           setLabelInput('');
@@ -71,7 +63,7 @@ const LabelElement = ({ id, name, color, onClick, selectButton }) => {
           id={id}
           name={color}
           color={color}
-          onClick={selectButton ? selectButton : onClick}
+          onClick={onClick}
         >
           {name}
         </LabelElementWrapper>
@@ -131,7 +123,7 @@ const LabelEditButton = styled.span`
   opacity: 0.7;
   :hover {
     opacity: 1;
-    background-color: #e9e4e4;
+    background-color: #e2e2e2;
   }
 `;
 export const SendUpdateButton = styled.button`

@@ -6,6 +6,7 @@ import CalendarModal from '../modal/CalendarModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from './card_utils';
+import cancelImage from '../../assets/img/cancel-icon.png';
 import deleteImage from '../../assets/img/delete-icon.png';
 import styled from 'styled-components';
 const progressCalculator = data => {
@@ -75,10 +76,8 @@ const CardModal = ({ clickModal, title, labels }) => {
     <>
       <ModalWrapper>
         <ModalInner tabIndex='0'>
-          <button style={{ float: 'right' }} onClick={clickModal}>
-            X
-          </button>
-          <CardDeleteButton onClick={deleteCard}></CardDeleteButton>
+          <CloseModalButton onClick={clickModal}></CloseModalButton>
+          <CardDeleteButton onClick={deleteCard}>Delete Card</CardDeleteButton>
           <ModalHeader>
             <ModalLabels>
               {labels.length > 0
@@ -90,18 +89,16 @@ const CardModal = ({ clickModal, title, labels }) => {
                 : null}
             </ModalLabels>
             {editButton ? (
-              <span>
-                <h2>
-                  <form onSubmit={sendUpdate}>
-                    <input value={cardTitle} onChange={inputHandler} />
-                    <button>save</button>
-                  </form>
-                </h2>
-              </span>
+              <div>
+                <form onSubmit={sendUpdate}>
+                  <input value={cardTitle} onChange={inputHandler} />
+                  <button>Save</button>
+                </form>
+              </div>
             ) : (
-              <span onClick={editCard}>
-                <h2>{title}</h2>
-              </span>
+              <div>
+                <h2 onClick={editCard}>{title}</h2>
+              </div>
             )}
           </ModalHeader>
           <ModalContents>
@@ -154,27 +151,59 @@ const ModalInner = styled.div`
   /* top: 50%; */
 `;
 
-const CardDeleteButton = styled.span`
-  background-image: url(${deleteImage});
-  background-repeat: no-repeat;
-  background-size: 25px;
-  height: 30px;
-  width: 30px;
-  align-items: center;
+const CardDeleteButton = styled.button`
+  background-color: #cf513d;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 7px;
   float: right;
-  opacity: 1;
 
+  margin: 0px;
+  margin-right: 7px;
   &:hover {
-    opacity: 0.5;
+    background-color: #e2472f;
   }
 `;
 
-const ModalHeader = styled.div``;
+const ModalHeader = styled.div`
+  min-height: 50px;
+  div {
+    min-height: 50px;
+    margin-left: 15px;
+    h2 {
+      display: inline-block;
+      width: 100px;
+    }
+    button {
+      background-color: #5aac44;
+      position: relative;
+      bottom: 4px;
+      padding: 5px;
+      height: 33px;
+      border: 0;
+      margin: 0px;
+      margin-left: 5px;
+      color: #fff;
+      border-radius: 3px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    input {
+      font-size: 25px;
+      border: 0px;
+      box-shadow: inset 0 0 0 2px #0079bf;
+      margin: 12px 0px;
+    }
+  }
+`;
 const ModalLabels = styled.div`
   overflow: auto;
   position: relative;
   box-sizing: border-box;
   color: #fff;
+  min-height: 38px;
 `;
 const ModalLabelElement = styled.span`
   background-color: ${props => props.color};
@@ -184,7 +213,7 @@ const ModalLabelElement = styled.span`
   float: left;
   width: auto;
   min-width: 50px;
-  height: 32px;
+  height: 28px;
   text-align: center;
   line-height: 32px;
   border-radius: 6px;
@@ -219,4 +248,21 @@ const ModalSidebar = styled.div`
   width: 210px;
   height: 80%;
   z-index: 10;
+`;
+
+const CloseModalButton = styled.span`
+  float: right;
+
+  background-image: url(${cancelImage});
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: center;
+  width: 20px;
+  height: 20px;
+  padding: 7px;
+  opacity: 0.7;
+  :hover {
+    opacity: 1;
+    background-color: #e2e2e2;
+  }
 `;

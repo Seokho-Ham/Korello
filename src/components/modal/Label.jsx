@@ -5,6 +5,7 @@ import { setData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
 import styled from 'styled-components';
 import { SendUpdateButton } from './LabelElement';
+import { TwitterPicker } from 'react-color';
 const Label = ({ labels }) => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
@@ -19,15 +20,16 @@ const Label = ({ labels }) => {
   const openLabelButton = () => {
     setOpenLabel(p => !p);
   };
-  const selectButton = e => {
-    setSelectColor(e.target.getAttribute('name'));
-  };
+
   const handleDisplay = () => {
     setLabelName('');
     setSelectColor('');
     setDisplay(p => !p);
   };
-
+  const handleColorChange = color => {
+    console.log(color.hex);
+    setSelectColor(color.hex);
+  };
   const addBoardLabelButton = async e => {
     e.preventDefault();
     if (labelName.length > 0 && selectColor.length > 0) {
@@ -63,7 +65,7 @@ const Label = ({ labels }) => {
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
       {openLabel ? (
         <LabelModal>
-          <LabelList selectButton={selectButton} labels={labels} />
+          <LabelList labels={labels} />
           {display ? (
             <div>
               <form onSubmit={addBoardLabelButton}>
@@ -73,6 +75,10 @@ const Label = ({ labels }) => {
                   placeholder='title'
                   color={selectColor}
                 />
+                <ColorList>
+                  <TwitterPicker width='100%' onChange={handleColorChange} />
+                </ColorList>
+
                 <AddLabelButton>Add Label</AddLabelButton>
               </form>
               <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
@@ -93,7 +99,7 @@ const LabelModalWrapper = styled.div`
 `;
 
 const LabelModal = styled.div`
-  min-width: 270px;
+  min-width: 300px;
   display: block;
   position: relative;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
@@ -105,7 +111,7 @@ const LabelModal = styled.div`
   padding: 25px 8px;
 `;
 const LabelButton = styled.button`
-  background-color: rgba(9, 30, 66, 0.04);
+  background-color: rgba(9, 30, 66, 0.08);
   width: 98%;
   height: 30px;
   border: 0;
@@ -129,4 +135,12 @@ const LabelInputTitle = styled.input`
 `;
 const AddLabelButton = styled(SendUpdateButton)`
   width: 98%;
+`;
+
+const ColorList = styled.div`
+  margin: 10px 0px;
+  input {
+    margin: 0px;
+    padding: 1px;
+  }
 `;

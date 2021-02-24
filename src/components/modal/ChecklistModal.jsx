@@ -75,7 +75,7 @@ const ChecklistModalButton = styled.div`
   }
 `;
 
-const ChecklistAddModal = styled.div`
+export const ChecklistAddModal = styled.div`
   min-width: 270px;
   display: block;
   position: relative;
@@ -99,7 +99,7 @@ const ChecklistAddModal = styled.div`
   }
 `;
 
-const ChecklistInput = styled.input`
+export const ChecklistInput = styled.input`
   border-radius: 3px;
   display: inline-block;
   margin: 2px;

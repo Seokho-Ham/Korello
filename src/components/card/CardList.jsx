@@ -88,7 +88,7 @@ const CardList = ({ location }) => {
               </>
             ) : (
               <TagList id='tag-all-list'>
-                <div>Please Make a Card</div>
+                <AddTagButton />
               </TagList>
             )}
           </CardListContainer>

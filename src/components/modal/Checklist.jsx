@@ -4,6 +4,8 @@ import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
+import { ChecklistAddModal, ChecklistInput } from './ChecklistModal';
+import { SendUpdateButton } from './LabelElement';
 const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
@@ -64,12 +66,16 @@ const Checklist = ({ percent }) => {
                 value={title}
                 onChange={onChangeHandler}
               ></input>
-              <button>Add</button>
+              <ChecklistAddButton>Add</ChecklistAddButton>
             </form>
-            <button onClick={clickButtonHandler}>Cancel</button>
+            <ChecklistStatusButton onClick={clickButtonHandler}>
+              Cancel
+            </ChecklistStatusButton>
           </>
         ) : (
-          <button onClick={clickButtonHandler}>Add an item</button>
+          <ChecklistStatusButton onClick={clickButtonHandler}>
+            + Add an item
+          </ChecklistStatusButton>
         )}
       </CheckListAddForm>
     </>
@@ -94,7 +100,7 @@ const ProgressBar = styled.div`
   border-radius: 50px;
 `;
 const ProgressPercentBar = styled.div`
-  width: ${props => props.percent};
+  width: ${props => props.percent}%;
   height: 100%;
   background-color: #3333;
   transition: width 0.2s ease-in-out;
@@ -106,8 +112,26 @@ const CheckListInner = styled.div`
 const CheckListAddForm = styled.div`
   input {
     display: block;
+    width: 90%;
+    border: 0px;
+    height: 25px;
+    box-shadow: inset 0 0 0 2px #0079bf;
   }
-  button {
-    margin: 2px 1px 2px 0px;
+`;
+
+const ChecklistAddButton = styled(SendUpdateButton)`
+  padding: 5px;
+  width: 50px;
+`;
+
+const ChecklistStatusButton = styled.button`
+  background-color: rgba(9, 30, 66, 0.08);
+  height: 30px;
+  border: 0;
+  color: #172b4d;
+  margin: 3px;
+  border-radius: 3px;
+  &:hover {
+    background-color: hsla(0, 0%, 74%, 0.5);
   }
 `;
