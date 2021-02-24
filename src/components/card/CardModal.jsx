@@ -133,7 +133,7 @@ const ModalWrapper = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10;
   overflow-y: auto;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
@@ -150,6 +150,7 @@ const ModalInner = styled.div`
   height: 700px;
   margin: 48px 0px 80px;
   padding: 30px 20px;
+  z-index: 11;
   /* top: 50%; */
 `;
 

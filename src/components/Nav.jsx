@@ -15,7 +15,7 @@ const Nav = ({ history, setLogin }) => {
     });
     history.push('/');
   };
-  const onCklickHandler = () => {
+  const onClickHandler = () => {
     // if (!boardButton) {
     //   getCard();
     // }
@@ -28,7 +28,7 @@ const Nav = ({ history, setLogin }) => {
         <a href='/boards'>
           <span className='home-button'></span>
         </a>
-        {/* <button onClick={onCklickHandler}>Boards</button>
+        {/* <button onClick={onClickHandler}>Boards</button>
         {boardButton ? <BoardButtonModal /> : null} */}
       </div>
       <div className='title'>

@@ -3,12 +3,15 @@ import colors from '../../assets/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from '../card/card_utils';
+import styled from 'styled-components';
+import LabelElement from './LabelElement';
 
 const LabelList = ({ selectButton, labels }) => {
   const { labellist, currentBoardUrl, currentCardId } = useSelector(
     state => state.card,
   );
   const dispatch = useDispatch();
+
   const checkOverlap = (arr, id) => {
     let result = false;
     arr.forEach(el => {
@@ -49,32 +52,24 @@ const LabelList = ({ selectButton, labels }) => {
         let value = labellist[colorlist[el.color]];
 
         return (
-          <div className='label-list' key={i}>
-            <span
+          <LabelListWrapper key={i}>
+            <LabelElement
               id={value.id}
-              className='label-el'
-              name={value.color}
-              style={{
-                backgroundColor: value.color,
-              }}
+              name={value.name}
+              color={value.color}
               onClick={addCardLabelButton}
-            >
-              {value.name}
-            </span>
-          </div>
+            />
+          </LabelListWrapper>
         );
       } else {
         return (
-          <div className='label-list' key={i}>
-            <span
-              className='label-el-colors'
-              name={el.color}
-              style={{
-                backgroundColor: el.color,
-              }}
-              onClick={selectButton}
-            ></span>
-          </div>
+          <LabelListWrapper key={i}>
+            <LabelElement
+              id={el.id}
+              color={el.color}
+              selectButton={selectButton}
+            />
+          </LabelListWrapper>
         );
       }
     });
@@ -84,3 +79,7 @@ const LabelList = ({ selectButton, labels }) => {
 };
 
 export default LabelList;
+
+const LabelListWrapper = styled.div`
+  display: flex;
+`;

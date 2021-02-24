@@ -3,7 +3,8 @@ import { fetchData, postData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
-
+import styled from 'styled-components';
+import { SendUpdateButton } from './LabelElement';
 const Label = ({ labels }) => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
@@ -58,42 +59,74 @@ const Label = ({ labels }) => {
   };
 
   return (
-    <div className='add-card-label-button'>
-      <button onClick={openLabelButton}>Label</button>
+    <LabelModalWrapper>
+      <LabelButton onClick={openLabelButton}>Label</LabelButton>
       {openLabel ? (
-        <div className='label-modal'>
+        <LabelModal>
           <LabelList selectButton={selectButton} labels={labels} />
-          <div
-            className='label-form'
-            style={{ display: display ? 'block' : 'none' }}
-          >
-            <form onSubmit={addBoardLabelButton}>
-              <input
-                className='label-input-title'
-                value={labelName}
-                onChange={onChangeHandler}
-                style={{
-                  backgroundColor: selectColor,
-
-                  color: selectColor === '' ? 'black' : '#fff',
-                }}
-                placeholder='title'
-              />
-              <button>Add Label</button>
-            </form>
-            <button onClick={handleDisplay}>Cancel</button>
-          </div>
-
-          <button
-            onClick={handleDisplay}
-            style={{ display: display ? 'none' : 'block' }}
-          >
-            Add Label
-          </button>
-        </div>
+          {display ? (
+            <div>
+              <form onSubmit={addBoardLabelButton}>
+                <LabelInputTitle
+                  value={labelName}
+                  onChange={onChangeHandler}
+                  placeholder='title'
+                  color={selectColor}
+                />
+                <AddLabelButton>Add Label</AddLabelButton>
+              </form>
+              <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
+            </div>
+          ) : (
+            <LabelButton onClick={handleDisplay}>Add Label</LabelButton>
+          )}
+        </LabelModal>
       ) : null}
-    </div>
+    </LabelModalWrapper>
   );
 };
 
 export default Label;
+
+const LabelModalWrapper = styled.div`
+  margin: 2px 0px;
+`;
+
+const LabelModal = styled.div`
+  min-width: 270px;
+  display: block;
+  position: relative;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 3px;
+  top: 50%;
+  left: 3px;
+  margin: 1px auto;
+  padding: 25px 8px;
+`;
+const LabelButton = styled.button`
+  background-color: rgba(9, 30, 66, 0.04);
+  width: 98%;
+  height: 30px;
+  border: 0;
+  color: #172b4d;
+  &:hover {
+    background-color: hsla(0, 0%, 74%, 0.5);
+  }
+`;
+const LabelInputTitle = styled.input`
+  border-radius: 3px;
+  display: inline-block;
+  margin: 2px;
+  width: 96%;
+  height: 25px;
+  padding: 3px;
+  border: 0px;
+  border-radius: 3px;
+  background-color: ${props => props.color};
+  box-shadow: inset 0 0 0 2px #0079bf;
+  color: ${props => (props.color === '' ? 'black' : '#fff')};
+`;
+const AddLabelButton = styled(SendUpdateButton)`
+  width: 98%;
+`;
