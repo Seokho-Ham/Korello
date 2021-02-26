@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from './card_utils';
@@ -9,7 +9,7 @@ const AddTagButton = () => {
   const [clicked, setClicked] = useState(false);
   const { currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
   const buttonStatusHandler = () => {
     setTagName('');
     setCardName('');
@@ -25,6 +25,7 @@ const AddTagButton = () => {
     e.preventDefault();
     if (!tagName || !cardName) {
       alert('빈칸이 있습니다.');
+      inputRef.current.focus();
     } else {
       const code = await postData(
         `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
@@ -42,10 +43,13 @@ const AddTagButton = () => {
       } else {
         alert('생성에 실패했습니다.');
         setTagName('');
+        inputRef.current.focus();
       }
     }
   };
-
+  useEffect(() => {
+    if (clicked) inputRef.current.focus();
+  });
   return (
     <>
       <TagAddContainer clicked={clicked}>
@@ -57,6 +61,7 @@ const AddTagButton = () => {
                 placeholder='tag name'
                 value={tagName}
                 onChange={onChangeHandler}
+                ref={inputRef}
               />
               <TagAddInput
                 name='card'

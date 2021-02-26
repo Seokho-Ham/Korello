@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchData, postData, getRefreshToken } from '../../api';
 import { add } from '../../reducers/board.reducer';
 import styled from 'styled-components';
+import { getBoard } from './board_utils';
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
   const [display, setDisplay] = useState(false);
@@ -21,12 +22,7 @@ const NewBoardForm = () => {
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        let [board, code] = await fetchData('/boards');
-        let payload = {
-          data: board ? board : [],
-          code: code ? code : 0,
-        };
-        dispatch(add(payload));
+        getBoard(dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();
@@ -48,7 +44,11 @@ const NewBoardForm = () => {
   const onChangeHandler = e => {
     setBoardName(e.target.value);
   };
-
+  useEffect(() => {
+    if (display) {
+      inputRef.current.focus();
+    }
+  });
   return (
     <>
       <AddBoardForm>

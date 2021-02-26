@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { fetchData, postData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
@@ -13,7 +13,7 @@ const Label = ({ labels }) => {
   const [display, setDisplay] = useState(false);
   const { currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
   const onChangeHandler = e => {
     setLabelName(e.target.value);
   };
@@ -54,12 +54,16 @@ const Label = ({ labels }) => {
         await addBoardLabelButton(e);
       } else {
         alert('추가 실패');
+        inputRef.current.focus();
       }
     } else {
       alert('이름과 색을 정해주세요!');
+      inputRef.current.focus();
     }
   };
-
+  useEffect(() => {
+    if (display) inputRef.current.focus();
+  });
   return (
     <LabelModalWrapper>
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
@@ -74,6 +78,7 @@ const Label = ({ labels }) => {
                   onChange={onChangeHandler}
                   placeholder='title'
                   color={selectColor}
+                  ref={inputRef}
                 />
                 <ColorList>
                   <TwitterPicker width='100%' onChange={handleColorChange} />
