@@ -7,7 +7,7 @@ import cancelImage from '../../assets/img/cancel-icon.png';
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const onChangeHandler = e => {

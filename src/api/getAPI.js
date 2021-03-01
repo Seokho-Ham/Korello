@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { getRefreshToken, clearStorage, setAccessToken } from './index';
 const serverUrl = 'https://hyuki.app/api/v1';
 
@@ -45,41 +46,20 @@ const fetchCard = async uri => {
   setAccessToken(localStorage.getItem('accessToken'));
   try {
     let { data } = await axios.get(serverUrl + uri);
-
     let { result_body, result_code } = data;
     console.log('raw data: ', result_body);
     if (result_body && result_body.length > 0) {
-      const obj = {};
-      const tags = [];
-      const cards = [];
+      let tags = [];
 
       result_body
         .sort((a, b) => new Date(a.createDate) - new Date(b.createDate))
         .forEach(el => {
-          let cardObj = {
-            id: el.id,
-            name: el.name,
-            tagValue: el.tagValue,
-            memberNames: el.memberNames,
-            labels: el.labels,
-            createDate: el.createDate,
-            updateDate: el.updateDate,
-          };
-
-          if (!obj[el.tagValue]) {
-            obj[el.tagValue] = [cardObj];
-          } else {
-            obj[el.tagValue].push(cardObj);
+          if (!tags.includes(el.tagValue)) {
+            tags.push(el.tagValue);
           }
         });
-
-      for (let i in obj) {
-        tags.push(i);
-        cards.push(obj[i]);
-      }
       console.log('tags: ', tags);
-      console.log('cards: ', cards);
-      return [tags, cards, result_code];
+      return [tags, result_body, result_code];
     } else {
       return [[], [], result_code];
     }

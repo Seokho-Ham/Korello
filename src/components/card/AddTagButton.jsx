@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from './card_utils';
 import styled from 'styled-components';
+import { setFirebaseData, timestamp } from '../../firebase';
+
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [clicked, setClicked] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const buttonStatusHandler = () => {
@@ -35,6 +37,10 @@ const AddTagButton = () => {
         },
       );
       if (code === 201) {
+        await setFirebaseData(currentBoardId, {
+          [tagName]: { name: tagName, createdAt: timestamp() },
+        });
+
         buttonStatusHandler();
         getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
@@ -49,7 +55,7 @@ const AddTagButton = () => {
   };
   useEffect(() => {
     if (clicked) inputRef.current.focus();
-  });
+  }, [clicked]);
   return (
     <>
       <TagAddContainer clicked={clicked}>

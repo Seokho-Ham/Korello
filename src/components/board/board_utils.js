@@ -26,7 +26,6 @@ const makeRecentList = data => {
 //서버로부터 board 데이터 받아옴.
 export const getBoard = async dispatch => {
   let [board, code] = await fetchData('/boards');
-  console.log(board);
   getDocuments(board);
   let recentBoard = makeRecentList(board);
 
