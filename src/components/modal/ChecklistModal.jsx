@@ -85,12 +85,11 @@ const ChecklistModalButton = styled.div`
 export const ChecklistAddModal = styled.div`
   min-width: 270px;
   display: block;
-  position: relative;
+  position: absolute;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 3px;
-  top: 50%;
-  left: 3px;
+  z-index: 21;
   margin: 1px auto;
   padding: 25px 8px;
   button {

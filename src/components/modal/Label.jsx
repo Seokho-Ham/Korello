@@ -63,7 +63,7 @@ const Label = ({ labels }) => {
   };
   useEffect(() => {
     if (display) inputRef.current.focus();
-  });
+  }, [display]);
   return (
     <LabelModalWrapper>
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
@@ -104,16 +104,15 @@ const LabelModalWrapper = styled.div`
 `;
 
 const LabelModal = styled.div`
-  min-width: 300px;
+  width: 300px;
   display: block;
-  position: relative;
+  position: absolute;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 3px;
-  top: 50%;
-  left: 3px;
   margin: 1px auto;
   padding: 25px 8px;
+  z-index: 22;
 `;
 const LabelButton = styled.button`
   background-color: rgba(9, 30, 66, 0.08);

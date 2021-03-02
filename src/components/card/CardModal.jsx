@@ -8,6 +8,7 @@ import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
+import CalendarModal from '../modal/CalendarModal';
 
 const progressCalculator = data => {
   let count = 0;
@@ -115,6 +116,7 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
             <div>Sidebar</div>
             <Label labels={labels} />
             <CheckListModal />
+            <CalendarModal />
           </ModalSidebar>
         </ModalInner>
       </ModalWrapper>

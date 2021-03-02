@@ -45,7 +45,7 @@ const LabelList = ({ labels }) => {
   const renderLabelList = () => {
     return labellist.map((el, i) => {
       return (
-        <LabelListWrapper key={i}>
+        <LabelListWrapper className='dasdas' key={i}>
           <LabelElement
             id={el.id}
             name={el.name}
@@ -57,11 +57,14 @@ const LabelList = ({ labels }) => {
     });
   };
 
-  return <>{renderLabelList()}</>;
+  return <LabelWrapper>{renderLabelList()}</LabelWrapper>;
 };
 
 export default LabelList;
-
+const LabelWrapper = styled.div`
+  max-height: 300px;
+  overflow-y: scroll;
+`;
 const LabelListWrapper = styled.div`
   display: flex;
 `;
