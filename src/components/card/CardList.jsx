@@ -7,12 +7,18 @@ import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 // import { moveCard } from '../../reducers/card.reducer';
-import { getCard, setLastViewList } from './card_utils';
+import { getCard, setLastViewList, setFBData } from './card_utils';
 import styled from 'styled-components';
 import bgImage from '../../api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg';
+import { setData } from '../../reducers/card.reducer';
+import { getFields } from '../../firebase';
+
 const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
-  const { taglist, currentBoardUrl } = useSelector(state => state.card);
+  const { taglist, currentBoardUrl, currentBoardId } = useSelector(
+    state => state.card,
+  );
+  // console.log(currentBoardId);
   const dispatch = useDispatch();
 
   const openLogHandler = () => {
@@ -29,7 +35,7 @@ const CardList = ({ location }) => {
         tagValue: destination.droppableId,
       });
       if (code === 200) {
-        getCard(currentBoardUrl, dispatch);
+        getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
         await updateCard(url, destination, source, draggableId);
@@ -59,8 +65,12 @@ const CardList = ({ location }) => {
   };
 
   useEffect(() => {
+    // setFBData();
+    const boardId = location.pathname.split('/')[2];
+    dispatch(setData({ currentBoardId: boardId }));
     setLastViewList(location);
-    getCard(`${location.pathname}`, dispatch);
+    // getFields(boardId);
+    getCard(`${location.pathname}`, dispatch, boardId);
   }, []);
 
   const renderCards = () => {

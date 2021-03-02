@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from './card_utils';
 import styled from 'styled-components';
+import { setFirebaseData, timestamp } from '../../firebase';
+
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [clicked, setClicked] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
   const buttonStatusHandler = () => {
     setTagName('');
     setCardName('');
@@ -25,6 +27,7 @@ const AddTagButton = () => {
     e.preventDefault();
     if (!tagName || !cardName) {
       alert('빈칸이 있습니다.');
+      inputRef.current.focus();
     } else {
       const code = await postData(
         `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
@@ -34,6 +37,10 @@ const AddTagButton = () => {
         },
       );
       if (code === 201) {
+        await setFirebaseData(currentBoardId, {
+          [tagName]: { name: tagName, createdAt: timestamp() },
+        });
+
         buttonStatusHandler();
         getCard(currentBoardUrl, dispatch);
       } else if (code >= 401001) {
@@ -42,10 +49,13 @@ const AddTagButton = () => {
       } else {
         alert('생성에 실패했습니다.');
         setTagName('');
+        inputRef.current.focus();
       }
     }
   };
-
+  useEffect(() => {
+    if (clicked) inputRef.current.focus();
+  }, [clicked]);
   return (
     <>
       <TagAddContainer clicked={clicked}>
@@ -57,6 +67,7 @@ const AddTagButton = () => {
                 placeholder='tag name'
                 value={tagName}
                 onChange={onChangeHandler}
+                ref={inputRef}
               />
               <TagAddInput
                 name='card'

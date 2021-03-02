@@ -15,12 +15,12 @@ const Nav = ({ history, setLogin }) => {
     });
     history.push('/');
   };
-  const onClickHandler = () => {
-    // if (!boardButton) {
-    //   getCard();
-    // }
-    setBoardButton(p => !p);
-  };
+  // const onClickHandler = () => {
+  //   // if (!boardButton) {
+  //   //   getCard();
+  //   // }
+  //   setBoardButton(p => !p);
+  // };
 
   return (
     <div id='header'>

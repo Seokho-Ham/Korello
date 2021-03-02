@@ -7,13 +7,13 @@ import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
 import styled from 'styled-components';
 import cancelImage from '../../assets/img/cancel-icon.png';
+import { deleteFirebaseData } from '../../firebase';
 const BoardForm = ({ data }) => {
   const history = useHistory();
   const [image, setImage] = useState(randomImage());
   const dispatch = useDispatch();
 
   const clickBoard = () => {
-    // console.log(history);
     history.push(`/board/${data.id}/cards`, {
       id: data.id,
     });
@@ -21,12 +21,14 @@ const BoardForm = ({ data }) => {
 
   const deleteBoard = async () => {
     const code = await postData('/board/delete', { id: data.id });
+
     if (code === 200) {
       if (localStorage.getItem('lastView')) {
         let list = JSON.parse(localStorage.getItem('lastView'));
         let result = list.filter(el => el !== parseInt(data.id));
         localStorage.setItem('lastView', JSON.stringify(result));
       }
+      await deleteFirebaseData(data.id);
       await getBoard(dispatch);
     } else if (code >= 401001) {
       await getRefreshToken();

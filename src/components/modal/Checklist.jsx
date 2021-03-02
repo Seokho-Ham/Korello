@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChecklistElement from './ChecklistElement';
 import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ const Checklist = ({ percent }) => {
   const [title, setTitle] = useState('');
   const { checklist, currentCardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
@@ -41,6 +41,10 @@ const Checklist = ({ percent }) => {
   const onChangeHandler = e => {
     setTitle(e.target.value);
   };
+  useEffect(() => {
+    if (clicked) inputRef.current.focus();
+  });
+
   return (
     <>
       <div>
@@ -65,6 +69,7 @@ const Checklist = ({ percent }) => {
                 placeholder='title'
                 value={title}
                 onChange={onChangeHandler}
+                ref={inputRef}
               ></input>
               <ChecklistAddButton>Add</ChecklistAddButton>
             </form>

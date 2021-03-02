@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
-import CalendarModal from '../modal/CalendarModal';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
-import deleteImage from '../../assets/img/delete-icon.png';
 import styled from 'styled-components';
+import CalendarModal from '../modal/CalendarModal';
+
 const progressCalculator = data => {
   let count = 0;
   data.forEach(el => {
@@ -20,10 +21,13 @@ const progressCalculator = data => {
   return result;
 };
 
-const CardModal = ({ clickModal, title, labels }) => {
-  const { checklist, currentBoardUrl, currentCardId } = useSelector(
-    state => state.card,
-  );
+const CardModal = ({ clickModal, title, labels, tag }) => {
+  const {
+    checklist,
+    currentBoardUrl,
+    currentCardId,
+    currentBoardId,
+  } = useSelector(state => state.card);
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();

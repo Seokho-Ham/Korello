@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from './card_utils';
@@ -7,9 +7,9 @@ import cancelImage from '../../assets/img/cancel-icon.png';
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
   const onChangeHandler = e => {
     setTitle(e.target.value);
   };
@@ -39,11 +39,18 @@ const AddButton = ({ tag }) => {
       } else {
         alert('생성에 실패했습니다.');
         setTitle('');
+        inputRef.current.focus();
       }
     } else {
       alert('이름을 입력해주세요.');
+      inputRef.current.focus();
     }
   };
+  useEffect(() => {
+    if (display) {
+      inputRef.current.focus();
+    }
+  });
 
   return (
     <>
@@ -57,6 +64,7 @@ const AddButton = ({ tag }) => {
                 placeholder='title'
                 value={title}
                 onChange={onChangeHandler}
+                ref={inputRef}
               ></CardAddInput>
 
               <CardAddButton>Add Card</CardAddButton>
