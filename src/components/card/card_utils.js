@@ -5,8 +5,8 @@ import { timestamp, getFields, setFirebaseData } from '../../firebase';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [taglist, cards, code] = await fetchCard(uri);
-  const fbData = await getFields(boardId);
-  console.log('fbdata: ', fbData);
+  // const fbData = await getFields(boardId);
+  // console.log('fbdata: ', fbData);
   const cardlist = [];
 
   if (cards.length > 0) {

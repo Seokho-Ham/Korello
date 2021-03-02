@@ -71,7 +71,7 @@ export default ChecklistModal;
 const ChecklistModalButton = styled.div`
   margin: 2px 0px;
   button {
-    background-color: rgba(9, 30, 66, 0.04);
+    background-color: rgba(9, 30, 66, 0.08);
     width: 98%;
     height: 30px;
     border: 0;

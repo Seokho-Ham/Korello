@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
-import CalendarModal from '../modal/CalendarModal';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard } from './card_utils';
@@ -115,7 +115,6 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
             <div>Sidebar</div>
             <Label labels={labels} />
             <CheckListModal />
-            <CalendarModal />
           </ModalSidebar>
         </ModalInner>
       </ModalWrapper>
