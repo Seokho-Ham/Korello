@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import queryString from 'query-string';
-import { setAccessToken } from '../api/index';
-import { Redirect } from 'react-router-dom';
+import { setAccessToken } from '../api';
+import { useHistory } from 'react-router-dom';
 
-const LoginPage = ({ refreshToken }) => {
-  if (queryString.parse(window.location.search).accessToken) {
-    console.log(queryString.parse(window.location.search).accessToken);
+const LoginPage = ({ login }) => {
+  let history = useHistory();
+
+  const setLoginInfo = () => {
+    localStorage.setItem(
+      'accessToken',
+      queryString.parse(window.location.search).accessToken,
+    );
+    localStorage.setItem(
+      'refreshToken',
+      queryString.parse(window.location.search).refreshToken,
+    );
+
     setAccessToken(queryString.parse(window.location.search).accessToken);
-    refreshToken(queryString.parse(window.location.search).refreshToken);
-  }
+    localStorage.setItem('loginStatus', true);
+  };
 
-  return queryString.parse(window.location.search).accessToken ? (
-    <Redirect to='/boards' />
-  ) : (
+  useEffect(() => {
+    if (login === 'true') {
+      setAccessToken(localStorage.getItem('accessToken'));
+      history.push('/boards');
+    }
+    if (
+      queryString.parse(window.location.search).accessToken !== undefined &&
+      queryString.parse(window.location.search).refreshToken !== undefined
+    ) {
+      setLoginInfo();
+      history.push('/boards');
+    }
+  }, []);
+
+  return (
     <div className='login-page'>
       <div className='login-header'>
-        <span className='login-title'></span>
-        <span className='login-name'></span>
+        <span className='login-title-image'></span>
       </div>
       <div className='login-container'>
         <div className='login-input'>

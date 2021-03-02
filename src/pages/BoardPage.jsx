@@ -1,25 +1,17 @@
 import React from 'react';
-import queryString from 'query-string';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Nav from '../components/Nav.jsx';
-import BoardList from '../components/board/BoardList';
-import CardList from '../components/card/CardList';
-import { setAccessToken } from '../api';
 
-const BoardPage = ({ match, history, location }) => {
-  if (location.search.length > 0) {
-    setAccessToken(queryString.parse(location.search));
-  }
+import { Redirect } from 'react-router-dom';
+import BoardContainer from '../components/board/BoardContainer';
 
-  return (
-    <Router>
-      <Nav />
-      <Route path={match.path} component={BoardList} />
-      <Route
-        path={`${match.path.slice(0, match.path.length - 1)}/:id/cards`}
-        component={CardList}
-      />
-    </Router>
+const BoardPage = ({ login }) => {
+  return login === 'true' ? (
+    <>
+      <BoardContainer />
+    </>
+  ) : (
+    <>
+      <Redirect to='/' />
+    </>
   );
 };
 

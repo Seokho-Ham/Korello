@@ -3,37 +3,26 @@
     height: 100%;
     background-color: #f9fafc;
   }
-  &-title {
-    background-image: url('/src/assets/img/title-icon.png');
-    background-repeat: no-repeat;
-    background-size: 60px;
-    cursor: pointer;
-    display: inline-block;
-    height: 50px;
-    width: 60px;
-  }
-  &-name {
-    align-items: center;
-    background-image: url('/src/assets/img/title-name.png');
-    background-repeat: no-repeat;
-    background-size: 100px;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    bottom: 4px;
-    right: 9px;
-    height: 40px;
-    width: 100px;
-  }
   &-header {
-    display: block;
-    height: 43px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    background-color: #026aa7;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-height: 40px;
+    overflow: hidden;
     text-align: center;
-    background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
+    padding: 4px;
+  }
+  &-title-image {
+    background-image: url('/src/assets/img/title-logo.png');
+    background-repeat: no-repeat;
+    background-size: 120px;
+
+    display: inline-block;
+    height: 33px;
+    width: 120px;
   }
   &-input {
     margin-top: 30px;

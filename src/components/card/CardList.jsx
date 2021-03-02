@@ -1,51 +1,154 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import TagForm from './TagForm';
-import { useGetCardApi } from '../../api/index';
+import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
+import LogBt from './LogBt';
+import LogList from './LogList';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+// import { moveCard } from '../../reducers/card.reducer';
+import { getCard, setLastViewList, setFBData } from './card_utils';
+import styled from 'styled-components';
+import bgImage from '../../api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg';
+import { setData } from '../../reducers/card.reducer';
+import { getFields } from '../../firebase';
 
-const CardList = ({ history, location }) => {
-  const [tagList, cardList, setUpdate] = useGetCardApi(`${location.pathname}`);
+const CardList = ({ location }) => {
+  const [openLog, setOpenLog] = useState(false);
+  const { taglist, currentBoardUrl, currentBoardId } = useSelector(
+    state => state.card,
+  );
+  // console.log(currentBoardId);
+  const dispatch = useDispatch();
 
-  const onClickHandler = () => {
-    history.goBack();
+  const openLogHandler = () => {
+    setOpenLog(p => !p);
+  };
+
+  const updateCard = async (url, destination, source, draggableId) => {
+    if (
+      source.droppableId !== destination.droppableId &&
+      destination.droppableId !== null
+    ) {
+      const code = await updateData(url + '/tag', {
+        id: draggableId,
+        tagValue: destination.droppableId,
+      });
+      if (code === 200) {
+        getCard(currentBoardUrl, dispatch, currentBoardId);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await updateCard(url, destination, source, draggableId);
+      } else {
+        alert('이동  실패');
+      }
+    }
+  };
+
+  const onDragEnd = result => {
+    console.log('drag-data: ', result);
+    const url = currentBoardUrl.slice(0, currentBoardUrl.length - 1);
+    let { destination, source, draggableId } = result;
+
+    if (
+      destination === null ||
+      source === null ||
+      (source.droppableId === destination.droppableId &&
+        source.index === destination.index)
+    ) {
+      return '';
+    }
+    if (source.droppableId === destination.droppableId) {
+    } else {
+      updateCard(url, destination, source, draggableId);
+    }
+  };
+
+  useEffect(() => {
+    // setFBData();
+    const boardId = location.pathname.split('/')[2];
+    dispatch(setData({ currentBoardId: boardId }));
+    setLastViewList(location);
+    // getFields(boardId);
+    getCard(`${location.pathname}`, dispatch, boardId);
+  }, []);
+
+  const renderCards = () => {
+    return taglist.map((el, i) => {
+      return <TagForm key={i} tag={el} tagIndex={i} />;
+    });
   };
 
   return (
-    <div className='card-container'>
-      <div id='card-header'>
-        <div id='card-header-items'>
-          <div className='go-back'>
-            <div className='go-back-button'>
-              <span className='go-back-img' onClick={onClickHandler}></span>
-            </div>
-          </div>
-          <AddTagButton url={location.pathname} setUpdate={setUpdate} />
-        </div>
-      </div>
-      <div id='card-list-container'>
-        {cardList.length > 0 ? (
-          <div id='tag-all-list'>
-            {cardList.map((el, i) => {
-              let index = cardList.indexOf(el);
-              return (
-                <TagForm
-                  key={i}
-                  data={el}
-                  tag={tagList[index]}
-                  boardUrl={location.pathname}
-                  setUpdate={setUpdate}
-                />
-              );
-            })}
-          </div>
-        ) : (
-          <div id='tag-all-list'>
-            <div className='no-card'>Please Make a Card</div>
-          </div>
-        )}
-      </div>
-    </div>
+    <Container>
+      <CardContainer>
+        <CardHeader>
+          <CardHeaderItems>
+            <LogBt openLogHandler={openLogHandler} />
+          </CardHeaderItems>
+        </CardHeader>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <CardListContainer>
+            {taglist.length > 0 ? (
+              <>
+                <TagList>
+                  {renderCards()}
+                  <AddTagButton />
+                </TagList>
+              </>
+            ) : (
+              <TagList id='tag-all-list'>
+                <AddTagButton />
+              </TagList>
+            )}
+          </CardListContainer>
+        </DragDropContext>
+      </CardContainer>
+      <LogList openLog={openLog} openLogHandler={openLogHandler} />
+    </Container>
   );
 };
 
 export default CardList;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-image: url(${bgImage});
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+`;
+
+const CardContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 1 1 0%;
+`;
+const CardHeader = styled.div`
+  height: 50px;
+`;
+const CardHeaderItems = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const CardListContainer = styled.div`
+  height: 95%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+`;
+const TagList = styled.div`
+  white-space: nowrap;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  height: 97%;
+`;

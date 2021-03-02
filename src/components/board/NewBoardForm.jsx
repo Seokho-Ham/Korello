@@ -1,30 +1,31 @@
-import React, { useState, useRef } from 'react';
-import { usePostApi } from '../../api/index';
-
-const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchData, postData, getRefreshToken } from '../../api';
+import { add } from '../../reducers/board.reducer';
+import styled from 'styled-components';
+import { getBoard } from './board_utils';
+const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
+  const [display, setDisplay] = useState(false);
+  const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const [postData] = usePostApi();
 
-  const onChangeHandler = e => {
-    setBoardName(e.target.value);
-  };
-
-  const keyHandler = e => {
-    if (e.key === 'Enter') {
-      addBoard();
+  const addBoard = async e => {
+    if (e) {
+      e.preventDefault();
     }
-  };
-  const addBoard = async () => {
+
     if (boardName.length > 0) {
-      const code = await postData('/board', {
+      let code = await postData('/board', {
         name: boardName,
       });
-
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        setUpdate(p => !p);
+        getBoard(dispatch);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addBoard();
       } else {
         alert('생성에 실패했습니다.');
         setBoardName('');
@@ -36,22 +37,78 @@ const NewBoardForm = ({ onClickHandler, setUpdate, display }) => {
     }
   };
 
+  const onClickHandler = () => {
+    setDisplay(p => !p);
+  };
+
+  const onChangeHandler = e => {
+    setBoardName(e.target.value);
+  };
+  useEffect(() => {
+    if (display) {
+      inputRef.current.focus();
+    }
+  });
   return (
-    <span
-      className='add-board-form'
-      style={{ display: display ? 'block' : 'none' }}
-    >
-      <input
-        ref={inputRef}
-        placeholder='board name'
-        value={boardName}
-        onChange={onChangeHandler}
-        onKeyPress={keyHandler}
-      />
-      <button onClick={addBoard}>Add</button>
-      <button onClick={onClickHandler}>Cancel</button>
-    </span>
+    <>
+      <AddBoardForm>
+        {!display ? (
+          <AddBoardContainer>
+            <div onClick={onClickHandler}>Create New Board</div>
+          </AddBoardContainer>
+        ) : (
+          <AddBoardContainer>
+            <form onSubmit={addBoard}>
+              <input
+                ref={inputRef}
+                placeholder='board name'
+                value={boardName}
+                onChange={onChangeHandler}
+              />
+              <AddBoardButton name='add' onClick={addBoard}>
+                Add
+              </AddBoardButton>
+            </form>
+            <AddBoardButton onClick={onClickHandler}>Cancel</AddBoardButton>
+          </AddBoardContainer>
+        )}
+      </AddBoardForm>
+    </>
   );
 };
 
 export default NewBoardForm;
+
+const AddBoardForm = styled.div`
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.21);
+  border-radius: 4px;
+`;
+const AddBoardContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  div {
+    width: 100%;
+    height: 100%;
+    font-size: 17px;
+    font-weight: 500;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    p {
+    }
+  }
+`;
+const AddBoardButton = styled.button`
+  border-radius: 6px;
+  border: 0px;
+  padding: 8px;
+  color: ${props => (props.name ? '#fff' : '')};
+  background-color: ${props => (props.name ? '#5aac44' : '')};
+  &:hover {
+    opacity: 0.5;
+  }
+`;

@@ -4,92 +4,53 @@ html {
   background-color: #f9fafc;
   line-height: 20px;
   font-weight: 400;
-  margin: 0px;
-  width: 100%;
   height: 100%;
+}
+html {
+  display: block;
+  overflow: hidden;
+}
+body {
+  margin: 0px;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
 }
 * {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
     Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-  //
+  outline: none;
 }
 input,
 button {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   padding: 3px;
   background-color: #fafbfc;
-  border: 2px solid #dfe1e6;
+  border: 0px;
   border-radius: 3px;
   margin: 3px;
+
   cursor: pointer;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button {
-  font-family: Noteworthy;
+input {
+  box-shadow: inset 0 0 0 2px #0079bf;
 }
-
+a {
+  text-decoration: none;
+}
+form {
+  display: inline;
+}
 #root {
   width: 100%;
   height: 100%;
   position: relative;
   z-index: 1;
 }
-// .container {
-//   width: 100%;
-//   height: 100%;
-// }
 
-#header {
-  background-color: #f9fafc;
-  display: block;
-  height: 43px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  text-align: center;
-  color: aliceblue;
-  background: linear-gradient(to right, #7392d6 1%, #4cdcda 100%);
-  .menu-bar {
-    width: 45%;
-  }
-  a {
-    opacity: 1;
-    &:hover {
-      opacity: 0.5;
-    }
-    .title-image {
-      background-image: url(https://user-images.githubusercontent.com/57708971/105126995-3e2c3680-5b23-11eb-9260-431e5b1d14d8.png);
-      background-repeat: no-repeat;
-      background-size: 60px;
-      cursor: pointer;
-      display: inline-block;
-      height: 50px;
-      width: 60px;
-    }
-    .title-name {
-      align-items: center;
-      background-image: url(https://user-images.githubusercontent.com/57708971/105015451-edfe9700-5a84-11eb-82b8-8bbc36492587.png);
-      background-repeat: no-repeat;
-      background-size: 100px;
-      cursor: pointer;
-      display: inline-block;
-      position: relative;
-      bottom: 4px;
-      right: 9px;
-      height: 40px;
-      width: 100px;
-    }
-  }
-}
+@import './nav';
 @import './login';
-@import './board';
-@import './card';
-@import './modal';
+
+@import './logs';

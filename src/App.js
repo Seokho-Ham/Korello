@@ -1,43 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Login from './pages/LoginPage.jsx';
 import Board from './pages/BoardPage.jsx';
 import NotFound from './pages/NotFound';
-
+import Nav from './components/Nav';
+import CardPage from './pages/CardPage.jsx';
+// import { useDispatch, useSelector } from 'react-redux';
 const App = () => {
-  const onSilentRefresh = async token => {
-    // let data = await axios.post()
-  };
-  const [login, setLogin] = useState(false);
+  const history = useHistory();
+  const [login, setLogin] = useState(localStorage.getItem('loginStatus'));
 
   useEffect(() => {
-    onSilentRefresh();
-  });
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path='/'
-            render={() => (
-              <Login refreshToken={onSilentRefresh} setLogin={setLogin} />
-            )}
-          />
+    setLogin(localStorage.getItem('loginStatus'));
+  }, []);
+  // const loginStatus = useSelector(state => state.user.status);
+  // console.log(loginStatus);
 
-          <Route path='/boards' component={Board} />
-          <Redirect from='/board/:id/cards' to='/boards' />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
-    </DndProvider>
+  return (
+    <>
+      {login === 'true' ? <Nav history={history} setLogin={setLogin} /> : null}
+      <Switch>
+        <Route
+          exact
+          path='/'
+          render={props => <Login {...props} login={login} />}
+        />
+        <Route
+          path='/boards'
+          render={props => <Board {...props} login={login} />}
+        />
+        <Route
+          path='/board/:id/cards'
+          render={props => <CardPage {...props} login={login} />}
+        />
+
+        <Route path='/notfound' render={NotFound} />
+      </Switch>
+    </>
   );
 };
 
