@@ -1,7 +1,4 @@
 node_modules
-<<<<<<< HEAD
 .eslintcache
-=======
-.eslintcache
-/src/firebase.js
->>>>>>> d82b74836a2de5a6d044716e285c8aab7af23241
+.env
+
