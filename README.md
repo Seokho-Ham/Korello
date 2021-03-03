@@ -3,6 +3,7 @@
 <br/>
 현재 레파지토리는 프론트의 코드만을 가지고 있습니다.
 
+
 ## 서비스 url
 https://korello.app
 
@@ -10,8 +11,10 @@ https://korello.app
 ## 참여자
 함석호(Frontend), 강동혁(Backend)
 
+
 ## 스택
 ![Stack](https://user-images.githubusercontent.com/57708971/109765194-d98eec00-7c37-11eb-9079-3f9be6d99f7c.png)
+
 
 ## 워크플로우
 #### Frontend
