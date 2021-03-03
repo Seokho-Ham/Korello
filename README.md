@@ -11,7 +11,7 @@ https://korello.app
 함석호(Frontend), 강동혁(Backend)
 
 ## 스택
-
+![Stack](https://user-images.githubusercontent.com/57708971/109765194-d98eec00-7c37-11eb-9079-3f9be6d99f7c.png)
 
 ## 워크플로우
 #### Frontend
