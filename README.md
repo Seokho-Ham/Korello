@@ -1,4 +1,3 @@
-
 # Korello App
 프론트는 React, 백엔드는 Kotlin을 사용한 2인 Trello 클론 프로젝트입니다.
 <br/>
@@ -16,7 +15,7 @@ https://korello.app
 
 ## 워크플로우
 #### Frontend
-![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109759245-0dfeaa00-7c30-11eb-9880-98f74d96adac.png)
+![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109762645-4b653680-7c34-11eb-9ab3-c365b39aacea.png)
 
 #### Backend
 ![BackEnd Flow](https://user-images.githubusercontent.com/57708971/109759614-9f6e1c00-7c30-11eb-8481-b78ae6c8ca05.png)
