@@ -3,10 +3,19 @@
 <br/>
 현재 레파지토리는 프론트의 코드만을 가지고 있습니다.
 
-### 참여자
+## 서비스 url
+https://korello.app
+
+
+## 참여자
 함석호(Frontend), 강동혁(Backend)
 
-### 서비스 url
-http://ec2-15-164-153-156.ap-northeast-2.compute.amazonaws.com/
+## 스택
 
- 
+
+## 워크플로우
+![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109759245-0dfeaa00-7c30-11eb-9880-98f74d96adac.png)
+![BackEnd Flow](https://user-images.githubusercontent.com/57708971/109759334-2b337880-7c30-11eb-9c05-3955eb7435a3.png)
+
+
+## 기능
