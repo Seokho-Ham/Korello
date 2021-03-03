@@ -15,7 +15,7 @@ https://korello.app
 
 ## 워크플로우
 #### Frontend
-![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109762645-4b653680-7c34-11eb-9ab3-c365b39aacea.png)
+![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109762942-b7e03580-7c34-11eb-8a37-3c606e1d8bc3.png)
 
 #### Backend
 ![BackEnd Flow](https://user-images.githubusercontent.com/57708971/109759614-9f6e1c00-7c30-11eb-8481-b78ae6c8ca05.png)
