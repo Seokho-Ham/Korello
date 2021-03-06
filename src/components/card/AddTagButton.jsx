@@ -37,9 +37,9 @@ const AddTagButton = () => {
         },
       );
       if (code === 201) {
-        await setFirebaseData(currentBoardId, {
-          [tagName]: { name: tagName, createdAt: timestamp() },
-        });
+        // await setFirebaseData(currentBoardId, {
+        //   [tagName]: { name: tagName, createdAt: timestamp() },
+        // });
 
         buttonStatusHandler();
         getCard(currentBoardUrl, dispatch);
