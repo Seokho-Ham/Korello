@@ -28,7 +28,7 @@ const BoardForm = ({ data }) => {
         let result = list.filter(el => el !== parseInt(data.id));
         localStorage.setItem('lastView', JSON.stringify(result));
       }
-      await deleteFirebaseData(data.id);
+      // await deleteFirebaseData(data.id);
       await getBoard(dispatch);
     } else if (code >= 401001) {
       await getRefreshToken();

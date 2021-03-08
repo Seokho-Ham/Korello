@@ -41,15 +41,25 @@ const LoginPage = ({ login }) => {
       </div>
       <div className='login-container'>
         <div className='login-input'>
-          <input className='email' placeholder='email'></input>
-          <input className='password' placeholder='password'></input>
           <input
+            style={{ boxShadow: 'none' }}
+            className='email'
+            placeholder='email'
+          ></input>
+          <input
+            style={{ boxShadow: 'none' }}
+            className='password'
+            placeholder='password'
+          ></input>
+          <input
+            style={{ boxShadow: 'none' }}
             className='submit'
             type='submit'
             value='Login'
             onClick={() => {
               alert('카카오로 로그인해주세요.');
             }}
+            style={{ boxShadow: 'none' }}
           ></input>
         </div>
         <div style={{ marginBottom: '15px', fontFamily: '-apple-system' }}>
