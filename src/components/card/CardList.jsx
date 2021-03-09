@@ -104,7 +104,10 @@ const CardList = ({ location }) => {
           </CardListContainer>
         </DragDropContext>
       </CardContainer>
-      <LogList openLog={openLog} openLogHandler={openLogHandler} />
+
+      {openLog ? (
+        <LogList openLog={openLog} openLogHandler={openLogHandler} />
+      ) : null}
     </Container>
   );
 };

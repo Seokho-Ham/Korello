@@ -59,3 +59,14 @@ export const setFBData = async (boardId, data) => {
   //   await db.doc(boardId).set(data ? data : {}, { merge: true });
   // }
 };
+
+export const progressCalculator = data => {
+  let count = 0;
+  data.forEach(el => {
+    if (el.status) {
+      count++;
+    }
+  });
+  const result = Math.round((count / data.length) * 100);
+  return result;
+};
