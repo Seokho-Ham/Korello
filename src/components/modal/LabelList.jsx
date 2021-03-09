@@ -14,9 +14,12 @@ const checkOverlap = (arr, id) => {
 };
 
 const LabelList = ({ labels }) => {
-  const { labellist, currentBoardUrl, currentCardId } = useSelector(
-    state => state.card,
-  );
+  const {
+    labellist,
+    currentBoardUrl,
+    currentCardId,
+    currentBoardId,
+  } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const addCardLabelButton = useCallback(
@@ -31,7 +34,7 @@ const LabelList = ({ labels }) => {
           });
 
       if (code === 201 || code === 200) {
-        getCard(currentBoardUrl, dispatch);
+        getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);

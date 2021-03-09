@@ -8,7 +8,7 @@ import { getCard } from '../card/card_utils';
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
   const [labelInput, setLabelInput] = useState(name);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const onEditLabelClick = useCallback(() => {
@@ -35,7 +35,7 @@ const LabelElement = ({ id, name, color, onClick }) => {
         if (code === 200 || code === 201) {
           setLabelInput('');
           onEditLabelClick();
-          getCard(currentBoardUrl, dispatch);
+          getCard(currentBoardUrl, dispatch, currentBoardId);
         } else if (code >= 401001) {
           await getRefreshToken();
           await onSubmit(e);
