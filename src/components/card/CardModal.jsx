@@ -2,24 +2,12 @@ import React, { useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { postData, updateData, getRefreshToken } from '../../api';
-import { getCard } from './card_utils';
+import { getCard, progressCalculator } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
-
-const progressCalculator = data => {
-  let count = 0;
-  data.forEach(el => {
-    if (el.status) {
-      count++;
-    }
-  });
-  const result = Math.round((count / data.length) * 100);
-  return result;
-};
 
 const CardModal = ({ clickModal, title, labels, tag }) => {
   const {
@@ -31,6 +19,7 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
+
   const inputHandler = e => {
     setCardTitle(e.target.value);
   };
@@ -78,6 +67,7 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
   };
   return (
     <>
+      <ModalOverlay />
       <ModalWrapper>
         <ModalInner tabIndex='0'>
           <CloseModalButton onClick={clickModal}></CloseModalButton>
@@ -126,6 +116,18 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
 
 export default CardModal;
 
+const ModalOverlay = styled.div`
+  box-sizing: border-box;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+`;
+
 const ModalWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -137,7 +139,7 @@ const ModalWrapper = styled.div`
   z-index: 10;
   overflow-y: auto;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  /* background-color: rgba(0, 0, 0, 0.6); */
   justify-content: center;
 `;
 
