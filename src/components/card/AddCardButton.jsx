@@ -10,6 +10,7 @@ const AddButton = ({ tag }) => {
   const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const formRef = useRef(null);
   const onChangeHandler = e => {
     setTitle(e.target.value);
   };
@@ -32,7 +33,7 @@ const AddButton = ({ tag }) => {
       if (code === 201) {
         setTitle('');
         setDisplay(prevState => !prevState);
-        getCard(currentBoardUrl, dispatch);
+        getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardHandler(e);
@@ -51,13 +52,18 @@ const AddButton = ({ tag }) => {
       inputRef.current.focus();
     }
   });
-
+  const handleTextArea = e => {
+    if (e.which == 13) {
+      formRef.current.submit();
+      e.preventDefault();
+    }
+  };
   return (
     <>
       <NewCardContainer>
         {display ? (
           <NewCardForm>
-            <form onSubmit={addCardHandler}>
+            <form onSubmit={addCardHandler} ref={formRef}>
               <CardAddInput
                 name='title'
                 type='text'
@@ -65,8 +71,16 @@ const AddButton = ({ tag }) => {
                 value={title}
                 onChange={onChangeHandler}
                 ref={inputRef}
-              ></CardAddInput>
-
+              />
+              {/* <CardAddTextArea
+                name='title'
+                type='text'
+                placeholder='title'
+                value={title}
+                onChange={onChangeHandler}
+                ref={inputRef}
+                onKeyDown={handleTextArea}
+              /> */}
               <CardAddButton>Add Card</CardAddButton>
             </form>
             <CardCancelButton onClick={onClickHandler}></CardCancelButton>
@@ -143,8 +157,21 @@ const CardAddButton = styled.button`
 const CardAddInput = styled.input`
   box-sizing: border-box;
   width: 100%;
+  height: 33px;
   margin: 0px;
   border: 1px;
   padding: 5px;
   box-shadow: inset 0 0 0 2px #0079bf;
 `;
+
+// const CardAddTextArea = styled.textarea`
+//   box-sizing: border-box;
+//   width: 100%;
+//   height: 60px;
+//   margin: 0px;
+//   border: 1px;
+//   border-radius: 3px;
+//   padding: 5px;
+//   box-shadow: inset 0 0 0 2px #0079bf;
+//   resize: none;
+// `;

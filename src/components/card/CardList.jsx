@@ -18,7 +18,7 @@ const CardList = ({ location }) => {
   const { taglist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
-  // console.log(currentBoardId);
+
   const dispatch = useDispatch();
 
   const openLogHandler = () => {
@@ -65,7 +65,6 @@ const CardList = ({ location }) => {
   };
 
   useEffect(() => {
-    // setFBData();
     const boardId = location.pathname.split('/')[2];
     dispatch(setData({ currentBoardId: boardId }));
     setLastViewList(location);

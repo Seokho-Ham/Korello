@@ -7,7 +7,7 @@ import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
 import styled from 'styled-components';
 import cancelImage from '../../assets/img/cancel-icon.png';
-import { deleteFirebaseData } from '../../firebase';
+import { deleteFirebaseDoc } from '../../firebase';
 const BoardForm = ({ data }) => {
   const history = useHistory();
   const [image, setImage] = useState(randomImage());
@@ -28,7 +28,7 @@ const BoardForm = ({ data }) => {
         let result = list.filter(el => el !== parseInt(data.id));
         localStorage.setItem('lastView', JSON.stringify(result));
       }
-      // await deleteFirebaseData(data.id);
+      await deleteFirebaseDoc(data.id);
       await getBoard(dispatch);
     } else if (code >= 401001) {
       await getRefreshToken();

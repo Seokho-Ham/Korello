@@ -16,7 +16,7 @@ const BoardList = () => {
     getBoard(dispatch);
   }, []);
 
-  const renderBoards = () => {
+  const renderBoards = data => {
     return data
       .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
       .map(el => {
@@ -26,25 +26,19 @@ const BoardList = () => {
 
   return (
     <>
-      {data.length === 0 ? (
-        <Board>
-          <h3>Loading...</h3>
-        </Board>
-      ) : (
-        <Board>
-          {data.length > 0 ? <RecentList /> : null}
-          <ListType name='workspace'>
-            <span></span>
-            <h3>Workspace</h3>
-          </ListType>
-          <List>
-            {data.length > 0 ? renderBoards() : '데이터가 없습니다.'}
-            <BoardElement>
-              <NewBoardForm />
-            </BoardElement>
-          </List>
-        </Board>
-      )}
+      <Board>
+        {data.length > 0 ? <RecentList /> : null}
+        <ListType name='workspace'>
+          <span></span>
+          <h3>Workspace</h3>
+        </ListType>
+        <List>
+          {data.length > 0 ? renderBoards(data) : null}
+          <BoardElement>
+            <NewBoardForm />
+          </BoardElement>
+        </List>
+      </Board>
     </>
   );
 };

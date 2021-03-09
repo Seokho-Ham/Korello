@@ -37,12 +37,12 @@ const AddTagButton = () => {
         },
       );
       if (code === 201) {
-        // await setFirebaseData(currentBoardId, {
-        //   [tagName]: { name: tagName, createdAt: timestamp() },
-        // });
+        await setFirebaseData(currentBoardId, {
+          [tagName]: { name: tagName, createdAt: new Date() },
+        });
 
         buttonStatusHandler();
-        getCard(currentBoardUrl, dispatch);
+        getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addTag(e);

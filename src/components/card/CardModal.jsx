@@ -9,7 +9,7 @@ import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
 
-const CardModal = ({ clickModal, title, labels, tag }) => {
+const CardModal = ({ clickModal, title, labels }) => {
   const {
     checklist,
     currentBoardUrl,
@@ -57,7 +57,7 @@ const CardModal = ({ clickModal, title, labels, tag }) => {
       },
     );
     if (code === 201) {
-      getCard(currentBoardUrl, dispatch);
+      getCard(currentBoardUrl, dispatch, currentBoardId);
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteCard();

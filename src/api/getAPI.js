@@ -9,7 +9,7 @@ const fetchData = async uri => {
     let { data } = await axios.get(serverUrl + uri);
 
     if (data.result_body) {
-      console.log('rawdata: ', data.result_body);
+      // console.log('rawdata: ', data.result_body);
       return [data.result_body, data.result_code];
     }
   } catch (err) {
@@ -49,19 +49,9 @@ const fetchCard = async uri => {
     let { result_body, result_code } = data;
     console.log('raw data: ', result_body);
     if (result_body && result_body.length > 0) {
-      let tags = [];
-
-      result_body
-        .sort((a, b) => new Date(a.createDate) - new Date(b.createDate))
-        .forEach(el => {
-          if (!tags.includes(el.tagValue)) {
-            tags.push(el.tagValue);
-          }
-        });
-      console.log('tags: ', tags);
-      return [tags, result_body, result_code];
+      return [result_body, result_code];
     } else {
-      return [[], [], result_code];
+      return [[], result_code];
     }
   } catch (err) {
     if (err.response) {

@@ -4,25 +4,26 @@ import { getCards } from '../../reducers/card.reducer';
 import { timestamp, getFields, setFirebaseData } from '../../firebase';
 
 export const getCard = async (uri, dispatch, boardId) => {
-  let [taglist, cards, code] = await fetchCard(uri);
-  // const fbData = await getFields(boardId);
+  let [cards, code] = await fetchCard(uri);
+  const fbData = await getFields(boardId);
   // console.log('fbdata: ', fbData);
   const cardlist = [];
 
   if (cards.length > 0) {
     cards.forEach(el => {
-      if (!cardlist[taglist.indexOf(el.tagValue)]) {
-        cardlist[taglist.indexOf(el.tagValue)] = [el];
+      if (!el) return null;
+      if (!cardlist[fbData.indexOf(el.tagValue)]) {
+        cardlist[fbData.indexOf(el.tagValue)] = [el];
       } else {
-        cardlist[taglist.indexOf(el.tagValue)].push(el);
+        cardlist[fbData.indexOf(el.tagValue)].push(el);
       }
     });
   }
 
-  console.log('cards: ', cardlist);
+  // console.log('cards: ', cardlist);
   let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
   let payload = {
-    taglist: taglist ? taglist : [],
+    taglist: fbData ? fbData : [],
     cardlist: cardlist ? cardlist : [],
     labellist: labels ? labels : [],
     currentBoardUrl: uri,
