@@ -15,6 +15,7 @@ const initialState = {
   cardlist: [],
   checklist: {},
   labellist: [],
+  cardlabels: {},
   currentBoardId: '',
   currentBoardUrl: '',
   currentCardId: '',

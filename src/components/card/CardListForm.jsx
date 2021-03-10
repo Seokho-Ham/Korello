@@ -3,13 +3,13 @@ import CardModal from './CardModal';
 import { fetchData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { setData } from '../../reducers/card.reducer';
+import card, { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
 const CardListForm = ({ id, title, tag, labels, index }) => {
   const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { checklist } = useSelector(state => state.card);
+  const { cardlabels } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const editCard = () => {
@@ -17,31 +17,6 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
   };
 
   const clickModal = async () => {
-    // const fetchModal = async () => {
-    //   const [data] = await fetchData(`/card/${id}/todo`);
-    //   let obj = {};
-    //   for (let key in checklist) {
-    //     obj[key] = checklist[key];
-    //   }
-    //   obj[id] = data;
-    //   dispatch(
-    //     setData({
-    //       checklist: obj,
-    //       currentCardId: id,
-    //     }),
-    //   );
-    // };
-    // if (!modalVisible) {
-    //   if (!checklist[id]) {
-    //     await fetchModal();
-    //   } else {
-    //     dispatch(
-    //       setData({
-    //         currentCardId: id,
-    //       }),
-    //     );
-    //   }
-    // }
     if (!modalVisible) {
       dispatch(
         setData({
@@ -51,7 +26,11 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
     }
     setModalVisible(p => !p);
   };
-
+  useEffect(() => {
+    let obj = cardlabels;
+    obj[id] = labels;
+    dispatch(setData({ cardlabels: obj }));
+  }, []);
   return (
     <>
       {modalVisible && (
@@ -60,7 +39,6 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
           clickModal={clickModal}
           title={title}
           tag={tag}
-          labels={labels}
         />
       )}
 
@@ -73,9 +51,9 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
               {...provided.dragHandleProps}
             >
               <Card onClick={clickModal}>
-                {labels.length > 0 ? (
+                {cardlabels[id] !== undefined && cardlabels[id].length > 0 ? (
                   <CardLabels>
-                    {labels
+                    {cardlabels[id]
                       .sort((a, b) => a.id - b.id)
                       .map((el, i) => (
                         <span

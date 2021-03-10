@@ -10,17 +10,20 @@ import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
 import { setData } from '../../reducers/card.reducer';
 
-const CardModal = ({ visible, clickModal, title, labels }) => {
+const CardModal = ({ visible, clickModal, title }) => {
   const {
     checklist,
     currentBoardUrl,
     currentCardId,
     currentBoardId,
+    cardlabels,
   } = useSelector(state => state.card);
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
-  console.log(checklist);
+  console.log(cardlabels[currentCardId]);
+  console.log(cardlabels);
+
   const inputHandler = e => {
     setCardTitle(e.target.value);
   };
@@ -106,8 +109,8 @@ const CardModal = ({ visible, clickModal, title, labels }) => {
           <CardDeleteButton onClick={deleteCard}>Delete Card</CardDeleteButton>
           <ModalHeader>
             <ModalLabels>
-              {labels.length > 0
-                ? labels.map((el, i) => (
+              {cardlabels[currentCardId] && cardlabels[currentCardId].length > 0
+                ? cardlabels[currentCardId].map((el, i) => (
                     <ModalLabelElement key={i} color={el.color}>
                       {el.name}
                     </ModalLabelElement>
@@ -139,7 +142,7 @@ const CardModal = ({ visible, clickModal, title, labels }) => {
           </ModalContents>
           <ModalSidebar>
             <div>Sidebar</div>
-            <Label labels={labels} />
+            <Label />
             <CheckListModal />
             <CalendarModal />
           </ModalSidebar>

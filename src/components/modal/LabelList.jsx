@@ -1,11 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
-import { getCard } from '../card/card_utils';
 import styled from 'styled-components';
 import LabelElement from './LabelElement';
+import { setData } from '../../reducers/card.reducer';
 
 const checkOverlap = (arr, id) => {
+  if (!arr) {
+    return false;
+  }
   const ids = arr.map(el => el.id);
   if (ids.includes(id)) {
     return true;
@@ -13,18 +16,16 @@ const checkOverlap = (arr, id) => {
   return false;
 };
 
-const LabelList = ({ labels }) => {
-  const {
-    labellist,
-    currentBoardUrl,
-    currentCardId,
-    currentBoardId,
-  } = useSelector(state => state.card);
+const LabelList = () => {
+  const { labellist, currentCardId, cardlabels } = useSelector(
+    state => state.card,
+  );
+
   const dispatch = useDispatch();
 
   const addCardLabelButton = useCallback(
     async e => {
-      let status = checkOverlap(labels, e.target.id);
+      let status = checkOverlap(cardlabels[currentCardId], e.target.id);
       const code = status
         ? await postData(`/card/${currentCardId}/label/delete`, {
             labelIds: [e.target.id],
@@ -34,7 +35,21 @@ const LabelList = ({ labels }) => {
           });
 
       if (code === 201 || code === 200) {
-        getCard(currentBoardUrl, dispatch, currentBoardId);
+        let arr = cardlabels[currentCardId];
+        if (status) {
+          arr.forEach((el, i) => {
+            if (el.id === e.target.id) {
+              arr.splice(i, 1);
+            }
+          });
+        } else {
+          labellist.forEach(el => {
+            if (el.id === e.target.id) {
+              arr.push(el);
+            }
+          });
+        }
+        dispatch(setData({ [cardlabels[currentCardId]]: arr }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);

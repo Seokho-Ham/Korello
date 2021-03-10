@@ -6,12 +6,14 @@ import LabelList from './LabelList';
 import styled from 'styled-components';
 import { SendUpdateButton } from './LabelElement';
 import { TwitterPicker } from 'react-color';
-const Label = ({ labels }) => {
+const Label = () => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, cardlabels, currentCardId } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const onChangeHandler = e => {
@@ -70,7 +72,7 @@ const Label = ({ labels }) => {
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
       {openLabel ? (
         <LabelModal>
-          <LabelList labels={labels} />
+          <LabelList />
           {display ? (
             <div>
               <form onSubmit={addBoardLabelButton}>
