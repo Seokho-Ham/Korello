@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const ChecklistModal = () => {
   const [clicked, setClicked] = useState(false);
   const [checkListTitle, setCheckListTitle] = useState('');
-  const { currentCardId } = useSelector(state => state.card);
+  const { currentCardId, checklist } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const clickButton = () => {
@@ -26,8 +26,13 @@ const ChecklistModal = () => {
       if (code === 201 || code === 200) {
         setCheckListTitle('');
         setClicked(p => !p);
-        const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
-        dispatch(setData({ checklist: checklist ? checklist : [] }));
+        const [data] = await fetchData(`/card/${currentCardId}/todo`);
+        let obj = {};
+        for (let key in checklist) {
+          obj[key] = checklist[key];
+        }
+        obj[currentCardId] = data;
+        dispatch(setData({ checklist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCheckList(e);

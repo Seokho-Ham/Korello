@@ -21,8 +21,13 @@ const ChecklistElement = ({ el }) => {
     async e => {
       const code = await updateData(`/todo/${e.target.name}/status`);
       if (code === 200) {
-        const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
-        dispatch(setData({ checklist: checklist ? checklist : [] }));
+        const [data] = await fetchData(`/card/${currentCardId}/todo`);
+        let obj = {};
+        for (let key in checklist) {
+          obj[key] = checklist[key];
+        }
+        obj[currentCardId] = data;
+        dispatch(setData({ checklist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await checkboxHandler(e);
@@ -43,8 +48,13 @@ const ChecklistElement = ({ el }) => {
 
           if (code === 200) {
             setChangebutton(false);
-            const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
-            dispatch(setData({ checklist: checklist ? checklist : [] }));
+            const [data] = await fetchData(`/card/${currentCardId}/todo`);
+            let obj = {};
+            for (let key in checklist) {
+              obj[key] = checklist[key];
+            }
+            obj[currentCardId] = data;
+            dispatch(setData({ checklist: obj }));
           } else if (code >= 401001) {
             await getRefreshToken();
             await changeChecklist(e);
@@ -63,8 +73,13 @@ const ChecklistElement = ({ el }) => {
   const deleteCheckList = useCallback(async () => {
     const code = await deleteData(`/todo/${el.todoId}`);
     if (code === 200) {
-      const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
-      dispatch(setData({ checklist: checklist ? checklist : [] }));
+      const [data] = await fetchData(`/card/${currentCardId}/todo`);
+      let obj = {};
+      for (let key in checklist) {
+        obj[key] = checklist[key];
+      }
+      obj[currentCardId] = data;
+      dispatch(setData({ checklist: obj }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await deleteCheckList();

@@ -1,54 +1,63 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import CardModal from './CardModal';
 import { fetchData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
+import { findByPlaceholderText } from '@testing-library/dom';
 
 const CardListForm = ({ id, title, tag, labels, index }) => {
   const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { checklist, currentCardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const editCard = () => {
     setEditButton(p => !p);
   };
 
-  const clickModal = () => {
-    if (modalVisible) {
+  const clickModal = async () => {
+    const fetchModal = async () => {
+      const [data] = await fetchData(`/card/${id}/todo`);
+      let obj = {};
+      for (let key in checklist) {
+        obj[key] = checklist[key];
+      }
+      obj[id] = data;
       dispatch(
         setData({
-          checklist: [],
+          checklist: obj,
           currentCardId: id,
         }),
       );
-    } else {
-      const fetchModal = async () => {
-        const [data] = await fetchData(`/card/${id}/todo`);
+    };
+    if (!modalVisible) {
+      if (!checklist[id]) {
+        await fetchModal();
+      } else {
         dispatch(
           setData({
-            checklist: data,
             currentCardId: id,
           }),
         );
-      };
-      fetchModal();
+      }
     }
     setModalVisible(p => !p);
   };
 
   return (
     <>
-      {modalVisible ? (
+      {modalVisible && (
         <CardModal
+          visible={modalVisible}
           clickModal={clickModal}
           title={title}
           tag={tag}
           labels={labels}
         />
-      ) : null}
+      )}
+
       <Draggable draggableId={id} index={index}>
         {provided => {
           return (

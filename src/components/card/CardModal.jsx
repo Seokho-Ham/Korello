@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import { useSelector, useDispatch } from 'react-redux';
-import { postData, updateData, getRefreshToken } from '../../api';
+import { fetchData, postData, updateData, getRefreshToken } from '../../api';
 import { getCard, progressCalculator } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
+import { setData } from '../../reducers/card.reducer';
 
-const CardModal = ({ clickModal, title, labels }) => {
+const CardModal = ({ visible, clickModal, title, labels }) => {
   const {
     checklist,
     currentBoardUrl,
@@ -19,10 +20,20 @@ const CardModal = ({ clickModal, title, labels }) => {
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
-
+  console.log(checklist);
   const inputHandler = e => {
     setCardTitle(e.target.value);
   };
+  const onBackgroundClick = e => {
+    if (e.target === e.currentTarget) {
+      clickModal();
+    }
+  };
+  const onInnerClick = e => {
+    if (e.target === e.currentTarget) {
+    }
+  };
+
   const editCard = () => {
     setEditButton(p => !p);
   };
@@ -38,7 +49,7 @@ const CardModal = ({ clickModal, title, labels }) => {
       );
       if (code === 200) {
         setEditButton(p => !p);
-        getCard(currentBoardUrl, dispatch);
+        getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
         await sendUpdate(e);
@@ -65,11 +76,11 @@ const CardModal = ({ clickModal, title, labels }) => {
       alert('삭제에 실패하였습니다.');
     }
   };
+
   return (
     <>
-      <ModalOverlay />
-      <ModalWrapper>
-        <ModalInner tabIndex='0'>
+      <ModalWrapper tabIndex='-1' visible={visible} onClick={onBackgroundClick}>
+        <ModalInner tabIndex='0' visible={visible}>
           <CloseModalButton onClick={clickModal}></CloseModalButton>
           <CardDeleteButton onClick={deleteCard}>Delete Card</CardDeleteButton>
           <ModalHeader>
@@ -96,9 +107,11 @@ const CardModal = ({ clickModal, title, labels }) => {
             )}
           </ModalHeader>
           <ModalContents>
-            {checklist.length > 0 ? (
+            {checklist[currentCardId].length > 0 ? (
               <ChecklistContainer>
-                <Checklist percent={progressCalculator(checklist)} />
+                <Checklist
+                  percent={progressCalculator(checklist[currentCardId])}
+                />
               </ChecklistContainer>
             ) : null}
           </ModalContents>
@@ -116,21 +129,9 @@ const CardModal = ({ clickModal, title, labels }) => {
 
 export default CardModal;
 
-const ModalOverlay = styled.div`
-  box-sizing: border-box;
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10;
-`;
-
 const ModalWrapper = styled.div`
   box-sizing: border-box;
-  display: flex;
+  display: ${props => (props.visible ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   right: 0;
@@ -139,13 +140,13 @@ const ModalWrapper = styled.div`
   z-index: 10;
   overflow-y: auto;
   height: 100%;
-  /* background-color: rgba(0, 0, 0, 0.6); */
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
 `;
 
 const ModalInner = styled.div`
   box-sizing: border-box;
-  display: block;
+  display: ${props => (props.visible ? 'block' : 'none')};
   position: relative;
   background-color: #ebecf0;
   border-radius: 10px;
@@ -154,7 +155,7 @@ const ModalInner = styled.div`
   margin: 48px 0px 80px;
   padding: 30px 20px;
   z-index: 11;
-  /* top: 50%; */
+  top: 5%;
 `;
 
 const CardDeleteButton = styled.button`

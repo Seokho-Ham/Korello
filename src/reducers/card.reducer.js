@@ -13,7 +13,7 @@ export const moveCard = createAction(MOVECARD);
 const initialState = {
   taglist: [],
   cardlist: [],
-  checklist: [],
+  checklist: {},
   labellist: [],
   currentBoardId: '',
   currentBoardUrl: '',

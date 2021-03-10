@@ -17,6 +17,7 @@ const Label = ({ labels }) => {
   const onChangeHandler = e => {
     setLabelName(e.target.value);
   };
+
   const openLabelButton = () => {
     setOpenLabel(p => !p);
   };

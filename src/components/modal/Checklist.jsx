@@ -15,6 +15,7 @@ const Checklist = ({ percent }) => {
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
+  // console.log(checklist);
 
   const addChecklistHandler = async e => {
     e.preventDefault();
@@ -26,8 +27,13 @@ const Checklist = ({ percent }) => {
       if (code === 201 || code === 200) {
         setTitle('');
         setClicked(p => !p);
-        const [checklist] = await fetchData(`/card/${currentCardId}/todo`);
-        dispatch(setData({ checklist: checklist ? checklist : [] }));
+        const [data] = await fetchData(`/card/${currentCardId}/todo`);
+        let obj = {};
+        for (let key in checklist) {
+          obj[key] = checklist[key];
+        }
+        obj[currentCardId] = data;
+        dispatch(setData({ checklist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addChecklistHandler(e);
@@ -57,7 +63,7 @@ const Checklist = ({ percent }) => {
         </ProgressContainer>
       </div>
       <CheckListInner>
-        {checklist.map((el, i) => (
+        {checklist[currentCardId].map((el, i) => (
           <ChecklistElement key={i} el={el} />
         ))}
       </CheckListInner>
