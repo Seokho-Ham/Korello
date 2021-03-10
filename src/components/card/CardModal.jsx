@@ -21,8 +21,6 @@ const CardModal = ({ visible, clickModal, title }) => {
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
-  console.log(cardlabels[currentCardId]);
-  console.log(cardlabels);
 
   const inputHandler = e => {
     setCardTitle(e.target.value);
@@ -91,7 +89,6 @@ const CardModal = ({ visible, clickModal, title }) => {
       dispatch(
         setData({
           checklist: obj,
-          // currentCardId: currentCardId,
         }),
       );
     };
