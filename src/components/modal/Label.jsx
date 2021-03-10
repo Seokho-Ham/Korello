@@ -6,6 +6,7 @@ import LabelList from './LabelList';
 import styled from 'styled-components';
 import { SendUpdateButton } from './LabelElement';
 import { TwitterPicker } from 'react-color';
+
 const Label = () => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');

@@ -6,16 +6,12 @@ import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken } from '../../api';
-import { getCard } from './card_utils';
 import { setData } from '../../reducers/card.reducer';
+
 const TagForm = ({ tag, tagIndex }) => {
-  const {
-    taglist,
-    cardlist,
-    currentBoardUrl,
-    currentBoardId,
-    cardlabels,
-  } = useSelector(state => state.card);
+  const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const deleteCard = async (url, cardId) => {
     let code = await postData(url.slice(0, url.length - 1) + '/delete', {

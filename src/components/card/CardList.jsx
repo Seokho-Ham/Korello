@@ -6,12 +6,10 @@ import LogBt from './LogBt';
 import LogList from './LogList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-// import { moveCard } from '../../reducers/card.reducer';
-import { getCard, setLastViewList, setFBData } from './card_utils';
+import { getCard, setLastViewList } from './card_utils';
 import styled from 'styled-components';
 import bgImage from '../../api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg';
 import { setData } from '../../reducers/card.reducer';
-import { getFields } from '../../firebase';
 
 const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
@@ -70,7 +68,7 @@ const CardList = ({ location }) => {
     setLastViewList(location);
     // getFields(boardId);
     getCard(`${location.pathname}`, dispatch, boardId);
-  }, []);
+  }, [currentBoardId]);
 
   const renderCards = () => {
     return taglist.map((el, i) => {

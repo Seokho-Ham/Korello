@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import styled from 'styled-components';
@@ -78,7 +78,7 @@ const LabelList = () => {
   return <LabelWrapper>{renderLabelList()}</LabelWrapper>;
 };
 
-export default LabelList;
+export default memo(LabelList);
 const LabelWrapper = styled.div`
   max-height: 300px;
   overflow-y: scroll;

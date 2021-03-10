@@ -1,12 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import CardModal from './CardModal';
-import { fetchData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import card, { setData } from '../../reducers/card.reducer';
+import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
-const CardListForm = ({ id, title, tag, labels, index }) => {
+const CardListForm = ({ id, title, labels, index }) => {
   const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { cardlabels } = useSelector(state => state.card);
@@ -38,7 +37,6 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
           visible={modalVisible}
           clickModal={clickModal}
           title={title}
-          tag={tag}
         />
       )}
 
