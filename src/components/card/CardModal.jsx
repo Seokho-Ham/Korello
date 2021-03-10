@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import { useSelector, useDispatch } from 'react-redux';
-import { postData, updateData, getRefreshToken } from '../../api';
+import { fetchData, postData, updateData, getRefreshToken } from '../../api';
 import { getCard, progressCalculator } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
+import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ visible, clickModal, title, labels }) => {
   const {
@@ -76,6 +77,27 @@ const CardModal = ({ visible, clickModal, title, labels }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchModal = async () => {
+      const [data] = await fetchData(`/card/${currentCardId}/todo`);
+      let obj = {};
+      for (let key in checklist) {
+        obj[key] = checklist[key];
+      }
+      obj[currentCardId] = data;
+      dispatch(
+        setData({
+          checklist: obj,
+          // currentCardId: currentCardId,
+        }),
+      );
+    };
+    if (!checklist[currentCardId]) {
+      fetchModal();
+    } else {
+    }
+  }, []);
+
   return (
     <>
       <ModalWrapper tabIndex='-1' visible={visible} onClick={onBackgroundClick}>
@@ -106,7 +128,8 @@ const CardModal = ({ visible, clickModal, title, labels }) => {
             )}
           </ModalHeader>
           <ModalContents>
-            {checklist[currentCardId].length > 0 ? (
+            {checklist[currentCardId] !== undefined &&
+            checklist[currentCardId].length > 0 ? (
               <ChecklistContainer>
                 <Checklist
                   percent={progressCalculator(checklist[currentCardId])}

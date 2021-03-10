@@ -17,30 +17,37 @@ const CardListForm = ({ id, title, tag, labels, index }) => {
   };
 
   const clickModal = async () => {
-    const fetchModal = async () => {
-      const [data] = await fetchData(`/card/${id}/todo`);
-      let obj = {};
-      for (let key in checklist) {
-        obj[key] = checklist[key];
-      }
-      obj[id] = data;
+    // const fetchModal = async () => {
+    //   const [data] = await fetchData(`/card/${id}/todo`);
+    //   let obj = {};
+    //   for (let key in checklist) {
+    //     obj[key] = checklist[key];
+    //   }
+    //   obj[id] = data;
+    //   dispatch(
+    //     setData({
+    //       checklist: obj,
+    //       currentCardId: id,
+    //     }),
+    //   );
+    // };
+    // if (!modalVisible) {
+    //   if (!checklist[id]) {
+    //     await fetchModal();
+    //   } else {
+    //     dispatch(
+    //       setData({
+    //         currentCardId: id,
+    //       }),
+    //     );
+    //   }
+    // }
+    if (!modalVisible) {
       dispatch(
         setData({
-          checklist: obj,
           currentCardId: id,
         }),
       );
-    };
-    if (!modalVisible) {
-      if (!checklist[id]) {
-        await fetchModal();
-      } else {
-        dispatch(
-          setData({
-            currentCardId: id,
-          }),
-        );
-      }
     }
     setModalVisible(p => !p);
   };
