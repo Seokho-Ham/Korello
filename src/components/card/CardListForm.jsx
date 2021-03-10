@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
-import { findByPlaceholderText } from '@testing-library/dom';
 
 const CardListForm = ({ id, title, tag, labels, index }) => {
   const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { checklist, currentCardId } = useSelector(state => state.card);
+  const { checklist } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const editCard = () => {

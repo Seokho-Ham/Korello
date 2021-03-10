@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchData, postData, updateData, getRefreshToken } from '../../api';
+import { postData, updateData, getRefreshToken } from '../../api';
 import { getCard, progressCalculator } from './card_utils';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
-import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ visible, clickModal, title, labels }) => {
   const {
