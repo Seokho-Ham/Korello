@@ -3,12 +3,12 @@ import TagForm from './TagForm';
 import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
-import LogList from './LogList';
+import LogModal from './LogModal';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard, setLastViewList } from './card_utils';
 import styled from 'styled-components';
-import bgImage from '../../api/bg-images/estee-janssens-aQfhbxailCs-unsplash.jpg';
+import bgImage from '../../api/bg-images/gradient.jpg';
 import { setData } from '../../reducers/card.reducer';
 
 const CardList = ({ location }) => {
@@ -16,7 +16,6 @@ const CardList = ({ location }) => {
   const { taglist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
-
   const dispatch = useDispatch();
 
   const openLogHandler = () => {
@@ -103,7 +102,11 @@ const CardList = ({ location }) => {
       </CardContainer>
 
       {openLog ? (
-        <LogList openLog={openLog} openLogHandler={openLogHandler} />
+        <LogModal
+          openLog={openLog}
+          openLogHandler={openLogHandler}
+          setOpenLog={setOpenLog}
+        />
       ) : null}
     </Container>
   );
@@ -141,7 +144,7 @@ const CardHeaderItems = styled.div`
   align-items: center;
 `;
 const CardListContainer = styled.div`
-  height: 95%;
+  height: 90%;
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;

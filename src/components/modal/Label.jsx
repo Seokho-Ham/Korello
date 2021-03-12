@@ -17,10 +17,16 @@ const Label = () => {
   );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const labelRef = useRef(null);
+
   const onChangeHandler = e => {
     setLabelName(e.target.value);
   };
-
+  const pageClickEvent = e => {
+    if (labelRef.current !== null && !labelRef.current.contains(e.target)) {
+      setOpenLabel(!openLabel);
+    }
+  };
   const openLabelButton = () => {
     setOpenLabel(p => !p);
   };
@@ -68,33 +74,43 @@ const Label = () => {
   useEffect(() => {
     if (display) inputRef.current.focus();
   }, [display]);
+
+  useEffect(() => {
+    if (openLabel) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [openLabel]);
+
   return (
     <LabelModalWrapper>
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
       {openLabel ? (
-        <LabelModal>
+        <LabelModal ref={labelRef}>
           <LabelList />
-          {display ? (
-            <div>
-              <form onSubmit={addBoardLabelButton}>
-                <LabelInputTitle
-                  value={labelName}
-                  onChange={onChangeHandler}
-                  placeholder='title'
-                  color={selectColor}
-                  ref={inputRef}
-                />
-                <ColorList>
-                  <TwitterPicker width='100%' onChange={handleColorChange} />
-                </ColorList>
+          <div style={{ display: display ? 'block' : 'none' }}>
+            <form onSubmit={addBoardLabelButton}>
+              <LabelInputTitle
+                value={labelName}
+                onChange={onChangeHandler}
+                placeholder='title'
+                color={selectColor}
+                ref={inputRef}
+              />
+              <ColorList>
+                <TwitterPicker width='100%' onChange={handleColorChange} />
+              </ColorList>
 
-                <AddLabelButton>Add Label</AddLabelButton>
-              </form>
-              <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
-            </div>
-          ) : (
-            <LabelButton onClick={handleDisplay}>+ Add Label</LabelButton>
-          )}
+              <AddLabelButton>Add Label</AddLabelButton>
+            </form>
+            <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
+          </div>
+
+          <LabelButton onClick={handleDisplay} display={display}>
+            + Add Label
+          </LabelButton>
         </LabelModal>
       ) : null}
     </LabelModalWrapper>
@@ -119,6 +135,7 @@ const LabelModal = styled.div`
   z-index: 22;
 `;
 const LabelButton = styled.button`
+  display: ${props => (props.display ? 'none' : 'inline')};
   background-color: rgba(9, 30, 66, 0.08);
   width: 98%;
   height: 30px;

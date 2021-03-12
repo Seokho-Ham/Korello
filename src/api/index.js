@@ -20,13 +20,13 @@ const getRefreshToken = async () => {
   if (data !== undefined) {
     if (data.result_code >= 401001) {
       if (data.result_code === 401001) {
-        alert('토큰이 만료됨!');
+        alert('토큰이 만료됐습니다.');
       }
       if (data.result_code === 401002) {
-        alert('토큰이 유효하지 않음');
+        alert('토큰이 올바르지 않습니다.');
       }
       if (data.result_code === 401003) {
-        alert('토큰이 없음!');
+        alert('토큰이 없습니다.');
       }
       return 401;
     } else if (data.result_code === 200) {

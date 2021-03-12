@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import '../../css/react-datepicker.css';
@@ -7,6 +7,7 @@ const CalendarModal = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const calendarRef = useRef(null);
   const onStartHandler = date => {
     setStartDate(date);
   };
@@ -17,9 +18,27 @@ const CalendarModal = () => {
     setOpen(p => !p);
   };
 
+  const pageClickEvent = e => {
+    if (
+      calendarRef.current !== null &&
+      !calendarRef.current.contains(e.target)
+    ) {
+      setOpen(!open);
+    }
+  };
+
+  useEffect(() => {
+    if (open) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [open]);
+
   registerLocale('ko', ko);
   return (
-    <Calendar>
+    <Calendar ref={calendarRef}>
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
       {open ? (
         <DateModal>

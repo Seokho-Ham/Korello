@@ -10,8 +10,17 @@ const ChecklistModal = () => {
   const { currentCardId, checklist } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const checklistRef = useRef(null);
   const clickButton = () => {
     setClicked(p => !p);
+  };
+  const pageClickEvent = e => {
+    if (
+      checklistRef.current !== null &&
+      !checklistRef.current.contains(e.target)
+    ) {
+      setClicked(!clicked);
+    }
   };
   const onChangeHandler = e => {
     setCheckListTitle(e.target.value);
@@ -50,11 +59,19 @@ const ChecklistModal = () => {
     if (clicked) inputRef.current.focus();
   });
 
+  useEffect(() => {
+    if (clicked) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [clicked]);
   return (
     <ChecklistModalButton>
       <button onClick={clickButton}>CheckList</button>
       {clicked ? (
-        <ChecklistAddModal>
+        <ChecklistAddModal ref={checklistRef}>
           <form onSubmit={addCheckList}>
             <ChecklistInput
               placeholder='checklist title'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
@@ -21,6 +21,8 @@ const CardModal = ({ visible, clickModal, title }) => {
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const formRef = useRef(null);
 
   const inputHandler = e => {
     setCardTitle(e.target.value);
@@ -30,13 +32,10 @@ const CardModal = ({ visible, clickModal, title }) => {
       clickModal();
     }
   };
-  const onInnerClick = e => {
-    if (e.target === e.currentTarget) {
-    }
-  };
 
   const editCard = () => {
     setEditButton(p => !p);
+    if (editButton) inputRef.current.focus();
   };
   const sendUpdate = async e => {
     e.preventDefault();
@@ -77,6 +76,11 @@ const CardModal = ({ visible, clickModal, title }) => {
       alert('삭제에 실패하였습니다.');
     }
   };
+  const pageClickEvent = e => {
+    if (formRef.current !== null && !formRef.current.contains(e.target)) {
+      setEditButton(!editButton);
+    }
+  };
 
   useEffect(() => {
     const fetchModal = async () => {
@@ -98,6 +102,20 @@ const CardModal = ({ visible, clickModal, title }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (editButton) inputRef.current.focus();
+  });
+
+  //모달 이외의 부분을 클릭할 경우 닫히도록!
+  useEffect(() => {
+    if (editButton) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [editButton]);
+
   return (
     <>
       <ModalWrapper tabIndex='-1' visible={visible} onClick={onBackgroundClick}>
@@ -116,8 +134,12 @@ const CardModal = ({ visible, clickModal, title }) => {
             </ModalLabels>
             {editButton ? (
               <div>
-                <form onSubmit={sendUpdate}>
-                  <input value={cardTitle} onChange={inputHandler} />
+                <form onSubmit={sendUpdate} ref={formRef}>
+                  <input
+                    value={cardTitle}
+                    onChange={inputHandler}
+                    ref={inputRef}
+                  />
                   <button>Save</button>
                 </form>
               </div>

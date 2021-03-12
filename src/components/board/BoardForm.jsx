@@ -8,6 +8,7 @@ import { BoardElement } from './BoardList';
 import styled from 'styled-components';
 import cancelImage from '../../assets/img/cancel-icon.png';
 import { deleteFirebaseDoc } from '../../firebase';
+
 const BoardForm = ({ data }) => {
   const history = useHistory();
   const [image, setImage] = useState(randomImage());

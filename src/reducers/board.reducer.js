@@ -15,6 +15,7 @@ const initialState = {
   data: [],
   code: 0,
   recentBoard: [],
+  boardTitle: '',
 };
 
 //handleActions(Reducer)

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import editImage from '../../assets/img/pencil.png';
-import { updateData, getRefreshToken, postData } from '../../api';
+import { updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from '../card/card_utils';
 
@@ -49,33 +49,30 @@ const LabelElement = ({ id, name, color, onClick }) => {
 
   return (
     <>
-      {editLabel ? (
-        <EditForm onSubmit={onSubmit}>
-          <LabelElementInput
-            placeholder={name}
-            color={color}
-            value={labelInput}
-            onChange={onInputChange}
-          />
-        </EditForm>
-      ) : (
-        <LabelElementWrapper
-          id={id}
-          name={color}
+      <EditForm onSubmit={onSubmit} editLabel={editLabel}>
+        <LabelElementInput
+          placeholder={name}
           color={color}
-          onClick={onClick}
-        >
-          {name}
-        </LabelElementWrapper>
-      )}
-      {editLabel ? (
-        <>
-          <SendUpdateButton onClick={onSubmit}>Save</SendUpdateButton>
-          <CancelButton onClick={onEditLabelClick}>Cancel</CancelButton>
-        </>
-      ) : (
-        <LabelEditButton onClick={onEditLabelClick} />
-      )}
+          value={labelInput}
+          onChange={onInputChange}
+        />
+      </EditForm>
+      <LabelElementWrapper
+        id={id}
+        name={color}
+        color={color}
+        onClick={onClick}
+        editLabel={editLabel}
+      >
+        {name}
+      </LabelElementWrapper>
+      <SendUpdateButton onClick={onSubmit} editLabel={editLabel}>
+        Save
+      </SendUpdateButton>
+      <CancelButton onClick={onEditLabelClick} editLabel={editLabel}>
+        Cancel
+      </CancelButton>
+      <LabelEditButton onClick={onEditLabelClick} editLabel={editLabel} />
     </>
   );
 };
@@ -84,7 +81,8 @@ export default LabelElement;
 
 const LabelElementWrapper = styled.span`
   color: #fff;
-  display: inline-block;
+  /* display: inline-block; */
+  display: ${props => (props.editLabel ? 'none' : 'inline-block')};
   font-size: 14px;
   margin: 2px;
   width: 85%;
@@ -112,6 +110,7 @@ const LabelElementInput = styled.input`
   box-shadow: inset 0 0 0 2px #0079bf;
 `;
 const LabelEditButton = styled.span`
+  display: ${props => (props.editLabel ? 'none' : 'inline')};
   background-image: url(${editImage});
   background-repeat: no-repeat;
   background-size: 16px;
@@ -127,6 +126,7 @@ const LabelEditButton = styled.span`
   }
 `;
 export const SendUpdateButton = styled.button`
+  display: ${props => (props.editLabel ? 'inline' : 'none')};
   background-color: #5aac44;
   height: 30px;
   border: 0;
@@ -137,6 +137,7 @@ export const SendUpdateButton = styled.button`
   }
 `;
 const CancelButton = styled.button`
+  display: ${props => (props.editLabel ? 'inline' : 'none')};
   background-color: rgb(136, 137, 138);
   height: 30px;
   border: 0;
@@ -149,6 +150,7 @@ const CancelButton = styled.button`
 `;
 
 const EditForm = styled.form`
+  display: ${props => (props.editLabel ? 'inline' : 'none')};
   margin: 0px;
   width: 75%;
 `;
