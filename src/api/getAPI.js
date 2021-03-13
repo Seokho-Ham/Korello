@@ -10,7 +10,7 @@ const fetchData = async uri => {
 
     if (data.result_body) {
       // console.log('rawdata: ', data.result_body);
-      return [data.result_body, data.result_code];
+      return [data.result_body, data.result_code, undefined];
     }
   } catch (err) {
     if (err.response) {
@@ -33,11 +33,12 @@ const fetchData = async uri => {
         window.location.reload();
       }
     } else if (err.request) {
-      console.log('error-request: ', err.request);
-      return { error: err };
+      // console.log('error-request: ', err.request);
+
+      return [[], 404, err];
     } else {
-      console.log('error: ', err);
-      return { error: err };
+      // console.log('error: ', err);
+      return [[], 404, err];
     }
   }
 };
@@ -73,9 +74,10 @@ const fetchCard = async uri => {
       }
     } else if (err.request) {
       console.log('error-request: ', err.request);
+      return [[], 404, err];
     } else {
       console.log('error: ', err);
-      return {};
+      return [[], 404, err];
     }
   }
 };

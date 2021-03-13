@@ -1,6 +1,7 @@
-import { get, setData } from '../../reducers/board.reducer';
+import { setData } from '../../reducers/board.reducer';
 import { fetchData } from '../../api';
-import { db, getDocuments } from '../../firebase';
+import { getDocuments } from '../../firebase';
+
 const makeRecentList = data => {
   let result = [];
   let lastView = localStorage.getItem('lastView');
@@ -25,15 +26,20 @@ const makeRecentList = data => {
 };
 //서버로부터 board 데이터 받아옴.
 export const getBoard = async dispatch => {
-  let [board, code] = await fetchData('/boards');
-  getDocuments(board);
-  let recentBoard = makeRecentList(board);
+  let [board, code, error] = await fetchData('/boards');
+  if (error) {
+    console.log(error);
+  } else {
+    getDocuments(board);
+    let recentBoard = makeRecentList(board);
 
-  let payload = {
-    data: board ? board : [],
-    code: code ? code : 0,
-    recentBoard: recentBoard ? recentBoard : [],
-  };
+    let payload = {
+      loading: false,
+      data: board ? board : [],
+      code: code ? code : 0,
+      recentBoard: recentBoard ? recentBoard : [],
+    };
 
-  dispatch(get(payload));
+    dispatch(setData(payload));
+  }
 };

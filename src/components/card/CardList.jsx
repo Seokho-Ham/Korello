@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCard, setLastViewList } from './card_utils';
 import styled from 'styled-components';
 import bgImage from '../../api/bg-images/gradient.jpg';
+import load from '../../assets/img/load.gif';
 import { setData } from '../../reducers/card.reducer';
 
 const CardList = ({ location }) => {
   const [openLog, setOpenLog] = useState(false);
-  const { taglist, currentBoardUrl, currentBoardId } = useSelector(
+  const { loading, taglist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const CardList = ({ location }) => {
 
   useEffect(() => {
     const boardId = location.pathname.split('/')[2];
-    dispatch(setData({ currentBoardId: boardId }));
+    dispatch(setData({ loading: true, currentBoardId: boardId }));
     setLastViewList(location);
     // getFields(boardId);
     getCard(`${location.pathname}`, dispatch, boardId);
@@ -85,7 +86,7 @@ const CardList = ({ location }) => {
         </CardHeader>
         <DragDropContext onDragEnd={onDragEnd}>
           <CardListContainer>
-            {taglist.length > 0 ? (
+            {!loading ? (
               <>
                 <TagList>
                   {renderCards()}
@@ -94,7 +95,7 @@ const CardList = ({ location }) => {
               </>
             ) : (
               <TagList id='tag-all-list'>
-                <AddTagButton />
+                <Loading></Loading>
               </TagList>
             )}
           </CardListContainer>
@@ -154,4 +155,16 @@ const TagList = styled.div`
   margin-bottom: 8px;
   padding-bottom: 8px;
   height: 97%;
+`;
+
+const Loading = styled.span`
+  display: inline-block;
+  position: relative;
+  top: 100px;
+  left: 47%;
+  background-image: url(${load});
+  background-repeat: no-repeat;
+  background-size: 130px;
+  width: 130px;
+  height: 130px;
 `;

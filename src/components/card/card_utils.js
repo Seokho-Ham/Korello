@@ -1,34 +1,39 @@
 import { findRenderedComponentWithType } from 'react-dom/test-utils';
 import { fetchCard, fetchData } from '../../api';
-import { getCards } from '../../reducers/card.reducer';
+import { setData } from '../../reducers/card.reducer';
 import { timestamp, getFields, setFirebaseData } from '../../firebase';
 
 export const getCard = async (uri, dispatch, boardId) => {
-  let [cards, code] = await fetchCard(uri);
-  const fbData = await getFields(boardId);
-  // console.log('fbdata: ', fbData);
-  const cardlist = [];
+  let [cards, code, error] = await fetchCard(uri);
+  if (!error) {
+    const fbData = await getFields(boardId);
+    // console.log('fbdata: ', fbData);
+    const cardlist = [];
 
-  if (cards.length > 0) {
-    cards.forEach(el => {
-      if (!el) return null;
-      if (!cardlist[fbData.indexOf(el.tagValue)]) {
-        cardlist[fbData.indexOf(el.tagValue)] = [el];
-      } else {
-        cardlist[fbData.indexOf(el.tagValue)].push(el);
-      }
-    });
+    if (cards.length > 0) {
+      cards.forEach(el => {
+        if (!el) return null;
+        if (!cardlist[fbData.indexOf(el.tagValue)]) {
+          cardlist[fbData.indexOf(el.tagValue)] = [el];
+        } else {
+          cardlist[fbData.indexOf(el.tagValue)].push(el);
+        }
+      });
+    }
+
+    // console.log('cards: ', cardlist);
+    let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
+    let payload = {
+      loading: false,
+      taglist: fbData ? fbData : [],
+      cardlist: cardlist ? cardlist : [],
+      labellist: labels ? labels : [],
+      currentBoardUrl: uri,
+    };
+    dispatch(setData(payload));
+  } else {
+    console.log(error);
   }
-
-  // console.log('cards: ', cardlist);
-  let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
-  let payload = {
-    taglist: fbData ? fbData : [],
-    cardlist: cardlist ? cardlist : [],
-    labellist: labels ? labels : [],
-    currentBoardUrl: uri,
-  };
-  dispatch(getCards(payload));
 };
 
 export const setLastViewList = location => {

@@ -10,8 +10,7 @@ import { useSelector } from 'react-redux';
 const App = () => {
   const history = useHistory();
   const [login, setLogin] = useState(localStorage.getItem('loginStatus'));
-  const { data } = useSelector(state => state.board);
-  console.log(data);
+
   useEffect(() => {
     setLogin(localStorage.getItem('loginStatus'));
   }, []);

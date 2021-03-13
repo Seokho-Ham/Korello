@@ -7,12 +7,15 @@ import { getBoard } from './board_utils';
 import styled from 'styled-components';
 import workspace from '../../assets/img/workspace.png';
 import recent from '../../assets/img/recent.png';
+import { setData } from '../../reducers/board.reducer';
+import load from '../../assets/img/load.gif';
 
 const BoardList = () => {
-  const { data } = useSelector(state => state.board);
+  const { data, loading } = useSelector(state => state.board);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setData({ loading: true }));
     getBoard(dispatch);
   }, []);
 
@@ -24,20 +27,26 @@ const BoardList = () => {
       });
   };
 
-  return (
+  return !loading ? (
     <>
       <Board>
-        {data.length > 0 ? <RecentList /> : null}
+        <RecentList />
         <ListType name='workspace'>
           <span></span>
           <h3>Workspace</h3>
         </ListType>
         <List>
-          {data.length > 0 ? renderBoards(data) : null}
+          {renderBoards(data)}
           <BoardElement>
             <NewBoardForm />
           </BoardElement>
         </List>
+      </Board>
+    </>
+  ) : (
+    <>
+      <Board>
+        <Loading />
       </Board>
     </>
   );
@@ -98,4 +107,15 @@ export const BoardElement = styled.div`
   border-radius: 4px;
   cursor: pointer;
   color: #fff;
+`;
+const Loading = styled.span`
+  display: inline-block;
+  position: relative;
+  top: 50px;
+  left: 30%;
+  background-image: url(${load});
+  background-repeat: no-repeat;
+  background-size: 130px;
+  width: 130px;
+  height: 130px;
 `;
