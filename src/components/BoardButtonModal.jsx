@@ -67,7 +67,8 @@ const BoardButtonContainer = styled.div`
   height: 400px;
   display: block;
   position: absolute;
-  left: 0px;
+  top:35px;
+  left: 33px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: #ebecf0;
   border-radius: 3px;
