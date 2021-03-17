@@ -19,6 +19,12 @@ const AddButton = ({ tag }) => {
     setDisplay(prevState => !prevState);
   };
 
+  const pageClickEvent = e => {
+    if (formRef.current !== null && !formRef.current.contains(e.target)) {
+      setDisplay(!display);
+    }
+  };
+
   const addCardHandler = async e => {
     e.preventDefault();
     if (title.length > 0) {
@@ -52,18 +58,22 @@ const AddButton = ({ tag }) => {
       inputRef.current.focus();
     }
   });
-  const handleTextArea = e => {
-    if (e.which == 13) {
-      formRef.current.submit();
-      e.preventDefault();
+
+  useEffect(() => {
+    if (display) {
+      window.addEventListener('click', pageClickEvent);
     }
-  };
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [display]);
+
   return (
     <>
       <NewCardContainer>
         {display ? (
-          <NewCardForm>
-            <form onSubmit={addCardHandler} ref={formRef}>
+          <NewCardForm ref={formRef}>
+            <form onSubmit={addCardHandler}>
               <CardAddInput
                 name='title'
                 type='text'
@@ -72,27 +82,17 @@ const AddButton = ({ tag }) => {
                 onChange={onChangeHandler}
                 ref={inputRef}
               />
-              {/* <CardAddTextArea
-                name='title'
-                type='text'
-                placeholder='title'
-                value={title}
-                onChange={onChangeHandler}
-                ref={inputRef}
-                onKeyDown={handleTextArea}
-              /> */}
+
               <CardAddButton>Add Card</CardAddButton>
             </form>
             <CardCancelButton onClick={onClickHandler}></CardCancelButton>
           </NewCardForm>
         ) : (
-          // <div className='add-button'>
           <NewCardForm>
             <CardAddStateButton onClick={onClickHandler}>
               + Add another card
             </CardAddStateButton>
           </NewCardForm>
-          // </div>
         )}
       </NewCardContainer>
     </>
@@ -102,9 +102,6 @@ const AddButton = ({ tag }) => {
 export default AddButton;
 const NewCardContainer = styled.div`
   box-sizing: border-box;
-
-  /* position: relative;
-  left: 6px; */
 `;
 const NewCardForm = styled.div`
   box-sizing: border-box;
@@ -163,15 +160,3 @@ const CardAddInput = styled.input`
   padding: 5px;
   box-shadow: inset 0 0 0 2px #0079bf;
 `;
-
-// const CardAddTextArea = styled.textarea`
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 60px;
-//   margin: 0px;
-//   border: 1px;
-//   border-radius: 3px;
-//   padding: 5px;
-//   box-shadow: inset 0 0 0 2px #0079bf;
-//   resize: none;
-// `;

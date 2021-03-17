@@ -12,6 +12,7 @@ const AddTagButton = () => {
   const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const formRef = useRef(null);
   const buttonStatusHandler = () => {
     setTagName('');
     setCardName('');
@@ -21,6 +22,12 @@ const AddTagButton = () => {
     e.target.name === 'tag'
       ? setTagName(e.target.value)
       : setCardName(e.target.value);
+  };
+
+  const pageClickEvent = e => {
+    if (formRef.current !== null && !formRef.current.contains(e.target)) {
+      setClicked(!clicked);
+    }
   };
 
   const addTag = async e => {
@@ -56,11 +63,20 @@ const AddTagButton = () => {
   useEffect(() => {
     if (clicked) inputRef.current.focus();
   }, [clicked]);
+
+  useEffect(() => {
+    if (clicked) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [clicked]);
   return (
     <>
       <TagAddContainer clicked={clicked}>
         {clicked ? (
-          <TagAddForm>
+          <TagAddForm ref={formRef}>
             <form onSubmit={addTag}>
               <TagAddInput
                 name='tag'

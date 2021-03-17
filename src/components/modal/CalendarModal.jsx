@@ -7,7 +7,7 @@ const CalendarModal = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const calendarRef = useRef(null);
+  // const calendarRef = useRef(null);
   const onStartHandler = date => {
     setStartDate(date);
   };
@@ -18,30 +18,31 @@ const CalendarModal = () => {
     setOpen(p => !p);
   };
 
-  const pageClickEvent = e => {
-    if (
-      calendarRef.current !== null &&
-      !calendarRef.current.contains(e.target)
-    ) {
-      setOpen(!open);
-    }
-  };
+  // const pageClickEvent = e => {
+  //   if (
+  //     calendarRef.current !== null &&
+  //     !calendarRef.current.contains(e.target)
+  //   ) {
+  //     setOpen(!open);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (open) {
-      window.addEventListener('click', pageClickEvent);
-    }
-    return () => {
-      window.removeEventListener('click', pageClickEvent);
-    };
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     window.addEventListener('click', pageClickEvent);
+  //   }
+  //   return () => {
+  //     window.removeEventListener('click', pageClickEvent);
+  //   };
+  // }, [open]);
 
   registerLocale('ko', ko);
   return (
-    <Calendar >
+    <Calendar>
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
-      
-        <DateModal status={open}>
+
+      <DateModal status={open}>
+        <SelectDate>
           <DatePicker
             locale='ko'
             selected={startDate}
@@ -53,6 +54,9 @@ const CalendarModal = () => {
             dateFormat='yyyy.MM.dd(eee)'
             // shouldCloseOnSelect={false}
           />
+        </SelectDate>
+        <span>~</span>
+        <SelectDate>
           <DatePicker
             locale='ko'
             selected={endDate}
@@ -62,13 +66,14 @@ const CalendarModal = () => {
             minDate={startDate}
             dateFormat='yyyy.MM.dd(eee)'
             onChange={onEndHandler}
+            // shouldCloseOnSelect={false}
           />
-          <div>
-            <DateSaveButton onClick={onClickHandler}>저장</DateSaveButton>
-            <button onClick={onClickHandler}>취소</button>
-          </div>
-        </DateModal>
-      
+        </SelectDate>
+        <div>
+          <DateSaveButton onClick={onClickHandler}>저장</DateSaveButton>
+          <DateCancelButton onClick={onClickHandler}>취소</DateCancelButton>
+        </div>
+      </DateModal>
     </Calendar>
   );
 };
@@ -89,15 +94,19 @@ const CalendarButton = styled.button`
   }
 `;
 const DateModal = styled.div`
-  min-width: 270px;
-  display: ${props =>props.status ?'block' : 'none'};
-  position: absolute;
+  min-width: 328px;
+  width: 328px;
+  display: ${props => (props.status ? 'block' : 'none')};
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 3px;
-  z-index: 20;
   margin: 1px auto;
   padding: 25px 8px;
+`;
+
+const SelectDate = styled.span`
+  display: inline-block;
+  width: auto;
 `;
 
 const DateSaveButton = styled.button`
@@ -107,9 +116,17 @@ const DateSaveButton = styled.button`
   color: #fff;
   border-radius: 3px;
   &:hover {
-    opacity: 0.8;
+    opacity: 0.5;
     background-color: #5aac44;
   }
 `;
 
-const DateCancelButton = styled.button``;
+const DateCancelButton = styled.button`
+  background-color: rgba(9, 30, 66, 0.08);
+  height: 30px;
+  border: 0;
+  border-radius: 3px;
+  :hover {
+    opacity: 0.5;
+  }
+`;

@@ -12,7 +12,7 @@ const CardEventLog = () => {
         <CardEventElement>
           <span></span>
           <div>
-            <div className='log-text'>첼시님이 카카오를 먹고 있습니다.</div>
+            <div className='log-text'>첼시님이 노드 한스푼 먹고 있습니다.</div>
             <div className='log-time'>01.26 03:41:02</div>
           </div>
         </CardEventElement>

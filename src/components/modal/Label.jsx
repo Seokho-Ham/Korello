@@ -31,7 +31,7 @@ const Label = () => {
   };
   const openLabelButton = () => {
     if (openLabel) {
-      setDisplay(p => !p);
+      setDisplay(false);
     }
     setOpenLabel(p => !p);
   };
