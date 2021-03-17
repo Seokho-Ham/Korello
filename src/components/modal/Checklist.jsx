@@ -12,6 +12,13 @@ const Checklist = ({ percent }) => {
   const { checklist, currentCardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const formRef = useRef(null);
+
+  const onOutsideClick = e => {
+    if (formRef.current !== null && !formRef.current.contains(e.target)) {
+      setClicked(!clicked);
+    }
+  };
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
@@ -49,7 +56,15 @@ const Checklist = ({ percent }) => {
   };
   useEffect(() => {
     if (clicked) inputRef.current.focus();
-  });
+  }, [clicked]);
+  useEffect(() => {
+    if (clicked) {
+      window.addEventListener('click', onOutsideClick);
+    }
+    return () => {
+      window.removeEventListener('click', onOutsideClick);
+    };
+  }, [clicked]);
 
   return (
     <>
@@ -67,7 +82,7 @@ const Checklist = ({ percent }) => {
           <ChecklistElement key={i} el={el} />
         ))}
       </CheckListInner>
-      <CheckListAddForm>
+      <CheckListAddForm ref={formRef}>
         {clicked ? (
           <>
             <form onSubmit={addChecklistHandler}>
@@ -131,6 +146,7 @@ const CheckListAddForm = styled.div`
 `;
 
 const ChecklistAddButton = styled(SendUpdateButton)`
+  display: inline;
   padding: 5px;
   width: 50px;
 `;

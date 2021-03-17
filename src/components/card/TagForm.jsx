@@ -56,6 +56,7 @@ const TagForm = ({ tag, tagIndex }) => {
               <TagElement {...provided.droppableProps} ref={provided.innerRef}>
                 {cardlist[tagIndex]
                   ? cardlist[tagIndex].map((el, i) => {
+                    // console.log(el)
                       if (!el) return null;
                       else {
                         return (

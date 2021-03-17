@@ -4,6 +4,7 @@ import { clearStorage } from '../api';
 import BoardButtonModal from './BoardButtonModal';
 import titleImage from '../assets/img/title-logo.png';
 import homeIcon from '../assets/img/home-icon.png';
+
 const Nav = ({ history, setLogin }) => {
   const [boardButton, setBoardButton] = useState(false);
   const login = localStorage.getItem('loginStatus');
@@ -11,13 +12,8 @@ const Nav = ({ history, setLogin }) => {
   const logoutHandler = () => {
     clearStorage();
     alert('로그아웃 되었습니다');
-    setLogin(p => {
-      if (p === 'true') {
-        setLogin('false');
-      } else {
-        setLogin('true');
-      }
-    });
+    setLogin('false');
+    localStorage.setItem('loginStatus', false)
     history.push('/');
   };
   const onClickHandler = () => {
@@ -124,10 +120,15 @@ const NavStatusButton = styled.div`
   text-align: right;
 
   button {
+    position:relative;
+    font-size: 14px;
+    font-weight: 400;
     border: 0;
+    border-radius:4px;
     color: #fff;
     padding: 5px;
     margin: 0px;
+    
     font-weight: bold;
     background-color: rgba(255, 255, 255, 0.3);
     &:hover {

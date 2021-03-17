@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
 import styled from 'styled-components';
-import { SendUpdateButton } from './LabelElement';
 import { TwitterPicker } from 'react-color';
 
 const Label = () => {
@@ -24,10 +23,16 @@ const Label = () => {
   };
   const pageClickEvent = e => {
     if (labelRef.current !== null && !labelRef.current.contains(e.target)) {
+      if (openLabel) {
+        setDisplay(p => !p);
+      }
       setOpenLabel(!openLabel);
     }
   };
   const openLabelButton = () => {
+    if (openLabel) {
+      setDisplay(p => !p);
+    }
     setOpenLabel(p => !p);
   };
 
@@ -108,9 +113,7 @@ const Label = () => {
             <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
           </div>
 
-          <LabelButton onClick={handleDisplay} display={display}>
-            + Add Label
-          </LabelButton>
+          <LabelButton onClick={handleDisplay}>+ Add Label</LabelButton>
         </LabelModal>
       ) : null}
     </LabelModalWrapper>
@@ -135,7 +138,7 @@ const LabelModal = styled.div`
   z-index: 22;
 `;
 const LabelButton = styled.button`
-  display: ${props => (props.display ? 'none' : 'inline')};
+  display: inline;
   background-color: rgba(9, 30, 66, 0.08);
   width: 98%;
   height: 30px;
@@ -158,7 +161,15 @@ const LabelInputTitle = styled.input`
   box-shadow: inset 0 0 0 2px #0079bf;
   color: ${props => (props.color === '' ? 'black' : '#fff')};
 `;
-const AddLabelButton = styled(SendUpdateButton)`
+const AddLabelButton = styled.button`
+  background-color: #5aac44;
+  height: 30px;
+  border: 0;
+  color: #fff;
+  border-radius: 3px;
+  &:hover {
+    opacity: 0.8;
+  }
   width: 98%;
 `;
 

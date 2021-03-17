@@ -9,6 +9,7 @@ import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import CalendarModal from '../modal/CalendarModal';
 import { setData } from '../../reducers/card.reducer';
+import CardEventLog from './CardEventLog';
 
 const CardModal = ({ visible, clickModal, title }) => {
   const {
@@ -158,6 +159,7 @@ const CardModal = ({ visible, clickModal, title }) => {
                 />
               </ChecklistContainer>
             ) : null}
+            <CardEventLog />
           </ModalContents>
           <ModalSidebar>
             <div>Sidebar</div>
@@ -195,7 +197,7 @@ const ModalInner = styled.div`
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
-  height: 700px;
+  height: auto;
   margin: 48px 0px 80px;
   padding: 30px 20px;
   z-index: 11;

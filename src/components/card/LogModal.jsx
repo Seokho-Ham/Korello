@@ -84,7 +84,7 @@ const EventLogHeader = styled.div`
     font-size: large;
   }
 `;
-const LogType = styled.div`
+export const LogType = styled.div`
   display: flex;
   align-items: center;
   margin: 14px 15px;
@@ -102,13 +102,13 @@ const LogType = styled.div`
     margin: 0px 5px;
   }
 `;
-const LogModalList = styled.div`
+export const LogModalList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const LogElement = styled.div`
+export const LogElement = styled.div`
   display: flex;
   flex-direction: row;
   span {

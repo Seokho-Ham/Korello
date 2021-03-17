@@ -38,10 +38,10 @@ const CalendarModal = () => {
 
   registerLocale('ko', ko);
   return (
-    <Calendar ref={calendarRef}>
+    <Calendar >
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
-      {open ? (
-        <DateModal>
+      
+        <DateModal status={open}>
           <DatePicker
             locale='ko'
             selected={startDate}
@@ -51,7 +51,7 @@ const CalendarModal = () => {
             onChange={onStartHandler}
             minDate={new Date()}
             dateFormat='yyyy.MM.dd(eee)'
-            shouldCloseOnSelect={false}
+            // shouldCloseOnSelect={false}
           />
           <DatePicker
             locale='ko'
@@ -68,7 +68,7 @@ const CalendarModal = () => {
             <button onClick={onClickHandler}>취소</button>
           </div>
         </DateModal>
-      ) : null}
+      
     </Calendar>
   );
 };
@@ -90,7 +90,7 @@ const CalendarButton = styled.button`
 `;
 const DateModal = styled.div`
   min-width: 270px;
-  display: block;
+  display: ${props =>props.status ?'block' : 'none'};
   position: absolute;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;

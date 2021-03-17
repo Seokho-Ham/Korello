@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
-import { setAccessToken } from '../api';
+
 import { useHistory } from 'react-router-dom';
-import Nav from '../components/Nav';
 import styled from 'styled-components';
 
 const LoginPage = ({ login }) => {
@@ -18,18 +17,16 @@ const LoginPage = ({ login }) => {
       queryString.parse(window.location.search).refreshToken,
     );
 
-    setAccessToken(queryString.parse(window.location.search).accessToken);
     localStorage.setItem('loginStatus', true);
   };
 
   useEffect(() => {
     if (login === 'true') {
-      setAccessToken(localStorage.getItem('accessToken'));
       history.push('/boards');
     }
     if (
-      queryString.parse(window.location.search).accessToken !== undefined &&
-      queryString.parse(window.location.search).refreshToken !== undefined
+      queryString.parse(window.location.search).accessToken &&
+      queryString.parse(window.location.search).refreshToken
     ) {
       setLoginInfo();
       history.push('/boards');
@@ -38,7 +35,7 @@ const LoginPage = ({ login }) => {
 
   return (
     <>
-      <Nav />
+      
       <LoginDisplay>
         <LoginConatiner>
           <LoginInput>
