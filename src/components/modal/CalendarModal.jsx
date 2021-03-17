@@ -7,7 +7,7 @@ const CalendarModal = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  // const calendarRef = useRef(null);
+  const calendarRef = useRef(null);
   const onStartHandler = date => {
     setStartDate(date);
   };
@@ -18,30 +18,31 @@ const CalendarModal = () => {
     setOpen(p => !p);
   };
 
-  // const pageClickEvent = e => {
-  //   if (
-  //     calendarRef.current !== null &&
-  //     !calendarRef.current.contains(e.target)
-  //   ) {
-  //     setOpen(!open);
-  //   }
-  // };
+  const pageClickEvent = e => {
+    if (
+      calendarRef.current !== null &&
+      !calendarRef.current.contains(e.target) &&
+      !e.target.className.includes('react-datepicker')
+    ) {
+      setOpen(!open);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (open) {
-  //     window.addEventListener('click', pageClickEvent);
-  //   }
-  //   return () => {
-  //     window.removeEventListener('click', pageClickEvent);
-  //   };
-  // }, [open]);
+  useEffect(() => {
+    if (open) {
+      window.addEventListener('click', pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [open]);
 
   registerLocale('ko', ko);
   return (
     <Calendar>
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
 
-      <DateModal status={open}>
+      <DateModal status={open} ref={calendarRef}>
         <SelectDate>
           <DatePicker
             locale='ko'
@@ -52,7 +53,6 @@ const CalendarModal = () => {
             onChange={onStartHandler}
             minDate={new Date()}
             dateFormat='yyyy.MM.dd(eee)'
-            // shouldCloseOnSelect={false}
           />
         </SelectDate>
         <span>~</span>
@@ -66,7 +66,6 @@ const CalendarModal = () => {
             minDate={startDate}
             dateFormat='yyyy.MM.dd(eee)'
             onChange={onEndHandler}
-            // shouldCloseOnSelect={false}
           />
         </SelectDate>
         <div>
