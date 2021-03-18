@@ -13,15 +13,36 @@ https://korello.app
 
 
 ## 스택
-![Stack](https://user-images.githubusercontent.com/57708971/109765194-d98eec00-7c37-11eb-9079-3f9be6d99f7c.png)
-
+#### 언어 및 프레임워크 : Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD
+#### 배포 : AWS Route53, EC2, NGINX
 
 ## 워크플로우
 #### Frontend
-![FrontEnd Flow](https://user-images.githubusercontent.com/57708971/109762942-b7e03580-7c34-11eb-8a37-3c606e1d8bc3.png)
+<img src='https://user-images.githubusercontent.com/57708971/109762942-b7e03580-7c34-11eb-8a37-3c606e1d8bc3.png' width='1000' height='500'/>
 
 #### Backend
-![BackEnd Flow](https://user-images.githubusercontent.com/57708971/109759614-9f6e1c00-7c30-11eb-8481-b78ae6c8ca05.png)
+<img src='https://user-images.githubusercontent.com/57708971/109759614-9f6e1c00-7c30-11eb-8481-b78ae6c8ca05.png' width='1000' height='500'/>
 
 
 ## 기능
+### 로그인 기능(카카오로그인)
+<img src='https://user-images.githubusercontent.com/57708971/111577041-efcea780-87f4-11eb-81ae-c999e566ab3f.gif' width='1000' height='500'/>
+
+### Board 추가,삭제 기능
+<img src='https://user-images.githubusercontent.com/57708971/111574331-a039ad00-87ef-11eb-9299-787893935e84.gif' width='1000' height='500'/>
+
+### Tag&Card 추가,수정,삭제 기능
+#### Tag
+<img src='https://user-images.githubusercontent.com/57708971/111576421-d2e5a480-87f3-11eb-868d-d8d7661f1224.gif' width='1000' height='500'/>
+#### Card
+<img src='https://user-images.githubusercontent.com/57708971/111576639-353ea500-87f4-11eb-959f-fa9b4ebd3109.gif' width='1000' height='500'/>
+
+### Drag & Drop 기능
+<img src='https://user-images.githubusercontent.com/57708971/111576938-c746ad80-87f4-11eb-9bd9-17abd6b4a1ec.gif' width='1000' height='500'/>
+
+### Label 추가, 수정 기능
+<img src='' width='1000' height='500'/>
+
+### Checklist 추가, 수정, 삭제 기능
+<img src='' width='1000' height='500'/>
+
