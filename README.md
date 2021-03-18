@@ -1,3 +1,4 @@
+
 # Korello App
 프론트는 React, 백엔드는 Kotlin을 사용한 2인 Trello 클론 프로젝트입니다.
 <br/>
@@ -41,8 +42,8 @@ https://korello.app
 <img src='https://user-images.githubusercontent.com/57708971/111576938-c746ad80-87f4-11eb-9bd9-17abd6b4a1ec.gif' width='1000' height='500'/>
 
 ### Label 추가, 수정 기능
-<img src='' width='1000' height='500'/>
+<img src='https://user-images.githubusercontent.com/57708971/111577602-f01b7280-87f5-11eb-814c-68c2d3b9ffa1.gif' width='1000' height='500'/>
 
 ### Checklist 추가, 수정, 삭제 기능
-<img src='' width='1000' height='500'/>
+<img src='https://user-images.githubusercontent.com/57708971/111577997-9bc4c280-87f6-11eb-8716-f003d76c8fba.gif' width='1000' height='500'/>
 
