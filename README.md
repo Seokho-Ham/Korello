@@ -7,6 +7,7 @@
 
 ## 서비스 url
 https://korello.app
+
 <br/>
 
 ## 참여자
@@ -17,6 +18,7 @@ https://korello.app
 #### [김기주 - *Backend*](https://github.com/kbiid)
 
 <br/>
+
 ## 개발사항(Frontend)
 - React Hooks Api를 사용한 함수형 컴포넌트 제작 및 상태 관리
 - React Router을 사용한 컴포넌트 구조 설계
@@ -25,11 +27,15 @@ https://korello.app
 - Redux를 사용하여 컴포넌트와 데이터를 분리해서 관리 및 Ducks 패턴 적용
 - StyledComponent를 사용한 css 작업
 - AWS EC2서버와 nginx를 사용한 배포
+
 <br/>
+
 ## 스택(Frontend)
 #### 언어 및 프레임워크 : Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD, Firebase
 #### 배포 : AWS Route53, EC2, NGINX
+
 <br/>
+
 ## 워크플로우
 #### Frontend
 <img src='https://user-images.githubusercontent.com/57708971/109762942-b7e03580-7c34-11eb-8a37-3c606e1d8bc3.png' width='1000' height='500'/>
@@ -38,6 +44,7 @@ https://korello.app
 <img src='https://user-images.githubusercontent.com/57708971/109759614-9f6e1c00-7c30-11eb-8481-b78ae6c8ca05.png' width='1000' height='500'/>
 
 <br/>
+
 ## 기능
 ### 로그인 기능(카카오로그인)
 <img src='https://user-images.githubusercontent.com/57708971/111577041-efcea780-87f4-11eb-81ae-c999e566ab3f.gif' width='1000' height='500'/>
