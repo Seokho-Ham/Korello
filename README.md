@@ -10,11 +10,24 @@ https://korello.app
 
 
 ## 참여자
-함석호(Frontend), 강동혁(Backend)
+#### [함석호 - *Frontend*](https://github.com/cocoball02)
+
+#### [강동혁 - *Backend*](https://github.com/DongHyukki)
+
+#### [김기주 - *Backend*](https://github.com/kbiid)
 
 
-## 스택
-#### 언어 및 프레임워크 : Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD
+## 개발사항(Frontend)
+- React Hooks Api를 사용한 함수형 컴포넌트 제작 및 상태 관리
+- React Router을 사용한 컴포넌트 구조 설계
+- CRUD API요청 커스텀 훅을 만들어 재사용성을 높임
+- React-Beautiful-DnD 라이브러리를 사용한 Drag&Drop 구현
+- Redux를 사용하여 컴포넌트와 데이터를 분리해서 관리 및 Ducks 패턴 적용
+- StyledComponent를 사용한 css 작업
+- AWS EC2서버와 nginx를 사용한 배포
+
+## 스택(Frontend)
+#### 언어 및 프레임워크 : Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD, Firebase
 #### 배포 : AWS Route53, EC2, NGINX
 
 ## 워크플로우
