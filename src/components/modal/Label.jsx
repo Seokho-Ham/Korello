@@ -11,9 +11,7 @@ const Label = () => {
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl, cardlabels, currentCardId } = useSelector(
-    state => state.card,
-  );
+  const { currentBoardUrl } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const labelRef = useRef(null);
@@ -23,14 +21,14 @@ const Label = () => {
   };
   const pageClickEvent = e => {
     if (labelRef.current !== null && !labelRef.current.contains(e.target)) {
-      if (openLabel) {
-        setDisplay(p => !p);
+      if (display) {
+        setDisplay(false);
       }
       setOpenLabel(!openLabel);
     }
   };
   const openLabelButton = () => {
-    if (openLabel) {
+    if (display) {
       setDisplay(false);
     }
     setOpenLabel(p => !p);
@@ -113,7 +111,9 @@ const Label = () => {
             <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
           </div>
 
-          <LabelButton onClick={handleDisplay}>+ Add Label</LabelButton>
+          <LabelButton display={display} onClick={handleDisplay}>
+            + Add Label
+          </LabelButton>
         </LabelModal>
       ) : null}
     </LabelModalWrapper>
@@ -138,7 +138,7 @@ const LabelModal = styled.div`
   z-index: 22;
 `;
 const LabelButton = styled.button`
-  display: inline;
+  display: ${props => (props.display ? 'none' : 'inline')};
   background-color: rgba(9, 30, 66, 0.08);
   width: 98%;
   height: 30px;

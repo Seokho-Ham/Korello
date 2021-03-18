@@ -8,7 +8,7 @@ import { Draggable } from 'react-beautiful-dnd';
 const CardListForm = ({ id, title, labels, index }) => {
   const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { cardlabels } = useSelector(state => state.card);
+  const { cardlabels, cardlist } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const editCard = () => {
@@ -29,7 +29,7 @@ const CardListForm = ({ id, title, labels, index }) => {
     let obj = cardlabels;
     obj[id] = labels;
     dispatch(setData({ cardlabels: obj }));
-  }, []);
+  }, [cardlist]);
   return (
     <>
       {modalVisible && (

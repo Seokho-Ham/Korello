@@ -126,11 +126,13 @@ const CardModal = ({ visible, clickModal, title }) => {
           <ModalHeader>
             <ModalLabels>
               {cardlabels[currentCardId] && cardlabels[currentCardId].length > 0
-                ? cardlabels[currentCardId].map((el, i) => (
-                    <ModalLabelElement key={i} color={el.color}>
-                      {el.name}
-                    </ModalLabelElement>
-                  ))
+                ? cardlabels[currentCardId]
+                    .sort((a, b) => a.id - b.id)
+                    .map((el, i) => (
+                      <ModalLabelElement key={i} color={el.color}>
+                        {el.name}
+                      </ModalLabelElement>
+                    ))
                 : null}
             </ModalLabels>
             {editButton ? (

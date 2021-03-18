@@ -3,21 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from './card_utils';
 import styled from 'styled-components';
-import { setFirebaseData, timestamp } from '../../firebase';
+import { setFirebaseData } from '../../firebase';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
-  const [clicked, setClicked] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
+
   const buttonStatusHandler = () => {
     setTagName('');
     setCardName('');
-    setClicked(prevState => !prevState);
+    setVisibility(prevState => !prevState);
   };
+
   const onChangeHandler = e => {
     e.target.name === 'tag'
       ? setTagName(e.target.value)
@@ -26,7 +28,7 @@ const AddTagButton = () => {
 
   const pageClickEvent = e => {
     if (formRef.current !== null && !formRef.current.contains(e.target)) {
-      setClicked(!clicked);
+      setVisibility(!visibility);
     }
   };
 
@@ -61,21 +63,21 @@ const AddTagButton = () => {
     }
   };
   useEffect(() => {
-    if (clicked) inputRef.current.focus();
-  }, [clicked]);
+    if (visibility) inputRef.current.focus();
+  }, [visibility]);
 
   useEffect(() => {
-    if (clicked) {
+    if (visibility) {
       window.addEventListener('click', pageClickEvent);
     }
     return () => {
       window.removeEventListener('click', pageClickEvent);
     };
-  }, [clicked]);
+  }, [visibility]);
   return (
     <>
-      <TagAddContainer clicked={clicked}>
-        {clicked ? (
+      <TagAddContainer clicked={visibility}>
+        {visibility ? (
           <TagAddForm ref={formRef}>
             <form onSubmit={addTag}>
               <TagAddInput
