@@ -32,9 +32,9 @@ https://korello.app
 
 ## 스택(Frontend)
 #### 언어 및 프레임워크
-##### Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD, Firebase
+#### - Javascript, ReactHooks, Redux, StyledComponents, React Beautiful DnD, Firebase
 #### 배포
-##### AWS Route53, EC2, NGINX
+#### - AWS Route53, EC2, NGINX
 
 <br/>
 
