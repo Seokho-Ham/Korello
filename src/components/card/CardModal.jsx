@@ -4,7 +4,6 @@ import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
 import CalendarModal from '../modal/CalendarModal';
 import CardEventLog from './CardEventLog';
-import cancelImage from '../../assets/img/cancel-icon.png';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData, postData, updateData, getRefreshToken } from '../../api';
