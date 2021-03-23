@@ -3,8 +3,6 @@ import RecentList from './RecentList';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
 import styled from 'styled-components';
-
-import load from '../../assets/img/load.gif';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoard } from './board_utils';
 import { setData } from '../../reducers/board.reducer';
