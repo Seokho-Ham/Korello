@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ChecklistElement from './ChecklistElement';
+import styled from 'styled-components';
 import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
-import styled from 'styled-components';
-import { ChecklistAddModal, ChecklistInput } from './ChecklistModal';
 import { SendUpdateButton } from './LabelElement';
+
 const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');

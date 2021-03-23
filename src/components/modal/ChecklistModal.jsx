@@ -11,6 +11,7 @@ const ChecklistModal = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const checklistRef = useRef(null);
+
   const clickButton = () => {
     setClicked(p => !p);
   };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, fetchData, updateData, deleteData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
-import deleteImage from '../../assets/img/cancel-icon.png';
+
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
@@ -132,7 +132,7 @@ const CheckListTitle = styled.span`
 `;
 const ChecklistDeleteButton = styled.span`
   display: inline-block;
-  background-image: url(${deleteImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 14px;

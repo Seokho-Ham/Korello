@@ -1,9 +1,9 @@
 import React, { memo, useCallback } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
-import styled from 'styled-components';
 import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
@@ -13,6 +13,7 @@ const TagForm = ({ tag, tagIndex }) => {
     state => state.card,
   );
   const dispatch = useDispatch();
+
   const deleteCard = async (url, cardId) => {
     let code = await postData(url.slice(0, url.length - 1) + '/delete', {
       id: cardId,
@@ -56,7 +57,6 @@ const TagForm = ({ tag, tagIndex }) => {
               <TagElement {...provided.droppableProps} ref={provided.innerRef}>
                 {cardlist[tagIndex]
                   ? cardlist[tagIndex].map((el, i) => {
-                    // console.log(el)
                       if (!el) return null;
                       else {
                         return (
@@ -131,7 +131,6 @@ const TagElement = styled.div`
   overflow: scroll;
   min-height: 40px;
   -ms-overflow-style: none;
-  /* scrollbar-width: none; */
   ::-webkit-scrollbar {
     display: none;
   }

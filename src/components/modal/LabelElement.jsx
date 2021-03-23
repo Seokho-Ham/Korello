@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import editImage from '../../assets/img/pencil.png';
 import { updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from '../card/card_utils';
@@ -111,7 +110,7 @@ const LabelElementInput = styled.input`
 `;
 const LabelEditButton = styled.span`
   display: ${props => (props.editLabel ? 'none' : 'inline')};
-  background-image: url(${editImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/pencil.png');
   background-repeat: no-repeat;
   background-size: 16px;
   background-position: center;

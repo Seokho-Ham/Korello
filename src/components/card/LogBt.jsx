@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import logImage from '../../assets/img/logs.png';
+
 const LogBt = ({ openLogHandler }) => {
   return (
     <LogButton>
@@ -16,7 +16,7 @@ const LogButton = styled.div`
   margin-left: 5px;
   span {
     display: inline-block;
-    background-image: url(${logImage});
+    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/logs.png');
     background-size: 28px;
     width: 29px;
     height: 28px;

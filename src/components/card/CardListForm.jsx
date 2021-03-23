@@ -1,19 +1,14 @@
 import React, { memo, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import CardModal from './CardModal';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
 const CardListForm = ({ id, title, labels, index }) => {
-  const [editButton, setEditButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { cardlabels, cardlist } = useSelector(state => state.card);
   const dispatch = useDispatch();
-
-  const editCard = () => {
-    setEditButton(p => !p);
-  };
 
   const clickModal = async () => {
     if (!modalVisible) {
@@ -30,6 +25,7 @@ const CardListForm = ({ id, title, labels, index }) => {
     obj[id] = labels;
     dispatch(setData({ cardlabels: obj }));
   }, [cardlist]);
+
   return (
     <>
       {modalVisible && (
@@ -65,7 +61,7 @@ const CardListForm = ({ id, title, labels, index }) => {
                 ) : (
                   <CardLabels></CardLabels>
                 )}
-                <CardTitle onClick={editCard}>{title}</CardTitle>
+                <CardTitle>{title}</CardTitle>
               </Card>
             </CardWrapper>
           );

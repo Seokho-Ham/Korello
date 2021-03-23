@@ -5,21 +5,22 @@ const CardEventLog = () => {
   return (
     <CardEventContainer>
       <CardEventActivity>
-        {/* <span></span> */}
         <h4>Activity</h4>
       </CardEventActivity>
       <LogModalList>
         <CardEventElement>
           <span></span>
           <div>
-            <div className='log-text'>첼시님이 노드 한스푼 먹고 있습니다.</div>
+            <div className='log-text'>
+              카드내에서 작업한 내용이 로그로 남는 공간입니다.
+            </div>
             <div className='log-time'>01.26 03:41:02</div>
           </div>
         </CardEventElement>
         <CardEventElement>
           <span></span>
           <div>
-            <div className='log-text'>supe님이 실망하셨습니다.</div>
+            <div className='log-text'>사용자가 카드를 생성하였습니다.</div>
             <div className='log-time'>01.26 03:41:02</div>
           </div>
         </CardEventElement>

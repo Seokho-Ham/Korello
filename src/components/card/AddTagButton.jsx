@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import { getCard } from './card_utils';
-import styled from 'styled-components';
 import { setFirebaseData } from '../../firebase';
 
 const AddTagButton = () => {

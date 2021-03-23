@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
+import CalendarModal from '../modal/CalendarModal';
+import CardEventLog from './CardEventLog';
+import cancelImage from '../../assets/img/cancel-icon.png';
+import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData, postData, updateData, getRefreshToken } from '../../api';
 import { getCard, progressCalculator } from './card_utils';
-import cancelImage from '../../assets/img/cancel-icon.png';
-import styled from 'styled-components';
-import CalendarModal from '../modal/CalendarModal';
 import { setData } from '../../reducers/card.reducer';
-import CardEventLog from './CardEventLog';
 
 const CardModal = ({ visible, clickModal, title }) => {
   const {
@@ -19,6 +19,7 @@ const CardModal = ({ visible, clickModal, title }) => {
     currentBoardId,
     cardlabels,
   } = useSelector(state => state.card);
+
   const [editButton, setEditButton] = useState(false);
   const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
@@ -107,7 +108,6 @@ const CardModal = ({ visible, clickModal, title }) => {
     if (editButton) inputRef.current.focus();
   });
 
-  //모달 이외의 부분을 클릭할 경우 닫히도록!
   useEffect(() => {
     if (editButton) {
       window.addEventListener('click', pageClickEvent);
@@ -307,7 +307,7 @@ const ModalSidebar = styled.div`
 const CloseModalButton = styled.span`
   float: right;
 
-  background-image: url(${cancelImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: center;

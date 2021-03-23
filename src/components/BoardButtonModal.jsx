@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBoard } from './board/board_utils';
 const BoardButtonModal = ({ boardButton, setBoardButton }) => {
-  const { data, boardTitle } = useSelector(state => state.board);
+  const { data } = useSelector(state => state.board);
   const { currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
@@ -67,7 +67,7 @@ const BoardButtonContainer = styled.div`
   height: 400px;
   display: block;
   position: absolute;
-  top:35px;
+  top: 35px;
   left: 33px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: #ebecf0;

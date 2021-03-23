@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import activityImage from '../../assets/img/activity.png';
-import profileImage from '../../assets/img/profile.png';
+
 const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   const modalRef = useRef(null);
   const pageClickHandler = e => {
@@ -91,7 +90,7 @@ export const LogType = styled.div`
 
   span {
     display: inline-block;
-    background-image: url(${activityImage});
+    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/activity.png');
     background-size: 25px;
     background-repeat: no-repeat;
     width: 27px;
@@ -112,7 +111,7 @@ export const LogElement = styled.div`
   display: flex;
   flex-direction: row;
   span {
-    background-image: url(${profileImage});
+    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/profile.png');
     background-size: 35px;
     background-repeat: no-repeat;
     width: 40px;

@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components';
 import { getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard } from './card_utils';
-import styled from 'styled-components';
-import cancelImage from '../../assets/img/cancel-icon.png';
+
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
-  const [display, setDisplay] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -16,12 +16,12 @@ const AddButton = ({ tag }) => {
   };
 
   const onClickHandler = () => {
-    setDisplay(prevState => !prevState);
+    setVisibility(prevState => !prevState);
   };
 
   const pageClickEvent = e => {
     if (formRef.current !== null && !formRef.current.contains(e.target)) {
-      setDisplay(!display);
+      setVisibility(!visibility);
     }
   };
 
@@ -38,7 +38,7 @@ const AddButton = ({ tag }) => {
 
       if (code === 201) {
         setTitle('');
-        setDisplay(prevState => !prevState);
+        setVisibility(prevState => !prevState);
         getCard(currentBoardUrl, dispatch, currentBoardId);
       } else if (code >= 401001) {
         await getRefreshToken();
@@ -54,24 +54,24 @@ const AddButton = ({ tag }) => {
     }
   };
   useEffect(() => {
-    if (display) {
+    if (visibility) {
       inputRef.current.focus();
     }
   });
 
   useEffect(() => {
-    if (display) {
+    if (visibility) {
       window.addEventListener('click', pageClickEvent);
     }
     return () => {
       window.removeEventListener('click', pageClickEvent);
     };
-  }, [display]);
+  }, [visibility]);
 
   return (
     <>
       <NewCardContainer>
-        {display ? (
+        {visibility ? (
           <NewCardForm ref={formRef}>
             <form onSubmit={addCardHandler}>
               <CardAddInput
@@ -123,7 +123,7 @@ const CardAddStateButton = styled.button`
   }
 `;
 const CardCancelButton = styled.span`
-  background-image: url(${cancelImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 15px;

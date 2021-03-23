@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchData, postData, getRefreshToken } from '../../api';
-import { add } from '../../reducers/board.reducer';
+import { postData, getRefreshToken } from '../../api';
 import styled from 'styled-components';
 import { getBoard } from './board_utils';
+
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
   const [display, setDisplay] = useState(false);

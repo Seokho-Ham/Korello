@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import TagForm from './TagForm';
-import { updateData, getRefreshToken } from '../../api';
 import AddTagButton from './AddTagButton';
 import LogBt from './LogBt';
 import LogModal from './LogModal';
+import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateData, getRefreshToken } from '../../api';
 import { getCard, setLastViewList } from './card_utils';
-import styled from 'styled-components';
-import bgImage from '../../api/bg-images/gradient.jpg';
-import load from '../../assets/img/load.gif';
 import { setData } from '../../reducers/card.reducer';
 
 const CardList = ({ location }) => {
+  const dispatch = useDispatch();
   const [openLog, setOpenLog] = useState(false);
   const { loading, taglist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
-  const dispatch = useDispatch();
 
   const openLogHandler = () => {
     setOpenLog(p => !p);
@@ -44,7 +42,6 @@ const CardList = ({ location }) => {
   };
 
   const onDragEnd = result => {
-    console.log('drag-data: ', result);
     const url = currentBoardUrl.slice(0, currentBoardUrl.length - 1);
     let { destination, source, draggableId } = result;
 
@@ -62,19 +59,18 @@ const CardList = ({ location }) => {
     }
   };
 
-  useEffect(() => {
-    const boardId = location.pathname.split('/')[2];
-    dispatch(setData({ loading: true, currentBoardId: boardId }));
-    setLastViewList(location);
-    // getFields(boardId);
-    getCard(`${location.pathname}`, dispatch, boardId);
-  }, [currentBoardId]);
-
   const renderCards = () => {
     return taglist.map((el, i) => {
       return <TagForm key={i} tag={el} tagIndex={i} />;
     });
   };
+
+  useEffect(() => {
+    const boardId = location.pathname.split('/')[2];
+    dispatch(setData({ loading: true, currentBoardId: boardId }));
+    setLastViewList(location);
+    getCard(`${location.pathname}`, dispatch, boardId);
+  }, [currentBoardId]);
 
   return (
     <Container>
@@ -120,7 +116,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-image: url(${bgImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/background+images/gradient.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 `;
@@ -162,7 +158,7 @@ const Loading = styled.span`
   position: relative;
   top: 100px;
   left: 47%;
-  background-image: url(${load});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/load.gif');
   background-repeat: no-repeat;
   background-size: 130px;
   width: 130px;

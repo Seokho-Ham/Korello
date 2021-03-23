@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import randomImage from '../../api/images';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
-import styled from 'styled-components';
-import cancelImage from '../../assets/img/cancel-icon.png';
 import { deleteFirebaseDoc } from '../../firebase';
 
 const BoardForm = ({ data }) => {
@@ -52,7 +51,7 @@ const BoardForm = ({ data }) => {
 export default React.memo(BoardForm);
 
 const BoardDeleteButton = styled.span`
-  background-image: url(${cancelImage});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 15px;

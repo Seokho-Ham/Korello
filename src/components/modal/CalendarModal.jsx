@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import '../../css/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
+
 const CalendarModal = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());

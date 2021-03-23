@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import RecentList from './RecentList';
 import BoardForm from './BoardForm';
 import NewBoardForm from './NewBoardForm';
+import styled from 'styled-components';
+
+import load from '../../assets/img/load.gif';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoard } from './board_utils';
-import styled from 'styled-components';
-import workspace from '../../assets/img/workspace.png';
-import recent from '../../assets/img/recent.png';
 import { setData } from '../../reducers/board.reducer';
-import load from '../../assets/img/load.gif';
 
 const BoardList = () => {
   const { data, loading } = useSelector(state => state.board);
@@ -78,7 +77,9 @@ export const ListType = styled.div`
   }
   span {
     background-image: url(${props =>
-      props.name === 'workspace' ? `${workspace}` : `${recent}`});
+      props.name === 'workspace'
+        ? 'https://korello.s3.ap-northeast-2.amazonaws.com/icons/workspace.png'
+        : 'https://korello.s3.ap-northeast-2.amazonaws.com/icons/recent.png'});
     background-repeat: no-repeat;
     background-size: ${props => (props.name === 'workspace' ? '25px' : '27px')};
     width: 35px;
@@ -113,7 +114,7 @@ const Loading = styled.span`
   position: relative;
   top: 50px;
   left: 30%;
-  background-image: url(${load});
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/load.gif')
   background-repeat: no-repeat;
   background-size: 130px;
   width: 130px;
