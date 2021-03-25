@@ -59,6 +59,7 @@ const TagForm = ({ tag, tagIndex }) => {
                   ? cardlist[tagIndex].map((el, i) => {
                       if (!el) return null;
                       else {
+                        console.log(el);
                         return (
                           <CardListForm
                             key={el.id}

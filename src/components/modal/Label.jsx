@@ -111,7 +111,7 @@ const Label = () => {
             <LabelButton onClick={handleDisplay}>Cancel</LabelButton>
           </div>
 
-          <LabelButton display={display} onClick={handleDisplay}>
+          <LabelButton visible={display} onClick={handleDisplay}>
             + Add Label
           </LabelButton>
         </LabelModal>
@@ -138,7 +138,7 @@ const LabelModal = styled.div`
   z-index: 22;
 `;
 const LabelButton = styled.button`
-  display: ${props => (props.display ? 'none' : 'inline')};
+  display: ${props => (props.visible ? 'none' : 'inline')};
   background-color: rgba(9, 30, 66, 0.08);
   width: 98%;
   height: 30px;

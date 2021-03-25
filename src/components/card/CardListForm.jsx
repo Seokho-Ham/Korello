@@ -24,6 +24,7 @@ const CardListForm = ({ id, title, labels, index }) => {
     let obj = cardlabels;
     obj[id] = labels;
     dispatch(setData({ cardlabels: obj }));
+    console.log('card useEffect!!!');
   }, [cardlist]);
 
   return (

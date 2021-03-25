@@ -11,7 +11,7 @@ const CalendarModal = () => {
   const calendarRef = useRef(null);
   const onStartHandler = date => {
     setStartDate(date);
-    console.log(date);
+    // console.log(date.getHours());
   };
   const onEndHandler = date => {
     setEndDate(date);

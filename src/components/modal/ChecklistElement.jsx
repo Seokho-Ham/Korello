@@ -107,7 +107,7 @@ const ChecklistElement = ({ el }) => {
   );
 };
 
-export default ChecklistElement;
+export default React.memo(ChecklistElement);
 
 const CheckListItem = styled.div`
   margin-top: 5px;

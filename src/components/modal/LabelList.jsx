@@ -17,43 +17,48 @@ const checkOverlap = (arr, id) => {
 };
 
 const LabelList = () => {
-  const { labellist, currentCardId, cardlabels } = useSelector(
+  const { labellist, currentCardId, cardlabels, axiosStatus } = useSelector(
     state => state.card,
   );
 
   const dispatch = useDispatch();
 
   const addCardLabelButton = async e => {
-    let status = checkOverlap(cardlabels[currentCardId], e.target.id);
-    const code = status
-      ? await postData(`/card/${currentCardId}/label/delete`, {
-          labelIds: [e.target.id],
-        })
-      : await postData(`/card/${currentCardId}/label`, {
-          labelId: e.target.id,
-        });
+    if (!axiosStatus) {
+      dispatch(setData({ axiosStatus: true }));
+      let status = checkOverlap(cardlabels[currentCardId], e.target.id);
+      const code = status
+        ? await postData(`/card/${currentCardId}/label/delete`, {
+            labelIds: [e.target.id],
+          })
+        : await postData(`/card/${currentCardId}/label`, {
+            labelId: e.target.id,
+          });
 
-    if (code === 201 || code === 200) {
-      let arr = cardlabels[currentCardId];
-      if (status) {
-        arr.forEach((el, i) => {
-          if (el.id === e.target.id) {
-            arr.splice(i, 1);
-          }
-        });
+      if (code === 201 || code === 200) {
+        let arr = cardlabels[currentCardId];
+        if (status) {
+          arr.forEach((el, i) => {
+            if (el.id === e.target.id) {
+              arr.splice(i, 1);
+            }
+          });
+        } else {
+          labellist.forEach(el => {
+            if (el.id === e.target.id) {
+              arr.push(el);
+            }
+          });
+        }
+        dispatch(
+          setData({ [cardlabels[currentCardId]]: arr, axiosStatus: false }),
+        );
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await addCardLabelButton(e);
       } else {
-        labellist.forEach(el => {
-          if (el.id === e.target.id) {
-            arr.push(el);
-          }
-        });
+        alert('실패');
       }
-      dispatch(setData({ [cardlabels[currentCardId]]: arr }));
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await addCardLabelButton(e);
-    } else {
-      alert('실패');
     }
   };
 

@@ -15,6 +15,7 @@ const initialState = {
   currentBoardId: '',
   currentBoardUrl: '',
   currentCardId: '',
+  axiosStatus: false,
 };
 
 const card = handleActions(

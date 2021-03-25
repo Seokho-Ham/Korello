@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ChecklistElement from './ChecklistElement';
 import styled from 'styled-components';
 import { postData, fetchData, getRefreshToken } from '../../api';
@@ -22,7 +22,6 @@ const Checklist = ({ percent }) => {
   const clickButtonHandler = () => {
     setClicked(p => !p);
   };
-  // console.log(checklist);
 
   const addChecklistHandler = async e => {
     e.preventDefault();
