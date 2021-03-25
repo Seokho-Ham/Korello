@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
 import styled from 'styled-components';
@@ -27,7 +27,7 @@ const TagForm = ({ tag, tagIndex }) => {
     }
   };
 
-  const deleteTagHandler = useCallback(async () => {
+  const deleteTagHandler = async () => {
     await deleteFirebaseField(currentBoardId, tag);
     if (
       cardlist[taglist.indexOf(tag)] &&
@@ -42,14 +42,14 @@ const TagForm = ({ tag, tagIndex }) => {
     arr.splice(taglist.indexOf(tag), 1);
     tags.splice(taglist.indexOf(tag), 1);
     dispatch(setData({ taglist: tags, cardlist: arr }));
-  }, [cardlist]);
+  };
 
   return (
     <TagWrapper>
       <Tag>
         <TagHeader>
           <div>{tag}</div>
-          <button onClick={deleteTagHandler}>X</button>
+          <TagDeleteButton onClick={deleteTagHandler} />
         </TagHeader>
         <Droppable droppableId={tag}>
           {provided => {
@@ -133,5 +133,21 @@ const TagElement = styled.div`
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+const TagDeleteButton = styled.span`
+  display: inline-block;
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 3px;
+  :hover {
+    opacity: 0.5px;
+    background-color: hsla(0, 0%, 74%, 0.5);
   }
 `;

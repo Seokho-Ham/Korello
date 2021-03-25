@@ -123,7 +123,7 @@ const CardAddStateButton = styled.button`
   }
 `;
 const CardCancelButton = styled.span`
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 15px;

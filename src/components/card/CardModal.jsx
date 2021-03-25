@@ -198,7 +198,7 @@ const ModalInner = styled.div`
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
-  height: auto;
+  height: 750px;
   margin: 48px 0px 80px;
   padding: 30px 20px;
   z-index: 11;
@@ -306,7 +306,7 @@ const ModalSidebar = styled.div`
 const CloseModalButton = styled.span`
   float: right;
 
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: center;

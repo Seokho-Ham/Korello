@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,41 +10,35 @@ const LabelElement = ({ id, name, color, onClick }) => {
   const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
-  const onEditLabelClick = useCallback(() => {
+  const onEditLabelClick = () => {
     setEditLabel(p => !p);
-  }, [editLabel]);
-  const onInputChange = useCallback(
-    e => {
-      setLabelInput(e.target.value);
-    },
-    [labelInput],
-  );
+  };
+  const onInputChange = e => {
+    setLabelInput(e.target.value);
+  };
 
-  const onSubmit = useCallback(
-    async e => {
-      e.preventDefault();
-      if (labelInput === name || labelInput === '') {
+  const onSubmit = async e => {
+    e.preventDefault();
+    if (labelInput === name || labelInput === '') {
+      onEditLabelClick();
+    } else {
+      const code = await updateData(`/label/${id}`, {
+        color: color,
+        name: labelInput,
+      });
+
+      if (code === 200 || code === 201) {
+        setLabelInput('');
         onEditLabelClick();
+        getCard(currentBoardUrl, dispatch, currentBoardId);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await onSubmit(e);
       } else {
-        const code = await updateData(`/label/${id}`, {
-          color: color,
-          name: labelInput,
-        });
-
-        if (code === 200 || code === 201) {
-          setLabelInput('');
-          onEditLabelClick();
-          getCard(currentBoardUrl, dispatch, currentBoardId);
-        } else if (code >= 401001) {
-          await getRefreshToken();
-          await onSubmit(e);
-        } else {
-          alert('실패');
-        }
+        alert('실패');
       }
-    },
-    [labelInput],
-  );
+    }
+  };
 
   return (
     <>

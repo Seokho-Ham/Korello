@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, fetchData, updateData, deleteData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
@@ -10,67 +10,59 @@ const ChecklistElement = ({ el }) => {
   const { currentCardId, checklist } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
-  const onChangeTitle = useCallback(
-    e => {
-      setNewTitle(e.target.value);
-    },
-    [newTitle],
-  );
+  const onChangeTitle = e => {
+    setNewTitle(e.target.value);
+  };
 
-  const checkboxHandler = useCallback(
-    async e => {
-      const code = await updateData(`/todo/${e.target.name}/status`);
-      if (code === 200) {
-        const [data] = await fetchData(`/card/${currentCardId}/todo`);
-        let obj = {};
-        for (let key in checklist) {
-          obj[key] = checklist[key];
-        }
-        obj[currentCardId] = data;
-        dispatch(setData({ checklist: obj }));
-      } else if (code >= 401001) {
-        await getRefreshToken();
-        await checkboxHandler(e);
-      } else {
-        alert('실패');
+  const checkboxHandler = async e => {
+    const code = await updateData(`/todo/${e.target.name}/status`);
+    if (code === 200) {
+      const [data] = await fetchData(`/card/${currentCardId}/todo`);
+      let obj = {};
+      for (let key in checklist) {
+        obj[key] = checklist[key];
       }
-    },
-    [checklist],
-  );
-  const changeChecklist = useCallback(
-    async e => {
-      e.preventDefault();
-      if (changeButton) {
-        if (newTitle.length > 0 && newTitle !== el.title) {
-          const code = await updateData(`/todo/${el.todoId}`, {
-            title: newTitle,
-          });
+      obj[currentCardId] = data;
+      dispatch(setData({ checklist: obj }));
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await checkboxHandler(e);
+    } else {
+      alert('실패');
+    }
+  };
+  const changeChecklist = async e => {
+    e.preventDefault();
+    if (changeButton) {
+      if (newTitle.length > 0 && newTitle !== el.title) {
+        const code = await updateData(`/todo/${el.todoId}`, {
+          title: newTitle,
+        });
 
-          if (code === 200) {
-            setChangebutton(false);
-            const [data] = await fetchData(`/card/${currentCardId}/todo`);
-            let obj = {};
-            for (let key in checklist) {
-              obj[key] = checklist[key];
-            }
-            obj[currentCardId] = data;
-            dispatch(setData({ checklist: obj }));
-          } else if (code >= 401001) {
-            await getRefreshToken();
-            await changeChecklist(e);
-          } else {
-            alert('실패');
+        if (code === 200) {
+          setChangebutton(false);
+          const [data] = await fetchData(`/card/${currentCardId}/todo`);
+          let obj = {};
+          for (let key in checklist) {
+            obj[key] = checklist[key];
           }
+          obj[currentCardId] = data;
+          dispatch(setData({ checklist: obj }));
+        } else if (code >= 401001) {
+          await getRefreshToken();
+          await changeChecklist(e);
         } else {
-          setChangebutton(p => !p);
+          alert('실패');
         }
       } else {
         setChangebutton(p => !p);
       }
-    },
-    [checklist],
-  );
-  const deleteCheckList = useCallback(async () => {
+    } else {
+      setChangebutton(p => !p);
+    }
+  };
+
+  const deleteCheckList = async () => {
     const code = await deleteData(`/todo/${el.todoId}`);
     if (code === 200) {
       const [data] = await fetchData(`/card/${currentCardId}/todo`);
@@ -86,7 +78,7 @@ const ChecklistElement = ({ el }) => {
     } else {
       alert('실패');
     }
-  }, [checklist]);
+  };
 
   return (
     <CheckListItem>
@@ -101,7 +93,7 @@ const ChecklistElement = ({ el }) => {
           <CheckListTitle>
             <form onSubmit={changeChecklist}>
               <ChecklistEdit value={newTitle} onChange={onChangeTitle} />
-              <ChecklistUpdate>Save</ChecklistUpdate>
+              <ChecklistUpdate onClick={changeChecklist}>Save</ChecklistUpdate>
             </form>
           </CheckListTitle>
         ) : (
@@ -132,7 +124,7 @@ const CheckListTitle = styled.span`
 `;
 const ChecklistDeleteButton = styled.span`
   display: inline-block;
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel.png');
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 14px;

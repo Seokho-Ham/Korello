@@ -11,6 +11,7 @@ const CalendarModal = () => {
   const calendarRef = useRef(null);
   const onStartHandler = date => {
     setStartDate(date);
+    console.log(date);
   };
   const onEndHandler = date => {
     setEndDate(date);

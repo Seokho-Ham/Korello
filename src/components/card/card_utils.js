@@ -1,13 +1,11 @@
-import { findRenderedComponentWithType } from 'react-dom/test-utils';
 import { fetchCard, fetchData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
-import { timestamp, getFields, setFirebaseData } from '../../firebase';
+import { getFields } from '../../firebase';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
   if (!error) {
     const fbData = await getFields(boardId);
-    // console.log('fbdata: ', fbData);
     const cardlist = [];
 
     if (cards.length > 0) {
@@ -21,7 +19,6 @@ export const getCard = async (uri, dispatch, boardId) => {
       });
     }
 
-    // console.log('cards: ', cardlist);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
     let payload = {
       loading: false,
@@ -56,14 +53,6 @@ export const setLastViewList = location => {
   } else {
     localStorage.setItem('lastView', JSON.stringify([parseInt(boardId)]));
   }
-};
-
-export const setFBData = async (boardId, data) => {
-  // const collectionData = await db.get();
-  // const boardLists = collectionData.docs.map(doc => doc.id);
-  // if (!boardLists.includes(boardId)) {
-  //   await db.doc(boardId).set(data ? data : {}, { merge: true });
-  // }
 };
 
 export const progressCalculator = data => {
