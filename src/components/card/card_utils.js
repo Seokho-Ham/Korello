@@ -6,15 +6,14 @@ export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
   if (!error) {
     const fbData = await getFields(boardId);
-    const cardlist = [];
-
+    const list = {};
     if (cards.length > 0) {
       cards.forEach(el => {
         if (!el) return null;
-        if (!cardlist[fbData.indexOf(el.tagValue)]) {
-          cardlist[fbData.indexOf(el.tagValue)] = [el];
+        if (!list[el.tagValue]) {
+          list[el.tagValue] = [el];
         } else {
-          cardlist[fbData.indexOf(el.tagValue)].push(el);
+          list[el.tagValue].push(el);
         }
       });
     }
@@ -23,7 +22,7 @@ export const getCard = async (uri, dispatch, boardId) => {
     let payload = {
       loading: false,
       taglist: fbData ? fbData : [],
-      cardlist: cardlist ? cardlist : [],
+      cardlist: list,
       labellist: labels ? labels : [],
       currentBoardUrl: uri,
     };

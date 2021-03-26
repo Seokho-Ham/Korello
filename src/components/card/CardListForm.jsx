@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
-const CardListForm = ({ id, title, labels, index }) => {
+const CardListForm = ({ id, title, labels, index, tag }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { cardlabels, cardlist } = useSelector(state => state.card);
+  const { cardlabels } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const clickModal = async () => {
     if (!modalVisible) {
       dispatch(
         setData({
+          currentTagName: tag,
           currentCardId: id,
         }),
       );
@@ -24,8 +25,7 @@ const CardListForm = ({ id, title, labels, index }) => {
     let obj = cardlabels;
     obj[id] = labels;
     dispatch(setData({ cardlabels: obj }));
-    console.log('card useEffect!!!');
-  }, [cardlist]);
+  }, [dispatch]);
 
   return (
     <>

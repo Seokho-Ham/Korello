@@ -12,6 +12,9 @@ import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ visible, clickModal, title }) => {
   const {
+    taglist,
+    cardlist,
+    currentTagName,
     checklist,
     currentBoardUrl,
     currentCardId,
@@ -50,7 +53,15 @@ const CardModal = ({ visible, clickModal, title }) => {
       );
       if (code === 200) {
         setEditButton(p => !p);
-        getCard(currentBoardUrl, dispatch, currentBoardId);
+        let obj = cardlist;
+        let list = cardlist[currentTagName].slice('');
+        list.forEach(el => {
+          if (el.id === currentCardId) {
+            el.name = cardTitle;
+          }
+        });
+        obj[currentTagName] = list;
+        dispatch(setData({ cardlist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await sendUpdate(e);

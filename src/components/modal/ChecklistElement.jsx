@@ -17,12 +17,12 @@ const ChecklistElement = ({ el }) => {
   const checkboxHandler = async e => {
     const code = await updateData(`/todo/${e.target.name}/status`);
     if (code === 200) {
-      const [data] = await fetchData(`/card/${currentCardId}/todo`);
-      let obj = {};
-      for (let key in checklist) {
-        obj[key] = checklist[key];
-      }
-      obj[currentCardId] = data;
+      let obj = { ...checklist };
+      obj[currentCardId].forEach(element => {
+        if (element.todoId === el.todoId) {
+          element.status = !element.status;
+        }
+      });
       dispatch(setData({ checklist: obj }));
     } else if (code >= 401001) {
       await getRefreshToken();
@@ -41,12 +41,12 @@ const ChecklistElement = ({ el }) => {
 
         if (code === 200) {
           setChangebutton(false);
-          const [data] = await fetchData(`/card/${currentCardId}/todo`);
-          let obj = {};
-          for (let key in checklist) {
-            obj[key] = checklist[key];
-          }
-          obj[currentCardId] = data;
+          let obj = { ...checklist };
+          obj[currentCardId].forEach(element => {
+            if (element.todoId === el.todoId) {
+              element.title = newTitle;
+            }
+          });
           dispatch(setData({ checklist: obj }));
         } else if (code >= 401001) {
           await getRefreshToken();
@@ -65,12 +65,12 @@ const ChecklistElement = ({ el }) => {
   const deleteCheckList = async () => {
     const code = await deleteData(`/todo/${el.todoId}`);
     if (code === 200) {
-      const [data] = await fetchData(`/card/${currentCardId}/todo`);
-      let obj = {};
-      for (let key in checklist) {
-        obj[key] = checklist[key];
-      }
-      obj[currentCardId] = data;
+      let obj = { ...checklist };
+      obj[currentCardId].forEach((element, i) => {
+        if (element.todoId === el.todoId) {
+          obj[currentCardId].splice(i, 1);
+        }
+      });
       dispatch(setData({ checklist: obj }));
     } else if (code >= 401001) {
       await getRefreshToken();

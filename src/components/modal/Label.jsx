@@ -40,7 +40,6 @@ const Label = () => {
     setDisplay(p => !p);
   };
   const handleColorChange = color => {
-    console.log(color.hex);
     setSelectColor(color.hex);
   };
   const addBoardLabelButton = async e => {

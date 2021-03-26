@@ -8,7 +8,7 @@ import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 
-const TagForm = ({ tag, tagIndex }) => {
+const TagForm = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
@@ -29,19 +29,16 @@ const TagForm = ({ tag, tagIndex }) => {
 
   const deleteTagHandler = async () => {
     await deleteFirebaseField(currentBoardId, tag);
-    if (
-      cardlist[taglist.indexOf(tag)] &&
-      cardlist[taglist.indexOf(tag)].length > 0
-    ) {
-      cardlist[taglist.indexOf(tag)].forEach(async el => {
+    if (cardlist[tag] && cardlist[tag].length > 0) {
+      cardlist[tag].forEach(async el => {
         await deleteCard(currentBoardUrl, el.id);
       });
     }
-    let arr = cardlist.slice('');
+    let cards = { ...cardlist };
     let tags = taglist.slice('');
-    arr.splice(taglist.indexOf(tag), 1);
+    delete cards[tag];
     tags.splice(taglist.indexOf(tag), 1);
-    dispatch(setData({ taglist: tags, cardlist: arr }));
+    dispatch(setData({ taglist: tags, cardlist: cards }));
   };
 
   return (
@@ -55,11 +52,10 @@ const TagForm = ({ tag, tagIndex }) => {
           {provided => {
             return (
               <TagElement {...provided.droppableProps} ref={provided.innerRef}>
-                {cardlist[tagIndex]
-                  ? cardlist[tagIndex].map((el, i) => {
+                {cardlist[tag]
+                  ? cardlist[tag].map((el, i) => {
                       if (!el) return null;
                       else {
-                        console.log(el);
                         return (
                           <CardListForm
                             key={el.id}

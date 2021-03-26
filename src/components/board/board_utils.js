@@ -21,14 +21,13 @@ const makeRecentList = data => {
   } else {
     result = [];
   }
-  console.log(result);
   return result;
 };
 //서버로부터 board 데이터 받아옴.
 export const getBoard = async dispatch => {
   let [board, code, error] = await fetchData('/boards');
   if (error) {
-    console.log(error);
+    alert(error);
   } else {
     getDocuments(board);
     let recentBoard = makeRecentList(board);

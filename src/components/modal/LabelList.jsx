@@ -58,6 +58,7 @@ const LabelList = () => {
         await addCardLabelButton(e);
       } else {
         alert('실패');
+        dispatch(setData({ axiosStatus: false }));
       }
     }
   };

@@ -9,8 +9,8 @@ import { BoardElement } from './BoardList';
 import { deleteFirebaseDoc } from '../../firebase';
 
 const BoardForm = ({ data }) => {
-  const history = useHistory();
   const [image, setImage] = useState(randomImage());
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const clickBoard = () => {
@@ -21,7 +21,6 @@ const BoardForm = ({ data }) => {
 
   const deleteBoard = async () => {
     const code = await postData('/board/delete', { id: data.id });
-
     if (code === 200) {
       if (localStorage.getItem('lastView')) {
         let list = JSON.parse(localStorage.getItem('lastView'));
@@ -34,6 +33,7 @@ const BoardForm = ({ data }) => {
       await getRefreshToken();
       await deleteBoard();
     } else {
+      alert(code);
       alert('삭제 실패!');
     }
   };

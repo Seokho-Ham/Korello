@@ -7,15 +7,16 @@ export const setData = createAction(SETSTATE);
 
 const initialState = {
   loading: false,
+  axiosStatus: false,
   taglist: [],
-  cardlist: [],
+  cardlist: {},
   checklist: {},
   labellist: [],
   cardlabels: {},
   currentBoardId: '',
   currentBoardUrl: '',
+  currentTagName: '',
   currentCardId: '',
-  axiosStatus: false,
 };
 
 const card = handleActions(

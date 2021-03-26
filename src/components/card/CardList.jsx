@@ -13,7 +13,7 @@ import { setData } from '../../reducers/card.reducer';
 const CardList = ({ location }) => {
   const dispatch = useDispatch();
   const [openLog, setOpenLog] = useState(false);
-  const { loading, taglist, currentBoardUrl, currentBoardId } = useSelector(
+  const { loading, taglist, cardlist, currentBoardUrl } = useSelector(
     state => state.card,
   );
 
@@ -31,7 +31,11 @@ const CardList = ({ location }) => {
         tagValue: destination.droppableId,
       });
       if (code === 200) {
-        getCard(currentBoardUrl, dispatch, currentBoardId);
+        let list = { ...cardlist };
+        let card = list[source.droppableId].splice(source.index, 1)[0];
+        list[destination.droppableId].push(card);
+
+        dispatch(setData({ cardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await updateCard(url, destination, source, draggableId);
@@ -55,13 +59,14 @@ const CardList = ({ location }) => {
     }
     if (source.droppableId === destination.droppableId) {
     } else {
+      console.log(result);
       updateCard(url, destination, source, draggableId);
     }
   };
 
   const renderCards = () => {
     return taglist.map((el, i) => {
-      return <TagForm key={i} tag={el} tagIndex={i} />;
+      return <TagForm key={i} tag={el} />;
     });
   };
 
@@ -70,7 +75,7 @@ const CardList = ({ location }) => {
     dispatch(setData({ loading: true, currentBoardId: boardId }));
     setLastViewList(location);
     getCard(`${location.pathname}`, dispatch, boardId);
-  }, [currentBoardId]);
+  }, [dispatch]);
 
   return (
     <Container>
