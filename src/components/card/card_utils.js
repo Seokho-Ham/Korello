@@ -7,6 +7,7 @@ export const getCard = async (uri, dispatch, boardId) => {
   if (!error) {
     const fbData = await getFields(boardId);
     const list = {};
+    const cardlabels = {};
     if (cards.length > 0) {
       cards.forEach(el => {
         if (!el) return null;
@@ -15,15 +16,18 @@ export const getCard = async (uri, dispatch, boardId) => {
         } else {
           list[el.tagValue].push(el);
         }
+        cardlabels[el.id] = el.labels;
       });
     }
-
+    console.log(cards);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
+
     let payload = {
       loading: false,
       taglist: fbData ? fbData : [],
       cardlist: list,
       labellist: labels ? labels : [],
+      cardlabels: cardlabels,
       currentBoardUrl: uri,
     };
     dispatch(setData(payload));

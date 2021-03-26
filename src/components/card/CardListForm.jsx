@@ -21,11 +21,6 @@ const CardListForm = ({ id, title, labels, index, tag }) => {
     }
     setModalVisible(p => !p);
   };
-  useEffect(() => {
-    let obj = cardlabels;
-    obj[id] = labels;
-    dispatch(setData({ cardlabels: obj }));
-  }, [dispatch]);
 
   return (
     <>

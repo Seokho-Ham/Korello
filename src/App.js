@@ -13,7 +13,6 @@ const App = () => {
   useEffect(() => {
     setLogin(localStorage.getItem('loginStatus'));
   }, []);
- 
 
   return (
     <>

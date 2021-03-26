@@ -31,11 +31,6 @@ const CardList = ({ location }) => {
         tagValue: destination.droppableId,
       });
       if (code === 200) {
-        let list = { ...cardlist };
-        let card = list[source.droppableId].splice(source.index, 1)[0];
-        list[destination.droppableId].push(card);
-
-        dispatch(setData({ cardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await updateCard(url, destination, source, draggableId);
@@ -59,7 +54,10 @@ const CardList = ({ location }) => {
     }
     if (source.droppableId === destination.droppableId) {
     } else {
-      console.log(result);
+      let list = { ...cardlist };
+      let card = list[source.droppableId].splice(source.index, 1)[0];
+      list[destination.droppableId].splice(destination.index, 0, card);
+      dispatch(setData({ cardlist: list }));
       updateCard(url, destination, source, draggableId);
     }
   };
@@ -87,18 +85,18 @@ const CardList = ({ location }) => {
         </CardHeader>
         <DragDropContext onDragEnd={onDragEnd}>
           <CardListContainer>
-            {!loading ? (
-              <>
-                <TagList>
-                  {renderCards()}
-                  <AddTagButton />
-                </TagList>
-              </>
-            ) : (
-              <TagList id='tag-all-list'>
-                <Loading></Loading>
+            <>
+              <TagList>
+                {!loading ? (
+                  <>
+                    {renderCards()}
+                    <AddTagButton />
+                  </>
+                ) : (
+                  <Loading />
+                )}
               </TagList>
-            )}
+            </>
           </CardListContainer>
         </DragDropContext>
       </CardContainer>
