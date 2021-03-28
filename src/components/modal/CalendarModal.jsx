@@ -1,19 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
 import '../../css/react-datepicker.css';
-import ko from 'date-fns/locale/ko';
+import { postData, getRefreshToken } from '../../api';
 
 const CalendarModal = () => {
   const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(
+    setHours(setMinutes(new Date(), 0), new Date().getHours()),
+  );
+  const [endDate, setEndDate] = useState(
+    setHours(setMinutes(new Date(), 0), new Date().getHours()),
+  );
   const calendarRef = useRef(null);
+
   const onStartHandler = date => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    console.log(
+      `${year}-${month < 10 ? '0' : ''}${month}-${
+        day < 10 ? '0' : ''
+      }${day} ${hour}:${minute}`,
+    );
     setStartDate(date);
-    // console.log(date.getHours());
   };
   const onEndHandler = date => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    console.log(
+      `${year}-${month < 10 ? '0' : ''}${month}-${
+        day < 10 ? '0' : ''
+      }${day} ${hour}:${minute}`,
+    );
     setEndDate(date);
   };
   const onClickHandler = () => {
@@ -29,6 +57,14 @@ const CalendarModal = () => {
       setOpen(!open);
     }
   };
+  const filterPassedTime = time => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const sendDateHandler = async () => {};
 
   useEffect(() => {
     if (open) {
@@ -39,7 +75,6 @@ const CalendarModal = () => {
     };
   }, [open]);
 
-  registerLocale('ko', ko);
   return (
     <Calendar>
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
@@ -47,26 +82,28 @@ const CalendarModal = () => {
       <DateModal status={open} ref={calendarRef}>
         <SelectDate>
           <DatePicker
-            locale='ko'
             selected={startDate}
             startDate={startDate}
             selectsStart
+            showTimeSelect
             endDate={endDate}
             onChange={onStartHandler}
+            filterTime={filterPassedTime}
             minDate={new Date()}
-            dateFormat='yyyy.MM.dd(eee)'
+            dateFormat='yyyy/MM/dd h:mm aa'
           />
         </SelectDate>
         <span>~</span>
         <SelectDate>
           <DatePicker
-            locale='ko'
             selected={endDate}
             selectsEnd
+            showTimeSelect
             startDate={startDate}
             endDate={endDate}
             minDate={startDate}
-            dateFormat='yyyy.MM.dd(eee)'
+            filterTime={filterPassedTime}
+            dateFormat='yyyy/MM/dd h:mm aa'
             onChange={onEndHandler}
           />
         </SelectDate>
