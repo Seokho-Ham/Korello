@@ -20,21 +20,23 @@ const BoardForm = ({ data }) => {
   };
 
   const deleteBoard = async () => {
-    const code = await postData('/board/delete', { id: data.id });
-    if (code === 200) {
-      if (localStorage.getItem('lastView')) {
-        let list = JSON.parse(localStorage.getItem('lastView'));
-        let result = list.filter(el => el !== parseInt(data.id));
-        localStorage.setItem('lastView', JSON.stringify(result));
+    if (window.confirm('보드를 삭제하시겠습니까?')) {
+      const code = await postData('/board/delete', { id: data.id });
+      if (code === 200) {
+        if (localStorage.getItem('lastView')) {
+          let list = JSON.parse(localStorage.getItem('lastView'));
+          let result = list.filter(el => el !== parseInt(data.id));
+          localStorage.setItem('lastView', JSON.stringify(result));
+        }
+        await deleteFirebaseDoc(data.id);
+        await getBoard(dispatch);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await deleteBoard();
+      } else {
+        alert(code);
+        alert('삭제 실패!');
       }
-      await deleteFirebaseDoc(data.id);
-      await getBoard(dispatch);
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await deleteBoard();
-    } else {
-      alert(code);
-      alert('삭제 실패!');
     }
   };
 

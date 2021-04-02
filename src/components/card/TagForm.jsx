@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ const TagForm = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
+
   const dispatch = useDispatch();
 
   const deleteCard = async (url, cardId) => {
@@ -28,17 +29,19 @@ const TagForm = ({ tag }) => {
   };
 
   const deleteTagHandler = async () => {
-    await deleteFirebaseField(currentBoardId, tag);
-    if (cardlist[tag] && cardlist[tag].length > 0) {
-      cardlist[tag].forEach(async el => {
-        await deleteCard(currentBoardUrl, el.id);
-      });
+    if (window.confirm('태그를 삭제하시겠습니까?')) {
+      await deleteFirebaseField(currentBoardId, tag);
+      if (cardlist[tag] && cardlist[tag].length > 0) {
+        cardlist[tag].forEach(async el => {
+          await deleteCard(currentBoardUrl, el.id);
+        });
+      }
+      let cards = { ...cardlist };
+      let tags = taglist.slice('');
+      delete cards[tag];
+      tags.splice(taglist.indexOf(tag), 1);
+      dispatch(setData({ taglist: tags, cardlist: cards }));
     }
-    let cards = { ...cardlist };
-    let tags = taglist.slice('');
-    delete cards[tag];
-    tags.splice(taglist.indexOf(tag), 1);
-    dispatch(setData({ taglist: tags, cardlist: cards }));
   };
 
   return (

@@ -73,19 +73,21 @@ const CardModal = ({ visible, clickModal, title }) => {
     }
   };
   const deleteCard = async () => {
-    let code = await postData(
-      currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/delete',
-      {
-        id: currentCardId,
-      },
-    );
-    if (code === 201) {
-      getCard(currentBoardUrl, dispatch, currentBoardId);
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await deleteCard();
-    } else {
-      alert('삭제에 실패하였습니다.');
+    if (window.confirm('카드를 삭제하시겠습니까?')) {
+      let code = await postData(
+        currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/delete',
+        {
+          id: currentCardId,
+        },
+      );
+      if (code === 201) {
+        getCard(currentBoardUrl, dispatch, currentBoardId);
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await deleteCard();
+      } else {
+        alert('삭제에 실패하였습니다.');
+      }
     }
   };
   const pageClickEvent = e => {
