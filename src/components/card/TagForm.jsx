@@ -29,7 +29,8 @@ const TagForm = ({ tag }) => {
   };
 
   const deleteTagHandler = async () => {
-    if (window.confirm('태그를 삭제하시겠습니까?')) {
+    let decision = window.confirm('태그를 삭제하시겠습니까?');
+    if (decision) {
       await deleteFirebaseField(currentBoardId, tag);
       if (cardlist[tag] && cardlist[tag].length > 0) {
         cardlist[tag].forEach(async el => {
