@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
 import CardListForm from './CardListForm';
 import styled from 'styled-components';
@@ -29,8 +29,7 @@ const TagForm = ({ tag }) => {
   };
 
   const deleteTagHandler = async () => {
-    let decision = window.confirm('태그를 삭제하시겠습니까?');
-    if (decision) {
+    if (window.confirm('태그를 삭제하시겠습니까?')) {
       await deleteFirebaseField(currentBoardId, tag);
       if (cardlist[tag] && cardlist[tag].length > 0) {
         cardlist[tag].forEach(async el => {

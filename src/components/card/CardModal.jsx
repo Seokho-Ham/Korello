@@ -12,7 +12,6 @@ import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ visible, clickModal, title }) => {
   const {
-    taglist,
     cardlist,
     currentTagName,
     checklist,

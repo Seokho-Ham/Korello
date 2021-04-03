@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRefreshToken, fetchData, updateData, deleteData } from '../../api';
+import { getRefreshToken, updateData, deleteData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
 

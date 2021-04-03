@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard } from '../card/card_utils';
 import { setData } from '../../reducers/card.reducer';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
   const [labelInput, setLabelInput] = useState(name);
-  const { currentBoardUrl, currentBoardId, labellist } = useSelector(
-    state => state.card,
-  );
+  const { labellist } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const onEditLabelClick = () => {
@@ -31,9 +28,7 @@ const LabelElement = ({ id, name, color, onClick }) => {
       });
 
       if (code === 200 || code === 201) {
-        setLabelInput('');
         onEditLabelClick();
-
         let list = labellist.slice('');
         list.forEach(el => {
           if (el.id === id) {
