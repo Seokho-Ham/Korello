@@ -7,6 +7,8 @@ const postData = async (uri, body) => {
     setAccessToken(localStorage.getItem('accessToken'));
 
     let { data } = await axios.post(serverUrl + uri, body);
+    // console.log(data);
+    // return [data.result_body,data.result_code]
 
     return data.result_code;
   } catch (err) {
