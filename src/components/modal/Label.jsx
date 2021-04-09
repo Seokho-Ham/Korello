@@ -11,7 +11,7 @@ const Label = () => {
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl } = useSelector(state => state.card);
+  const { currentBoardUrl, labellist } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const labelRef = useRef(null);
@@ -45,7 +45,7 @@ const Label = () => {
   const addBoardLabelButton = async e => {
     e.preventDefault();
     if (labelName.length > 0 && selectColor.length > 0) {
-      const code = await postData(
+      const [responseData, code] = await postData(
         currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
         {
           name: labelName,
@@ -60,6 +60,8 @@ const Label = () => {
         let [labels] = await fetchData(
           currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
         );
+        // let list = [...labellist]
+        // list.push(responseData)
         dispatch(setData({ labellist: labels ? labels : [] }));
       } else if (code >= 401001) {
         await getRefreshToken();

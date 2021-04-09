@@ -73,7 +73,7 @@ const CardModal = ({ visible, clickModal, title }) => {
   };
   const deleteCard = async () => {
     if (window.confirm('카드를 삭제하시겠습니까?')) {
-      let code = await postData(
+      let [responseData, code] = await postData(
         currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/delete',
         {
           id: currentCardId,

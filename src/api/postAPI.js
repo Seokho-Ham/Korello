@@ -8,9 +8,9 @@ const postData = async (uri, body) => {
 
     let { data } = await axios.post(serverUrl + uri, body);
     // console.log(data);
-    // return [data.result_body,data.result_code]
+    return [data.result_body ? data.result_body : null, data.result_code];
 
-    return data.result_code;
+    // return data.result_code;
   } catch (err) {
     console.log(err);
     return err.response.data.result_code;

@@ -16,9 +16,12 @@ const TagForm = ({ tag }) => {
   const dispatch = useDispatch();
 
   const deleteCard = async (url, cardId) => {
-    let code = await postData(url.slice(0, url.length - 1) + '/delete', {
-      id: cardId,
-    });
+    let [responseData, code] = await postData(
+      url.slice(0, url.length - 1) + '/delete',
+      {
+        id: cardId,
+      },
+    );
     if (code === 201) {
     } else if (code >= 401001) {
       await getRefreshToken();

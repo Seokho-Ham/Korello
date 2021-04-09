@@ -27,7 +27,7 @@ const LabelList = () => {
     if (!axiosStatus) {
       dispatch(setData({ axiosStatus: true }));
       let status = checkOverlap(cardlabels[currentCardId], e.target.id);
-      const code = status
+      const [responseData, code] = status
         ? await postData(`/card/${currentCardId}/label/delete`, {
             labelIds: [e.target.id],
           })

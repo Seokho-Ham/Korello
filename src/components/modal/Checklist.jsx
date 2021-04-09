@@ -26,15 +26,19 @@ const Checklist = ({ percent }) => {
   const addChecklistHandler = async e => {
     e.preventDefault();
     if (title.length > 0) {
-      const code = await postData(`/card/${currentCardId}/todo`, {
-        cardId: currentCardId,
-        title: title,
-      });
+      const [responseData, code] = await postData(
+        `/card/${currentCardId}/todo`,
+        {
+          cardId: currentCardId,
+          title: title,
+        },
+      );
       if (code === 201 || code === 200) {
         setTitle('');
         setClicked(p => !p);
         const [data] = await fetchData(`/card/${currentCardId}/todo`);
-        let obj = {};
+        // let obj = {...checklist};
+        // obj[currentCardId].push(responseData);
         for (let key in checklist) {
           obj[key] = checklist[key];
         }

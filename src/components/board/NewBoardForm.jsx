@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import styled from 'styled-components';
 import { getBoard } from './board_utils';
+import { setData } from '../../reducers/board.reducer';
 
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
   const [display, setDisplay] = useState(false);
+  const { data } = useSelector(state => state.board);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
@@ -16,12 +18,15 @@ const NewBoardForm = () => {
     }
 
     if (boardName.length > 0) {
-      let code = await postData('/board', {
+      let [responseData, code] = await postData('/board', {
         name: boardName,
       });
       if (code === 201) {
         setBoardName('');
         onClickHandler();
+        // let list = [...data];
+        // list.push(responseData)
+        // dispatch(setData({data : list}));
         getBoard(dispatch);
       } else if (code >= 401001) {
         await getRefreshToken();

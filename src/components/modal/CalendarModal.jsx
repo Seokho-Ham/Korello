@@ -64,7 +64,17 @@ const CalendarModal = () => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
-  const sendDateHandler = async () => {};
+  const sendDateHandler = async () => {
+    const [responseData, code] = await postData('uri');
+    if (code === 201) {
+    } else if (code >= 401001) {
+      await getRefreshToken();
+      await sendDateHandler();
+    } else {
+      alert('생성에 실패했습니다.');
+      setOpen(!open);
+    }
+  };
 
   useEffect(() => {
     if (open) {

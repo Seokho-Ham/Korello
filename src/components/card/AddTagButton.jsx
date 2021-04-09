@@ -38,7 +38,7 @@ const AddTagButton = () => {
       alert('빈칸이 있습니다.');
       inputRef.current.focus();
     } else {
-      const code = await postData(
+      const [responseData, code] = await postData(
         `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
         {
           tagValue: tagName,

@@ -21,7 +21,9 @@ const BoardForm = ({ data }) => {
 
   const deleteBoard = async () => {
     if (window.confirm('보드를 삭제하시겠습니까?')) {
-      const code = await postData('/board/delete', { id: data.id });
+      const [responseData, code] = await postData('/board/delete', {
+        id: data.id,
+      });
       if (code === 200) {
         if (localStorage.getItem('lastView')) {
           let list = JSON.parse(localStorage.getItem('lastView'));

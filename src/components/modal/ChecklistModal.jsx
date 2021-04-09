@@ -29,15 +29,20 @@ const ChecklistModal = () => {
   const addCheckList = async e => {
     e.preventDefault();
     if (checkListTitle.length > 0) {
-      const code = await postData(`/card/${currentCardId}/todo`, {
-        cardId: currentCardId,
-        title: checkListTitle,
-      });
+      const [responseData, code] = await postData(
+        `/card/${currentCardId}/todo`,
+        {
+          cardId: currentCardId,
+          title: checkListTitle,
+        },
+      );
       if (code === 201 || code === 200) {
         setCheckListTitle('');
         setClicked(p => !p);
         const [data] = await fetchData(`/card/${currentCardId}/todo`);
         let obj = {};
+        // let obj = {...checklist};
+        // obj[currentCardId].push(responseData);
         for (let key in checklist) {
           obj[key] = checklist[key];
         }
