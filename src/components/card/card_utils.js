@@ -6,6 +6,7 @@ export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
   if (!error) {
     const fbData = await getFields(boardId);
+    // console.log(fbData);
     const list = {};
     const cardlabels = {};
     if (cards.length > 0) {
@@ -19,7 +20,7 @@ export const getCard = async (uri, dispatch, boardId) => {
         cardlabels[el.id] = el.labels;
       });
     }
-    console.log(cards);
+    // console.log(cards);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
 
     let payload = {

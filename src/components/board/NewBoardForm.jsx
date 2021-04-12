@@ -8,7 +8,7 @@ import { setData } from '../../reducers/board.reducer';
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { data } = useSelector(state => state.board);
+  const { boardlist } = useSelector(state => state.board);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
@@ -24,10 +24,9 @@ const NewBoardForm = () => {
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        // let list = [...data];
-        // list.push(responseData)
-        // dispatch(setData({data : list}));
-        getBoard(dispatch);
+        let list = [...boardlist];
+        list.push(responseData);
+        dispatch(setData({ boardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();

@@ -9,7 +9,7 @@ export const setData = createAction(SETSTATE);
 //initialState
 const initialState = {
   loading: false,
-  data: [],
+  boardlist: [],
   code: 0,
   recentBoard: [],
   boardTitle: '',

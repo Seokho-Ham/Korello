@@ -8,7 +8,7 @@ import { getBoard } from './board_utils';
 import { setData } from '../../reducers/board.reducer';
 
 const BoardList = () => {
-  const { data, loading } = useSelector(state => state.board);
+  const { boardlist, loading } = useSelector(state => state.board);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const BoardList = () => {
           <h3>Workspace</h3>
         </ListType>
         <List>
-          {renderBoards(data)}
+          {renderBoards(boardlist)}
           <BoardElement>
             <NewBoardForm />
           </BoardElement>

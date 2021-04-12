@@ -2,14 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
-import { getCard } from './card_utils';
 import { setFirebaseData } from '../../firebase';
+import { setData } from '../../reducers/card.reducer';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [cardName, setCardName] = useState('');
   const [visibility, setVisibility] = useState(false);
-  const { currentBoardUrl, currentBoardId } = useSelector(state => state.card);
+  const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
@@ -49,9 +51,12 @@ const AddTagButton = () => {
         await setFirebaseData(currentBoardId, {
           [tagName]: { name: tagName, createdAt: new Date() },
         });
-
         buttonStatusHandler();
-        getCard(currentBoardUrl, dispatch, currentBoardId);
+        let arr = [...taglist];
+        arr.push(tagName);
+        let obj = { ...cardlist };
+        obj[tagName] = [responseData];
+        dispatch(setData({ taglist: arr, cardlist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addTag(e);

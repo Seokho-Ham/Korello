@@ -80,7 +80,13 @@ const CardModal = ({ visible, clickModal, title }) => {
         },
       );
       if (code === 201) {
-        getCard(currentBoardUrl, dispatch, currentBoardId);
+        let obj = { ...cardlist };
+        obj[currentTagName].forEach((el, i) => {
+          if (el.id === currentCardId) {
+            obj[currentTagName].splice(i, 1);
+          }
+        });
+        dispatch(setData({ cardlist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCard();

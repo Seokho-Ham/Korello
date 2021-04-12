@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postData, fetchData, getRefreshToken } from '../../api';
+import { postData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
 
@@ -39,14 +39,8 @@ const ChecklistModal = () => {
       if (code === 201 || code === 200) {
         setCheckListTitle('');
         setClicked(p => !p);
-        const [data] = await fetchData(`/card/${currentCardId}/todo`);
-        let obj = {};
-        // let obj = {...checklist};
-        // obj[currentCardId].push(responseData);
-        for (let key in checklist) {
-          obj[key] = checklist[key];
-        }
-        obj[currentCardId] = data;
+        let obj = { ...checklist };
+        obj[currentCardId].push(responseData);
         dispatch(setData({ checklist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();

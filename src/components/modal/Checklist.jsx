@@ -36,13 +36,8 @@ const Checklist = ({ percent }) => {
       if (code === 201 || code === 200) {
         setTitle('');
         setClicked(p => !p);
-        const [data] = await fetchData(`/card/${currentCardId}/todo`);
-        // let obj = {...checklist};
-        // obj[currentCardId].push(responseData);
-        for (let key in checklist) {
-          obj[key] = checklist[key];
-        }
-        obj[currentCardId] = data;
+        let obj = { ...checklist };
+        obj[currentCardId].push(responseData);
         dispatch(setData({ checklist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();

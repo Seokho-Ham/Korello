@@ -57,12 +57,10 @@ const Label = () => {
         setSelectColor('');
         setLabelName('');
         setDisplay(p => !p);
-        let [labels] = await fetchData(
-          currentBoardUrl.slice(0, currentBoardUrl.length - 6) + '/label',
-        );
-        // let list = [...labellist]
-        // list.push(responseData)
-        dispatch(setData({ labellist: labels ? labels : [] }));
+
+        let list = [...labellist];
+        list.push(responseData);
+        dispatch(setData({ labellist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoardLabelButton(e);

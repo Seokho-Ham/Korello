@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import randomImage from '../../api/images';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
 import { deleteFirebaseDoc } from '../../firebase';
+import { setData } from '../../reducers/board.reducer';
 
 const BoardForm = ({ data }) => {
   const [image, setImage] = useState(randomImage());
   const history = useHistory();
   const dispatch = useDispatch();
+  const { boardlist, recentBoard } = useSelector(state => state.board);
 
   const clickBoard = () => {
     history.push(`/board/${data.id}/cards`, {
@@ -24,6 +26,7 @@ const BoardForm = ({ data }) => {
       const [responseData, code] = await postData('/board/delete', {
         id: data.id,
       });
+
       if (code === 200) {
         if (localStorage.getItem('lastView')) {
           let list = JSON.parse(localStorage.getItem('lastView'));
@@ -31,7 +34,19 @@ const BoardForm = ({ data }) => {
           localStorage.setItem('lastView', JSON.stringify(result));
         }
         await deleteFirebaseDoc(data.id);
-        await getBoard(dispatch);
+        let list = [...boardlist];
+        let recentlist = [...recentBoard];
+        list.forEach((el, i) => {
+          if (el.id === data.id) {
+            list.splice(i, 1);
+          }
+        });
+        recentlist.forEach((el, i) => {
+          if (el.id === data.id) {
+            recentlist.splice(i, 1);
+          }
+        });
+        dispatch(setData({ boardlist: list, recentBoard: recentlist }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteBoard();

@@ -34,7 +34,7 @@ export const getBoard = async dispatch => {
 
     let payload = {
       loading: false,
-      data: board ? board : [],
+      boardlist: board ? board : [],
       code: code ? code : 0,
       recentBoard: recentBoard ? recentBoard : [],
     };

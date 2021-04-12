@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoard } from './board/board_utils';
 const BoardButtonModal = ({ boardButton, setBoardButton }) => {
-  const { data } = useSelector(state => state.board);
+  const { boardlist } = useSelector(state => state.board);
   const { currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
@@ -20,7 +20,7 @@ const BoardButtonModal = ({ boardButton, setBoardButton }) => {
     const getList = async () => {
       await getBoard(dispatch);
     };
-    if (data.length === 0) {
+    if (boardlist.length === 0) {
       getList();
     }
   }, []);
@@ -35,7 +35,7 @@ const BoardButtonModal = ({ boardButton, setBoardButton }) => {
   }, [boardButton]);
 
   const renderBoardList = () => {
-    return data.map(el => {
+    return boardlist.map(el => {
       return el.id.toString() === currentBoardId ? (
         <BoardElement className='nav-modal-element' key={el.id} id={el.id}>
           <ElementLink href={`/board/${el.id}/cards`} id={el.id}>
