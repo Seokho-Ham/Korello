@@ -1,12 +1,32 @@
 import React, { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   const modalRef = useRef(null);
+  const { eventlogs } = useSelector(state => state.card);
   const pageClickHandler = e => {
     if (modalRef.current !== null && !modalRef.current.contains(e.target)) {
       setOpenLog(!openLog);
     }
+  };
+  console.log(eventlogs);
+  const renderLogs = () => {
+    return eventlogs.map(el => {
+      let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
+      return (
+        <LogElement key={el.id}>
+          <span></span>
+          <div>
+            <div className='log-text'>
+              {el.memberName}님이 {el.message}
+            </div>
+            <div className='log-time'>{eventTime}</div>
+          </div>
+          <br></br>
+        </LogElement>
+      );
+    });
   };
   useEffect(() => {
     if (openLog) {
@@ -29,13 +49,14 @@ const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
         <h4>Activity</h4>
       </LogType>
       <LogModalList>
-        <LogElement>
+        {/* <LogElement>
           <span></span>
           <div>
             <div className='log-text'>강뚝딱님이 보드를 수정했습니다.</div>
             <div className='log-time'>01.26 03:41:02</div>
           </div>
-        </LogElement>
+        </LogElement> */}
+        {renderLogs()}
       </LogModalList>
     </EventLogContainer>
   );
@@ -105,11 +126,14 @@ export const LogModalList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 85%;
+  overflow-y: scroll;
 `;
 
 export const LogElement = styled.div`
   display: flex;
   flex-direction: row;
+  margin: 10px 0px;
   span {
     background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/profile.png');
     background-size: 35px;

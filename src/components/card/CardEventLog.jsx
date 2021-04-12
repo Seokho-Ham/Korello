@@ -44,7 +44,6 @@ const CardEventActivity = styled(LogType)`
 const CardEventList = styled(LogModalList)``;
 
 const CardEventElement = styled(LogElement)`
-  margin: 10px 0px;
   font-size: 14px;
   span {
     margin: 0px 10px;

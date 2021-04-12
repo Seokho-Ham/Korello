@@ -13,6 +13,7 @@ const initialState = {
   checklist: {},
   labellist: [],
   cardlabels: {},
+  eventlogs: [],
   currentBoardId: '',
   currentBoardUrl: '',
   currentTagName: '',
