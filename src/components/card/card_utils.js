@@ -21,7 +21,7 @@ export const getCard = async (uri, dispatch, boardId) => {
         cardlabels[el.id] = el.labels;
       });
     }
-    // console.log(cards);
+
     let events = await axios.get(
       `https://hyuki.app/api/v2/events/board/${boardId}`,
     );
