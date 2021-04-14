@@ -114,13 +114,9 @@ const CardDueDate = styled.div`
   background-color: #febebe;
   width: 80px;
   height: 27px;
-  /* border: 1px solid; */
-  box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1);
+  /* box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1); */
   border-radius: 4px;
   margin-top: 5px;
-  /* position: relative; */
-  /* top: 1px;
-  left: 3px; */
 
   font-size: 14px;
   font-weight: 500;
