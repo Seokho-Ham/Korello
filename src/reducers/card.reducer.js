@@ -14,6 +14,7 @@ const initialState = {
   labellist: [],
   cardlabels: {},
   eventlogs: [],
+  modalVisible: false,
   currentBoardId: '',
   currentBoardUrl: '',
   currentTagName: '',

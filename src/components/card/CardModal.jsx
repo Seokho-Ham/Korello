@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link, Route, useHistory } from 'react-router-dom';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
@@ -10,29 +11,33 @@ import { fetchData, postData, updateData, getRefreshToken } from '../../api';
 import { getCard, progressCalculator } from './card_utils';
 import { setData } from '../../reducers/card.reducer';
 
-const CardModal = ({ visible, clickModal, title }) => {
+const CardModal = () => {
   const {
     cardlist,
     currentTagName,
+    currentCardName,
     checklist,
     currentBoardUrl,
-    currentCardId,
     currentBoardId,
+    currentCardId,
+    modalVisible,
     cardlabels,
   } = useSelector(state => state.card);
 
   const [editButton, setEditButton] = useState(false);
-  const [cardTitle, setCardTitle] = useState(title);
+  const [cardTitle, setCardTitle] = useState(currentCardName);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
+  const history = useHistory();
 
   const inputHandler = e => {
     setCardTitle(e.target.value);
   };
   const onBackgroundClick = e => {
     if (e.target === e.currentTarget) {
-      clickModal();
+      dispatch(setData({ modalVisible: !modalVisible }));
+      history.push(`/board/${currentBoardId}/cards`);
     }
   };
 
@@ -42,7 +47,7 @@ const CardModal = ({ visible, clickModal, title }) => {
   };
   const sendUpdate = async e => {
     e.preventDefault();
-    if (cardTitle !== title) {
+    if (cardTitle !== currentCardName) {
       let code = await updateData(
         currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/name',
         {
@@ -136,9 +141,17 @@ const CardModal = ({ visible, clickModal, title }) => {
 
   return (
     <>
-      <ModalWrapper tabIndex='-1' visible={visible} onClick={onBackgroundClick}>
-        <ModalInner tabIndex='0' visible={visible}>
-          <CloseModalButton onClick={clickModal}></CloseModalButton>
+      <ModalWrapper
+        tabIndex='-1'
+        visible={modalVisible}
+        onClick={onBackgroundClick}
+      >
+        <ModalInner tabIndex='0' visible={modalVisible}>
+          <CloseModalButton
+            onClick={() => {
+              dispatch(setData({ modalVisible: !modalVisible }));
+            }}
+          ></CloseModalButton>
           <CardDeleteButton onClick={deleteCard}>Delete Card</CardDeleteButton>
           <ModalHeader>
             <ModalLabels>
@@ -165,7 +178,7 @@ const CardModal = ({ visible, clickModal, title }) => {
               </div>
             ) : (
               <div>
-                <h2 onClick={editCard}>{title}</h2>
+                <h2 onClick={editCard}>{currentCardName}</h2>
               </div>
             )}
           </ModalHeader>
@@ -205,7 +218,7 @@ const ModalWrapper = styled.div`
   z-index: 10;
   overflow-y: auto;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.1);
   justify-content: center;
 `;
 

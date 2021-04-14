@@ -35,7 +35,7 @@ const FieldValue = firebase.firestore.FieldValue;
 export const getDocuments = async arr => {
   const responseData = await db.get();
   const docList = responseData.docs.map(el => el.id);
-  console.log('firebase board list: ', docList);
+  // console.log('firebase board list: ', docList);
   arr.forEach(async el => {
     if (!docList.includes(el.id)) {
       await db.doc(el.id).set({});

@@ -5,19 +5,19 @@ import axios from 'axios';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
+
   if (!error) {
     const fbData = await getFields(boardId);
-    // console.log(fbData);
     const list = {};
     const cardlabels = {};
+
+    fbData.forEach(el => {
+      list[el] = [];
+    });
     if (cards.length > 0) {
       cards.forEach(el => {
         if (!el) return null;
-        if (!list[el.tagValue]) {
-          list[el.tagValue] = [el];
-        } else {
-          list[el.tagValue].push(el);
-        }
+        list[el.tagValue].push(el);
         cardlabels[el.id] = el.labels;
       });
     }
@@ -25,9 +25,10 @@ export const getCard = async (uri, dispatch, boardId) => {
     let events = await axios.get(
       `https://hyuki.app/api/v2/events/board/${boardId}`,
     );
-    console.log(events.data);
+    // console.log(events.data.result_body);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
 
+    // console.log(list);
     let payload = {
       loading: false,
       taglist: fbData ? fbData : [],
