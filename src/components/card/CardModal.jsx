@@ -91,7 +91,7 @@ const CardModal = () => {
             obj[currentTagName].splice(i, 1);
           }
         });
-        dispatch(setData({ cardlist: obj }));
+        dispatch(setData({ cardlist: obj, modalVisible: !modalVisible }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCard();
