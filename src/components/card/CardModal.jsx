@@ -8,7 +8,7 @@ import CardEventLog from './CardEventLog';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData, postData, updateData, getRefreshToken } from '../../api';
-import { progressCalculator } from './card_utils';
+import { getEvents, progressCalculator } from './card_utils';
 import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ modalVisible, setModalVisible }) => {
@@ -18,6 +18,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
     currentCardName,
     checklist,
     currentBoardUrl,
+    currentBoardId,
     currentCardId,
     cardlabels,
   } = useSelector(state => state.card);
@@ -84,13 +85,20 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
         },
       );
       if (code === 201) {
+        let events = await getEvents(currentBoardId);
         let obj = { ...cardlist };
         obj[currentTagName].forEach((el, i) => {
           if (el.id === currentCardId) {
             obj[currentTagName].splice(i, 1);
           }
         });
-        dispatch(setData({ cardlist: obj, modalVisible: !modalVisible }));
+        dispatch(
+          setData({
+            cardlist: obj,
+            modalVisible: !modalVisible,
+            eventlogs: events,
+          }),
+        );
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCard();

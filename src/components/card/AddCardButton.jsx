@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
+import { getEvents } from './card_utils';
 
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
@@ -39,11 +40,12 @@ const AddButton = ({ tag }) => {
       );
 
       if (code === 201) {
+        const events = await getEvents(currentBoardId);
         setTitle('');
         setVisibility(prevState => !prevState);
         let list = { ...cardlist };
         list[responseData.tagValue].push(responseData);
-        dispatch(setData({ cardlist: list }));
+        dispatch(setData({ cardlist: list, eventlogs: events }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardHandler(e);

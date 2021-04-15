@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { deleteData, updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
+import { getEvents } from '../card/card_utils';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
@@ -71,7 +72,15 @@ const LabelElement = ({ id, name, color, onClick }) => {
               obj[currentCardId].splice(i, 1);
             }
           });
-          dispatch(setData({ cardlabels: obj, labellist: boardlabels }));
+          const events = await getEvents(currentBoardId);
+
+          dispatch(
+            setData({
+              cardlabels: obj,
+              labellist: boardlabels,
+              eventlogs: events,
+            }),
+          );
         } else {
           dispatch(setData({ labellist: boardlabels }));
         }

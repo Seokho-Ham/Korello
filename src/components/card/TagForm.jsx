@@ -7,6 +7,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
+import { getEvents } from './card_utils';
 
 const TagForm = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
@@ -39,11 +40,13 @@ const TagForm = ({ tag }) => {
           await deleteCard(currentBoardUrl, el.id);
         });
       }
+      const events = await getEvents(currentBoardId);
+
       let cards = { ...cardlist };
       let tags = taglist.slice('');
       delete cards[tag];
       tags.splice(taglist.indexOf(tag), 1);
-      dispatch(setData({ taglist: tags, cardlist: cards }));
+      dispatch(setData({ taglist: tags, cardlist: cards, eventlogs: events }));
     }
   };
 

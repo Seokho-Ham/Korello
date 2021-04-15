@@ -5,13 +5,16 @@ import { setData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
 import styled from 'styled-components';
 import { TwitterPicker } from 'react-color';
+import { getEvents } from '../card/card_utils';
 
 const Label = () => {
   const [openLabel, setOpenLabel] = useState(false);
   const [selectColor, setSelectColor] = useState('');
   const [labelName, setLabelName] = useState('');
   const [display, setDisplay] = useState(false);
-  const { currentBoardUrl, labellist } = useSelector(state => state.card);
+  const { currentBoardId, currentBoardUrl, labellist } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const labelRef = useRef(null);
@@ -60,7 +63,9 @@ const Label = () => {
 
         let list = [...labellist];
         list.push(responseData);
-        dispatch(setData({ labellist: list }));
+        const events = await getEvents(currentBoardId);
+
+        dispatch(setData({ labellist: list, eventlogs: events }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoardLabelButton(e);
