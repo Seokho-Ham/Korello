@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { updateData, getRefreshToken } from '../../api';
+import { deleteData, updateData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
   const [labelInput, setLabelInput] = useState(name);
-  const { labellist } = useSelector(state => state.card);
+  const { cardlabels, labellist, currentBoardId, currentCardId } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
 
   const onEditLabelClick = () => {
@@ -45,6 +47,43 @@ const LabelElement = ({ id, name, color, onClick }) => {
     }
   };
 
+  const deleteBoardLabel = async () => {
+    if (window.confirm('라벨을 완전히 삭제하시겠습니까?')) {
+      const code = await deleteData(`/board/${currentBoardId}/label/${id}`);
+      if (code === 200) {
+        let boardlabels = [...labellist];
+        boardlabels.forEach((el, i) => {
+          if (el.id === id) {
+            boardlabels.splice(i, 1);
+          }
+        });
+
+        let overlap = true;
+        cardlabels[currentCardId].forEach(el => {
+          if (el.id === id) {
+            overlap = false;
+          }
+        });
+        if (!overlap) {
+          let obj = cardlabels;
+          obj[currentCardId].forEach((el, i) => {
+            if (el.id === id) {
+              obj[currentCardId].splice(i, 1);
+            }
+          });
+          dispatch(setData({ cardlabels: obj, labellist: boardlabels }));
+        } else {
+          dispatch(setData({ labellist: boardlabels }));
+        }
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await deleteBoardLabel();
+      } else {
+        alert('실패');
+      }
+    }
+  };
+
   return (
     <>
       <EditForm onSubmit={onSubmit} editLabel={editLabel}>
@@ -67,8 +106,8 @@ const LabelElement = ({ id, name, color, onClick }) => {
       <SendUpdateButton onClick={onSubmit} editLabel={editLabel}>
         Save
       </SendUpdateButton>
-      <CancelButton onClick={onEditLabelClick} editLabel={editLabel}>
-        Cancel
+      <CancelButton onClick={deleteBoardLabel} editLabel={editLabel}>
+        Delete
       </CancelButton>
       <LabelEditButton onClick={onEditLabelClick} editLabel={editLabel} />
     </>
@@ -136,14 +175,15 @@ export const SendUpdateButton = styled.button`
 `;
 const CancelButton = styled.button`
   display: ${props => (props.editLabel ? 'inline' : 'none')};
-  background-color: rgb(136, 137, 138);
+  background-color: #cf513d;
   height: 30px;
   border: 0;
   color: #fff;
   margin-left: 0px;
   border-radius: 3px;
   &:hover {
-    opacity: 0.8;
+    /* opacity: 0.8; */
+    background-color: #e2472f;
   }
 `;
 

@@ -8,19 +8,17 @@ import CardEventLog from './CardEventLog';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData, postData, updateData, getRefreshToken } from '../../api';
-import { getCard, progressCalculator } from './card_utils';
+import { progressCalculator } from './card_utils';
 import { setData } from '../../reducers/card.reducer';
 
-const CardModal = () => {
+const CardModal = ({ modalVisible, setModalVisible }) => {
   const {
     cardlist,
     currentTagName,
     currentCardName,
     checklist,
     currentBoardUrl,
-    currentBoardId,
     currentCardId,
-    modalVisible,
     cardlabels,
   } = useSelector(state => state.card);
 
@@ -29,16 +27,17 @@ const CardModal = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
-  const history = useHistory();
 
   const inputHandler = e => {
     setCardTitle(e.target.value);
   };
   const onBackgroundClick = e => {
     if (e.target === e.currentTarget) {
-      dispatch(setData({ modalVisible: !modalVisible }));
-      history.push(`/board/${currentBoardId}/cards`);
+      setModalVisible(!modalVisible);
     }
+  };
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
   };
 
   const editCard = () => {
@@ -147,11 +146,7 @@ const CardModal = () => {
         onClick={onBackgroundClick}
       >
         <ModalInner tabIndex='0' visible={modalVisible}>
-          <CloseModalButton
-            onClick={() => {
-              dispatch(setData({ modalVisible: !modalVisible }));
-            }}
-          ></CloseModalButton>
+          <CloseModalButton onClick={closeModal}></CloseModalButton>
           <CardDeleteButton onClick={deleteCard}>Delete Card</CardDeleteButton>
           <ModalHeader>
             <ModalLabels>
@@ -218,7 +213,7 @@ const ModalWrapper = styled.div`
   z-index: 10;
   overflow-y: auto;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
 `;
 

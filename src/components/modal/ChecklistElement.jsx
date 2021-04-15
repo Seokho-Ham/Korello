@@ -63,20 +63,22 @@ const ChecklistElement = ({ el }) => {
   };
 
   const deleteCheckList = async () => {
-    const code = await deleteData(`/todo/${el.todoId}`);
-    if (code === 200) {
-      let obj = { ...checklist };
-      obj[currentCardId].forEach((element, i) => {
-        if (element.todoId === el.todoId) {
-          obj[currentCardId].splice(i, 1);
-        }
-      });
-      dispatch(setData({ checklist: obj }));
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await deleteCheckList();
-    } else {
-      alert('실패');
+    if (window.confirm('체크리스트를 삭제하시겠습니까?')) {
+      const code = await deleteData(`/todo/${el.todoId}`);
+      if (code === 200) {
+        let obj = { ...checklist };
+        obj[currentCardId].forEach((element, i) => {
+          if (element.todoId === el.todoId) {
+            obj[currentCardId].splice(i, 1);
+          }
+        });
+        dispatch(setData({ checklist: obj }));
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await deleteCheckList();
+      } else {
+        alert('실패');
+      }
     }
   };
 

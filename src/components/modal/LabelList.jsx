@@ -36,23 +36,21 @@ const LabelList = () => {
           });
 
       if (code === 201 || code === 200) {
-        let arr = cardlabels[currentCardId];
+        let obj = { ...cardlabels };
         if (status) {
-          arr.forEach((el, i) => {
+          obj[currentCardId].forEach((el, i) => {
             if (el.id === e.target.id) {
-              arr.splice(i, 1);
+              obj[currentCardId].splice(i, 1);
             }
           });
         } else {
           labellist.forEach(el => {
             if (el.id === e.target.id) {
-              arr.push(el);
+              obj[currentCardId].push(el);
             }
           });
         }
-        dispatch(
-          setData({ [cardlabels[currentCardId]]: arr, axiosStatus: false }),
-        );
+        dispatch(setData({ cardlabels: obj, axiosStatus: false }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);

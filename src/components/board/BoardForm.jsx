@@ -4,7 +4,6 @@ import randomImage from '../../api/images';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
-import { getBoard } from './board_utils';
 import { BoardElement } from './BoardList';
 import { deleteFirebaseDoc } from '../../firebase';
 import { setData } from '../../reducers/board.reducer';

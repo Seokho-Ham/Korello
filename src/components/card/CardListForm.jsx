@@ -6,17 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
-const CardListForm = ({ id, title, labels, index, tag }) => {
-  const { modalVisible, cardlabels, currentBoardId } = useSelector(
-    state => state.card,
-  );
+const CardListForm = ({ id, title, index, tag }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const { cardlabels } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const clickModal = async () => {
-    // console.log(modalVisible);
+    setModalVisible(!modalVisible);
     if (!modalVisible) {
       dispatch(
         setData({
-          modalVisible: !modalVisible,
           currentTagName: tag,
           currentCardId: id,
           currentCardName: title,
@@ -27,8 +25,10 @@ const CardListForm = ({ id, title, labels, index, tag }) => {
 
   return (
     <>
-      {modalVisible && <CardModal />}
-
+      <CardModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <Draggable draggableId={id} index={index}>
         {provided => {
           return (
