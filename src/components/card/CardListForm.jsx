@@ -25,10 +25,12 @@ const CardListForm = ({ id, title, index, tag }) => {
 
   return (
     <>
-      <CardModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+      {modalVisible && (
+        <CardModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+      )}
       <Draggable draggableId={id} index={index}>
         {provided => {
           return (
