@@ -5,11 +5,14 @@ import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import { SendUpdateButton } from './LabelElement';
+import { updateCardEvents } from '../card/card_utils';
 
 const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
-  const { checklist, currentCardId } = useSelector(state => state.card);
+  const { checklist, currentCardId, cardeventlogs } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
@@ -36,9 +39,10 @@ const Checklist = ({ percent }) => {
       if (code === 201 || code === 200) {
         setTitle('');
         setClicked(p => !p);
+        const logs = await updateCardEvents(currentCardId, cardeventlogs);
         let obj = { ...checklist };
         obj[currentCardId].push(responseData);
-        dispatch(setData({ checklist: obj }));
+        dispatch(setData({ checklist: obj, cardeventlogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addChecklistHandler(e);

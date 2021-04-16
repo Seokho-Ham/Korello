@@ -1,7 +1,6 @@
-import { fetchCard, fetchData, getRefreshToken } from '../../api';
+import { fetchCard, fetchData, fetchEvents, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import { getFields, setFirebaseData } from '../../firebase';
-import axios from 'axios';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
@@ -27,16 +26,13 @@ export const getCard = async (uri, dispatch, boardId) => {
         } else {
           list[el.tagValue].push(el);
         }
-
         cardlabels[el.id] = el.labels;
       });
     }
 
-    let events = await getEvents(boardId);
-    // console.log(events.data.result_body);
+    let [events] = await fetchEvents(`/events/board/${boardId}`);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
 
-    // console.log(list);
     let payload = {
       loading: false,
       taglist: fbData ? fbData : [],
@@ -85,18 +81,22 @@ export const progressCalculator = data => {
   return result;
 };
 
-export const getEvents = async boardId => {
+export const updateCardEvents = async (cardId, state) => {
   try {
-    let events = await axios.get(
-      `https://hyuki.app/api/v2/events/board/${boardId}`,
-    );
-    return events.data.result_body;
+    let [cardEvents] = await fetchEvents(`/events/card/${cardId}`);
+    let logs = {};
+    for (let key in state) {
+      logs[key] = state[key];
+    }
+    logs[cardId] = cardEvents;
+
+    return logs;
   } catch (err) {
     if (err.response) {
       if (err.response) {
         if (err.response.data.result_code >= 401001) {
           await getRefreshToken();
-          await getEvents(boardId);
+          await updateCardEvents(cardId);
         }
       } else {
         console.log(err);

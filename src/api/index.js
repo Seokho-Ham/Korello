@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fetchData, fetchCard } from './getAPI';
+import { fetchData, fetchCard, fetchEvents } from './getAPI';
 import postData from './postAPI';
 import updateData from './updateAPI';
 import deleteData from './deleteAPI';
@@ -50,6 +50,7 @@ export {
   getRefreshToken,
   fetchData,
   fetchCard,
+  fetchEvents,
   postData,
   updateData,
   deleteData,

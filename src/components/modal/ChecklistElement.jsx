@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, updateData, deleteData } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
+import { updateCardEvents } from '../card/card_utils';
 
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
-  const { currentCardId, checklist } = useSelector(state => state.card);
+  const { currentCardId, checklist, cardeventlogs } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
 
   const onChangeTitle = e => {
@@ -66,13 +69,14 @@ const ChecklistElement = ({ el }) => {
     if (window.confirm('체크리스트를 삭제하시겠습니까?')) {
       const code = await deleteData(`/todo/${el.todoId}`);
       if (code === 200) {
+        const logs = await updateCardEvents(currentCardId, cardeventlogs);
         let obj = { ...checklist };
         obj[currentCardId].forEach((element, i) => {
           if (element.todoId === el.todoId) {
             obj[currentCardId].splice(i, 1);
           }
         });
-        dispatch(setData({ checklist: obj }));
+        dispatch(setData({ checklist: obj, cardeventlogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCheckList();

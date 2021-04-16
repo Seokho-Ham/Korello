@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRefreshToken, postData } from '../../api';
+import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { setFirebaseData } from '../../firebase';
 import { setData } from '../../reducers/card.reducer';
-import { getEvents } from './card_utils';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
@@ -52,7 +51,7 @@ const AddTagButton = () => {
         await setFirebaseData(currentBoardId, {
           [tagName]: { name: tagName, createdAt: new Date() },
         });
-        let events = await getEvents(currentBoardId);
+        const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         buttonStatusHandler();
         let arr = [...taglist];
         arr.push(tagName);

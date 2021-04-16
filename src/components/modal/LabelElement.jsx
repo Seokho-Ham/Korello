@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { deleteData, updateData, getRefreshToken } from '../../api';
+import {
+  deleteData,
+  updateData,
+  getRefreshToken,
+  fetchEvents,
+} from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
-import { getEvents } from '../card/card_utils';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
@@ -72,7 +76,7 @@ const LabelElement = ({ id, name, color, onClick }) => {
               obj[currentCardId].splice(i, 1);
             }
           });
-          const events = await getEvents(currentBoardId);
+          const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
 
           dispatch(
             setData({

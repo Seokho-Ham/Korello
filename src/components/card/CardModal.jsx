@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, Route, useHistory } from 'react-router-dom';
 import Label from '../modal/Label';
 import CheckListModal from '../modal/ChecklistModal';
 import Checklist from '../modal/Checklist';
@@ -7,8 +6,14 @@ import CalendarModal from '../modal/CalendarModal';
 import CardEventLog from './CardEventLog';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchData, postData, updateData, getRefreshToken } from '../../api';
-import { getEvents, progressCalculator } from './card_utils';
+import {
+  fetchData,
+  postData,
+  updateData,
+  getRefreshToken,
+  fetchEvents,
+} from '../../api';
+import { progressCalculator, updateCardEvents } from './card_utils';
 import { setData } from '../../reducers/card.reducer';
 
 const CardModal = ({ modalVisible, setModalVisible }) => {
@@ -17,6 +22,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
     currentTagName,
     currentCardName,
     checklist,
+    cardeventlogs,
     currentBoardUrl,
     currentBoardId,
     currentCardId,
@@ -85,7 +91,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
         },
       );
       if (code === 201) {
-        let events = await getEvents(currentBoardId);
+        const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         let obj = { ...cardlist };
         obj[currentTagName].forEach((el, i) => {
           if (el.id === currentCardId) {
@@ -116,14 +122,17 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
   useEffect(() => {
     const fetchModal = async () => {
       const [data] = await fetchData(`/card/${currentCardId}/todo`);
+      const logs = await updateCardEvents(currentCardId, cardeventlogs);
       let obj = {};
       for (let key in checklist) {
         obj[key] = checklist[key];
       }
+
       obj[currentCardId] = data;
       dispatch(
         setData({
           checklist: obj,
+          cardeventlogs: logs,
         }),
       );
     };
@@ -232,7 +241,7 @@ const ModalInner = styled.div`
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
-  height: 750px;
+  height: 850px;
   margin: 48px 0px 80px;
   padding: 30px 20px;
   z-index: 11;

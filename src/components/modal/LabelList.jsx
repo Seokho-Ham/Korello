@@ -4,6 +4,7 @@ import { getRefreshToken, postData } from '../../api';
 import styled from 'styled-components';
 import LabelElement from './LabelElement';
 import { setData } from '../../reducers/card.reducer';
+import { updateCardEvents } from '../card/card_utils';
 
 const checkOverlap = (arr, id) => {
   if (!arr) {
@@ -17,9 +18,13 @@ const checkOverlap = (arr, id) => {
 };
 
 const LabelList = () => {
-  const { labellist, currentCardId, cardlabels, axiosStatus } = useSelector(
-    state => state.card,
-  );
+  const {
+    labellist,
+    currentCardId,
+    cardeventlogs,
+    cardlabels,
+    axiosStatus,
+  } = useSelector(state => state.card);
 
   const dispatch = useDispatch();
 
@@ -50,7 +55,11 @@ const LabelList = () => {
             }
           });
         }
-        dispatch(setData({ cardlabels: obj, axiosStatus: false }));
+
+        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        dispatch(
+          setData({ cardlabels: obj, axiosStatus: false, cardeventlogs: logs }),
+        );
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);

@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { fetchData, postData, getRefreshToken } from '../../api';
+import { postData, getRefreshToken, fetchEvents } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
 import styled from 'styled-components';
 import { TwitterPicker } from 'react-color';
-import { getEvents } from '../card/card_utils';
 
 const Label = () => {
   const [openLabel, setOpenLabel] = useState(false);
@@ -63,7 +62,7 @@ const Label = () => {
 
         let list = [...labellist];
         list.push(responseData);
-        const events = await getEvents(currentBoardId);
+        const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
 
         dispatch(setData({ labellist: list, eventlogs: events }));
       } else if (code >= 401001) {

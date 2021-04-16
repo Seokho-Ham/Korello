@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { getRefreshToken, postData } from '../../api';
+import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../../reducers/card.reducer';
-import { getEvents } from './card_utils';
 
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
@@ -40,7 +39,7 @@ const AddButton = ({ tag }) => {
       );
 
       if (code === 201) {
-        const events = await getEvents(currentBoardId);
+        const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         setTitle('');
         setVisibility(prevState => !prevState);
         let list = { ...cardlist };
