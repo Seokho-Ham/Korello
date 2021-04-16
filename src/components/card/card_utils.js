@@ -1,6 +1,6 @@
 import { fetchCard, fetchData, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
-import { getFields } from '../../firebase';
+import { getFields, setFirebaseData } from '../../firebase';
 import axios from 'axios';
 
 export const getCard = async (uri, dispatch, boardId) => {
@@ -14,10 +14,20 @@ export const getCard = async (uri, dispatch, boardId) => {
     fbData.forEach(el => {
       list[el] = [];
     });
+
     if (cards.length > 0) {
-      cards.forEach(el => {
+      cards.forEach(async el => {
         if (!el) return null;
-        list[el.tagValue].push(el);
+        if (!list[el.tagValue]) {
+          list[el.tagValue] = [el];
+          fbData.push(el.tagValue);
+          await setFirebaseData(boardId, {
+            [el.tagValue]: { name: el.tagValue, createdAt: new Date() },
+          });
+        } else {
+          list[el.tagValue].push(el);
+        }
+
         cardlabels[el.id] = el.labels;
       });
     }
