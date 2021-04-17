@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchButtonModal from './SearchButtonModal';
 
 const SearchUser = () => {
   const [searchedWord, setSearchedWord] = useState('');
   const [searchButtonHandler, setSearchButtonHandler] = useState(false);
+  const { currentBoardId } = useSelector(state => state.card);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -35,9 +37,9 @@ const SearchUser = () => {
     if (searchButtonHandler) inputRef.current.focus();
   }, [searchButtonHandler]);
 
-  return (
+  return currentBoardId.length > 0 ? (
     <>
-      <SearchButtonContainer ref={dropdownRef} display={searchButtonHandler}>
+      <SearchButtonContainer ref={dropdownRef} visible={searchButtonHandler}>
         <input
           ref={inputRef}
           value={searchedWord}
@@ -50,17 +52,17 @@ const SearchUser = () => {
         />
       </SearchButtonContainer>
 
-      <SearchButton display={searchButtonHandler} onClick={onClickHandler}>
+      <SearchButton visible={searchButtonHandler} onClick={onClickHandler}>
         Search
       </SearchButton>
     </>
-  );
+  ) : null;
 };
 
 export default SearchUser;
 
 const SearchButtonContainer = styled.div`
-  display: ${props => (props.display ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'block' : 'none')};
   input {
     margin: 2px 0px 0px 3px;
     width: 250px;
@@ -71,7 +73,7 @@ const SearchButtonContainer = styled.div`
   }
 `;
 const SearchButton = styled.button`
-  display: ${props => (props.display ? 'none' : 'block')};
+  display: ${props => (props.visible ? 'none' : 'block')};
   background-color: hsla(0, 0%, 100%, 0.3);
   border: 0px;
   padding: 5px;

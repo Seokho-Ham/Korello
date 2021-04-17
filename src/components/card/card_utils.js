@@ -1,6 +1,7 @@
 import { fetchCard, fetchData, fetchEvents, getRefreshToken } from '../../api';
 import { setData } from '../../reducers/card.reducer';
 import { getFields, setFirebaseData } from '../../firebase';
+import { searchUser } from '../../reducers/user.reducer';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
@@ -29,7 +30,10 @@ export const getCard = async (uri, dispatch, boardId) => {
         cardlabels[el.id] = el.labels;
       });
     }
-
+    let [userlist] = await fetchData('/members');
+    // console.log(userlist);
+    let [memberlist] = await fetchData(`/board/${boardId}/members`);
+    console.log(memberlist);
     let [events] = await fetchEvents(`/events/board/${boardId}`);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
 
@@ -41,7 +45,9 @@ export const getCard = async (uri, dispatch, boardId) => {
       cardlabels: cardlabels,
       currentBoardUrl: uri,
       eventlogs: events,
+      memberlist: memberlist,
     };
+    dispatch(searchUser({ userList: userlist }));
     dispatch(setData(payload));
   } else {
     console.log(error);
