@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { clearStorage } from '../api';
 import BoardButtonModal from './BoardButtonModal';
+import SearchUser from './user/SearchUser';
 
 const Nav = ({ history, setLogin }) => {
   const [boardButton, setBoardButton] = useState(false);
@@ -25,12 +26,14 @@ const Nav = ({ history, setLogin }) => {
           <span className='home-button'></span>
         </a>
         <BoardButton onClick={onClickHandler}>Boards</BoardButton>
-        {boardButton ? (
+        {boardButton && (
           <BoardButtonModal
             boardButton={boardButton}
             setBoardButton={setBoardButton}
           />
-        ) : null}
+        )}
+
+        <SearchUser />
       </NavHeaderButtons>
       <NavTitle>
         <a href='/boards'>
