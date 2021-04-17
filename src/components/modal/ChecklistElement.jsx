@@ -26,7 +26,9 @@ const ChecklistElement = ({ el }) => {
           element.status = !element.status;
         }
       });
-      dispatch(setData({ checklist: obj }));
+      const logs = await updateCardEvents(currentCardId, cardeventlogs);
+
+      dispatch(setData({ checklist: obj, cardeventlogs: logs }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await checkboxHandler(e);
@@ -50,7 +52,8 @@ const ChecklistElement = ({ el }) => {
               element.title = newTitle;
             }
           });
-          dispatch(setData({ checklist: obj }));
+          const logs = await updateCardEvents(currentCardId, cardeventlogs);
+          dispatch(setData({ checklist: obj, cardeventlogs: logs }));
         } else if (code >= 401001) {
           await getRefreshToken();
           await changeChecklist(e);

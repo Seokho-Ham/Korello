@@ -4,6 +4,7 @@ import { postData, getRefreshToken } from '../../api';
 import styled from 'styled-components';
 import { getBoard } from './board_utils';
 import { setData } from '../../reducers/board.reducer';
+import { db } from '../../firebase';
 
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
@@ -26,6 +27,7 @@ const NewBoardForm = () => {
         onClickHandler();
         let list = [...boardlist];
         list.push(responseData);
+        await db.doc(responseData.id).set({});
         dispatch(setData({ boardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
