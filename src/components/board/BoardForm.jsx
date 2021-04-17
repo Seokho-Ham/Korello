@@ -22,6 +22,7 @@ const BoardForm = ({ data }) => {
 
   const deleteBoard = async () => {
     if (window.confirm('보드를 삭제하시겠습니까?')) {
+      console.log(data.id);
       const [responseData, code] = await postData('/board/delete', {
         id: data.id,
       });
