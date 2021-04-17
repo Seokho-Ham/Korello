@@ -26,9 +26,7 @@ const makeRecentList = data => {
 };
 //서버로부터 board 데이터 받아옴.
 export const getBoard = async dispatch => {
-  // let [board, code, error] = await fetchData('/boards');
   let [board, code, error] = await fetchData('/board/self');
-  let [users] = await fetchData('/members');
 
   if (error) {
     alert(error);
@@ -42,7 +40,7 @@ export const getBoard = async dispatch => {
       code: code ? code : 0,
       recentBoard: recentBoard ? recentBoard : [],
     };
-    dispatch(searchUser({ userList: users }));
+
     dispatch(setData(payload));
   }
 };
