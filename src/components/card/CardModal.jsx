@@ -327,6 +327,10 @@ const ModalContents = styled.div`
   width: 470px;
   height: 80%;
   z-index: 0;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChecklistContainer = styled.div`

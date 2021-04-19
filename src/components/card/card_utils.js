@@ -5,7 +5,7 @@ import { searchUser } from '../../reducers/user.reducer';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
-
+  console.log(cards);
   if (!error) {
     const fbData = await getFields(boardId);
     const list = {};
@@ -33,7 +33,7 @@ export const getCard = async (uri, dispatch, boardId) => {
     let [userlist] = await fetchData('/members');
     // console.log(userlist);
     let [memberlist] = await fetchData(`/board/${boardId}/members`);
-    console.log(memberlist);
+    // console.log(memberlist);
     let [events] = await fetchEvents(`/events/board/${boardId}`);
     let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
 

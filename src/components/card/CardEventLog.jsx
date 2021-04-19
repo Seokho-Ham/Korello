@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { LogType, LogElement, LogModalList } from './LogModal';
 const CardEventLog = () => {
   const { cardeventlogs, currentCardId } = useSelector(state => state.card);
-  console.log(cardeventlogs);
+  // console.log(cardeventlogs);
   const renderEventLogs = () => {
     return cardeventlogs[currentCardId].map(el => {
       let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
