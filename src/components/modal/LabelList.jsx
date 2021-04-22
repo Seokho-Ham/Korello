@@ -51,7 +51,11 @@ const LabelList = () => {
         } else {
           labellist.forEach(el => {
             if (el.id === e.target.id) {
-              obj[currentCardId].push(el);
+              if (!obj[currentCardId]) {
+                obj[currentCardId] = [el];
+              } else {
+                obj[currentCardId].push(el);
+              }
             }
           });
         }
