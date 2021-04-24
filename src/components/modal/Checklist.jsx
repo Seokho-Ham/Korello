@@ -3,7 +3,7 @@ import ChecklistElement from './ChecklistElement';
 import styled from 'styled-components';
 import { postData, fetchData, getRefreshToken } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import { SendUpdateButton } from './LabelElement';
 import { updateCardEvents } from '../card/card_utils';
 
@@ -42,7 +42,7 @@ const Checklist = ({ percent }) => {
         const logs = await updateCardEvents(currentCardId, cardeventlogs);
         let obj = { ...checklist };
         obj[currentCardId].push(responseData);
-        dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+        dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addChecklistHandler(e);

@@ -1,9 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CardModal from './CardModal';
-import { Link, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
 const CardListForm = ({ id, title, index, tag }) => {
@@ -14,7 +13,7 @@ const CardListForm = ({ id, title, index, tag }) => {
     setModalVisible(!modalVisible);
     if (!modalVisible) {
       dispatch(
-        setData({
+        setCardData({
           currentTagName: tag,
           currentCardId: id,
           currentCardName: title,

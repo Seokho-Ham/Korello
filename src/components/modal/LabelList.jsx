@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import styled from 'styled-components';
 import LabelElement from './LabelElement';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import { updateCardEvents } from '../card/card_utils';
 
 const checkOverlap = (arr, id) => {
@@ -30,7 +30,7 @@ const LabelList = () => {
 
   const addCardLabelButton = async e => {
     if (!axiosStatus) {
-      dispatch(setData({ axiosStatus: true }));
+      dispatch(setCardData({ axiosStatus: true }));
       let status = checkOverlap(cardlabels[currentCardId], e.target.id);
       const [responseData, code] = status
         ? await postData(`/card/${currentCardId}/label/delete`, {
@@ -62,14 +62,18 @@ const LabelList = () => {
 
         const logs = await updateCardEvents(currentCardId, cardeventlogs);
         dispatch(
-          setData({ cardlabels: obj, axiosStatus: false, cardeventlogs: logs }),
+          setCardData({
+            cardlabels: obj,
+            axiosStatus: false,
+            cardeventlogs: logs,
+          }),
         );
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);
       } else {
         alert('실패');
-        dispatch(setData({ axiosStatus: false }));
+        dispatch(setCardData({ axiosStatus: false }));
       }
     }
   };

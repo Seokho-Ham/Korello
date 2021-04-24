@@ -5,14 +5,14 @@ import NewBoardForm from './NewBoardForm';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoard } from './board_utils';
-import { setData } from '../../reducers/board.reducer';
+import { setBoardData } from '../../reducers/board.reducer';
 
 const BoardList = () => {
   const { boardlist, loading } = useSelector(state => state.board);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setData({ loading: true }));
+    dispatch(setBoardData({ loading: true }));
     getBoard(dispatch);
   }, []);
 

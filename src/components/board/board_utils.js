@@ -1,4 +1,4 @@
-import { setData } from '../../reducers/board.reducer';
+import { setBoardData } from '../../reducers/board.reducer';
 import { fetchData } from '../../api';
 import { getDocuments } from '../../firebase';
 import { searchUser } from '../../reducers/user.reducer';
@@ -41,6 +41,6 @@ export const getBoard = async dispatch => {
       recentBoard: recentBoard ? recentBoard : [],
     };
 
-    dispatch(setData(payload));
+    dispatch(setBoardData(payload));
   }
 };

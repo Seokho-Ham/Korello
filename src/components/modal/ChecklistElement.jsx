@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, updateData, deleteData } from '../../api';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
 import { updateCardEvents } from '../card/card_utils';
 
@@ -28,7 +28,7 @@ const ChecklistElement = ({ el }) => {
       });
       const logs = await updateCardEvents(currentCardId, cardeventlogs);
 
-      dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+      dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await checkboxHandler(e);
@@ -53,7 +53,7 @@ const ChecklistElement = ({ el }) => {
             }
           });
           const logs = await updateCardEvents(currentCardId, cardeventlogs);
-          dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+          dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
         } else if (code >= 401001) {
           await getRefreshToken();
           await changeChecklist(e);
@@ -79,7 +79,7 @@ const ChecklistElement = ({ el }) => {
             obj[currentCardId].splice(i, 1);
           }
         });
-        dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+        dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCheckList();

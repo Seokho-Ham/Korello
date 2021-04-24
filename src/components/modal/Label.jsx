@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { postData, getRefreshToken, fetchEvents } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import LabelList from './LabelList';
 import styled from 'styled-components';
 import { TwitterPicker } from 'react-color';
@@ -64,7 +64,7 @@ const Label = () => {
         list.push(responseData);
         const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
 
-        dispatch(setData({ labellist: list, eventlogs: events }));
+        dispatch(setCardData({ labellist: list, eventlogs: events }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoardLabelButton(e);

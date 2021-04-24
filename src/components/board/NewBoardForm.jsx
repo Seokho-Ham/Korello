@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import styled from 'styled-components';
-import { getBoard } from './board_utils';
-import { setData } from '../../reducers/board.reducer';
+
+import { setBoardData } from '../../reducers/board.reducer';
 import { db } from '../../firebase';
 
 const NewBoardForm = () => {
@@ -28,7 +28,7 @@ const NewBoardForm = () => {
         let list = [...boardlist];
         list.push(responseData);
         await db.doc(responseData.id).set({});
-        dispatch(setData({ boardlist: list }));
+        dispatch(setBoardData({ boardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();

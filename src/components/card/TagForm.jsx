@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken, fetchEvents } from '../../api';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const TagForm = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
@@ -45,7 +45,9 @@ const TagForm = ({ tag }) => {
       let tags = taglist.slice('');
       delete cards[tag];
       tags.splice(taglist.indexOf(tag), 1);
-      dispatch(setData({ taglist: tags, cardlist: cards, eventlogs: events }));
+      dispatch(
+        setCardData({ taglist: tags, cardlist: cards, eventlogs: events }),
+      );
     }
   };
 

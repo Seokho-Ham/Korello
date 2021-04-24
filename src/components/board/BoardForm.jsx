@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
 import { BoardElement } from './BoardList';
 import { deleteFirebaseDoc } from '../../firebase';
-import { setData } from '../../reducers/board.reducer';
+import { setBoardData } from '../../reducers/board.reducer';
 
 const BoardForm = ({ data }) => {
   const [image, setImage] = useState(randomImage());
@@ -46,7 +46,7 @@ const BoardForm = ({ data }) => {
             recentlist.splice(i, 1);
           }
         });
-        dispatch(setData({ boardlist: list, recentBoard: recentlist }));
+        dispatch(setBoardData({ boardlist: list, recentBoard: recentlist }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteBoard();

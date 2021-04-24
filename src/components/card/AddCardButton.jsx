@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const AddButton = ({ tag }) => {
   const [title, setTitle] = useState('');
@@ -44,7 +44,7 @@ const AddButton = ({ tag }) => {
         setVisibility(prevState => !prevState);
         let list = { ...cardlist };
         list[responseData.tagValue].push(responseData);
-        dispatch(setData({ cardlist: list, eventlogs: events }));
+        dispatch(setCardData({ cardlist: list, eventlogs: events }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardHandler(e);

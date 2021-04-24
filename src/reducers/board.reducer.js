@@ -5,7 +5,7 @@ import setState from './reduxUtils';
 const SETSTATE = '/boards/SETSTATE';
 //createAction(action maker)
 
-export const setData = createAction(SETSTATE);
+export const setBoardData = createAction(SETSTATE);
 //initialState
 const initialState = {
   loading: false,

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { setFirebaseData } from '../../firebase';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
@@ -57,7 +57,9 @@ const AddTagButton = () => {
         arr.push(tagName);
         let obj = { ...cardlist };
         obj[tagName] = [responseData];
-        dispatch(setData({ taglist: arr, cardlist: obj, eventlogs: events }));
+        dispatch(
+          setCardData({ taglist: arr, cardlist: obj, eventlogs: events }),
+        );
       } else if (code >= 401001) {
         await getRefreshToken();
         await addTag(e);

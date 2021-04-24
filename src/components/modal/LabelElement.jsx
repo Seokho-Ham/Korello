@@ -7,7 +7,7 @@ import {
   fetchEvents,
 } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
@@ -42,7 +42,7 @@ const LabelElement = ({ id, name, color, onClick }) => {
             el.name = labelInput;
           }
         });
-        dispatch(setData({ labellist: list }));
+        dispatch(setCardData({ labellist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await onSubmit(e);
@@ -79,14 +79,14 @@ const LabelElement = ({ id, name, color, onClick }) => {
           const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
 
           dispatch(
-            setData({
+            setCardData({
               cardlabels: obj,
               labellist: boardlabels,
               eventlogs: events,
             }),
           );
         } else {
-          dispatch(setData({ labellist: boardlabels }));
+          dispatch(setCardData({ labellist: boardlabels }));
         }
       } else if (code >= 401001) {
         await getRefreshToken();
