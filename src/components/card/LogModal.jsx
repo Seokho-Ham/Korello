@@ -128,6 +128,10 @@ export const LogModalList = styled.div`
   width: 100%;
   height: 85%;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const LogElement = styled.div`

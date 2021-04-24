@@ -26,9 +26,9 @@ const CardEventLog = () => {
       <CardEventActivity>
         <h4>Activity</h4>
       </CardEventActivity>
-      <LogModalList>
+      <CardEventList>
         {cardeventlogs[currentCardId] ? renderEventLogs() : null}
-      </LogModalList>
+      </CardEventList>
     </CardEventContainer>
   );
 };
