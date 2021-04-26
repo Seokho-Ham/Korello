@@ -12,7 +12,6 @@ const BoardList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setBoardData({ loading: true }));
     getBoard(dispatch);
   }, []);
 

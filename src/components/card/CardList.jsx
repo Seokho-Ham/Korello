@@ -53,6 +53,7 @@ const CardList = ({ location }) => {
       return '';
     }
     if (source.droppableId === destination.droppableId) {
+      // console.log(result);
     } else {
       let list = { ...cardlist };
       let card = list[source.droppableId].splice(source.index, 1)[0];

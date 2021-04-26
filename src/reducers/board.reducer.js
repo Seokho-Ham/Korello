@@ -11,8 +11,8 @@ const initialState = {
   loading: false,
   boardlist: [],
   code: 0,
+  error: null,
   recentBoard: [],
-  boardTitle: '',
 };
 
 //handleActions(Reducer)

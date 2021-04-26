@@ -1,7 +1,6 @@
 import { setBoardData } from '../../reducers/board.reducer';
 import { fetchData } from '../../api';
 import { getDocuments } from '../../firebase';
-import { searchUser } from '../../reducers/user.reducer';
 
 const makeRecentList = data => {
   let result = [];
@@ -26,19 +25,21 @@ const makeRecentList = data => {
 };
 //서버로부터 board 데이터 받아옴.
 export const getBoard = async dispatch => {
-  let [board, code, error] = await fetchData('/board/self');
-
+  dispatch(setBoardData({ loading: true }));
+  let [data, code, error] = await fetchData('/board/self');
+  console.log(data);
   if (error) {
     alert(error);
   } else {
-    getDocuments(board);
-    let recentBoard = makeRecentList(board);
+    getDocuments(data);
+    let recentBoard = makeRecentList(data);
 
     let payload = {
       loading: false,
-      boardlist: board ? board : [],
-      code: code ? code : 0,
-      recentBoard: recentBoard ? recentBoard : [],
+      boardlist: data,
+      code: code,
+      error: error,
+      recentBoard: recentBoard,
     };
 
     dispatch(setBoardData(payload));
