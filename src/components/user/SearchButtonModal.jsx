@@ -116,7 +116,9 @@ const SearchButtonModal = ({ searchedWord, searchButtonHandler }) => {
     <SearchModalContainer className='search-modal'>
       <div style={{ fontWeight: 'bold' }}>User List</div>
       <hr />
-      <SearchModalList>{renderUsers()}</SearchModalList>
+      <SearchModalList>
+        {userList && memberlist ? renderUsers() : null}
+      </SearchModalList>
     </SearchModalContainer>
   ) : null;
 };
