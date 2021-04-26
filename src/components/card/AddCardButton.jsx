@@ -43,7 +43,10 @@ const AddButton = ({ tag }) => {
         setTitle('');
         setVisibility(prevState => !prevState);
         let list = { ...cardlist };
-        list[responseData.tagValue].push(responseData);
+        list[responseData.tagValue]
+          ? list[responseData.tagValue].push(responseData)
+          : (list[responseData.tagValue] = [responseData]);
+
         dispatch(setData({ cardlist: list, eventlogs: events }));
       } else if (code >= 401001) {
         await getRefreshToken();

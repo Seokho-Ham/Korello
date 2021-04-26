@@ -21,7 +21,6 @@ const FieldValue = firebase.firestore.FieldValue;
 export const getDocuments = async arr => {
   const responseData = await db.get();
   const docList = responseData.docs.map(el => el.id);
-  // console.log('firebase board list: ', docList);
   arr.forEach(async el => {
     if (!docList.includes(el.id)) {
       await db.doc(el.id).set({});
@@ -38,7 +37,6 @@ export const getFields = async boardId => {
     const dataList = responseData.data();
 
     let result = [];
-    // console.log('fb field raw data: ', dataList);
     if (Object.keys(dataList).length > 0) {
       for (let key in dataList) {
         result.push(dataList[key]);
@@ -49,7 +47,6 @@ export const getFields = async boardId => {
           return a.createdAt - b.createdAt;
         })
         .map(el => el.name);
-      // console.log('tag list: ', data);
       return data;
     } else {
       return result;

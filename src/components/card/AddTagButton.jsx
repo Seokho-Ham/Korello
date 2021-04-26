@@ -7,25 +7,19 @@ import { setData } from '../../reducers/card.reducer';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
-  const [cardName, setCardName] = useState('');
   const [visibility, setVisibility] = useState(false);
-  const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
-    state => state.card,
-  );
+  const { taglist, currentBoardId } = useSelector(state => state.card);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
 
   const buttonStatusHandler = () => {
     setTagName('');
-    setCardName('');
     setVisibility(prevState => !prevState);
   };
 
   const onChangeHandler = e => {
-    e.target.name === 'tag'
-      ? setTagName(e.target.value)
-      : setCardName(e.target.value);
+    setTagName(e.target.value);
   };
 
   const pageClickEvent = e => {
@@ -36,36 +30,17 @@ const AddTagButton = () => {
 
   const addTag = async e => {
     e.preventDefault();
-    if (!tagName || !cardName) {
+    if (!tagName) {
       alert('빈칸이 있습니다.');
       inputRef.current.focus();
     } else {
-      const [responseData, code] = await postData(
-        `${currentBoardUrl.slice(0, currentBoardUrl.length - 1)}`,
-        {
-          tagValue: tagName,
-          name: cardName,
-        },
-      );
-      if (code === 201) {
-        await setFirebaseData(currentBoardId, {
-          [tagName]: { name: tagName, createdAt: new Date() },
-        });
-        const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
-        buttonStatusHandler();
-        let arr = [...taglist];
-        arr.push(tagName);
-        let obj = { ...cardlist };
-        obj[tagName] = [responseData];
-        dispatch(setData({ taglist: arr, cardlist: obj, eventlogs: events }));
-      } else if (code >= 401001) {
-        await getRefreshToken();
-        await addTag(e);
-      } else {
-        alert('생성에 실패했습니다.');
-        setTagName('');
-        inputRef.current.focus();
-      }
+      await setFirebaseData(currentBoardId, {
+        [tagName]: { name: tagName, createdAt: new Date() },
+      });
+      buttonStatusHandler();
+      let arr = [...taglist];
+      arr.push(tagName);
+      dispatch(setData({ taglist: arr }));
     }
   };
   useEffect(() => {
@@ -87,19 +62,11 @@ const AddTagButton = () => {
           <TagAddForm ref={formRef}>
             <form onSubmit={addTag}>
               <TagAddInput
-                name='tag'
                 placeholder='tag name'
                 value={tagName}
                 onChange={onChangeHandler}
                 ref={inputRef}
               />
-              <TagAddInput
-                name='card'
-                placeholder='card name'
-                value={cardName}
-                onChange={onChangeHandler}
-              />
-
               <TagAddButton>Add</TagAddButton>
             </form>
             <TagCancelButton onClick={buttonStatusHandler}>
