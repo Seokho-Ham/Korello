@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { getBoard } from './board_utils';
 import { setData } from '../../reducers/board.reducer';
 import { db } from '../../firebase';
+import { useHistory } from 'react-router';
 
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
@@ -12,6 +13,7 @@ const NewBoardForm = () => {
   const { boardlist } = useSelector(state => state.board);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const history = useHistory();
 
   const addBoard = async e => {
     if (e) {
@@ -29,6 +31,7 @@ const NewBoardForm = () => {
         list.push(responseData);
         await db.doc(responseData.id).set({});
         dispatch(setData({ boardlist: list }));
+        history.push(`/board/${responseData.id}/cards`);
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoard();

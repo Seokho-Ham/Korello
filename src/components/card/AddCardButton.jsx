@@ -41,7 +41,6 @@ const AddButton = ({ tag }) => {
       if (code === 201) {
         const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         setTitle('');
-        setVisibility(prevState => !prevState);
         let list = { ...cardlist };
         list[responseData.tagValue]
           ? list[responseData.tagValue].push(responseData)
