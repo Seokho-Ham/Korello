@@ -4,11 +4,11 @@ import randomImage from '../../api/images';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
-import { BoardElement } from './BoardList';
+import { BoardItem } from './BoardList';
 import { deleteFirebaseDoc } from '../../firebase';
-import { setBoardData } from '../../reducers/board.reducer';
+import { boardActions } from '../../reducers/board.reducer';
 
-const BoardForm = ({ data }) => {
+const BoardElement = ({ data }) => {
   const [image, setImage] = useState(randomImage());
   const history = useHistory();
   const dispatch = useDispatch();
@@ -22,7 +22,6 @@ const BoardForm = ({ data }) => {
 
   const deleteBoard = async () => {
     if (window.confirm('보드를 삭제하시겠습니까?')) {
-      // console.log(data.id);
       const [responseData, code] = await postData('/board/delete', {
         id: data.id,
       });
@@ -33,20 +32,19 @@ const BoardForm = ({ data }) => {
           let result = list.filter(el => el !== parseInt(data.id));
           localStorage.setItem('lastView', JSON.stringify(result));
         }
-        await deleteFirebaseDoc(data.id);
+        deleteFirebaseDoc(data.id);
         let list = [...boardlist];
         let recentlist = [...recentBoard];
-        list.forEach((el, i) => {
-          if (el.id === data.id) {
-            list.splice(i, 1);
-          }
-        });
-        recentlist.forEach((el, i) => {
-          if (el.id === data.id) {
-            recentlist.splice(i, 1);
-          }
-        });
-        dispatch(setBoardData({ boardlist: list, recentBoard: recentlist }));
+        const deletedItem = list.filter(el => el.id === data.id)[0];
+        list.splice(list.indexOf(deletedItem), 1);
+        recentlist.splice(recentlist.indexOf(deletedItem), 1);
+
+        dispatch(
+          boardActions.setBoardData({
+            boardlist: list,
+            recentBoard: recentlist,
+          }),
+        );
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteBoard();
@@ -58,16 +56,16 @@ const BoardForm = ({ data }) => {
   };
 
   return (
-    <BoardElement image={image}>
+    <BoardItem image={image}>
       <BoardDeleteButton onClick={deleteBoard}></BoardDeleteButton>
       <BoardCover onClick={clickBoard}>
         <BoardTitle>{data.name}</BoardTitle>
       </BoardCover>
-    </BoardElement>
+    </BoardItem>
   );
 };
 
-export default React.memo(BoardForm);
+export default React.memo(BoardElement);
 
 const BoardDeleteButton = styled.span`
   background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');

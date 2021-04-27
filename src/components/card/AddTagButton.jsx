@@ -40,7 +40,7 @@ const AddTagButton = () => {
       buttonStatusHandler();
       let arr = [...taglist];
       arr.push(tagName);
-      dispatch(setData({ taglist: arr }));
+      dispatch(setCardData({ taglist: arr }));
     }
   };
   useEffect(() => {

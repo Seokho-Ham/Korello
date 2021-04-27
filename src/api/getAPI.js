@@ -10,7 +10,7 @@ const fetchData = async uri => {
     const { data } = await axios.get(serverUrl + uri);
 
     if (data.result_body) {
-      return [data.result_body, data.result_code, null];
+      return [data.result_body, null];
     }
   } catch (err) {
     if (
@@ -21,13 +21,13 @@ const fetchData = async uri => {
       if (response_code === 200) {
         return await fetchData(uri);
       } else {
-        console.log('error', err);
+        console.log('error : ', err);
         clearStorage();
         alert('다시 로그인 해주세요!');
         window.location.reload();
       }
     } else {
-      return [null, err.result_code, err];
+      return [null, err];
     }
   }
 };

@@ -18,7 +18,7 @@ export const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 export const db = firebase.firestore().collection('korello');
 const FieldValue = firebase.firestore.FieldValue;
 
-export const getDocuments = async arr => {
+export const setFirebaseDocuments = async arr => {
   const responseData = await db.get();
   const docList = responseData.docs.map(el => el.id);
   arr.forEach(async el => {

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoard } from './board/board_utils';
+import { getBoardList } from './board/board_utils';
+
 const BoardButtonModal = ({ boardButton, setBoardButton }) => {
   const { boardlist } = useSelector(state => state.board);
   const { currentBoardId } = useSelector(state => state.card);
@@ -17,11 +18,8 @@ const BoardButtonModal = ({ boardButton, setBoardButton }) => {
     }
   };
   useEffect(() => {
-    const getList = async () => {
-      await getBoard(dispatch);
-    };
     if (boardlist.length === 0) {
-      getList();
+      getBoardList(dispatch);
     }
   }, []);
 

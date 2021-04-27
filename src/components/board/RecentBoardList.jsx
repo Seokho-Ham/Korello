@@ -1,15 +1,15 @@
 import React from 'react';
-import BoardForm from './BoardForm';
+import BoardElement from './BoardElement';
 import { useSelector } from 'react-redux';
 import { ListType, List } from './BoardList';
 
-const RecentList = () => {
+const RecentBoardList = () => {
   const { recentBoard } = useSelector(state => state.board);
 
   const renderRecentBoards = () => {
     return recentBoard.length > 0
       ? recentBoard.map(el => {
-          return <BoardForm key={el.id} data={el} />;
+          return <BoardElement key={el.id} data={el} />;
         })
       : null;
   };
@@ -29,4 +29,4 @@ const RecentList = () => {
   );
 };
 
-export default RecentList;
+export default RecentBoardList;
