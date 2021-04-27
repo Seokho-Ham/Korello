@@ -19,9 +19,9 @@ const checkOverlap = (arr, id) => {
 
 const LabelList = () => {
   const {
-    labellist,
+    boardlabels,
     currentCardId,
-    cardeventlogs,
+    cardEventLogs,
     cardlabels,
     axiosStatus,
   } = useSelector(state => state.card);
@@ -49,7 +49,7 @@ const LabelList = () => {
             }
           });
         } else {
-          labellist.forEach(el => {
+          boardlabels.forEach(el => {
             if (el.id === e.target.id) {
               if (!obj[currentCardId]) {
                 obj[currentCardId] = [el];
@@ -60,12 +60,12 @@ const LabelList = () => {
           });
         }
 
-        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         dispatch(
           setCardData({
             cardlabels: obj,
             axiosStatus: false,
-            cardeventlogs: logs,
+            cardEventLogs: logs,
           }),
         );
       } else if (code >= 401001) {
@@ -79,7 +79,7 @@ const LabelList = () => {
   };
 
   const renderLabelList = () => {
-    return labellist.map((el, i) => {
+    return boardlabels.map((el, i) => {
       return (
         <LabelListWrapper className='dasdas' key={i}>
           <LabelElement

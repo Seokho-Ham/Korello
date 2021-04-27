@@ -10,7 +10,7 @@ import { updateCardEvents } from '../card/card_utils';
 const Checklist = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
-  const { checklist, currentCardId, cardeventlogs } = useSelector(
+  const { checklist, currentCardId, cardEventLogs } = useSelector(
     state => state.card,
   );
   const dispatch = useDispatch();
@@ -38,10 +38,10 @@ const Checklist = ({ percent }) => {
       );
       if (code === 201 || code === 200) {
         setTitle('');
-        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         let obj = { ...checklist };
         obj[currentCardId].push(responseData);
-        dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
+        dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addChecklistHandler(e);

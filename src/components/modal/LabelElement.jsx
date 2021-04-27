@@ -12,9 +12,12 @@ import { setCardData } from '../../reducers/card.reducer';
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);
   const [labelInput, setLabelInput] = useState(name);
-  const { cardlabels, labellist, currentBoardId, currentCardId } = useSelector(
-    state => state.card,
-  );
+  const {
+    cardlabels,
+    boardlabels,
+    currentBoardId,
+    currentCardId,
+  } = useSelector(state => state.card);
   const dispatch = useDispatch();
 
   const onEditLabelClick = () => {
@@ -36,13 +39,13 @@ const LabelElement = ({ id, name, color, onClick }) => {
 
       if (code === 200 || code === 201) {
         onEditLabelClick();
-        let list = labellist.slice('');
+        let list = [...boardlabels];
         list.forEach(el => {
           if (el.id === id) {
             el.name = labelInput;
           }
         });
-        dispatch(setCardData({ labellist: list }));
+        dispatch(setCardData({ boardlabels: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await onSubmit(e);
@@ -56,10 +59,10 @@ const LabelElement = ({ id, name, color, onClick }) => {
     if (window.confirm('라벨을 완전히 삭제하시겠습니까?')) {
       const code = await deleteData(`/board/${currentBoardId}/label/${id}`);
       if (code === 200) {
-        let boardlabels = [...labellist];
-        boardlabels.forEach((el, i) => {
+        let list = [...boardlabels];
+        list.forEach((el, i) => {
           if (el.id === id) {
-            boardlabels.splice(i, 1);
+            list.splice(i, 1);
           }
         });
 
@@ -76,17 +79,19 @@ const LabelElement = ({ id, name, color, onClick }) => {
               obj[currentCardId].splice(i, 1);
             }
           });
-          const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
+          const [boardEventLogs] = await fetchEvents(
+            `/events/board/${currentBoardId}`,
+          );
 
           dispatch(
             setCardData({
               cardlabels: obj,
-              labellist: boardlabels,
-              eventlogs: events,
+              boardlabels: list,
+              boardEventLogs,
             }),
           );
         } else {
-          dispatch(setCardData({ labellist: boardlabels }));
+          dispatch(setCardData({ boardlabels: list }));
         }
       } else if (code >= 401001) {
         await getRefreshToken();

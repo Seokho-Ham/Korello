@@ -22,7 +22,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
     currentTagName,
     currentCardName,
     checklist,
-    cardeventlogs,
+    cardEventLogs,
     currentBoardUrl,
     currentBoardId,
     currentCardId,
@@ -122,7 +122,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
   useEffect(() => {
     const fetchModal = async () => {
       const [data] = await fetchData(`/card/${currentCardId}/todo`);
-      const logs = await updateCardEvents(currentCardId, cardeventlogs);
+      const logs = await updateCardEvents(currentCardId, cardEventLogs);
       let obj = {};
       for (let key in checklist) {
         obj[key] = checklist[key];
@@ -132,7 +132,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
       dispatch(
         setCardData({
           checklist: obj,
-          cardeventlogs: logs,
+          cardEventLogs: logs,
         }),
       );
     };

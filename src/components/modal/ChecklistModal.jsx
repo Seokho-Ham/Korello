@@ -8,7 +8,7 @@ import { updateCardEvents } from '../card/card_utils';
 const ChecklistModal = () => {
   const [clicked, setClicked] = useState(false);
   const [checkListTitle, setCheckListTitle] = useState('');
-  const { currentCardId, checklist, cardeventlogs } = useSelector(
+  const { currentCardId, checklist, cardEventLogs } = useSelector(
     state => state.card,
   );
   const dispatch = useDispatch();
@@ -42,10 +42,10 @@ const ChecklistModal = () => {
       if (code === 201 || code === 200) {
         setCheckListTitle('');
         setClicked(p => !p);
-        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         let obj = { ...checklist };
         obj[currentCardId].push(responseData);
-        dispatch(setCardData({ checklist: obj, cardeventlogs: logs }));
+        dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCheckList(e);
