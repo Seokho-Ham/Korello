@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   const modalRef = useRef(null);
-  const { eventlogs } = useSelector(state => state.card);
+  const { boardEventLogs } = useSelector(state => state.card);
   const pageClickHandler = e => {
     if (modalRef.current !== null && !modalRef.current.contains(e.target)) {
       setOpenLog(!openLog);
     }
   };
-  console.log(eventlogs);
+  console.log(boardEventLogs);
   const renderLogs = () => {
-    return eventlogs.map(el => {
+    return boardEventLogs.map(el => {
       let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
       return (
         <LogElement key={el.id}>

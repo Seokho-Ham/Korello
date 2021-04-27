@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getRefreshToken, postData } from '../../api';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const SearchButtonModal = ({ searchedWord, searchButtonHandler }) => {
   const { userList } = useSelector(state => state.user);
@@ -47,7 +47,7 @@ const SearchButtonModal = ({ searchedWord, searchButtonHandler }) => {
             }
           });
         }
-        dispatch(setData({ memberlist: arr }));
+        dispatch(setCardData({ memberlist: arr }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await userAuthorityHandler(e);

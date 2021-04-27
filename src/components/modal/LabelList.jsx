@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, postData } from '../../api';
 import styled from 'styled-components';
 import LabelElement from './LabelElement';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import { updateCardEvents } from '../card/card_utils';
 
 const checkOverlap = (arr, id) => {
@@ -19,9 +19,9 @@ const checkOverlap = (arr, id) => {
 
 const LabelList = () => {
   const {
-    labellist,
+    boardlabels,
     currentCardId,
-    cardeventlogs,
+    cardEventLogs,
     cardlabels,
     axiosStatus,
   } = useSelector(state => state.card);
@@ -30,7 +30,7 @@ const LabelList = () => {
 
   const addCardLabelButton = async e => {
     if (!axiosStatus) {
-      dispatch(setData({ axiosStatus: true }));
+      dispatch(setCardData({ axiosStatus: true }));
       let status = checkOverlap(cardlabels[currentCardId], e.target.id);
       const [responseData, code] = status
         ? await postData(`/card/${currentCardId}/label/delete`, {
@@ -49,7 +49,7 @@ const LabelList = () => {
             }
           });
         } else {
-          labellist.forEach(el => {
+          boardlabels.forEach(el => {
             if (el.id === e.target.id) {
               if (!obj[currentCardId]) {
                 obj[currentCardId] = [el];
@@ -60,22 +60,26 @@ const LabelList = () => {
           });
         }
 
-        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         dispatch(
-          setData({ cardlabels: obj, axiosStatus: false, cardeventlogs: logs }),
+          setCardData({
+            cardlabels: obj,
+            axiosStatus: false,
+            cardEventLogs: logs,
+          }),
         );
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardLabelButton(e);
       } else {
         alert('실패');
-        dispatch(setData({ axiosStatus: false }));
+        dispatch(setCardData({ axiosStatus: false }));
       }
     }
   };
 
   const renderLabelList = () => {
-    return labellist.map((el, i) => {
+    return boardlabels.map((el, i) => {
       return (
         <LabelListWrapper className='dasdas' key={i}>
           <LabelElement

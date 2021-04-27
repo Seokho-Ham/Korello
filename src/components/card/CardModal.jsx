@@ -14,7 +14,7 @@ import {
   fetchEvents,
 } from '../../api';
 import { progressCalculator, updateCardEvents } from './card_utils';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const CardModal = ({ modalVisible, setModalVisible }) => {
   const {
@@ -22,7 +22,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
     currentTagName,
     currentCardName,
     checklist,
-    cardeventlogs,
+    cardEventLogs,
     currentBoardUrl,
     currentBoardId,
     currentCardId,
@@ -71,7 +71,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
           }
         });
         obj[currentTagName] = list;
-        dispatch(setData({ cardlist: obj }));
+        dispatch(setCardData({ cardlist: obj }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await sendUpdate(e);
@@ -99,7 +99,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
           }
         });
         dispatch(
-          setData({
+          setCardData({
             cardlist: obj,
             modalVisible: !modalVisible,
             eventlogs: events,
@@ -122,7 +122,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
   useEffect(() => {
     const fetchModal = async () => {
       const [data] = await fetchData(`/card/${currentCardId}/todo`);
-      const logs = await updateCardEvents(currentCardId, cardeventlogs);
+      const logs = await updateCardEvents(currentCardId, cardEventLogs);
       let obj = {};
       for (let key in checklist) {
         obj[key] = checklist[key];
@@ -130,9 +130,9 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
 
       obj[currentCardId] = data;
       dispatch(
-        setData({
+        setCardData({
           checklist: obj,
-          cardeventlogs: logs,
+          cardEventLogs: logs,
         }),
       );
     };

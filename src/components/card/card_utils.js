@@ -1,54 +1,54 @@
 import { fetchCard, fetchData, fetchEvents, getRefreshToken } from '../../api';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import { getFields, setFirebaseData } from '../../firebase';
-import { searchUser } from '../../reducers/user.reducer';
+import { userActions } from '../../reducers/user.reducer';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
   console.log(cards);
   if (!error) {
-    const fbData = await getFields(boardId);
-    const list = {};
+    const taglist = await getFields(boardId);
+    const cardlist = {};
     const cardlabels = {};
 
-    fbData.forEach(el => {
-      list[el] = [];
+    taglist.forEach(el => {
+      cardlist[el] = [];
     });
 
     if (cards.length > 0) {
       cards.forEach(async el => {
         if (!el) return null;
-        if (!list[el.tagValue]) {
-          list[el.tagValue] = [el];
-          fbData.push(el.tagValue);
+        if (!cardlist[el.tagValue]) {
+          cardlist[el.tagValue] = [el];
+          taglist.push(el.tagValue);
           await setFirebaseData(boardId, {
             [el.tagValue]: { name: el.tagValue, createdAt: new Date() },
           });
         } else {
-          list[el.tagValue].push(el);
+          cardlist[el.tagValue].push(el);
         }
         cardlabels[el.id] = el.labels;
       });
     }
     let [userlist] = await fetchData('/members');
-    // console.log(userlist);
     let [memberlist] = await fetchData(`/board/${boardId}/members`);
-    // console.log(memberlist);
-    let [events] = await fetchEvents(`/events/board/${boardId}`);
-    let [labels] = await fetchData(uri.slice(0, uri.length - 6) + '/label');
+    let [boardEventLogs] = await fetchEvents(`/events/board/${boardId}`);
+    let [boardlabels] = await fetchData(
+      uri.slice(0, uri.length - 6) + '/label',
+    );
 
     let payload = {
       loading: false,
-      taglist: fbData ? fbData : [],
-      cardlist: list,
-      labellist: labels ? labels : [],
-      cardlabels: cardlabels,
+      taglist,
+      cardlist,
+      boardlabels,
+      cardlabels,
       currentBoardUrl: uri,
-      eventlogs: events,
-      memberlist: memberlist,
+      boardEventLogs,
+      memberlist,
     };
-    dispatch(searchUser({ userList: userlist }));
-    dispatch(setData(payload));
+    dispatch(userActions.searchUser(userlist));
+    dispatch(setCardData(payload));
   } else {
     console.log(error);
   }

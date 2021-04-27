@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
-import styled from 'styled-components';
-import { getBoard } from './board_utils';
-import { setData } from '../../reducers/board.reducer';
+import { boardActions } from '../../reducers/board.reducer';
 import { db } from '../../firebase';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 const NewBoardForm = () => {
   const [boardName, setBoardName] = useState('');
@@ -21,7 +20,7 @@ const NewBoardForm = () => {
     }
 
     if (boardName.length > 0) {
-      let [responseData, code] = await postData('/board', {
+      let [responseData, code, err] = await postData('/board', {
         name: boardName,
       });
       if (code === 201) {
@@ -30,13 +29,13 @@ const NewBoardForm = () => {
         let list = [...boardlist];
         list.push(responseData);
         await db.doc(responseData.id).set({});
-        dispatch(setData({ boardlist: list }));
+        dispatch(boardActions.setBoardData({ boardlist: list }));
         history.push(`/board/${responseData.id}/cards`);
       } else if (code >= 401001) {
         await getRefreshToken();
-        await addBoard();
+        await addBoard(e);
       } else {
-        alert('생성에 실패했습니다.');
+        alert(err);
         setBoardName('');
         inputRef.current.focus();
       }

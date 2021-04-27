@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefreshToken, updateData, deleteData } from '../../api';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 import styled from 'styled-components';
 import { updateCardEvents } from '../card/card_utils';
 
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
-  const { currentCardId, checklist, cardeventlogs } = useSelector(
+  const { currentCardId, checklist, cardEventLogs } = useSelector(
     state => state.card,
   );
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ const ChecklistElement = ({ el }) => {
           element.status = !element.status;
         }
       });
-      const logs = await updateCardEvents(currentCardId, cardeventlogs);
+      const logs = await updateCardEvents(currentCardId, cardEventLogs);
 
-      dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+      dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
     } else if (code >= 401001) {
       await getRefreshToken();
       await checkboxHandler(e);
@@ -52,8 +52,8 @@ const ChecklistElement = ({ el }) => {
               element.title = newTitle;
             }
           });
-          const logs = await updateCardEvents(currentCardId, cardeventlogs);
-          dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+          const logs = await updateCardEvents(currentCardId, cardEventLogs);
+          dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
         } else if (code >= 401001) {
           await getRefreshToken();
           await changeChecklist(e);
@@ -72,14 +72,14 @@ const ChecklistElement = ({ el }) => {
     if (window.confirm('체크리스트를 삭제하시겠습니까?')) {
       const code = await deleteData(`/todo/${el.todoId}`);
       if (code === 200) {
-        const logs = await updateCardEvents(currentCardId, cardeventlogs);
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         let obj = { ...checklist };
         obj[currentCardId].forEach((element, i) => {
           if (element.todoId === el.todoId) {
             obj[currentCardId].splice(i, 1);
           }
         });
-        dispatch(setData({ checklist: obj, cardeventlogs: logs }));
+        dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await deleteCheckList();

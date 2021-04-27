@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { setFirebaseData } from '../../firebase';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
@@ -40,7 +40,7 @@ const AddTagButton = () => {
       buttonStatusHandler();
       let arr = [...taglist];
       arr.push(tagName);
-      dispatch(setData({ taglist: arr }));
+      dispatch(setCardData({ taglist: arr }));
     }
   };
   useEffect(() => {

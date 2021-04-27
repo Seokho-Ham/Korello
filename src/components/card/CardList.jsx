@@ -8,7 +8,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateData, getRefreshToken } from '../../api';
 import { getCard, setLastViewList } from './card_utils';
-import { setData } from '../../reducers/card.reducer';
+import { setCardData } from '../../reducers/card.reducer';
 
 const CardList = ({ location }) => {
   const dispatch = useDispatch();
@@ -53,11 +53,12 @@ const CardList = ({ location }) => {
       return '';
     }
     if (source.droppableId === destination.droppableId) {
+      // console.log(result);
     } else {
       let list = { ...cardlist };
       let card = list[source.droppableId].splice(source.index, 1)[0];
       list[destination.droppableId].splice(destination.index, 0, card);
-      dispatch(setData({ cardlist: list }));
+      dispatch(setCardData({ cardlist: list }));
       updateCard(url, destination, source, draggableId);
     }
   };
@@ -70,7 +71,7 @@ const CardList = ({ location }) => {
 
   useEffect(() => {
     const boardId = location.pathname.split('/')[2];
-    dispatch(setData({ loading: true, currentBoardId: boardId }));
+    dispatch(setCardData({ loading: true, currentBoardId: boardId }));
     setLastViewList(location);
     getCard(`${location.pathname}`, dispatch, boardId);
   }, [dispatch]);

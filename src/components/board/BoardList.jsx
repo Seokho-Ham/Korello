@@ -1,42 +1,42 @@
 import React, { useEffect } from 'react';
-import RecentList from './RecentList';
-import BoardForm from './BoardForm';
+import RecentBoardList from './RecentBoardList';
+import BoardElement from './BoardElement';
 import NewBoardForm from './NewBoardForm';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoard } from './board_utils';
-import { setData } from '../../reducers/board.reducer';
+import { getBoardList } from './board_utils';
 
 const BoardList = () => {
   const { boardlist, loading } = useSelector(state => state.board);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setData({ loading: true }));
-    getBoard(dispatch);
+    getBoardList(dispatch);
   }, []);
 
   const renderBoards = data => {
     return data
-      .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
-      .map(el => {
-        return <BoardForm key={el.id} data={el} />;
-      });
+      ? data
+          .sort((a, b) => Date.parse(a.createDate) - Date.parse(b.createDate))
+          .map(el => {
+            return <BoardElement key={el.id} data={el} />;
+          })
+      : '죄송합니다. 에러가 발생했습니다.';
   };
 
   return !loading ? (
     <>
       <Board>
-        <RecentList />
+        <RecentBoardList />
         <ListType name='workspace'>
           <span></span>
           <h3>Workspace</h3>
         </ListType>
         <List>
           {renderBoards(boardlist)}
-          <BoardElement>
+          <BoardItem>
             <NewBoardForm />
-          </BoardElement>
+          </BoardItem>
         </List>
       </Board>
     </>
@@ -62,6 +62,7 @@ export const Board = styled.div`
 export const ListType = styled.div`
   position: relative;
   left: 18px;
+
   h3 {
     display: inline-block;
     line-height: 24px;
@@ -74,12 +75,13 @@ export const ListType = styled.div`
     white-space: nowrap;
   }
   span {
-    background-image: url(${props =>
-      props.name === 'workspace'
-        ? 'https://korello.s3.ap-northeast-2.amazonaws.com/icons/workspace.png'
-        : 'https://korello.s3.ap-northeast-2.amazonaws.com/icons/recent.png'});
+    display: inline-block;
+    ${props =>
+      props.name
+        ? `background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/workspace.png');`
+        : `background-image: url(https://korello.s3.ap-northeast-2.amazonaws.com/icons/recent.png);`};
     background-repeat: no-repeat;
-    background-size: ${props => (props.name === 'workspace' ? '25px' : '27px')};
+    background-size: ${props => (props.name ? '25px' : '27px')};
     width: 35px;
     height: 25px;
   }
@@ -94,7 +96,7 @@ export const List = styled.div`
   overflow: auto;
 `;
 
-export const BoardElement = styled.div`
+export const BoardItem = styled.div`
   margin: 10px;
   margin-top: 20px;
   float: left;

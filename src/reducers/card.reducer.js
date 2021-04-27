@@ -3,7 +3,7 @@ import setState from './reduxUtils';
 
 const SETSTATE = '/card/SETSTATE';
 
-export const setData = createAction(SETSTATE);
+export const setCardData = createAction(SETSTATE);
 
 const initialState = {
   loading: false,
@@ -11,10 +11,10 @@ const initialState = {
   taglist: [],
   cardlist: {},
   checklist: {},
-  labellist: [],
+  boardlabels: [],
   cardlabels: {},
-  eventlogs: [],
-  cardeventlogs: {},
+  boardEventLogs: [],
+  cardEventLogs: {},
   currentBoardId: '',
   currentBoardUrl: '',
   currentTagName: '',
