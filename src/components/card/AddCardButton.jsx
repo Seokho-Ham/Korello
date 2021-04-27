@@ -41,10 +41,17 @@ const AddButton = ({ tag }) => {
       if (code === 201) {
         const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         setTitle('');
-        setVisibility(prevState => !prevState);
         let list = { ...cardlist };
+<<<<<<< HEAD
         list[responseData.tagValue].push(responseData);
         dispatch(setCardData({ cardlist: list, eventlogs: events }));
+=======
+        list[responseData.tagValue]
+          ? list[responseData.tagValue].push(responseData)
+          : (list[responseData.tagValue] = [responseData]);
+
+        dispatch(setData({ cardlist: list, eventlogs: events }));
+>>>>>>> f808f5ee19a4fbe972440c45cc082486736ce31a
       } else if (code >= 401001) {
         await getRefreshToken();
         await addCardHandler(e);

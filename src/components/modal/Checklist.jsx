@@ -38,7 +38,6 @@ const Checklist = ({ percent }) => {
       );
       if (code === 201 || code === 200) {
         setTitle('');
-        setClicked(p => !p);
         const logs = await updateCardEvents(currentCardId, cardeventlogs);
         let obj = { ...checklist };
         obj[currentCardId].push(responseData);
