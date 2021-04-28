@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postData, getRefreshToken } from '../../api';
-import { setCardData } from '../../reducers/card.reducer';
+import { postData, getRefreshToken } from '../../../api';
+import { setCardData } from '../../../reducers/card.reducer';
 import styled from 'styled-components';
-import { updateCardEvents } from '../../helper/card';
+import { updateCardEvents } from '../../../helper/card';
 
 const ChecklistModal = () => {
   const [clicked, setClicked] = useState(false);

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import AddCardButton from './AddCardButton';
-import CardListForm from './CardListForm';
+import CardElement from './CardElement';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
@@ -8,7 +8,7 @@ import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken, fetchEvents } from '../../api';
 import { setCardData } from '../../reducers/card.reducer';
 import { MdClose } from 'react-icons/md';
-const TagForm = ({ tag }) => {
+const TagContainer = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
   );
@@ -68,7 +68,7 @@ const TagForm = ({ tag }) => {
                       if (!el) return null;
                       else {
                         return (
-                          <CardListForm
+                          <CardElement
                             key={el.id}
                             index={i}
                             id={el.id}
@@ -91,7 +91,7 @@ const TagForm = ({ tag }) => {
   );
 };
 
-export default memo(TagForm);
+export default memo(TagContainer);
 
 const TagWrapper = styled.div`
   width: 272px;
@@ -120,7 +120,7 @@ const TagHeader = styled.div`
   margin: 15px 0px 3px 0px;
   border-radius: 6px;
   padding: 0 0 0 14px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #172b4d;
   background-color: #ebecf0;

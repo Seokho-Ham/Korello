@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChecklistElement from './ChecklistElement';
 import styled from 'styled-components';
-import { postData, fetchData, getRefreshToken } from '../../api';
+import { postData, getRefreshToken } from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCardData } from '../../reducers/card.reducer';
-import { SendUpdateButton } from './LabelElement';
-import { updateCardEvents } from '../card/card_utils';
+import { setCardData } from '../../../reducers/card.reducer';
+import { SendUpdateButton } from '../label/LabelElement';
+import { updateCardEvents } from '../../../helper/card';
 
-const Checklist = ({ percent }) => {
+const ChecklistContent = ({ percent }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState('');
   const { checklist, currentCardId, cardEventLogs } = useSelector(
@@ -106,7 +106,7 @@ const Checklist = ({ percent }) => {
   );
 };
 
-export default Checklist;
+export default ChecklistContent;
 
 const ProgressContainer = styled.div`
   position: relative;

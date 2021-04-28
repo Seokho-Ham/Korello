@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { LogType, LogElement, LogModalList } from './LogModal';
+import { LogType, LogElement, LogModalList } from './BoardLogModal';
 import { MdAccountCircle } from 'react-icons/md';
 
 const CardEventLog = () => {

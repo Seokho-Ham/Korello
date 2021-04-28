@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CardModal from './CardModal';
+import CardModal from '../modal/CardModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCardData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
-const CardListForm = ({ id, title, index, tag }) => {
+const CardElement = ({ id, title, index, tag }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { cardlabels } = useSelector(state => state.card);
   const dispatch = useDispatch();
@@ -52,9 +52,7 @@ const CardListForm = ({ id, title, index, tag }) => {
                         ></span>
                       ))}
                   </CardLabels>
-                ) : (
-                  <CardLabels></CardLabels>
-                )}
+                ) : null}
                 <CardTitle>{title}</CardTitle>
                 {/* <CardDueDate>
                   <span></span>
@@ -69,7 +67,7 @@ const CardListForm = ({ id, title, index, tag }) => {
   );
 };
 
-export default memo(CardListForm);
+export default memo(CardElement);
 
 const CardWrapper = styled.div`
   display: block;
@@ -80,9 +78,12 @@ const CardWrapper = styled.div`
 
 const Card = styled.div`
   position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
   background-color: #fff;
   border-radius: 4px;
-  padding: 8px;
+  padding: 3px 8px;
   box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
   min-height: 40px;
 `;
@@ -92,7 +93,7 @@ const CardLabels = styled.div`
   position: relative;
   min-height: 8px;
   span {
-    margin: 0px 2px 2px 2px;
+    margin: 4px 2px;
     padding: 1px, 2px;
     border-radius: 10px;
     float: left;
@@ -104,38 +105,38 @@ const CardLabels = styled.div`
 const CardTitle = styled.div`
   display: inline-block;
   position: relative;
-  top: 1px;
+
   left: 3px;
   font-size: 14px;
   font-weight: 500;
 `;
 
-const CardDueDate = styled.div`
-  display: block;
-  background-color: #febebe;
-  width: 80px;
-  height: 27px;
-  /* box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1); */
-  border-radius: 4px;
-  margin-top: 5px;
+// const CardDueDate = styled.div`
+//   display: block;
+//   background-color: #febebe;
+//   width: 80px;
+//   height: 27px;
+//   /* box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1); */
+//   border-radius: 4px;
+//   margin: 5px 0px;
 
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  span {
-    display: inline-block;
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
-    background-size: 25px;
-    background-repeat: no-repeat;
-    position: relative;
-    top: 1px;
-    width: 29px;
-    height: 28px;
-    margin: 0px;
-  }
-  div {
-    display: inline-block;
-    position: relative;
-    bottom: 10px;
-  }
-`;
+//   font-size: 14px;
+//   font-weight: 500;
+//   color: #fff;
+//   span {
+//     display: inline-block;
+//     background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
+//     background-size: 25px;
+//     background-repeat: no-repeat;
+//     position: relative;
+//     top: 1px;
+//     width: 29px;
+//     height: 28px;
+//     margin: 0px;
+//   }
+//   div {
+//     display: inline-block;
+//     position: relative;
+//     bottom: 10px;
+//   }
+// `;

@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRefreshToken, postData } from '../../api';
+import { getRefreshToken, postData } from '../../../api';
 import styled from 'styled-components';
 import LabelElement from './LabelElement';
-import { setCardData } from '../../reducers/card.reducer';
-import { updateCardEvents } from '../card/card_utils';
+import { setCardData } from '../../../reducers/card.reducer';
+import { updateCardEvents } from '../../../helper/card';
 
 const checkOverlap = (arr, id) => {
   if (!arr) {
@@ -17,7 +17,7 @@ const checkOverlap = (arr, id) => {
   return false;
 };
 
-const LabelList = () => {
+const BoardLabelList = () => {
   const {
     boardlabels,
     currentCardId,
@@ -96,7 +96,7 @@ const LabelList = () => {
   return <LabelWrapper>{renderLabelList()}</LabelWrapper>;
 };
 
-export default memo(LabelList);
+export default memo(BoardLabelList);
 const LabelWrapper = styled.div`
   max-height: 300px;
   overflow-y: scroll;

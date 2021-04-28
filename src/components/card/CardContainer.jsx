@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import TagForm from './TagForm';
+import TagContainer from './TagContainer';
 import AddTagButton from './AddTagButton';
-import LogBt from './LogBt';
-import LogModal from './LogModal';
+import BoardLogButton from './BoardLogButton';
+import BoardLogModal from './BoardLogModal';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateData, getRefreshToken } from '../../api';
-import { getCard, setLastViewList } from './card_utils';
+import { getCard, setLastViewList } from '../../helper/card';
 import { setCardData } from '../../reducers/card.reducer';
 
 const CardList = ({ location }) => {
@@ -65,7 +65,7 @@ const CardList = ({ location }) => {
 
   const renderCards = () => {
     return taglist.map((el, i) => {
-      return <TagForm key={i} tag={el} />;
+      return <TagContainer key={i} tag={el} />;
     });
   };
 
@@ -78,14 +78,14 @@ const CardList = ({ location }) => {
 
   return (
     <Container>
-      <CardContainer>
+      <CardPageContainer>
         <CardHeader>
           <CardHeaderItems>
-            <LogBt openLogHandler={openLogHandler} />
+            <BoardLogButton openLogHandler={openLogHandler} />
           </CardHeaderItems>
         </CardHeader>
         <DragDropContext onDragEnd={onDragEnd}>
-          <CardListContainer>
+          <CardListContent>
             <>
               <TagList>
                 {!loading ? (
@@ -98,12 +98,12 @@ const CardList = ({ location }) => {
                 )}
               </TagList>
             </>
-          </CardListContainer>
+          </CardListContent>
         </DragDropContext>
-      </CardContainer>
+      </CardPageContainer>
 
       {openLog ? (
-        <LogModal
+        <BoardLogModal
           openLog={openLog}
           openLogHandler={openLogHandler}
           setOpenLog={setOpenLog}
@@ -125,7 +125,7 @@ const Container = styled.div`
   background-size: 100% 100%;
 `;
 
-const CardContainer = styled.div`
+const CardPageContainer = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -144,7 +144,7 @@ const CardHeaderItems = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-const CardListContainer = styled.div`
+const CardListContent = styled.div`
   height: 90%;
   width: 100%;
   overflow-x: auto;

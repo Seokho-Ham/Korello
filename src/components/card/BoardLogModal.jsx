@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MdAccountCircle, MdEvent } from 'react-icons/md';
-const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
+const BoardLogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   const modalRef = useRef(null);
   const { boardEventLogs } = useSelector(state => state.card);
   const pageClickHandler = e => {
@@ -53,7 +53,7 @@ const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   );
 };
 
-export default LogModal;
+export default BoardLogModal;
 
 const EventLogContainer = styled.div`
   display: flex;

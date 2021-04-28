@@ -1,7 +1,7 @@
 import React from 'react';
 import BoardElement from './BoardElement';
 import { useSelector } from 'react-redux';
-import { ListType, List } from './BoardList';
+import { ListType, List } from './BoardListContainer';
 import { MdAccessTime } from 'react-icons/md';
 
 const RecentBoardList = () => {

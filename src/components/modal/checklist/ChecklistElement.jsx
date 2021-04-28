@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRefreshToken, updateData, deleteData } from '../../api';
-import { setCardData } from '../../reducers/card.reducer';
+import { getRefreshToken, updateData, deleteData } from '../../../api';
+import { setCardData } from '../../../reducers/card.reducer';
 import styled from 'styled-components';
-import { updateCardEvents } from '../../helper/card';
+import { updateCardEvents } from '../../../helper/card';
 
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);

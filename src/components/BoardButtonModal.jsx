@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardList } from './board/board_utils';
+import { getBoardList } from '../helper/board';
 
 const BoardButtonModal = ({ boardButton, setBoardButton }) => {
   const { boardlist } = useSelector(state => state.board);

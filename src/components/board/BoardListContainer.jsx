@@ -4,10 +4,10 @@ import BoardElement from './BoardElement';
 import NewBoardForm from './NewBoardForm';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardList } from './board_utils';
+import { getBoardList } from '../../helper/board';
 import { MdAccountBox } from 'react-icons/md';
 
-const BoardList = () => {
+const BoardListContainer = () => {
   const { boardlist, loading } = useSelector(state => state.board);
   const dispatch = useDispatch();
 
@@ -50,11 +50,12 @@ const BoardList = () => {
   );
 };
 
-export default BoardList;
+export default BoardListContainer;
 
 export const Board = styled.div`
   display: flex;
   flex-direction: column;
+
   background-color: #f9fafc;
   margin: 40px 15px 0px;
   width: 100%;
@@ -63,9 +64,7 @@ export const Board = styled.div`
 `;
 
 export const ListType = styled.div`
-  position: relative;
-  left: 18px;
-
+  margin-top: 10px;
   h3 {
     display: inline-block;
     line-height: 24px;
@@ -106,7 +105,7 @@ const Loading = styled.span`
   position: relative;
   top: 50px;
   left: 30%;
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/load.gif')
+  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/load.gif');
   background-repeat: no-repeat;
   background-size: 130px;
   width: 130px;

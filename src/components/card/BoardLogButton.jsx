@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdMenu } from 'react-icons/md';
-const LogBt = ({ openLogHandler }) => {
+const BoardLogButton = ({ openLogHandler }) => {
   return (
     <LogButton>
       <MdMenu onClick={openLogHandler} size='28' />
@@ -9,7 +9,7 @@ const LogBt = ({ openLogHandler }) => {
   );
 };
 
-export default LogBt;
+export default BoardLogButton;
 
 const LogButton = styled.div`
   display: inline-block;

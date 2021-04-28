@@ -1,5 +1,5 @@
 import React from 'react';
-import BoardList from './BoardList';
+import BoardListContainer from './BoardListContainer';
 import styled from 'styled-components';
 const BoardContainer = () => {
   return (
@@ -11,7 +11,7 @@ const BoardContainer = () => {
           </div>
         </BoardNav>
       </BoardSidebar>
-      <BoardList />
+      <BoardListContainer />
     </Container>
   );
 };

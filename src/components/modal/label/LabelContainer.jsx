@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { postData, getRefreshToken, fetchEvents } from '../../api';
+import { postData, getRefreshToken, fetchEvents } from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCardData } from '../../reducers/card.reducer';
-import LabelList from './LabelList';
+import { setCardData } from '../../../reducers/card.reducer';
+import BoardLabelList from './BoardLabelList';
 import styled from 'styled-components';
 import { TwitterPicker } from 'react-color';
 
@@ -97,7 +97,7 @@ const Label = () => {
       <LabelButton onClick={openLabelButton}>Label</LabelButton>
       {openLabel ? (
         <LabelModal ref={labelRef}>
-          <LabelList />
+          <BoardLabelList />
           <div style={{ display: display ? 'block' : 'none' }}>
             <form onSubmit={addBoardLabelButton}>
               <LabelInputTitle

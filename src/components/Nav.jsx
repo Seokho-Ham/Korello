@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { clearStorage } from '../api';
 import BoardButtonModal from './BoardButtonModal';
 import SearchUser from './user/SearchUser';
+import { BiHome } from 'react-icons/bi';
+import { FaChalkboard } from 'react-icons/fa';
 
 const Nav = ({ history, setLogin }) => {
   const [boardButton, setBoardButton] = useState(false);
@@ -23,9 +25,12 @@ const Nav = ({ history, setLogin }) => {
     <NavHeader>
       <NavHeaderButtons>
         <a href='/boards'>
-          <span className='home-button'></span>
+          <BiHome size='25' color='white' />
         </a>
-        <BoardButton onClick={onClickHandler}>Boards</BoardButton>
+        <BoardButton onClick={onClickHandler}>
+          <FaChalkboard size='17' color='white' />
+          Boards
+        </BoardButton>
         {boardButton && (
           <BoardButtonModal
             boardButton={boardButton}
@@ -83,15 +88,9 @@ const NavHeaderButtons = styled.div`
     width: 31px;
     border-radius: 4px;
   }
-  .home-button {
-    display: inline-block;
+  svg {
     position: relative;
-    top: 2px;
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/home-icon.png');
-    background-repeat: no-repeat;
-    background-size: 25px;
-    width: 25px;
-    height: 25px;
+    top: 3px;
   }
 `;
 
@@ -145,8 +144,12 @@ const BoardButton = styled.button`
   margin: 0px;
   margin-left: 3px;
   font-weight: bold;
+
   color: #fff;
   :hover {
     opacity: 0.5;
+  }
+  svg {
+    margin-right: 5px;
   }
 `;

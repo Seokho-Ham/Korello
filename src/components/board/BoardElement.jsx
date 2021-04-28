@@ -4,10 +4,10 @@ import randomImage from '../../api/images';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postData, getRefreshToken } from '../../api';
-import { BoardItem } from './BoardList';
+import { BoardItem } from './BoardListContainer';
 import { deleteFirebaseDoc } from '../../firebase';
 import { boardActions } from '../../reducers/board.reducer';
-
+import { BiX } from 'react-icons/bi';
 const BoardElement = ({ data }) => {
   const [image, setImage] = useState(randomImage());
   const history = useHistory();
@@ -57,7 +57,9 @@ const BoardElement = ({ data }) => {
 
   return (
     <BoardItem image={image}>
-      <BoardDeleteButton onClick={deleteBoard}></BoardDeleteButton>
+      <BoardDeleteButton onClick={deleteBoard}>
+        <BiX size='30' />
+      </BoardDeleteButton>
       <BoardCover onClick={clickBoard}>
         <BoardTitle>{data.name}</BoardTitle>
       </BoardCover>
@@ -68,12 +70,9 @@ const BoardElement = ({ data }) => {
 export default React.memo(BoardElement);
 
 const BoardDeleteButton = styled.span`
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: 15px;
-  width: 5px;
-  height: 13px;
+  width: 0.5px;
+  height: 12px;
   background-color: hsla(0, 0%, 74%, 0.5);
   border: 0px;
   border-radius: 3px;
@@ -84,6 +83,11 @@ const BoardDeleteButton = styled.span`
     background-color: hsla(0, 0%, 74%, 1);
   }
   float: right;
+  svg {
+    position: relative;
+    right: 15px;
+    bottom: 7px;
+  }
 `;
 const BoardCover = styled.div`
   height: 100%;

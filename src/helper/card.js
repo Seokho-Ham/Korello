@@ -1,7 +1,7 @@
-import { fetchCard, fetchData, fetchEvents, getRefreshToken } from '../../api';
-import { setCardData } from '../../reducers/card.reducer';
-import { getFields, setFirebaseData } from '../../firebase';
-import { userActions } from '../../reducers/user.reducer';
+import { fetchCard, fetchData, fetchEvents, getRefreshToken } from '../api';
+import { setCardData } from '../reducers/card.reducer';
+import { getFields, setFirebaseData } from '../firebase';
+import { userActions } from '../reducers/user.reducer';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);

@@ -5,9 +5,9 @@ import {
   updateData,
   getRefreshToken,
   fetchEvents,
-} from '../../api';
+} from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCardData } from '../../reducers/card.reducer';
+import { setCardData } from '../../../reducers/card.reducer';
 
 const LabelElement = ({ id, name, color, onClick }) => {
   const [editLabel, setEditLabel] = useState(false);

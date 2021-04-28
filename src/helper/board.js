@@ -1,6 +1,6 @@
-import { boardActions } from '../../reducers/board.reducer';
-import { fetchData } from '../../api';
-import { setFirebaseDocuments } from '../../firebase';
+import { boardActions } from '../reducers/board.reducer';
+import { fetchData } from '../api';
+import { setFirebaseDocuments } from '../firebase';
 
 const makeRecentList = data => {
   let result = [];

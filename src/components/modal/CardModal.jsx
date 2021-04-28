@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Label from '../modal/Label';
-import CheckListModal from '../modal/ChecklistModal';
-import Checklist from '../modal/Checklist';
-import CalendarModal from '../modal/CalendarModal';
-import CardEventLog from './CardEventLog';
+import LabelContainer from './label/LabelContainer';
+import CheckListModal from './checklist/ChecklistModal';
+import ChecklistContent from './checklist/ChecklistContent';
+import CalendarModal from './calendar/CalendarModal';
+import CardEventLog from '../card/CardEventLog';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -13,7 +13,7 @@ import {
   getRefreshToken,
   fetchEvents,
 } from '../../api';
-import { progressCalculator, updateCardEvents } from './card_utils';
+import { progressCalculator, updateCardEvents } from '../../helper/card';
 import { setCardData } from '../../reducers/card.reducer';
 
 const CardModal = ({ modalVisible, setModalVisible }) => {
@@ -198,7 +198,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
             {checklist[currentCardId] !== undefined &&
             checklist[currentCardId].length > 0 ? (
               <ChecklistContainer>
-                <Checklist
+                <ChecklistContent
                   percent={progressCalculator(checklist[currentCardId])}
                 />
               </ChecklistContainer>
@@ -207,7 +207,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
           </ModalContents>
           <ModalSidebar>
             <div>Sidebar</div>
-            <Label />
+            <LabelContainer />
             <CheckListModal />
             <CalendarModal />
           </ModalSidebar>

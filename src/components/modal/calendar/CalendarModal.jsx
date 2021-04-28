@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
-import '../../css/react-datepicker.css';
-import { postData, getRefreshToken } from '../../api';
+import '../../../css/react-datepicker.css';
+import { postData, getRefreshToken } from '../../../api';
 
 const CalendarModal = () => {
   const [open, setOpen] = useState(false);
