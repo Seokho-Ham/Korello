@@ -87,6 +87,9 @@ const NavHeaderButtons = styled.div`
     background-color: hsla(0, 0%, 100%, 0.3);
     width: 31px;
     border-radius: 4px;
+    :hover {
+      opacity: 0.5;
+    }
   }
   svg {
     position: relative;
