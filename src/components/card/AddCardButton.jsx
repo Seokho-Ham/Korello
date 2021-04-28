@@ -92,7 +92,6 @@ const AddButton = ({ tag }) => {
 
               <CardAddButton>Add Card</CardAddButton>
             </form>
-            <CardCancelButton onClick={onClickHandler}></CardCancelButton>
           </NewCardForm>
         ) : (
           <NewCardForm>
@@ -129,30 +128,13 @@ const CardAddStateButton = styled.button`
     color: #172b4d;
   }
 `;
-const CardCancelButton = styled.span`
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 15px;
-  width: 40px;
-  height: 20px;
-  background-color: #ebecf0;
-  border: 0px;
-  border-radius: 3px;
-  margin-left: 3px;
-  padding: 8px 15px;
-  color: #172b4d;
-  &:hover {
-    background-color: hsla(0, 0%, 74%, 0.5);
-  }
-`;
 
 const CardAddButton = styled.button`
-  margin: 5px 2px 10px 0px;
+  margin: 7px 2px 6px 2px;
   background-color: #5aac44;
   color: #fff;
-  padding: 7px;
-  border-radius: 6px;
+  padding: 4px;
+  border-radius: 4px;
   &:hover {
     background-color: #458534;
   }

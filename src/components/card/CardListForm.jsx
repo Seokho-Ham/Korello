@@ -56,10 +56,10 @@ const CardListForm = ({ id, title, index, tag }) => {
                   <CardLabels></CardLabels>
                 )}
                 <CardTitle>{title}</CardTitle>
-                <CardDueDate>
+                {/* <CardDueDate>
                   <span></span>
                   <div>Apr 13</div>
-                </CardDueDate>
+                </CardDueDate> */}
               </Card>
             </CardWrapper>
           );

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-
+import { MdAccountCircle, MdEvent } from 'react-icons/md';
 const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
   const modalRef = useRef(null);
   const { boardEventLogs } = useSelector(state => state.card);
@@ -10,13 +10,13 @@ const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
       setOpenLog(!openLog);
     }
   };
-  console.log(boardEventLogs);
+
   const renderLogs = () => {
     return boardEventLogs.map(el => {
       let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
       return (
         <LogElement key={el.id}>
-          <span></span>
+          <MdAccountCircle size='32' />
           <div>
             <div className='log-text'>
               {el.memberName}님이 {el.message}
@@ -45,19 +45,10 @@ const LogModal = ({ openLog, openLogHandler, setOpenLog }) => {
       </EventLogHeader>
       <hr />
       <LogType>
-        <span></span>
+        <MdEvent size='30' />
         <h4>Activity</h4>
       </LogType>
-      <LogModalList>
-        {/* <LogElement>
-          <span></span>
-          <div>
-            <div className='log-text'>강뚝딱님이 보드를 수정했습니다.</div>
-            <div className='log-time'>01.26 03:41:02</div>
-          </div>
-        </LogElement> */}
-        {renderLogs()}
-      </LogModalList>
+      <LogModalList>{renderLogs()}</LogModalList>
     </EventLogContainer>
   );
 };
@@ -109,14 +100,6 @@ export const LogType = styled.div`
   align-items: center;
   margin: 14px 15px;
 
-  span {
-    display: inline-block;
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/activity.png');
-    background-size: 25px;
-    background-repeat: no-repeat;
-    width: 27px;
-    height: 25px;
-  }
   h4 {
     display: inline;
     margin: 0px 5px;
@@ -138,13 +121,8 @@ export const LogElement = styled.div`
   display: flex;
   flex-direction: row;
   margin: 10px 0px;
-  span {
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/profile.png');
-    background-size: 35px;
-    background-repeat: no-repeat;
-    width: 40px;
-    height: 35px;
-    margin: 0px 15px;
+  svg {
+    margin: 0px 10px 0px 13px;
   }
   .log-time {
     font-size: small;

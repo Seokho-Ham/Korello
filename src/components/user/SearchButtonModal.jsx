@@ -58,7 +58,6 @@ const SearchButtonModal = ({ searchedWord, searchButtonHandler }) => {
   };
 
   const renderUsers = () => {
-    // console.log(memberlist);
     let memberNames = memberlist.map(el => {
       return el.memberName;
     });

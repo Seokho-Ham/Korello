@@ -7,7 +7,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { deleteFirebaseField } from '../../firebase';
 import { postData, getRefreshToken, fetchEvents } from '../../api';
 import { setCardData } from '../../reducers/card.reducer';
-
+import { MdClose } from 'react-icons/md';
 const TagForm = ({ tag }) => {
   const { taglist, cardlist, currentBoardUrl, currentBoardId } = useSelector(
     state => state.card,
@@ -56,7 +56,8 @@ const TagForm = ({ tag }) => {
       <Tag>
         <TagHeader>
           <div>{tag}</div>
-          <TagDeleteButton onClick={deleteTagHandler} />
+
+          <MdClose onClick={deleteTagHandler} size='23' />
         </TagHeader>
         <Droppable droppableId={tag}>
           {provided => {
@@ -133,6 +134,13 @@ const TagHeader = styled.div`
       background-color: hsla(0, 0%, 74%, 0.5);
     }
   }
+  svg {
+    border-radius: 3px;
+    :hover {
+      opacity: 0.5px;
+      background-color: hsla(0, 0%, 74%, 0.5);
+    }
+  }
 `;
 const TagElement = styled.div`
   overflow: scroll;
@@ -140,21 +148,5 @@ const TagElement = styled.div`
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
-  }
-`;
-
-const TagDeleteButton = styled.span`
-  display: inline-block;
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/cancel-icon.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 14px;
-  width: 20px;
-  height: 20px;
-  padding: 3px;
-  border-radius: 3px;
-  :hover {
-    opacity: 0.5px;
-    background-color: hsla(0, 0%, 74%, 0.5);
   }
 `;

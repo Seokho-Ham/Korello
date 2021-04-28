@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { MdMenu } from 'react-icons/md';
 const LogBt = ({ openLogHandler }) => {
   return (
     <LogButton>
-      <span onClick={openLogHandler}></span>
+      <MdMenu onClick={openLogHandler} size='28' />
     </LogButton>
   );
 };
@@ -14,14 +14,9 @@ export default LogBt;
 const LogButton = styled.div`
   display: inline-block;
   margin-left: 5px;
-  span {
-    display: inline-block;
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/logs.png');
-    background-size: 28px;
-    width: 29px;
-    height: 28px;
-    border-radius: 3px;
+  svg {
     border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 4px;
     background-color: hsla(0, 0%, 100%, 0.5);
     cursor: pointer;
   }

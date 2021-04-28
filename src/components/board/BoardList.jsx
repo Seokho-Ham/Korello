@@ -5,6 +5,7 @@ import NewBoardForm from './NewBoardForm';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardList } from './board_utils';
+import { MdAccountBox } from 'react-icons/md';
 
 const BoardList = () => {
   const { boardlist, loading } = useSelector(state => state.board);
@@ -29,7 +30,7 @@ const BoardList = () => {
       <Board>
         <RecentBoardList />
         <ListType name='workspace'>
-          <span></span>
+          <MdAccountBox size='27' />
           <h3>Workspace</h3>
         </ListType>
         <List>
@@ -52,6 +53,8 @@ const BoardList = () => {
 export default BoardList;
 
 export const Board = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #f9fafc;
   margin: 40px 15px 0px;
   width: 100%;
@@ -66,24 +69,13 @@ export const ListType = styled.div`
   h3 {
     display: inline-block;
     line-height: 24px;
-    margin: 0px 0 0;
+    margin: 0px 5px 0px;
     font-size: 16px;
     font-weight: 700;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-  span {
-    display: inline-block;
-    ${props =>
-      props.name
-        ? `background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/workspace.png');`
-        : `background-image: url(https://korello.s3.ap-northeast-2.amazonaws.com/icons/recent.png);`};
-    background-repeat: no-repeat;
-    background-size: ${props => (props.name ? '25px' : '27px')};
-    width: 35px;
-    height: 25px;
   }
 `;
 

@@ -95,9 +95,6 @@ const Checklist = ({ percent }) => {
               ></input>
               <ChecklistAddButton>Add</ChecklistAddButton>
             </form>
-            <ChecklistStatusButton onClick={clickButtonHandler}>
-              Cancel
-            </ChecklistStatusButton>
           </>
         ) : (
           <ChecklistStatusButton onClick={clickButtonHandler}>
@@ -141,14 +138,14 @@ const CheckListAddForm = styled.div`
     display: block;
     width: 90%;
     border: 0px;
-    height: 25px;
+    height: 27px;
     box-shadow: inset 0 0 0 2px #0079bf;
   }
 `;
 
 const ChecklistAddButton = styled(SendUpdateButton)`
   display: inline;
-  padding: 5px;
+  margin-top: 5px;
   width: 50px;
 `;
 

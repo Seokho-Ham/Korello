@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { LogType, LogElement, LogModalList } from './LogModal';
+import { MdAccountCircle } from 'react-icons/md';
+
 const CardEventLog = () => {
   const { cardEventLogs, currentCardId } = useSelector(state => state.card);
 
@@ -10,7 +12,7 @@ const CardEventLog = () => {
       let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
       return (
         <CardEventElement key={el.id}>
-          <span></span>
+          <MdAccountCircle size='32' />
           <div>
             <div className='log-text'>
               {el.memberName}님이 {el.message}
@@ -50,7 +52,7 @@ const CardEventList = styled(LogModalList)``;
 
 const CardEventElement = styled(LogElement)`
   font-size: 14px;
-  span {
-    margin: 0px 10px;
+  svg {
+    margin: 0px 10px 0px 0px;
   }
 `;

@@ -241,11 +241,12 @@ const ModalInner = styled.div`
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
-  height: 850px;
+  height: 90%;
+  max-height: 800px;
   margin: 48px 0px 80px;
   padding: 30px 20px;
   z-index: 11;
-  top: 5%;
+  top: 1%;
 `;
 
 const CardDeleteButton = styled.button`

@@ -69,9 +69,6 @@ const AddTagButton = () => {
               />
               <TagAddButton>Add</TagAddButton>
             </form>
-            <TagCancelButton onClick={buttonStatusHandler}>
-              Cancel
-            </TagCancelButton>
           </TagAddForm>
         ) : (
           <TagAddStateButton onClick={buttonStatusHandler}>
@@ -97,6 +94,7 @@ const TagAddInput = styled.input`
   display: block;
   box-sizing: border-box;
   width: 100%;
+  height: 33px;
   margin: 0px;
   border: 0.5px;
   margin-bottom: 3px;
@@ -109,27 +107,17 @@ const TagAddForm = styled.div`
   margin: 7px;
 `;
 const TagAddButton = styled.button`
-  margin: 2px;
+  margin: 5px 2px 4px 2px;
   background-color: #5aac44;
   color: #fff;
-  padding: 6px;
-  border-radius: 6px;
+  padding: 4px;
+  border-radius: 4px;
   border: 1px;
   &:hover {
     background-color: #458534;
   }
 `;
-const TagCancelButton = styled.button`
-  display: inline-block;
-  background-color: #ebecf0;
-  border: 0px;
-  margin: 4px;
-  padding: 6px;
-  color: #172b4d;
-  &:hover {
-    background-color: hsla(0, 0%, 74%, 0.5);
-  }
-`;
+
 const TagAddStateButton = styled.div`
   font-size: 14px;
   font-weight: 400;

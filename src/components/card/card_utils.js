@@ -30,7 +30,7 @@ export const getCard = async (uri, dispatch, boardId) => {
         cardlabels[el.id] = el.labels;
       });
     }
-    let [userlist] = await fetchData('/members');
+    let [userList] = await fetchData('/members');
     let [memberlist] = await fetchData(`/board/${boardId}/members`);
     let [boardEventLogs] = await fetchEvents(`/events/board/${boardId}`);
     let [boardlabels] = await fetchData(
@@ -47,7 +47,7 @@ export const getCard = async (uri, dispatch, boardId) => {
       boardEventLogs,
       memberlist,
     };
-    dispatch(userActions.searchUser(userlist));
+    dispatch(userActions.searchUser({ userList }));
     dispatch(setCardData(payload));
   } else {
     console.log(error);
@@ -59,18 +59,16 @@ export const setLastViewList = location => {
 
   let lastViewList = JSON.parse(localStorage.getItem('lastView'));
   if (lastViewList) {
+    if (lastViewList.length >= 4) {
+      lastViewList = lastViewList.splice(0, 4);
+    }
     if (lastViewList.includes(parseInt(boardId))) {
       lastViewList.splice(lastViewList.indexOf(parseInt(boardId)), 1);
-      localStorage.setItem(
-        'lastView',
-        JSON.stringify([parseInt(boardId), ...lastViewList]),
-      );
-    } else {
-      localStorage.setItem(
-        'lastView',
-        JSON.stringify([parseInt(boardId), ...lastViewList]),
-      );
     }
+    localStorage.setItem(
+      'lastView',
+      JSON.stringify([parseInt(boardId), ...lastViewList]),
+    );
   } else {
     localStorage.setItem('lastView', JSON.stringify([parseInt(boardId)]));
   }

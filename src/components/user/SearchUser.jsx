@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchButtonModal from './SearchButtonModal';
+import { MdContacts } from 'react-icons/md';
 
 const SearchUser = () => {
   const [searchedWord, setSearchedWord] = useState('');
@@ -53,6 +54,7 @@ const SearchUser = () => {
       </SearchButtonContainer>
 
       <SearchButton visible={searchButtonHandler} onClick={onClickHandler}>
+        <MdContacts size='15' />
         Search
       </SearchButton>
     </>
@@ -84,5 +86,10 @@ const SearchButton = styled.button`
   color: #fff;
   :hover {
     opacity: 0.5;
+  }
+  svg {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
   }
 `;
