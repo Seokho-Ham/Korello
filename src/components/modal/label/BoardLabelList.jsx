@@ -100,6 +100,10 @@ export default memo(BoardLabelList);
 const LabelWrapper = styled.div`
   max-height: 300px;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const LabelListWrapper = styled.div`
   display: flex;

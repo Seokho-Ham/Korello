@@ -142,6 +142,10 @@ const SearchModalList = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const UserElement = styled.div`
   &:hover {

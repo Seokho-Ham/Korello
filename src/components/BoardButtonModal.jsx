@@ -77,6 +77,10 @@ const BoardButtonContainer = styled.div`
 const BoardModalList = styled.div`
   overflow: scroll;
   height: 90%;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BoardElement = styled.div`
