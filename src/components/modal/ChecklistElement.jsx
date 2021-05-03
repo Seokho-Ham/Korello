@@ -18,7 +18,9 @@ const ChecklistElement = ({ el }) => {
   };
 
   const checkboxHandler = async e => {
-    const code = await updateData(`/todo/${e.target.name}/status`);
+    const [resultData, code] = await updateData(
+      `/todo/${e.target.name}/status`,
+    );
     if (code === 200) {
       let obj = { ...checklist };
       obj[currentCardId].forEach(element => {
@@ -40,7 +42,7 @@ const ChecklistElement = ({ el }) => {
     e.preventDefault();
     if (changeButton) {
       if (newTitle.length > 0 && newTitle !== el.title) {
-        const code = await updateData(`/todo/${el.todoId}`, {
+        const [resultData, code] = await updateData(`/todo/${el.todoId}`, {
           title: newTitle,
         });
 

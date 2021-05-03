@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCardData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 
-const CardElement = ({ id, title, index, tag }) => {
+const CardElement = ({ id, title, index, tag, dueDate }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { cardlabels } = useSelector(state => state.card);
   const dispatch = useDispatch();
@@ -54,10 +54,12 @@ const CardElement = ({ id, title, index, tag }) => {
                   </CardLabels>
                 ) : null}
                 <CardTitle>{title}</CardTitle>
-                {/* <CardDueDate>
-                  <span></span>
-                  <div>Apr 13</div>
-                </CardDueDate> */}
+                {dueDate ? (
+                  <CardDueDate>
+                    <span></span>
+                    <div>Apr 13</div>
+                  </CardDueDate>
+                ) : null}
               </Card>
             </CardWrapper>
           );
@@ -111,32 +113,32 @@ const CardTitle = styled.div`
   font-weight: 500;
 `;
 
-// const CardDueDate = styled.div`
-//   display: block;
-//   background-color: #febebe;
-//   width: 80px;
-//   height: 27px;
-//   /* box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1); */
-//   border-radius: 4px;
-//   margin: 5px 0px;
+const CardDueDate = styled.div`
+  display: block;
+  background-color: #febebe;
+  width: 80px;
+  height: 27px;
+  /* box-shadow: 0 2px 0 rgba(9, 20, 44, 0.1); */
+  border-radius: 4px;
+  margin: 5px 0px;
 
-//   font-size: 14px;
-//   font-weight: 500;
-//   color: #fff;
-//   span {
-//     display: inline-block;
-//     background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
-//     background-size: 25px;
-//     background-repeat: no-repeat;
-//     position: relative;
-//     top: 1px;
-//     width: 29px;
-//     height: 28px;
-//     margin: 0px;
-//   }
-//   div {
-//     display: inline-block;
-//     position: relative;
-//     bottom: 10px;
-//   }
-// `;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  span {
+    display: inline-block;
+    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
+    background-size: 25px;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 1px;
+    width: 29px;
+    height: 28px;
+    margin: 0px;
+  }
+  div {
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+  }
+`;

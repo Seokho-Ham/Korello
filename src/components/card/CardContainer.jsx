@@ -26,7 +26,7 @@ const CardList = ({ location }) => {
       source.droppableId !== destination.droppableId &&
       destination.droppableId !== null
     ) {
-      const code = await updateData(url + '/tag', {
+      const [resultData, code] = await updateData(url + '/tag', {
         id: draggableId,
         tagValue: destination.droppableId,
       });

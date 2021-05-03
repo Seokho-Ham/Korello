@@ -6,7 +6,7 @@ const updateData = async (url, body) => {
   try {
     const { data } = await axios.put(serverUrl + url, body);
 
-    return data.result_code;
+    return [data.result_body ? data.result_body : null, data.result_code, null];
   } catch (err) {
     return err.response.data.result_code;
   }

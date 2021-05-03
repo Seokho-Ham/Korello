@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEvents, getRefreshToken, postData } from '../../api';
 import { setFirebaseData } from '../../firebase';
 import { setCardData } from '../../reducers/card.reducer';
 

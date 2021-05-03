@@ -54,7 +54,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
   const sendUpdate = async e => {
     e.preventDefault();
     if (cardTitle !== currentCardName) {
-      let code = await updateData(
+      let [resultData, code] = await updateData(
         currentBoardUrl.slice(0, currentBoardUrl.length - 1) + '/name',
         {
           id: currentCardId,

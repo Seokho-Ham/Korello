@@ -73,8 +73,8 @@ const TagContainer = ({ tag }) => {
                             index={i}
                             id={el.id}
                             title={el.name}
-                            labels={el.labels}
                             tag={tag}
+                            dueDate={el.dueDate}
                           />
                         );
                       }

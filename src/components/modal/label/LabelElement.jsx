@@ -32,7 +32,7 @@ const LabelElement = ({ id, name, color, onClick }) => {
     if (labelInput === name || labelInput === '') {
       onEditLabelClick();
     } else {
-      const code = await updateData(`/label/${id}`, {
+      const [resultData, code] = await updateData(`/label/${id}`, {
         color: color,
         name: labelInput,
       });

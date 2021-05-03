@@ -4,9 +4,11 @@ import DatePicker from 'react-datepicker';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import '../../../css/react-datepicker.css';
-import { postData, getRefreshToken } from '../../../api';
+import { updateData, getRefreshToken } from '../../../api';
+import { useSelector } from 'react-redux';
 
 const CalendarModal = () => {
+  const { currentCardId } = useSelector(state => state.card);
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(new Date(), 0), new Date().getHours()),
@@ -23,11 +25,9 @@ const CalendarModal = () => {
     const hour = date.getHours();
     const minute = date.getMinutes();
 
-    console.log(
-      `${year}-${month < 10 ? '0' : ''}${month}-${
-        day < 10 ? '0' : ''
-      }${day} ${hour}:${minute}`,
-    );
+    const strDate = `${year}-${month < 10 ? '0' : ''}${month}-${
+      day < 10 ? '0' : ''
+    }${day} ${hour}:${minute}`;
     setStartDate(date);
   };
   const onEndHandler = date => {
@@ -37,11 +37,9 @@ const CalendarModal = () => {
     const hour = date.getHours();
     const minute = date.getMinutes();
 
-    console.log(
-      `${year}-${month < 10 ? '0' : ''}${month}-${
-        day < 10 ? '0' : ''
-      }${day} ${hour}:${minute}`,
-    );
+    const strDate = `${year}-${month < 10 ? '0' : ''}${month}-${
+      day < 10 ? '0' : ''
+    }${day} ${hour}:${minute}`;
     setEndDate(date);
   };
   const onClickHandler = () => {
@@ -65,8 +63,13 @@ const CalendarModal = () => {
   };
 
   const sendDateHandler = async () => {
-    const [responseData, code] = await postData('uri');
+    const [responseData, code] = await updateData(
+      `/board/${currentCardId}/card/due-date`,
+    );
+    console.log(startDate);
+    console.log(endDate);
     if (code === 201) {
+      console.log(responseData);
     } else if (code >= 401001) {
       await getRefreshToken();
       await sendDateHandler();
@@ -118,7 +121,7 @@ const CalendarModal = () => {
           />
         </SelectDate>
         <div>
-          <DateSaveButton onClick={onClickHandler}>저장</DateSaveButton>
+          <DateSaveButton onClick={sendDateHandler}>저장</DateSaveButton>
           <DateCancelButton onClick={onClickHandler}>취소</DateCancelButton>
         </div>
       </DateModal>
