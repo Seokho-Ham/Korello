@@ -1,6 +1,7 @@
 import { boardActions } from '../reducers/board.reducer';
 import { fetchData } from '../api';
 import { setFirebaseDocuments } from '../firebase';
+import { userActions } from '../reducers/user.reducer';
 
 const makeRecentList = data => {
   let result = [];
@@ -27,10 +28,11 @@ const makeRecentList = data => {
 //서버로부터 board 데이터 받아옴.
 export const getBoardList = async dispatch => {
   dispatch(boardActions.startRequest());
-  let [boardlist, error] = await fetchData('/board/self');
+  const [boardlist, boardError] = await fetchData('/board/self');
+  const [userInfo, infoError] = await fetchData('/member/self');
 
-  if (error) {
-    alert(error);
+  if (boardError || infoError) {
+    alert(boardError ? boardError : infoError);
   } else {
     //firebase에 해당 보드가 없을 경우 추가해주는 함수
     setFirebaseDocuments(boardlist);
@@ -38,11 +40,11 @@ export const getBoardList = async dispatch => {
 
     let payload = {
       loading: false,
-      error,
+      error: boardError,
       boardlist,
       recentBoard,
     };
-
+    dispatch(userActions.setUserInfo(userInfo));
     dispatch(boardActions.setBoardData(payload));
   }
 };

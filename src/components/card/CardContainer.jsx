@@ -26,7 +26,7 @@ const CardList = ({ location }) => {
       source.droppableId !== destination.droppableId &&
       destination.droppableId !== null
     ) {
-      const code = await updateData(url + '/tag', {
+      const [resultData, code] = await updateData(url + '/tag', {
         id: draggableId,
         tagValue: destination.droppableId,
       });
@@ -120,6 +120,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  /* background-color: #c6edee; */
   background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/background+images/gradient.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;

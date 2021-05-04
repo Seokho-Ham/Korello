@@ -73,8 +73,8 @@ const TagContainer = ({ tag }) => {
                             index={i}
                             id={el.id}
                             title={el.name}
-                            labels={el.labels}
                             tag={tag}
+                            dueDate={el.dueDate}
                           />
                         );
                       }
@@ -113,6 +113,7 @@ const Tag = styled.div`
   position: relative;
   white-space: normal;
   overflow-y: auto;
+  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
 `;
 
 const TagHeader = styled.div`

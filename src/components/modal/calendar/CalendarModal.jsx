@@ -1,48 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import setHours from 'date-fns/setHours';
-import setMinutes from 'date-fns/setMinutes';
+import { format } from 'date-fns';
 import '../../../css/react-datepicker.css';
-import { postData, getRefreshToken } from '../../../api';
+import { updateData, getRefreshToken, deleteData } from '../../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCardData } from '../../../reducers/card.reducer';
 
-const CalendarModal = () => {
+const CalendarModal = ({ due }) => {
+  const {
+    cardlist,
+    currentTagName,
+    currentBoardId,
+    currentCardId,
+  } = useSelector(state => state.card);
   const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState(
-    setHours(setMinutes(new Date(), 0), new Date().getHours()),
-  );
-  const [endDate, setEndDate] = useState(
-    setHours(setMinutes(new Date(), 0), new Date().getHours()),
-  );
+  const [dueDate, setDueDate] = useState(new Date());
+  const dispatch = useDispatch();
   const calendarRef = useRef(null);
-
-  const onStartHandler = date => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    console.log(
-      `${year}-${month < 10 ? '0' : ''}${month}-${
-        day < 10 ? '0' : ''
-      }${day} ${hour}:${minute}`,
-    );
-    setStartDate(date);
-  };
-  const onEndHandler = date => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    console.log(
-      `${year}-${month < 10 ? '0' : ''}${month}-${
-        day < 10 ? '0' : ''
-      }${day} ${hour}:${minute}`,
-    );
-    setEndDate(date);
+  const onDueDateHandler = date => {
+    setDueDate(date);
   };
   const onClickHandler = () => {
     setOpen(p => !p);
@@ -65,14 +42,48 @@ const CalendarModal = () => {
   };
 
   const sendDateHandler = async () => {
-    const [responseData, code] = await postData('uri');
-    if (code === 201) {
-    } else if (code >= 401001) {
-      await getRefreshToken();
-      await sendDateHandler();
-    } else {
-      alert('생성에 실패했습니다.');
-      setOpen(!open);
+    if (window.confirm('해당 날짜로 DueDate를 설정하시겠습니까?')) {
+      const [responseData, code] = await updateData(
+        `/board/${currentBoardId}/card/due-date`,
+        {
+          id: currentCardId,
+          dueDate: format(dueDate, 'yyyy-MM-dd hh:mm'),
+        },
+      );
+
+      if (code === 200) {
+        alert('DueDate 설정 완료!');
+        const list = { ...cardlist };
+        list[currentTagName].filter(
+          el => el.id === currentCardId,
+        )[0].dueDate = format(dueDate, 'yyyy-MM-dd hh:mm:ss');
+        dispatch(setCardData({ cardlist: list }));
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await sendDateHandler();
+      } else {
+        alert('생성에 실패했습니다.');
+      }
+    }
+  };
+  const dateDeleteHandler = async () => {
+    if (window.confirm('DueDate를 제거하시겠습니까?')) {
+      const code = await deleteData(
+        `/board/${currentBoardId}/card/${currentCardId}/due-date`,
+      );
+      if (code === 200) {
+        alert('DueDate 삭제 완료!');
+        const list = { ...cardlist };
+        list[currentTagName].filter(
+          el => el.id === currentCardId,
+        )[0].dueDate = null;
+        dispatch(setCardData({ cardlist: list }));
+      } else if (code >= 401001) {
+        await getRefreshToken();
+        await dateDeleteHandler();
+      } else {
+        alert('삭제에 실패했습니다.');
+      }
     }
   };
 
@@ -92,35 +103,23 @@ const CalendarModal = () => {
       <DateModal status={open} ref={calendarRef}>
         <SelectDate>
           <DatePicker
-            selected={startDate}
-            startDate={startDate}
-            selectsStart
+            selected={dueDate}
             showTimeSelect
-            endDate={endDate}
-            onChange={onStartHandler}
+            endDate={dueDate}
+            minDate={dueDate}
             filterTime={filterPassedTime}
-            minDate={new Date()}
-            dateFormat='yyyy/MM/dd h:mm aa'
+            dateFormat='yyyy-MM-dd hh:mm'
+            onChange={onDueDateHandler}
           />
         </SelectDate>
-        <span>~</span>
-        <SelectDate>
-          <DatePicker
-            selected={endDate}
-            selectsEnd
-            showTimeSelect
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-            filterTime={filterPassedTime}
-            dateFormat='yyyy/MM/dd h:mm aa'
-            onChange={onEndHandler}
-          />
-        </SelectDate>
-        <div>
-          <DateSaveButton onClick={onClickHandler}>저장</DateSaveButton>
-          <DateCancelButton onClick={onClickHandler}>취소</DateCancelButton>
-        </div>
+        <span>
+          <DateSaveButton onClick={sendDateHandler}>저장</DateSaveButton>
+          {due ? (
+            <DateCancelButton onClick={dateDeleteHandler}>
+              삭제
+            </DateCancelButton>
+          ) : null}
+        </span>
       </DateModal>
     </Calendar>
   );
@@ -142,8 +141,8 @@ const CalendarButton = styled.button`
   }
 `;
 const DateModal = styled.div`
-  min-width: 328px;
-  width: 328px;
+  min-width: 280px;
+  width: 280px;
   display: ${props => (props.status ? 'block' : 'none')};
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
