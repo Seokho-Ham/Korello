@@ -113,7 +113,7 @@ const TagAddButton = styled.button`
   border-radius: 4px;
   border: 1px;
   &:hover {
-    background-color: #458534;
+    background-color: #61d341;
   }
 `;
 

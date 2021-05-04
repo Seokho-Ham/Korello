@@ -136,7 +136,7 @@ const CardAddButton = styled.button`
   padding: 4px;
   border-radius: 4px;
   &:hover {
-    background-color: #458534;
+    background-color: #61d341;
   }
 `;
 

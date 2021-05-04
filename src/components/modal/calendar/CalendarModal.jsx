@@ -164,17 +164,17 @@ const DateSaveButton = styled.button`
   color: #fff;
   border-radius: 3px;
   &:hover {
-    opacity: 0.5;
-    background-color: #5aac44;
+    background-color: #61d341;
   }
 `;
 
 const DateCancelButton = styled.button`
-  background-color: rgba(9, 30, 66, 0.08);
+  background-color: #cf513d;
+  color: #fff;
   height: 30px;
   border: 0;
   border-radius: 3px;
-  :hover {
-    opacity: 0.5;
+  &:hover {
+    background-color: #e2472f;
   }
 `;

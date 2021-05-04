@@ -29,10 +29,9 @@ const makeRecentList = data => {
 export const getBoardList = async dispatch => {
   dispatch(boardActions.startRequest());
   const [boardlist, boardError] = await fetchData('/board/self');
-  const [userInfo, infoError] = await fetchData('/member/self');
 
-  if (boardError || infoError) {
-    alert(boardError ? boardError : infoError);
+  if (boardError) {
+    alert(boardError);
   } else {
     //firebase에 해당 보드가 없을 경우 추가해주는 함수
     setFirebaseDocuments(boardlist);
@@ -44,7 +43,7 @@ export const getBoardList = async dispatch => {
       boardlist,
       recentBoard,
     };
-    dispatch(userActions.setUserInfo(userInfo));
+
     dispatch(boardActions.setBoardData(payload));
   }
 };

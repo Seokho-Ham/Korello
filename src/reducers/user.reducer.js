@@ -12,7 +12,7 @@ export const userActions = {
 
 const initialState = {
   loginStatus: false,
-  userInfo: {},
+  userInfo: null,
   userList: [],
 };
 

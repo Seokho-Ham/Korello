@@ -172,8 +172,7 @@ const JoinButton = styled.button`
   color: #fff;
   border-radius: 3px;
   &:hover {
-    opacity: 0.5;
-    background-color: #5aac44;
+    background-color: #61d341;
   }
 `;
 const KickButton = styled.button`
@@ -184,7 +183,6 @@ const KickButton = styled.button`
   color: #fff;
   border-radius: 3px;
   &:hover {
-    opacity: 0.5;
     background-color: #e2472f;
   }
 `;

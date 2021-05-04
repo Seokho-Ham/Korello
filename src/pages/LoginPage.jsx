@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
-
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -35,7 +34,6 @@ const LoginPage = ({ login }) => {
 
   return (
     <>
-      
       <LoginDisplay>
         <LoginConatiner>
           <LoginInput>
