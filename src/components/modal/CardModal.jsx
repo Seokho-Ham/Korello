@@ -16,7 +16,7 @@ import {
 import { progressCalculator, updateCardEvents } from '../../helper/card';
 import { setCardData } from '../../reducers/card.reducer';
 import { format } from 'date-fns';
-
+import { MdSchedule } from 'react-icons/md';
 const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
   const {
     cardlist,
@@ -176,8 +176,18 @@ const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
             </ModalLabels>
             {dueDate ? (
               <ModalDueDate>
-                <span></span>
-                <div>{`${format(new Date(dueDate), 'M월 d일 hh시 mm분')}`}</div>
+                <MdSchedule
+                  size='30'
+                  style={{
+                    margin: '0px 3px',
+                    position: 'relative',
+                    bottom: '3px',
+                  }}
+                />
+                <div className='dueDate'>{`${format(
+                  new Date(dueDate),
+                  'M월 d일 hh시 mm분',
+                )}`}</div>
               </ModalDueDate>
             ) : null}
 
@@ -300,22 +310,12 @@ const ModalDueDate = styled.div`
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  span {
-    display: inline-block;
-    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
-    background-size: 25px;
-    background-repeat: no-repeat;
-    position: relative;
-    top: 1px;
-    width: 29px;
-    height: 28px;
-    margin: 0px;
-  }
-  div {
+
+  .dueDate {
     margin: 0px;
     display: inline-block;
     position: relative;
-    bottom: 10px;
+    bottom: 11px;
   }
 `;
 const ModalLabelElement = styled.span`

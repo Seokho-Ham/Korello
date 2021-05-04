@@ -22,7 +22,7 @@ const CalendarModal = ({ due }) => {
     setDueDate(date);
   };
   const onClickHandler = () => {
-    setOpen(p => !p);
+    setOpen(!open);
   };
 
   const pageClickEvent = e => {
@@ -97,30 +97,31 @@ const CalendarModal = ({ due }) => {
   }, [open]);
 
   return (
-    <Calendar>
+    <Calendar ref={calendarRef}>
       <CalendarButton onClick={onClickHandler}>Calendar</CalendarButton>
-
-      <DateModal status={open} ref={calendarRef}>
-        <SelectDate>
-          <DatePicker
-            selected={dueDate}
-            showTimeSelect
-            endDate={dueDate}
-            minDate={dueDate}
-            filterTime={filterPassedTime}
-            dateFormat='yyyy-MM-dd hh:mm'
-            onChange={onDueDateHandler}
-          />
-        </SelectDate>
-        <span>
-          <DateSaveButton onClick={sendDateHandler}>저장</DateSaveButton>
-          {due ? (
-            <DateCancelButton onClick={dateDeleteHandler}>
-              삭제
-            </DateCancelButton>
-          ) : null}
-        </span>
-      </DateModal>
+      {open && (
+        <DateModal>
+          <SelectDate>
+            <DatePicker
+              selected={dueDate}
+              showTimeSelect
+              endDate={dueDate}
+              minDate={dueDate}
+              filterTime={filterPassedTime}
+              dateFormat='yyyy-MM-dd hh:mm'
+              onChange={onDueDateHandler}
+            />
+          </SelectDate>
+          <span>
+            <DateSaveButton onClick={sendDateHandler}>저장</DateSaveButton>
+            {due && (
+              <DateCancelButton onClick={dateDeleteHandler}>
+                삭제
+              </DateCancelButton>
+            )}
+          </span>
+        </DateModal>
+      )}
     </Calendar>
   );
 };
@@ -143,7 +144,7 @@ const CalendarButton = styled.button`
 const DateModal = styled.div`
   min-width: 280px;
   width: 280px;
-  display: ${props => (props.status ? 'block' : 'none')};
+  display: block;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 3px;

@@ -74,7 +74,7 @@ const ChecklistModal = () => {
   return (
     <ChecklistModalButton>
       <button onClick={clickButton}>CheckList</button>
-      {clicked ? (
+      {clicked && (
         <ChecklistAddModal ref={checklistRef}>
           <form onSubmit={addCheckList}>
             <ChecklistInput
@@ -87,7 +87,7 @@ const ChecklistModal = () => {
             <button>+ Add Checklist</button>
           </form>
         </ChecklistAddModal>
-      ) : null}
+      )}
     </ChecklistModalButton>
   );
 };
