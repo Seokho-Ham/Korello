@@ -15,8 +15,9 @@ import {
 } from '../../api';
 import { progressCalculator, updateCardEvents } from '../../helper/card';
 import { setCardData } from '../../reducers/card.reducer';
+import { format } from 'date-fns';
 
-const CardModal = ({ modalVisible, setModalVisible }) => {
+const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
   const {
     cardlist,
     currentTagName,
@@ -30,7 +31,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
   } = useSelector(state => state.card);
 
   const [editButton, setEditButton] = useState(false);
-  const [cardTitle, setCardTitle] = useState(currentCardName);
+  const [cardTitle, setCardTitle] = useState(title);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
@@ -63,15 +64,11 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
       );
       if (code === 200) {
         setEditButton(p => !p);
-        let obj = cardlist;
-        let list = cardlist[currentTagName].slice('');
-        list.forEach(el => {
-          if (el.id === currentCardId) {
-            el.name = cardTitle;
-          }
-        });
-        obj[currentTagName] = list;
-        dispatch(setCardData({ cardlist: obj }));
+        const list = { ...cardlist };
+        list[currentTagName].filter(
+          el => el.id === currentCardId,
+        )[0].name = cardTitle;
+        dispatch(setCardData({ cardlist: list }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await sendUpdate(e);
@@ -177,20 +174,26 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
                     ))
                 : null}
             </ModalLabels>
+            {dueDate ? (
+              <ModalDueDate>
+                <span></span>
+                <div>{`${format(new Date(dueDate), 'M월 d일 hh시 mm분')}`}</div>
+              </ModalDueDate>
+            ) : null}
+
             {editButton ? (
-              <div>
+              <div className='title'>
                 <form onSubmit={sendUpdate} ref={formRef}>
                   <input
                     value={cardTitle}
                     onChange={inputHandler}
                     ref={inputRef}
                   />
-                  <button>Save</button>
                 </form>
               </div>
             ) : (
-              <div>
-                <h2 onClick={editCard}>{currentCardName}</h2>
+              <div className='title'>
+                <h2 onClick={editCard}>{title}</h2>
               </div>
             )}
           </ModalHeader>
@@ -209,7 +212,7 @@ const CardModal = ({ modalVisible, setModalVisible }) => {
             <div>Sidebar</div>
             <LabelContainer />
             <CheckListModal />
-            <CalendarModal />
+            <CalendarModal due={dueDate} />
           </ModalSidebar>
         </ModalInner>
       </ModalWrapper>
@@ -241,6 +244,7 @@ const ModalInner = styled.div`
   background-color: #ebecf0;
   border-radius: 10px;
   width: 768px;
+  min-width: 768px;
   height: 90%;
   max-height: 800px;
   margin: 48px 0px 80px;
@@ -256,7 +260,6 @@ const CardDeleteButton = styled.button`
   border-radius: 3px;
   padding: 7px;
   float: right;
-
   margin: 0px;
   margin-right: 7px;
   &:hover {
@@ -266,27 +269,11 @@ const CardDeleteButton = styled.button`
 
 const ModalHeader = styled.div`
   min-height: 50px;
+  .title {
+    display: inline-block;
+  }
   div {
-    min-height: 50px;
     margin-left: 15px;
-    h2 {
-      display: inline-block;
-    }
-    button {
-      background-color: #5aac44;
-      position: relative;
-      bottom: 4px;
-      padding: 5px;
-      height: 33px;
-      border: 0;
-      margin: 0px;
-      margin-left: 5px;
-      color: #fff;
-      border-radius: 3px;
-      &:hover {
-        opacity: 0.8;
-      }
-    }
     input {
       font-size: 25px;
       border: 0px;
@@ -297,10 +284,39 @@ const ModalHeader = styled.div`
 `;
 const ModalLabels = styled.div`
   overflow: auto;
-  position: relative;
   box-sizing: border-box;
   color: #fff;
   min-height: 38px;
+`;
+
+const ModalDueDate = styled.div`
+  display: block;
+  background-color: #febebe;
+  margin: 10px 0px;
+  padding-top: 5px;
+  width: 160px;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  span {
+    display: inline-block;
+    background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/icons/clock.png');
+    background-size: 25px;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 1px;
+    width: 29px;
+    height: 28px;
+    margin: 0px;
+  }
+  div {
+    margin: 0px;
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+  }
 `;
 const ModalLabelElement = styled.span`
   background-color: ${props => props.color};
@@ -314,7 +330,7 @@ const ModalLabelElement = styled.span`
   text-align: center;
   line-height: 32px;
   border-radius: 6px;
-  box-shadow: 0 2px 0 rgba(9, 30, 66, 0.25);
+  /* box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25); */
 `;
 
 const ModalContents = styled.div`

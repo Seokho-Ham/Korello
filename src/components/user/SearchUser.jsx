@@ -81,7 +81,6 @@ const SearchButton = styled.button`
   padding: 5px;
   margin: 0px;
   margin-left: 3px;
-
   font-weight: bold;
   color: #fff;
   :hover {

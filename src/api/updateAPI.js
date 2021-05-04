@@ -8,7 +8,7 @@ const updateData = async (url, body) => {
 
     return [data.result_body ? data.result_body : null, data.result_code, null];
   } catch (err) {
-    return err.response.data.result_code;
+    return [null, err.response.data.result_code, err];
   }
 };
 
