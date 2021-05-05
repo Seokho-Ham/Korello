@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CardModal from '../modal/CardModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,16 @@ import { setCardData } from '../../reducers/card.reducer';
 import { Draggable } from 'react-beautiful-dnd';
 import { format } from 'date-fns';
 import parseJSON from 'date-fns/parseJSON';
+import isAfter from 'date-fns/isAfter';
+
 const CardElement = ({ id, title, index, tag, dueDate }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { cardlabels } = useSelector(state => state.card);
+  const [expiredStatus, setExpiredState] = useState(
+    isAfter(new Date(), new Date(dueDate)),
+  );
   const dispatch = useDispatch();
+
   const clickModal = async () => {
     setModalVisible(!modalVisible);
     if (!modalVisible) {
@@ -22,6 +28,9 @@ const CardElement = ({ id, title, index, tag, dueDate }) => {
       );
     }
   };
+  useEffect(() => {
+    setExpiredState(isAfter(new Date(), new Date(dueDate)));
+  }, [dueDate]);
 
   return (
     <>
@@ -31,6 +40,7 @@ const CardElement = ({ id, title, index, tag, dueDate }) => {
           setModalVisible={setModalVisible}
           dueDate={dueDate}
           title={title}
+          expiredStatus={expiredStatus}
         />
       )}
       <Draggable draggableId={id} index={index}>
@@ -58,9 +68,13 @@ const CardElement = ({ id, title, index, tag, dueDate }) => {
                 ) : null}
                 <CardTitle>{title}</CardTitle>
                 {dueDate ? (
-                  <CardDueDate>
+                  <CardDueDate expired={expiredStatus}>
                     <span></span>
-                    <div>{`${format(parseJSON(dueDate), 'MM월 dd일')}`}</div>
+                    <div>
+                      {expiredStatus
+                        ? '기간 만료!'
+                        : `${format(parseJSON(dueDate), 'MM월 dd일')}`}
+                    </div>
                   </CardDueDate>
                 ) : null}
               </Card>
@@ -118,7 +132,7 @@ const CardTitle = styled.div`
 
 const CardDueDate = styled.div`
   display: block;
-  background-color: #febebe;
+  background-color: ${props => (props.expired ? '#e2472f' : '#febebe')};
   width: fit-content;
   padding-right: 10px;
   max-height: 27px;

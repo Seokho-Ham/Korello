@@ -4,6 +4,7 @@ import CheckListModal from './checklist/ChecklistModal';
 import ChecklistContent from './checklist/ChecklistContent';
 import CalendarModal from './calendar/CalendarModal';
 import CardEventLog from '../card/CardEventLog';
+import DueDateComponent from './calendar/DueDateComponent';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -15,9 +16,14 @@ import {
 } from '../../api';
 import { progressCalculator, updateCardEvents } from '../../helper/card';
 import { setCardData } from '../../reducers/card.reducer';
-import { format } from 'date-fns';
-import { MdSchedule } from 'react-icons/md';
-const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
+
+const CardModal = ({
+  modalVisible,
+  setModalVisible,
+  dueDate,
+  title,
+  expiredStatus,
+}) => {
   const {
     cardlist,
     currentTagName,
@@ -50,7 +56,6 @@ const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
 
   const editCard = () => {
     setEditButton(p => !p);
-    if (editButton) inputRef.current.focus();
   };
   const sendUpdate = async e => {
     e.preventDefault();
@@ -174,23 +179,8 @@ const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
                     ))
                 : null}
             </ModalLabels>
-            {dueDate ? (
-              <ModalDueDate>
-                <MdSchedule
-                  size='30'
-                  style={{
-                    margin: '0px 3px',
-                    position: 'relative',
-                    bottom: '3px',
-                  }}
-                />
-                <div className='dueDate'>{`${format(
-                  new Date(dueDate),
-                  'M월 d일 hh시 mm분',
-                )}`}</div>
-              </ModalDueDate>
-            ) : null}
 
+            <DueDateComponent dueDate={dueDate} expiredStatus={expiredStatus} />
             {editButton ? (
               <div className='title'>
                 <form onSubmit={sendUpdate} ref={formRef}>
@@ -209,13 +199,13 @@ const CardModal = ({ modalVisible, setModalVisible, dueDate, title }) => {
           </ModalHeader>
           <ModalContents>
             {checklist[currentCardId] !== undefined &&
-            checklist[currentCardId].length > 0 ? (
-              <ChecklistContainer>
-                <ChecklistContent
-                  percent={progressCalculator(checklist[currentCardId])}
-                />
-              </ChecklistContainer>
-            ) : null}
+              checklist[currentCardId].length > 0 && (
+                <ChecklistContainer>
+                  <ChecklistContent
+                    percent={progressCalculator(checklist[currentCardId])}
+                  />
+                </ChecklistContainer>
+              )}
             <CardEventLog />
           </ModalContents>
           <ModalSidebar>
@@ -299,25 +289,6 @@ const ModalLabels = styled.div`
   min-height: 38px;
 `;
 
-const ModalDueDate = styled.div`
-  display: block;
-  background-color: #febebe;
-  margin: 10px 0px;
-  padding-top: 5px;
-  width: 160px;
-  height: 30px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-
-  .dueDate {
-    margin: 0px;
-    display: inline-block;
-    position: relative;
-    bottom: 11px;
-  }
-`;
 const ModalLabelElement = styled.span`
   background-color: ${props => props.color};
   margin: 2px;

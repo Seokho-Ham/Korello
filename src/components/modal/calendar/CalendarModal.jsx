@@ -5,11 +5,13 @@ import { format } from 'date-fns';
 import '../../../css/react-datepicker.css';
 import { updateData, getRefreshToken, deleteData } from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateCardEvents } from '../../../helper/card';
 import { setCardData } from '../../../reducers/card.reducer';
 
 const CalendarModal = ({ due }) => {
   const {
     cardlist,
+    cardEventLogs,
     currentTagName,
     currentBoardId,
     currentCardId,
@@ -47,17 +49,18 @@ const CalendarModal = ({ due }) => {
         `/board/${currentBoardId}/card/due-date`,
         {
           id: currentCardId,
-          dueDate: format(dueDate, 'yyyy-MM-dd hh:mm'),
+          dueDate: format(dueDate, 'yyyy-MM-dd kk:mm'),
         },
       );
 
       if (code === 200) {
         alert('DueDate 설정 완료!');
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         const list = { ...cardlist };
         list[currentTagName].filter(
           el => el.id === currentCardId,
-        )[0].dueDate = format(dueDate, 'yyyy-MM-dd hh:mm:ss');
-        dispatch(setCardData({ cardlist: list }));
+        )[0].dueDate = format(dueDate, 'yyyy-MM-dd kk:mm:ss');
+        dispatch(setCardData({ cardlist: list, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await sendDateHandler();
@@ -73,11 +76,12 @@ const CalendarModal = ({ due }) => {
       );
       if (code === 200) {
         alert('DueDate 삭제 완료!');
+        const logs = await updateCardEvents(currentCardId, cardEventLogs);
         const list = { ...cardlist };
         list[currentTagName].filter(
           el => el.id === currentCardId,
         )[0].dueDate = null;
-        dispatch(setCardData({ cardlist: list }));
+        dispatch(setCardData({ cardlist: list, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await dateDeleteHandler();
@@ -108,7 +112,7 @@ const CalendarModal = ({ due }) => {
               endDate={dueDate}
               minDate={dueDate}
               filterTime={filterPassedTime}
-              dateFormat='yyyy-MM-dd hh:mm'
+              dateFormat='yyyy-MM-dd kk:mm'
               onChange={onDueDateHandler}
             />
           </SelectDate>

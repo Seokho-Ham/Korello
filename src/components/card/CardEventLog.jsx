@@ -9,7 +9,15 @@ const CardEventLog = () => {
 
   const renderEventLogs = () => {
     return cardEventLogs[currentCardId].map(el => {
-      let eventTime = `${el.createdDate[0]}.0${el.createdDate[1]}.${el.createdDate[2]} ${el.createdDate[3]}:${el.createdDate[4]}`;
+      let eventTime = `${el.createdDate[0]}.${
+        el.createdDate[1] < 10 ? '0' + el.createdDate[1] : el.createdDate[1]
+      }.${
+        el.createdDate[2] < 10 ? '0' + el.createdDate[2] : el.createdDate[2]
+      } ${
+        el.createdDate[3] < 10 ? '0' + el.createdDate[3] : el.createdDate[3]
+      }:${
+        el.createdDate[4] < 10 ? '0' + el.createdDate[4] : el.createdDate[4]
+      }`;
       return (
         <CardEventElement key={el.id}>
           <MdAccountCircle size='32' />
