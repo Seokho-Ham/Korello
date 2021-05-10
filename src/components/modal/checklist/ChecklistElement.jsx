@@ -108,7 +108,13 @@ const ChecklistElement = ({ el }) => {
             </form>
           </CheckListTitle>
         ) : (
-          <CheckListTitle onClick={changeChecklist}>{el.title}</CheckListTitle>
+          <CheckListTitle
+            onClick={changeChecklist}
+            className='title'
+            checked={el.status}
+          >
+            {el.title}
+          </CheckListTitle>
         )}
         <ChecklistDeleteButton
           onClick={deleteCheckList}
@@ -132,6 +138,9 @@ const CheckListTitle = styled.span`
   width: 395px;
   height: 30px;
   margin-left: 10px;
+
+  text-decoration: ${props => props.checked && 'line-through'};
+  color: ${props => props.checked && '#adb5bd'};
 `;
 const ChecklistDeleteButton = styled.span`
   display: inline-block;
