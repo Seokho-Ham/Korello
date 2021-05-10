@@ -93,7 +93,9 @@ const ChecklistContent = ({ percent }) => {
                 onChange={onChangeHandler}
                 ref={inputRef}
               ></input>
-              <ChecklistAddButton>Add</ChecklistAddButton>
+              <ChecklistAddButton onClick={addChecklistHandler}>
+                Add
+              </ChecklistAddButton>
             </form>
           </>
         ) : (

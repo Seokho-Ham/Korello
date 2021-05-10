@@ -84,7 +84,7 @@ const ChecklistModal = () => {
               style={{ display: 'block' }}
               ref={inputRef}
             />
-            <button>+ Add Checklist</button>
+            <button onClick={addCheckList}>+ Add Checklist</button>
           </form>
         </ChecklistAddModal>
       )}

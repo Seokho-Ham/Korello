@@ -7,7 +7,9 @@ import { setCardData } from '../../reducers/card.reducer';
 const AddTagButton = () => {
   const [tagName, setTagName] = useState('');
   const [visibility, setVisibility] = useState(false);
-  const { taglist, currentBoardId } = useSelector(state => state.card);
+  const { taglist, cardlist, currentBoardId } = useSelector(
+    state => state.card,
+  );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const formRef = useRef(null);
@@ -36,8 +38,14 @@ const AddTagButton = () => {
       await setFirebaseData(currentBoardId, {
         [tagName]: { name: tagName, createdAt: new Date() },
       });
+
       buttonStatusHandler();
-      dispatch(setCardData({ taglist: [...taglist, tagName] }));
+      dispatch(
+        setCardData({
+          taglist: [...taglist, tagName],
+          cardlist: { ...cardlist, [tagName]: [] },
+        }),
+      );
     }
   };
   useEffect(() => {
