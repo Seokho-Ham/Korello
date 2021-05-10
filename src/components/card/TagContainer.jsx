@@ -147,7 +147,7 @@ const TagHeader = styled.div`
 `;
 const TagElement = styled.div`
   overflow: scroll;
-  min-height: 40px;
+  min-height: 10px;
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
