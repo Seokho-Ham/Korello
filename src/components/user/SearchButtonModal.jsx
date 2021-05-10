@@ -38,16 +38,21 @@ const SearchButtonModal = ({ searchedWord, searchButtonHandler }) => {
         let arr = [...memberlist];
 
         if (status === 'join') {
-          let data = { memberId: userData.id, memberName: userData.name };
-          arr.push(data);
+          dispatch(
+            setCardData({
+              memberlist: [
+                ...memberlist,
+                { memberId: userData.id, memberName: userData.name },
+              ],
+            }),
+          );
         } else {
-          arr.forEach((el, i) => {
-            if (el.memberId === userData.id) {
-              arr.splice(i, 1);
-            }
-          });
+          dispatch(
+            setCardData({
+              memberlist: memberlist.filter(el => el.memberId !== userData.id),
+            }),
+          );
         }
-        dispatch(setCardData({ memberlist: arr }));
       } else if (code >= 401001) {
         await getRefreshToken();
         await userAuthorityHandler(e);

@@ -42,11 +42,13 @@ const TagContainer = ({ tag }) => {
       const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
 
       let cards = { ...cardlist };
-      let tags = taglist.slice('');
       delete cards[tag];
-      tags.splice(taglist.indexOf(tag), 1);
       dispatch(
-        setCardData({ taglist: tags, cardlist: cards, eventlogs: events }),
+        setCardData({
+          taglist: taglist.filter(el => el !== tag),
+          cardlist: cards,
+          eventlogs: events,
+        }),
       );
     }
   };

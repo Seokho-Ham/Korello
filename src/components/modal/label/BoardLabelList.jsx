@@ -43,11 +43,9 @@ const BoardLabelList = () => {
       if (code === 201 || code === 200) {
         let obj = { ...cardlabels };
         if (status) {
-          obj[currentCardId].forEach((el, i) => {
-            if (el.id === e.target.id) {
-              obj[currentCardId].splice(i, 1);
-            }
-          });
+          obj[currentCardId] = obj[currentCardId].filter(
+            el => el.id !== e.target.id,
+          );
         } else {
           boardlabels.forEach(el => {
             if (el.id === e.target.id) {

@@ -60,13 +60,16 @@ const Label = () => {
         setLabelName('');
         setDisplay(p => !p);
 
-        let labels = [...boardlabels];
-        labels.push(responseData);
         const [eventlogs] = await fetchEvents(
           `/events/board/${currentBoardId}`,
         );
 
-        dispatch(setCardData({ boardlabels: labels, eventlogs }));
+        dispatch(
+          setCardData({
+            boardlabels: [...boardlabels, responseData],
+            eventlogs,
+          }),
+        );
       } else if (code >= 401001) {
         await getRefreshToken();
         await addBoardLabelButton(e);

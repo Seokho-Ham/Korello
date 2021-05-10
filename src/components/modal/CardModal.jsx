@@ -95,11 +95,9 @@ const CardModal = ({
       if (code === 201) {
         const [events] = await fetchEvents(`/events/board/${currentBoardId}`);
         let obj = { ...cardlist };
-        obj[currentTagName].forEach((el, i) => {
-          if (el.id === currentCardId) {
-            obj[currentTagName].splice(i, 1);
-          }
-        });
+        obj[currentTagName] = obj[currentTagName].filter(
+          el => el.id !== currentCardId,
+        );
         dispatch(
           setCardData({
             cardlist: obj,

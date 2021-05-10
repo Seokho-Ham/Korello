@@ -26,10 +26,12 @@ const NewBoardForm = () => {
       if (code === 201) {
         setBoardName('');
         onClickHandler();
-        let list = [...boardlist];
-        list.push(responseData);
         await db.doc(responseData.id).set({});
-        dispatch(boardActions.setBoardData({ boardlist: list }));
+        dispatch(
+          boardActions.setBoardData({
+            boardlist: [...boardlist, responseData],
+          }),
+        );
         history.push(`/board/${responseData.id}/cards`);
       } else if (code >= 401001) {
         await getRefreshToken();

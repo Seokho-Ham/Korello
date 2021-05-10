@@ -33,16 +33,10 @@ const BoardElement = ({ data }) => {
           localStorage.setItem('lastView', JSON.stringify(result));
         }
         deleteFirebaseDoc(data.id);
-        let list = [...boardlist];
-        let recentlist = [...recentBoard];
-        const deletedItem = list.filter(el => el.id === data.id)[0];
-        list.splice(list.indexOf(deletedItem), 1);
-        recentlist.splice(recentlist.indexOf(deletedItem), 1);
-
         dispatch(
           boardActions.setBoardData({
-            boardlist: list,
-            recentBoard: recentlist,
+            boardlist: boardlist.filter(el => el.id !== data.id),
+            recentBoard: recentBoard.filter(el => el.id !== data.id),
           }),
         );
       } else if (code >= 401001) {

@@ -4,7 +4,6 @@ import { getRefreshToken, updateData, deleteData } from '../../../api';
 import { setCardData } from '../../../reducers/card.reducer';
 import styled from 'styled-components';
 import { updateCardEvents } from '../../../helper/card';
-
 const ChecklistElement = ({ el }) => {
   const [newTitle, setNewTitle] = useState(el.title);
   const [changeButton, setChangebutton] = useState(false);
@@ -76,11 +75,9 @@ const ChecklistElement = ({ el }) => {
       if (code === 200) {
         const logs = await updateCardEvents(currentCardId, cardEventLogs);
         let obj = { ...checklist };
-        obj[currentCardId].forEach((element, i) => {
-          if (element.todoId === el.todoId) {
-            obj[currentCardId].splice(i, 1);
-          }
-        });
+        obj[currentCardId] = obj[currentCardId].filter(
+          element => element.todoId !== el.todoId,
+        );
         dispatch(setCardData({ checklist: obj, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
@@ -94,12 +91,14 @@ const ChecklistElement = ({ el }) => {
   return (
     <CheckListItem>
       <>
-        <input
-          type='checkbox'
-          name={el.todoId}
-          checked={el.status}
-          onChange={checkboxHandler}
-        />
+        <div className='checkbox'>
+          <input
+            type='checkbox'
+            name={el.todoId}
+            checked={el.status}
+            onChange={checkboxHandler}
+          />
+        </div>
         {changeButton ? (
           <CheckListTitle>
             <form onSubmit={changeChecklist}>
@@ -132,6 +131,12 @@ const CheckListItem = styled.div`
   padding: 3px;
   display: flex;
   flex-direction: row;
+  .checkbox {
+    input {
+      position: relative;
+      top: 2px;
+    }
+  }
 `;
 const CheckListTitle = styled.span`
   display: inline-block;

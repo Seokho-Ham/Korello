@@ -8,6 +8,13 @@ export const getCard = async (uri, dispatch, boardId) => {
   console.log(cards);
   if (!error) {
     const taglist = await getFields(boardId);
+    const [userList] = await fetchData('/members');
+    const [memberlist] = await fetchData(`/board/${boardId}/members`);
+    const [boardlabels] = await fetchData(
+      uri.slice(0, uri.length - 6) + '/label',
+    );
+    const [boardEventLogs] = await fetchEvents(`/events/board/${boardId}`);
+
     const cardlist = {};
     const cardlabels = {};
 
@@ -30,12 +37,6 @@ export const getCard = async (uri, dispatch, boardId) => {
         cardlabels[el.id] = el.labels;
       });
     }
-    let [userList] = await fetchData('/members');
-    let [memberlist] = await fetchData(`/board/${boardId}/members`);
-    let [boardEventLogs] = await fetchEvents(`/events/board/${boardId}`);
-    let [boardlabels] = await fetchData(
-      uri.slice(0, uri.length - 6) + '/label',
-    );
 
     let payload = {
       loading: false,

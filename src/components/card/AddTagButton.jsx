@@ -37,9 +37,7 @@ const AddTagButton = () => {
         [tagName]: { name: tagName, createdAt: new Date() },
       });
       buttonStatusHandler();
-      let arr = [...taglist];
-      arr.push(tagName);
-      dispatch(setCardData({ taglist: arr }));
+      dispatch(setCardData({ taglist: [...taglist, tagName] }));
     }
   };
   useEffect(() => {

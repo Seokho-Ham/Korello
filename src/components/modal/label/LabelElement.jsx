@@ -59,13 +59,6 @@ const LabelElement = ({ id, name, color, onClick }) => {
     if (window.confirm('라벨을 완전히 삭제하시겠습니까?')) {
       const code = await deleteData(`/board/${currentBoardId}/label/${id}`);
       if (code === 200) {
-        let list = [...boardlabels];
-        list.forEach((el, i) => {
-          if (el.id === id) {
-            list.splice(i, 1);
-          }
-        });
-
         let overlap = true;
         cardlabels[currentCardId].forEach(el => {
           if (el.id === id) {
@@ -86,12 +79,16 @@ const LabelElement = ({ id, name, color, onClick }) => {
           dispatch(
             setCardData({
               cardlabels: obj,
-              boardlabels: list,
+              boardlabels: boardlabels.filter(el => el.id !== id),
               boardEventLogs,
             }),
           );
         } else {
-          dispatch(setCardData({ boardlabels: list }));
+          dispatch(
+            setCardData({
+              boardlabels: boardlabels.filter(el => el.id !== id),
+            }),
+          );
         }
       } else if (code >= 401001) {
         await getRefreshToken();
