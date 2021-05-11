@@ -49,25 +49,13 @@ https://korello.app
 
 <br/>
 
-## 기능
+## 기능 (gif 추가예정)
 ### 로그인 기능(카카오로그인)
-<img src='https://user-images.githubusercontent.com/57708971/111577041-efcea780-87f4-11eb-81ae-c999e566ab3f.gif' width='1000' height='500'/>
-
 ### Board 추가,삭제 기능
-<img src='https://user-images.githubusercontent.com/57708971/111574331-a039ad00-87ef-11eb-9299-787893935e84.gif' width='1000' height='500'/>
-
 ### Tag&Card 추가,수정,삭제 기능
 #### Tag
-<img src='https://user-images.githubusercontent.com/57708971/111576421-d2e5a480-87f3-11eb-868d-d8d7661f1224.gif' width='1000' height='500'/>
 #### Card
-<img src='https://user-images.githubusercontent.com/57708971/111576639-353ea500-87f4-11eb-959f-fa9b4ebd3109.gif' width='1000' height='500'/>
-
 ### Drag & Drop 기능
-<img src='https://user-images.githubusercontent.com/57708971/111576938-c746ad80-87f4-11eb-9bd9-17abd6b4a1ec.gif' width='1000' height='500'/>
-
 ### Label 추가, 수정 기능
-<img src='https://user-images.githubusercontent.com/57708971/111577602-f01b7280-87f5-11eb-814c-68c2d3b9ffa1.gif' width='1000' height='500'/>
-
 ### Checklist 추가, 수정, 삭제 기능
-<img src='https://user-images.githubusercontent.com/57708971/111577997-9bc4c280-87f6-11eb-8716-f003d76c8fba.gif' width='1000' height='500'/>
 
