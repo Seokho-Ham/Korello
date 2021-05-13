@@ -30,7 +30,7 @@ const ModalDueDate = styled.div`
   background-color: ${props => (props.expired ? '#e2472f' : '#febebe')};
   margin: 10px 0px;
   padding-top: 5px;
-  width: ${props => (props.expired ? '225px' : '160px')};
+  width: ${props => (props.expired ? '235px' : '170px')};
   height: 30px;
   border-radius: 4px;
   font-size: 14px;

@@ -57,9 +57,8 @@ const CalendarModal = ({ due }) => {
         alert('DueDate 설정 완료!');
         const logs = await updateCardEvents(currentCardId, cardEventLogs);
         const list = { ...cardlist };
-        list[currentTagName].filter(
-          el => el.id === currentCardId,
-        )[0].dueDate = format(dueDate, 'yyyy-MM-dd kk:mm:ss');
+        list[currentTagName].filter(el => el.id === currentCardId)[0].dueDate =
+          format(dueDate, 'yyyy-MM-dd kk:mm:ss');
         dispatch(setCardData({ cardlist: list, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
@@ -78,9 +77,8 @@ const CalendarModal = ({ due }) => {
         alert('DueDate 삭제 완료!');
         const logs = await updateCardEvents(currentCardId, cardEventLogs);
         const list = { ...cardlist };
-        list[currentTagName].filter(
-          el => el.id === currentCardId,
-        )[0].dueDate = null;
+        list[currentTagName].filter(el => el.id === currentCardId)[0].dueDate =
+          null;
         dispatch(setCardData({ cardlist: list, cardEventLogs: logs }));
       } else if (code >= 401001) {
         await getRefreshToken();
@@ -117,10 +115,10 @@ const CalendarModal = ({ due }) => {
             />
           </SelectDate>
           <span>
-            <DateSaveButton onClick={sendDateHandler}>저장</DateSaveButton>
+            <DateSaveButton onClick={sendDateHandler}>Save</DateSaveButton>
             {due && (
               <DateCancelButton onClick={dateDeleteHandler}>
-                삭제
+                Delete
               </DateCancelButton>
             )}
           </span>

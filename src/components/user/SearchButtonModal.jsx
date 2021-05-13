@@ -182,7 +182,7 @@ const JoinButton = styled.button`
 `;
 const KickButton = styled.button`
   float: right;
-  background-color: #e2472f;
+  background-color: #cf513d;
   height: 30px;
   border: 0;
   color: #fff;

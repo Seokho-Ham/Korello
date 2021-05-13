@@ -75,10 +75,10 @@ const NewBoardForm = () => {
                 value={boardName}
                 onChange={onChangeHandler}
               />
-              <AddBoardButton name='add' onClick={addBoard}>
-                Add
-              </AddBoardButton>
-            </form>
+            </form>{' '}
+            <AddBoardButton name='add' onClick={addBoard}>
+              Add
+            </AddBoardButton>
             <AddBoardButton onClick={onClickHandler}>Cancel</AddBoardButton>
           </AddBoardContainer>
         )}
@@ -98,27 +98,33 @@ const AddBoardContainer = styled.div`
   width: 100%;
   height: 100%;
   text-align: center;
-  position: relative;
-  top: 10px;
+  input {
+    padding: 4px;
+  }
+  form,
+  button {
+    position: relative;
+    top: 13px;
+  }
   div {
     width: 100%;
     height: 100%;
     font-size: 17px;
     font-weight: 500;
-
+    position: relative;
+    top: 13px;
     margin-top: 0px;
     margin-bottom: 0px;
-    p {
-    }
   }
 `;
 const AddBoardButton = styled.button`
   border-radius: 6px;
   border: 0px;
-  padding: 8px;
+  padding: 4.5px;
   color: ${props => (props.name ? '#fff' : '')};
   background-color: ${props => (props.name ? '#5aac44' : '')};
   &:hover {
-    opacity: 0.5;
+    background-color: ${props => (props.name ? '#61d341' : '')};
+    opacity: ${props => (!props.name ? '0.5' : '')};
   }
 `;

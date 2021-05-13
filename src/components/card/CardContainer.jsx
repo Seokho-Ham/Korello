@@ -120,8 +120,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* background-color: #c6edee; */
-  background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/background+images/gradient.jpg');
+  background-color: #cacfe3;
+  /* background-image: url('https://korello.s3.ap-northeast-2.amazonaws.com/background+images/gradient.jpg'); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
 `;
