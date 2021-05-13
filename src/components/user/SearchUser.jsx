@@ -67,6 +67,7 @@ const SearchButtonContainer = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
   input {
     margin: 2px 0px 0px 3px;
+    border-radius: 4px;
     width: 250px;
     height: 23px;
   }

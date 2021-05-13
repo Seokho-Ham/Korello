@@ -64,7 +64,7 @@ export const Board = styled.div`
 `;
 
 export const ListType = styled.div`
-  margin-top: 10px;
+  margin: 5px 0px;
   h3 {
     display: inline-block;
     line-height: 24px;
