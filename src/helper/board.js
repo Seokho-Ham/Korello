@@ -1,24 +1,22 @@
 import { boardActions } from '../reducers/board.reducer';
 import { fetchData } from '../api';
 import { setFirebaseDocuments } from '../firebase';
-import { userActions } from '../reducers/user.reducer';
 
 const makeRecentList = data => {
   let result = [];
-  let lastView = localStorage.getItem('lastView');
-  if (lastView !== null && JSON.parse(lastView).length > 0) {
-    let arr = [];
-    JSON.parse(lastView).forEach(el => {
-      if (!arr.includes(parseInt(el))) {
-        arr.push(parseInt(el));
-      }
+  let lastView = JSON.parse(localStorage.getItem('lastView'));
+
+  if (lastView !== null && lastView.length) {
+    const arr = [];
+    lastView.forEach(el => {
+      arr.push(parseInt(el));
     });
-    let boards = arr
+
+    result = arr
       .map(element => {
         return data.filter(e => parseInt(e.id) === element)[0];
       })
       .filter(el => el);
-    result = boards;
   } else {
     result = [];
   }
@@ -37,13 +35,13 @@ export const getBoardList = async dispatch => {
     setFirebaseDocuments(boardlist);
     let recentBoard = makeRecentList(boardlist);
 
-    let payload = {
-      loading: false,
-      error: boardError,
-      boardlist,
-      recentBoard,
-    };
-
-    dispatch(boardActions.setBoardData(payload));
+    dispatch(
+      boardActions.setBoardData({
+        loading: false,
+        error: boardError,
+        boardlist,
+        recentBoard,
+      }),
+    );
   }
 };

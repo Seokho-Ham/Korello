@@ -72,7 +72,7 @@ const CardList = ({ location }) => {
   useEffect(() => {
     const boardId = location.pathname.split('/')[2];
     dispatch(setCardData({ loading: true, currentBoardId: boardId }));
-    setLastViewList(location);
+    setLastViewList(boardId);
     getCard(`${location.pathname}`, dispatch, boardId);
   }, [dispatch]);
 
