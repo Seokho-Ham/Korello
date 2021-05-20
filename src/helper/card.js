@@ -5,59 +5,41 @@ import { userActions } from '../reducers/user.reducer';
 
 export const getCard = async (uri, dispatch, boardId) => {
   let [cards, code, error] = await fetchCard(uri);
-  console.log(cards);
+
   if (!error) {
     const taglist = await getFields(boardId);
     const [userList] = await fetchData('/members');
     const [memberlist] = await fetchData(`/board/${boardId}/members`);
-    const [boardlabels] = await fetchData(
-      uri.slice(0, uri.length - 6) + '/label',
-    );
+    const [boardlabels] = await fetchData(`/board/${boardId}/label`);
     const [boardEventLogs] = await fetchEvents(`/events/board/${boardId}`);
+    let cardlist = {},
+      cardlabels = {};
 
-    const cardlist = {};
-    const cardlabels = {};
-
-    taglist.forEach(el => {
-      cardlist[el] = [];
-    });
-
-    if (cards.length > 0) {
-      cards.forEach(async el => {
-        if (!el) return null;
-        if (!cardlist[el.tagValue]) {
-          cardlist[el.tagValue] = [el];
-          taglist.push(el.tagValue);
-          await setFirebaseData(boardId, {
-            [el.tagValue]: { name: el.tagValue, createdAt: new Date() },
-          });
-        } else {
-          cardlist[el.tagValue].push(el);
-        }
-        cardlabels[el.id] = el.labels;
-      });
+    if (cards.length) {
+      const [cardData, cardLabelData] = makeCardList(cards, taglist, boardId);
+      cardlist = cardData;
+      cardlabels = cardLabelData;
     }
 
-    let payload = {
-      loading: false,
-      taglist,
-      cardlist,
-      boardlabels,
-      cardlabels,
-      currentBoardUrl: uri,
-      boardEventLogs,
-      memberlist,
-    };
     dispatch(userActions.searchUser({ userList }));
-    dispatch(setCardData(payload));
+    dispatch(
+      setCardData({
+        loading: false,
+        taglist,
+        cardlist,
+        boardlabels,
+        cardlabels,
+        currentBoardUrl: uri,
+        boardEventLogs,
+        memberlist,
+      }),
+    );
   } else {
     console.log(error);
   }
 };
 
-export const setLastViewList = location => {
-  const boardId = location.pathname.split('/')[2];
-
+export const setLastViewList = boardId => {
   let lastViewList = JSON.parse(localStorage.getItem('lastView'));
   if (lastViewList) {
     if (lastViewList.length >= 4) {
@@ -108,4 +90,25 @@ export const updateCardEvents = async (cardId, state) => {
       }
     }
   }
+};
+//cardlist, cardlabels 객체 만드는 함수
+const makeCardList = (rawCardData, tagArr, id) => {
+  const cardlist = {};
+  const cardlabels = {};
+  rawCardData.forEach(async el => {
+    if (!cardlist[el.tagValue]) {
+      cardlist[el.tagValue] = [el];
+      if (!tagArr.includes(el.tagValue)) {
+        tagArr.push(el.tagValue);
+        await setFirebaseData(id, {
+          [el.tagValue]: { name: el.tagValue, createdAt: new Date() },
+        });
+      }
+    } else {
+      cardlist[el.tagValue].push(el);
+    }
+    cardlabels[el.id] = el.labels;
+  });
+
+  return [cardlist, cardlabels];
 };

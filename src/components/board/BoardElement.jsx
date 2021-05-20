@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import randomImage from '../../api/images';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +20,7 @@ const BoardElement = ({ data }) => {
     });
   };
 
-  const deleteBoard = async () => {
+  const deleteBoard = useCallback(async () => {
     if (window.confirm('보드를 삭제하시겠습니까?')) {
       const [responseData, code] = await postData('/board/delete', {
         id: data.id,
@@ -47,7 +47,7 @@ const BoardElement = ({ data }) => {
         alert('삭제 실패!');
       }
     }
-  };
+  }, [boardlist]);
 
   return (
     <BoardItem image={image}>
